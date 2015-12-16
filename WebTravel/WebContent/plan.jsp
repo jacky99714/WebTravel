@@ -6,33 +6,38 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>行程規劃</title>
 	<style>
-		.head{
-			text-align: center;
-			font-size:36px;
-		}
-		
-		.box {		
-			border:3px ridge #DDDDDD;  
- 			width:560px;
- 			height:140px;	
-		}
+            .head{
+                text-align: center;
+                font-size:36px;
+            }
+
+            .box {		
+                border:3px ridge #DDDDDD;  
+                width:560px;
+                height:140px;	
+            }
 					
 	    .line{
-			width:100px;
-			height:0px;
-			border:3px ridge red;
-     
-        }
+                width:100px;
+                height:0px;
+                border:3px ridge red;
+            }
+            
+            table{
+                border:3px ridge #DDDDDD
+            }
         
-        td{
-        	border:3px ridge purple;  
-        }
+            td{
+                border:3px ridge purple;  
+            }
 	</style>
 	
 	<script>
-             var imgId = 0;
-             var totalImage = 0;
-             var lineNum = 5;  // how many td tag does one tr tag has 
+            var table;
+            var imgId = 0;
+            var totalImage = 0;
+            var maxImg = 5;  // max image in tr tag
+            var maxLine = 5; 
  /////////////////////////////////////////////////////////               
 		function allowDrop(ev) {
 		    ev.preventDefault();
@@ -51,48 +56,53 @@
                     if(srcParent.id === "collection"){
                         return;
                     }
+                    
                     if(tar.id !== "garbage"){ 
                         var tarId = tar.id;
                         ev.currentTarget.replaceChild(src,tar);      //(new,old)
-           
-                        srcParent.appendChild(tar);
-                        src.id = 0;                   //exchangeId
-                        tar.id = srcId;
+                        srcParent.appendChild(tar);                        
+                        tar.id = srcId;     //exchangeId
                         src.id = tarId;                    
                     }else{
                         var tr = srcParent.parentNode;
                         totalImage --;
-                            if(srcParent.nextElementSibling !== null){
-                                tr.removeChild(srcParent.nextElementSibling);
-                            }else if(srcParent.previousElementSibling !== null){
-                                tr.removeChild(srcParent.previousElementSibling);
-                            }
-                             tr.removeChild(srcParent);
-                             srcParent.removeChild(src);                            
-                        if(tr.id === "tr1"){
-                            var tr1 = document.getElementById("tr1");
-                            var tr2 = document.getElementById("tr2");
-                            var moveUp = tr2.firstElementChild;
-                            if(totalImage >= lineNum){
-                                tr1.appendChild(createTd("line"));
-                            }
-                            if(moveUp !== null ){
-                                tr1.appendChild(moveUp);
-                            }
-                            
-                            if(tr2.firstElementChild !== null){
-                                tr2.removeChild(tr2.firstElementChild);
-                            }
+                        if(srcParent.nextElementSibling !== null){
+                            tr.removeChild(srcParent.nextElementSibling);
+                        }else if(srcParent.previousElementSibling !== null){
+                            tr.removeChild(srcParent.previousElementSibling);
                         }
+                        srcParent.removeChild(src);  
+                        tr.removeChild(srcParent);
+                        
+                        var trNum =  Math.ceil((totalImage+1) / maxImg); // how many tr tag
+                        var srcLine = parseInt((tr.id).substring(2));  //source image tr number
+             
+                        if(srcLine+1 !== trNum){
+                            for(var i = srcLine; i < (trNum-1); i++){
+                                var tr1 = document.getElementById(("tr"+i));
+                                var tr2 = document.getElementById(("tr"+(i+1)));
+                                var moveUp = tr2.firstElementChild;
+                                if((totalImage+1) >= maxImg){
+                                    tr1.appendChild(createTd("line"));
+                                }
+                                if(moveUp !== null ){
+                                    tr1.appendChild(moveUp);
+                                }
 
+                                if(tr2.firstElementChild !== null){
+                                    tr2.removeChild(tr2.firstElementChild);
+                                }
+                            }   //end for                                          
+                        }
+                        if(totalImage % maxImg === 0){                   
+                            table.removeChild(table.lastChild);
+                        }
                     }      
 		}
                 
                 function click(ev){
                     var img = ev.currentTarget;
                     appendImg(img.src);
-                        
-          
                 }
 ////////////////////////////////////////////////////////////////		
 		function createImg(imgsrc){
@@ -121,34 +131,37 @@
 				td.appendChild(createImg(imgsrc));
 			}
 			return td;
-			
 		}
                 
                 function appendImg(imgsrc){
-                    var tdImg = createTd("image",imgsrc);
-                    var tr;
-                    
-                    if(totalImage >= lineNum*2){
+                    if((maxLine * maxImg) === totalImage){
                         return;
                     }
-                    if(Math.floor(totalImage / lineNum) === 0){
-                        tr = document.getElementById("tr1");
-                    }else{
-                        tr = document.getElementById("tr2");
-                    }
-            
-                    if(totalImage % lineNum !== 0){      
-                         var tdLine = createTd("line",null);
-                         tr.appendChild(tdLine);
-                    }
-                    tr.appendChild(tdImg);
                     
+                    
+                    
+                    var tdImg = createTd("image",imgsrc);
+                    var tr;
+
+                    if( totalImage % maxImg === 0){
+                       tr = document.createElement("tr");
+                       tr.id = "tr"+ Math.floor(totalImage / maxImg );      
+                       table.appendChild(tr);
+                    }
+
+                    tr = document.getElementById("tr"+ Math.floor(totalImage / maxImg ));
+         
+                    if(totalImage % maxImg !== 0){      
+                        var tdLine = createTd("line",null);
+                        tr.appendChild(tdLine);
+                    }
+                    tr.appendChild(tdImg);     
                     totalImage++;  
                 } 
 		
 		window.onload = function(){
-			var table = document.getElementById("tab");
-			var tr1 = document.getElementById("tr1");
+			table = document.getElementById("tab");
+                        totalImage = 0;
                         
                         appendImg("img/freeze_f.bmp");
                         appendImg("img/firen_f.bmp");
@@ -157,14 +170,12 @@
                         appendImg("img/justin_f.bmp");
                         appendImg("img/freeze_f.bmp");
                         appendImg("img/firen_f.bmp");
-//                        appendImg("img/firzen_f.bmp");
-//                        appendImg("img/john_f.bmp");
-//                        appendImg("img/justin_f.bmp");
+                        appendImg("img/firzen_f.bmp");
+                        appendImg("img/john_f.bmp");
+                        appendImg("img/justin_f.bmp");
                     for(var i=1;i <= 4;i++){
                          document.getElementById("get"+i).addEventListener("click", click);                 
                     }
-                   
-
 		}
 		
 	</script>
@@ -184,11 +195,8 @@
             <img id="garbage" src="img/garbage.png">
         </div> 
         
-	<table id="tab" style="border:3px ridge #DDDDDD;">
-		<tr id="tr1">		
-		</tr>
-		<tr id="tr2">		
-		</tr>
+	<table id="tab">
+
 	</table>
 </body>
 
