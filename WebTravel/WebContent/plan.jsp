@@ -230,7 +230,7 @@
             <img id="get2" src="img/firzenAttack.png" draggable="true" ondragstart="drag(event)">
             <img id="get3" src="img/freezeAttack.png" draggable="true" ondragstart="drag(event)">
             <img id="get4" src="img/johnAttack.png" draggable="true" ondragstart="drag(event)"> 
-            <img  id="close" src="img/close2.png">
+            <img  id="close" src="img/close.png">
         </div>
         <div id="fade" class="black_overlay"> </div>
         
