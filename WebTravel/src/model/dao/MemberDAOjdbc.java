@@ -20,13 +20,19 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+
 import model.MemberBean;
 
 public class MemberDAOjdbc {
 	
-	private static final String URL = "jdbc:sqlserver://10.211.55.3:1433;database=travel";
-	private static final String USERNAME = "sa";
-	private static final String PASSWORD = "sa123456";
+//	private static final String URL = "jdbc:sqlserver://l;database=travel";
+//	private static final String USERNAME = "sa";
+//	private static final String PASSWORD = "sa123456";
 	
 	private static final String SELECT_ID = "SELECT * FROM Member WHERE memberID=?";
 	private static final String SELECT_UESRNAME = "SELECT * FROM Member WHERE userName=?";
@@ -37,11 +43,20 @@ public class MemberDAOjdbc {
 	private static final String UPDATE = "update Member set password=?,firstName=?,lastName=?,nickName=?,birthDay=?,address=?,cellphone=?,telephone=?,email=?,photo=? where userName=?";
 //	private static final String UPDATE = "update Member set password=?,firstName=?,lastName=?,nickName=?,birthDay=?,address=?,cellphone=?,telephone=?,email=? where userName=?";
 	private Connection conn= null;
-
+	Context context= null;
+	DataSource ds= null; 
+	public MemberDAOjdbc(){
+		try {
+			context = new InitialContext();
+			ds = (DataSource) context.lookup("java:comp/env/jdbc/CutomerDataBase");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 	//查詢
 	public List<MemberBean> select(){  //查詢
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn =  ds.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<MemberBean> list = new ArrayList<MemberBean>();
@@ -79,7 +94,7 @@ public class MemberDAOjdbc {
 	}
 	public MemberBean select(int memberId){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn =  ds.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_ID);
 			ps.setInt(1, memberId);
 			ResultSet rs = ps.executeQuery();
@@ -117,7 +132,7 @@ public class MemberDAOjdbc {
 	}
 	public MemberBean select(String userName){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn =  ds.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_UESRNAME);
 			ps.setString(1, userName);
 			ResultSet rs = ps.executeQuery();
@@ -155,7 +170,7 @@ public class MemberDAOjdbc {
 	//新增
 	public MemberBean insert(MemberBean memberBean) throws FileNotFoundException{  //新增
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn =  ds.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setString(1, memberBean.getUserName());
 			ps.setBytes(2, memberBean.getPassword().getBytes());
@@ -189,7 +204,7 @@ public class MemberDAOjdbc {
 	}
 	public MemberBean update(MemberBean memberBean) throws IOException{
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn =  ds.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setString(10, memberBean.getUserName());
 			ps.setBytes(1, memberBean.getPassword().getBytes());
@@ -225,7 +240,7 @@ public class MemberDAOjdbc {
 	}
 	public boolean delete(String userName){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn =  ds.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setString(1,userName);
 			if(ps.executeUpdate()==1){
@@ -249,7 +264,7 @@ public class MemberDAOjdbc {
 		
 //-----------------------圖片匯入-----------------------------------
 		
-		File f = new File("/Users/mouse/Desktop/001.jpg");
+		File f = new File("C:/Users/Student/Desktop/02.jpg");
 		byte[] poto = new byte[(int)f.length()];
 		FileInputStream fi = new FileInputStream(f);
 		fi.read(poto);
@@ -271,10 +286,10 @@ public class MemberDAOjdbc {
 		mb.setPhoto(poto);
 		
 //----------------------------------------------------------
-//		List<MemberBean> li= m.select();  //全部select
-//		for(MemberBean e:li){
-//			System.out.println(e);
-//		}
+		List<MemberBean> li= m.select();  //全部select
+		for(MemberBean e:li){
+			System.out.println(e);
+		}
 //----------------------------------------------------------
 //		System.out.println(m.select(2));  //單筆select
 //----------------------------------------------------------
