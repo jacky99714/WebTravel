@@ -488,7 +488,19 @@
 				}				
 			}else if(state == "userHurt"){
 				if(!userDefense){
+					if(step <= 6){
+						back.sx -= 15;
+					    if( back.sx <= 0){
+					    	back.sx += 1380;
+					    }						
+					}
+
 					user.imgPerson.sx += user.imgPerson.sWidth;	
+				    if(step <= 3){
+				    	user.imgPerson.dy -= 15;	
+				    }else if(step <= 6){
+				    	user.imgPerson.dy += 15;	
+				    }
 				}	    			    
 			}else if(state == "enemyWalk"){	
 			    enemy.imgPerson.sx += user.imgPerson.sWidth;	
@@ -502,6 +514,18 @@
 					enemy.imgPerson.sx += enemy.imgPerson.sWidth;			
 				}					
 			}else if(state == "enemyHurt"){
+				if(step <= 6){
+					back.sx +=15;
+				    if( back.sx >= 1380){
+				    	back.sx -= 1380;
+				    }					
+				}
+
+			    if(step <= 3){
+			    	 enemy.imgPerson.dy -= 15;	
+			    }else if(step <= 6) {
+			    	 enemy.imgPerson.dy += 15;	
+			    }
 			    enemy.imgPerson.sx += user.imgPerson.sWidth;	
 			}else if(state == "enemyAngry"){
 				enemy.imgPerson.sx += user.imgPerson.sWidth;
