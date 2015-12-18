@@ -1,4 +1,4 @@
-package model.dao;
+package model.dao.jndi;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,13 +8,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.RestaurantMessageBean;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
-public class RestaurantMessageDAOjdbc {
-	// DB連線資訊
-	private static final String URL = "jdbc:sqlserver://localhost:1433;database=travel";
-	private static final String USERNAME = "sa";
-	private static final String PASSWORD = "passw0rd";
+import model.RestaurantMessageBean;
+import model.dao.RestaurantMessageDAO;
+
+public class RestaurantMessageDAOjndi implements RestaurantMessageDAO {
+
 	// select
 	private static final String SELECT_ALL = "select * from RestaurantMessage";
 	private static final String SELECT_BY_RESTAURANTID = "select * from RestaurantMessage where restaurantId = ?";
@@ -27,12 +30,21 @@ public class RestaurantMessageDAOjdbc {
 	private static final String DELETE = "delete from RestaurantMessage where restaurantMessageId=?";
 	private Connection conn = null;
 
-	// 查詢 SELECT_ALL
+	DataSource ds =null;
+	public RestaurantMessageDAOjndi(){
+		try {
+			Context context = new InitialContext();
+			ds = (DataSource) context.lookup("java:comp/env/jdbc/xxx");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
+	@Override
 	public List<RestaurantMessageBean> select() {
 		List<RestaurantMessageBean> list = null;
 		RestaurantMessageBean rmbean = null;
 		try (// AutoCloseable
-				Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+				Connection conn =ds.getConnection();) {
 
 			PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
 			ResultSet rs = ps.executeQuery();
@@ -53,9 +65,13 @@ public class RestaurantMessageDAOjdbc {
 	}
 
 	// 查詢SELECT_BY_RESTAURANTID
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.RestaurantMessageDAO#select(int)
+	 */
+	@Override
 	public RestaurantMessageBean select(int sceneId) {
 		RestaurantMessageBean rmbean = null;
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn =ds.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_RESTAURANTID);
 			ps.setInt(1, sceneId);
 			ResultSet rs = ps.executeQuery();
@@ -74,9 +90,13 @@ public class RestaurantMessageDAOjdbc {
 	}
 
 	// 新增INSERT
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.RestaurantMessageDAO#insert(model.RestaurantMessageBean)
+	 */
+	@Override
 	public RestaurantMessageBean insert(RestaurantMessageBean bean) {
 		RestaurantMessageBean result = null;
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn =ds.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			if (bean != null) {
 				ps.setString(1, bean.getMessageContent());
@@ -95,9 +115,13 @@ public class RestaurantMessageDAOjdbc {
 	}
 
 	// 修改UPDATE
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.RestaurantMessageDAO#update(model.RestaurantMessageBean)
+	 */
+	@Override
 	public RestaurantMessageBean update(RestaurantMessageBean bean) {
 		RestaurantMessageBean result = null;
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn =ds.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			if (bean != null) {
 				ps.setString(1, bean.getMessageContent());
@@ -116,8 +140,12 @@ public class RestaurantMessageDAOjdbc {
 	}
 
 	// 刪除DELETE
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.RestaurantMessageDAO#delete(int)
+	 */
+	@Override
 	public boolean delete(int RestaurantMessageId) {
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn =ds.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 
 			ps.setInt(1, RestaurantMessageId);
@@ -134,7 +162,7 @@ public class RestaurantMessageDAOjdbc {
 	}
 
 	public static void main(String[] args) {
-		RestaurantMessageDAOjdbc test = new RestaurantMessageDAOjdbc();
+		RestaurantMessageDAO test = new RestaurantMessageDAOjndi();
 		// ----------------------------------------------------------
 		// List<RestaurantMessageBean> li= test.select(); //全部select
 		// for(RestaurantMessageBean e:li){

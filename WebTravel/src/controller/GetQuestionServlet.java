@@ -13,7 +13,7 @@ import org.json.JSONObject;
 
 import model.QBean;
 import model.dao.QDAO;
-import model.dao.QDAOjdbc;
+import model.dao.jdbc.QDAOjdbc;
 
 /**
  * Servlet implementation class GetQuestionServlet

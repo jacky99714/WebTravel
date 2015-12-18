@@ -1,4 +1,4 @@
-package model.dao;
+package model.dao.jndi;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,15 +8,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 import model.SceneBean;
+import model.dao.SceneDAO;
 
-public class SceneDAOjdbc {
-	//DB連線資訊
-	private static final String URL = "jdbc:sqlserver://localhost:1433;database=travel";
-	private static final String USERNAME = "sa";
-	private static final String PASSWORD = "passw0rd";	
+public class SceneDAOjndi implements SceneDAO {
+	
 	//select
 	private static final String SELECT_ALL = "select * from scene";
 	private static final String SELECT_BY_LOCATION = "select * from scene where location = ?";	
@@ -32,12 +33,21 @@ public class SceneDAOjdbc {
 	private static final String DELETE = "delete from scene where sceneName=?";
 	private Connection conn = null;
 	
-	//查詢 SELECT_ALL
+	DataSource ds =null;
+	public SceneDAOjndi(){
+		try {
+			Context context = new InitialContext();
+			ds = (DataSource) context.lookup("java:comp/env/jdbc/xxx");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
+	@Override
 	public  List<SceneBean> select() {
 		List<SceneBean> list = null;
 		SceneBean sbean =null;
 		try (//AutoCloseable
-			 Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD); 
+			 Connection conn = ds.getConnection(); 
 			 ){
 			
 			PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
@@ -62,10 +72,14 @@ public class SceneDAOjdbc {
 	}
 	
 	//查詢SELECT_BY_LOCATION
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.SceneDAO#select(java.lang.String)
+	 */
+	@Override
 	public  SceneBean select(String location) {
 		SceneBean sbean =null;
 		try (
-			 Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD); 
+				Connection conn = ds.getConnection(); 
 			 ){
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_LOCATION);
 			ps.setString(1, location);
@@ -89,10 +103,14 @@ public class SceneDAOjdbc {
 	}
 	
 	//新增INSERT
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.SceneDAO#insert(model.SceneBean)
+	 */
+	@Override
 	public SceneBean insert(SceneBean bean) {
 		SceneBean result = null;
 		try (
-			Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);	
+				Connection conn = ds.getConnection(); 
 				){
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			if(bean != null){
@@ -116,10 +134,14 @@ public class SceneDAOjdbc {
 	}
 	
 	//修改UPDATE
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.SceneDAO#update(model.SceneBean)
+	 */
+	@Override
 	public SceneBean update(SceneBean bean){
 		SceneBean result = null;
 		try (
-			Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);	
+				Connection conn = ds.getConnection(); 	
 				){
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			if(bean != null){
@@ -143,9 +165,13 @@ public class SceneDAOjdbc {
 	}
 	
 	//刪除DELETE
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.SceneDAO#delete(java.lang.String)
+	 */
+	@Override
 	public boolean delete(String sceneName) {
 		try (
-				Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);	
+				Connection conn = ds.getConnection(); 	
 					){
 				PreparedStatement ps = conn.prepareStatement(DELETE);
 				
@@ -164,7 +190,7 @@ public class SceneDAOjdbc {
 	
 	
 	public static void main(String[] args){
-		SceneDAOjdbc test = new SceneDAOjdbc();
+		SceneDAO test = new SceneDAOjndi();
 //----------------------------------------------------------
 //		List<SceneBean> li= test.select();  //全部select
 //		for(SceneBean e:li){

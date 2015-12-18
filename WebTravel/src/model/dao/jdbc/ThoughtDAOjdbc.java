@@ -1,4 +1,4 @@
-package model.dao;
+package model.dao.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,8 +11,9 @@ import java.util.List;
 
 import model.MemberBean;
 import model.ThoughtBean;
+import model.dao.ThoughtDAO;
 
-public class ThoughtDAOjdbc {
+public class ThoughtDAOjdbc implements ThoughtDAO {
 	
 	private static final String URL = "jdbc:sqlserver://10.211.55.3:1433;database=travel";
 	private static final String USERNAME = "sa";
@@ -27,6 +28,10 @@ public class ThoughtDAOjdbc {
 	private SimpleDateFormat sf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private Connection conn= null;
 	
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.ThoughtDAO#select()
+	 */
+	@Override
 	public List<ThoughtBean> select(){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -56,6 +61,10 @@ public class ThoughtDAOjdbc {
 		}
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.ThoughtDAO#select(java.lang.String)
+	 */
+	@Override
 	public ThoughtBean select(String thoughtName){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -84,6 +93,10 @@ public class ThoughtDAOjdbc {
 		}
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.ThoughtDAO#select(int)
+	 */
+	@Override
 	public ThoughtBean select(int thoughtId){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -112,6 +125,10 @@ public class ThoughtDAOjdbc {
 		}
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.ThoughtDAO#update(model.ThoughtBean)
+	 */
+	@Override
 	public ThoughtBean update(ThoughtBean thoughtBean){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -137,6 +154,10 @@ public class ThoughtDAOjdbc {
 		}
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.ThoughtDAO#insert(model.ThoughtBean)
+	 */
+	@Override
 	public ThoughtBean insert(ThoughtBean thoughtBean){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -161,6 +182,10 @@ public class ThoughtDAOjdbc {
 		}
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.ThoughtDAO#delete(int)
+	 */
+	@Override
 	public boolean delete(int thoughtId){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -183,7 +208,7 @@ public class ThoughtDAOjdbc {
 		return false;
 	}
 	public static void main(String[] args){
-		ThoughtDAOjdbc t = new ThoughtDAOjdbc();
+		ThoughtDAO t = new ThoughtDAOjdbc();
 		
 		ThoughtBean tb = new ThoughtBean();
 		tb.setThoughtId(1);

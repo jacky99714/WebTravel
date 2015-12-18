@@ -1,4 +1,4 @@
-package model.dao;
+package model.dao.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,9 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.ImpeachBean;
+import model.dao.ImpeachDAO;
 
 
-public class ImpeachDAOjdbc {
+public class ImpeachDAOjdbc implements ImpeachDAO {
 	
 	private static final String URL = "jdbc:sqlserver://10.211.55.3:1433;database=travel";
 	private static final String USERNAME = "sa";
@@ -34,6 +35,10 @@ public class ImpeachDAOjdbc {
 	private SimpleDateFormat sf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private Connection conn= null;
 	
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.ImpeachDAO#delete(int)
+	 */
+	@Override
 	public boolean delete(int impeachId){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -56,6 +61,10 @@ public class ImpeachDAOjdbc {
 		return false;
 	}
 	
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.ImpeachDAO#insertSceneId(model.ImpeachBean)
+	 */
+	@Override
 	public List<ImpeachBean> insertSceneId(ImpeachBean impeachBean){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -81,6 +90,10 @@ public class ImpeachDAOjdbc {
 		}
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.ImpeachDAO#insertSceneMessageId(model.ImpeachBean)
+	 */
+	@Override
 	public List<ImpeachBean> insertSceneMessageId(ImpeachBean impeachBean){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -107,6 +120,10 @@ public class ImpeachDAOjdbc {
 		return null;
 	}
 	
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.ImpeachDAO#insertThoughtId(model.ImpeachBean)
+	 */
+	@Override
 	public List<ImpeachBean> insertThoughtId(ImpeachBean impeachBean){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -132,6 +149,10 @@ public class ImpeachDAOjdbc {
 		}
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.ImpeachDAO#insertRestaurantMessageId(model.ImpeachBean)
+	 */
+	@Override
 	public List<ImpeachBean> insertRestaurantMessageId(ImpeachBean impeachBean){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -157,6 +178,10 @@ public class ImpeachDAOjdbc {
 		}
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.ImpeachDAO#insertRestaurantId(model.ImpeachBean)
+	 */
+	@Override
 	public List<ImpeachBean> insertRestaurantId(ImpeachBean impeachBean){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -183,6 +208,10 @@ public class ImpeachDAOjdbc {
 		return null;
 	}
 	
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.ImpeachDAO#select()
+	 */
+	@Override
 	public List<ImpeachBean> select(){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -217,7 +246,7 @@ public class ImpeachDAOjdbc {
 		return null;
 	}
 	public static void main(String[] args){
-		ImpeachDAOjdbc t = new ImpeachDAOjdbc();
+		ImpeachDAO t = new ImpeachDAOjdbc();
 		SimpleDateFormat sf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 		ImpeachBean tb = new ImpeachBean();

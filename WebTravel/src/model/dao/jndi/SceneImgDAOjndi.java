@@ -1,4 +1,4 @@
-package model.dao;
+package model.dao.jndi;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,13 +10,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.SceneImgBean;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
-public class SceneImgDAOjdbc {
+import model.SceneImgBean;
+import model.dao.RestaurantMessageDAO;
+import model.dao.SceneImgDAO;
+
+public class SceneImgDAOjndi implements SceneImgDAO {
 	// DB連線資訊
-	private static final String URL = "jdbc:sqlserver://localhost:1433;database=travel";
-	private static final String USERNAME = "sa";
-	private static final String PASSWORD = "passw0rd";
+
 	// select
 	private static final String SELECT_ALL = "select * from SceneImg";
 	private static final String SELECT_BY_SCENEID = "select * from SceneImg where sceneId = ?";
@@ -28,13 +33,21 @@ public class SceneImgDAOjdbc {
 	// delete
 	private static final String DELETE = "delete from SceneImg where sceneImgId=?";
 	private Connection conn = null;
-
-	// 查詢 SELECT_ALL
+	DataSource ds =null;
+	public SceneImgDAOjndi(){
+		try {
+			Context context = new InitialContext();
+			ds = (DataSource) context.lookup("java:comp/env/jdbc/xxx");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
+	@Override
 	public List<SceneImgBean> select() {
 		List<SceneImgBean> list = null;
 		SceneImgBean rmbean = null;
 		try (// AutoCloseable
-				Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+				Connection conn = ds.getConnection();) {
 
 			PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
 			ResultSet rs = ps.executeQuery();
@@ -54,9 +67,13 @@ public class SceneImgDAOjdbc {
 	}
 
 	// 查詢SELECT_BY_SCENEID
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.SceneImgDAO#select(int)
+	 */
+	@Override
 	public SceneImgBean select(int sceneId) {
 		SceneImgBean rmbean = null;
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn = ds.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_SCENEID);
 			ps.setInt(1, sceneId);
 			ResultSet rs = ps.executeQuery();
@@ -74,9 +91,13 @@ public class SceneImgDAOjdbc {
 	}
 
 	// 新增INSERT
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.SceneImgDAO#insert(model.SceneImgBean)
+	 */
+	@Override
 	public SceneImgBean insert(SceneImgBean bean) {
 		SceneImgBean result = null;
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn = ds.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			if (bean != null) {
 				ps.setBytes(1, bean.getImg());
@@ -94,9 +115,13 @@ public class SceneImgDAOjdbc {
 	}
 
 	// 修改UPDATE
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.SceneImgDAO#update(model.SceneImgBean)
+	 */
+	@Override
 	public SceneImgBean update(SceneImgBean bean) {
 		SceneImgBean result = null;
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn = ds.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			if (bean != null) {
 				ps.setBytes(1, bean.getImg());
@@ -114,8 +139,12 @@ public class SceneImgDAOjdbc {
 	}
 
 	// 刪除DELETE
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.SceneImgDAO#delete(int)
+	 */
+	@Override
 	public boolean delete(int sceneImgId) {
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn = ds.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 
 			ps.setInt(1, sceneImgId);
@@ -132,7 +161,7 @@ public class SceneImgDAOjdbc {
 	}
 
 	public static void main(String[] args) {
-		RestaurantMessageDAOjdbc test = new RestaurantMessageDAOjdbc();
+		RestaurantMessageDAO test = new RestaurantMessageDAOjndi();
 		
 		//-----------------------圖片匯入-----------------------------------
 		

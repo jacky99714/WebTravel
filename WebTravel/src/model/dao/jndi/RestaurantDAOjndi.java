@@ -1,4 +1,4 @@
-package model.dao;
+package model.dao.jndi;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,9 +8,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.RestaurantBean;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
-public class RestaurantDAOjdbc {
+import model.RestaurantBean;
+import model.dao.RestaurantDAO;
+
+public class RestaurantDAOjndi implements RestaurantDAO {
 
 	// DB連線資訊
 	private static final String URL = "jdbc:sqlserver://localhost:1433;database=travel";
@@ -30,12 +36,21 @@ public class RestaurantDAOjdbc {
 	private static final String DELETE = "delete from restaurant where restaurantName=?";
 	private Connection conn = null;
 	
-	// 查詢 SELECT_ALL
+	DataSource ds =null;
+	public RestaurantDAOjndi(){
+		try {
+			Context context = new InitialContext();
+			ds = (DataSource) context.lookup("java:comp/env/jdbc/xxx");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
+	@Override
 	public List<RestaurantBean> select() {
 		List<RestaurantBean> list = null;
 		RestaurantBean rbean = null;
 		try (// AutoCloseable
-				Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+				Connection conn = ds.getConnection();) {
 
 			PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
 			ResultSet rs = ps.executeQuery();
@@ -63,9 +78,13 @@ public class RestaurantDAOjdbc {
 	}
 
 	// 查詢SELECT_BY_LOCATION
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.RestaurantDAO#select(java.lang.String)
+	 */
+	@Override
 	public RestaurantBean select(String location) {
 		RestaurantBean rbean = null;
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn = ds.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_LOCATION);
 			ps.setString(1, location);
 			ResultSet rs = ps.executeQuery();
@@ -92,9 +111,13 @@ public class RestaurantDAOjdbc {
 	}
 
 	// 新增INSERT
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.RestaurantDAO#insert(model.RestaurantBean)
+	 */
+	@Override
 	public RestaurantBean insert(RestaurantBean bean) {
 		RestaurantBean result = null;
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn = ds.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			if (bean != null) {
 				ps.setString(1, bean.getLocation());
@@ -121,9 +144,13 @@ public class RestaurantDAOjdbc {
 	}
 
 	// 修改UPDATE
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.RestaurantDAO#update(model.RestaurantBean)
+	 */
+	@Override
 	public RestaurantBean update(RestaurantBean bean) {
 		RestaurantBean result = null;
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn = ds.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			if (bean != null) {
 				ps.setString(1, bean.getLocation());
@@ -150,8 +177,12 @@ public class RestaurantDAOjdbc {
 	}
 
 	// 刪除DELETE
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.RestaurantDAO#delete(java.lang.String)
+	 */
+	@Override
 	public boolean delete(String sceneName) {
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn = ds.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 
 			ps.setString(1, sceneName);
@@ -172,7 +203,7 @@ public class RestaurantDAOjdbc {
 	
 	
 	public static void main(String[] args){
-		RestaurantDAOjdbc test = new RestaurantDAOjdbc();
+		RestaurantDAO test = new RestaurantDAOjndi();
 //----------------------------------------------------------
 //		List<RestaurantBean> li= test.select();  //全部select
 //		for(RestaurantBean e:li){

@@ -1,7 +1,5 @@
-package model.dao;
+package model.dao.jdbc;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,42 +8,48 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.RestaurantImgBean;
+import model.RestaurantMessageBean;
+import model.dao.RestaurantMessageDAO;
 
-public class RestaurantImgDAOjdbc {
+public class RestaurantMessageDAOjdbc implements RestaurantMessageDAO {
 	// DB連線資訊
 	private static final String URL = "jdbc:sqlserver://localhost:1433;database=travel";
 	private static final String USERNAME = "sa";
 	private static final String PASSWORD = "passw0rd";
 	// select
-	private static final String SELECT_ALL = "select * from RestaurantImg";
-	private static final String SELECT_BY_RESTAURANTID = "select * from RestaurantImg where restaurantId = ?";
+	private static final String SELECT_ALL = "select * from RestaurantMessage";
+	private static final String SELECT_BY_RESTAURANTID = "select * from RestaurantMessage where restaurantId = ?";
 	// insert
-	private static final String INSERT = "insert into RestaurantImg" + " (img,restaurantId) "
-			+ "values(?, ?)";
+	private static final String INSERT = "insert into RestaurantMessage" + " (messageContent,restaurantId,memberId) "
+			+ "values(?, ?, ?)";
 	// update
-	private static final String UPDATE = "update RestaurantImg set img=?,restaurantId=?";
+	private static final String UPDATE = "update RestaurantMessage set messageContent=?,restaurantId=?,memberId=?";
 	// delete
-	private static final String DELETE = "delete from RestaurantImg where restaurantImgId=?";
+	private static final String DELETE = "delete from RestaurantMessage where restaurantMessageId=?";
 	private Connection conn = null;
 
 	// 查詢 SELECT_ALL
-	public List<RestaurantImgBean> select() {
-		List<RestaurantImgBean> list = null;
-		RestaurantImgBean ribean = null;
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.RestaurantMessageDAO#select()
+	 */
+	@Override
+	public List<RestaurantMessageBean> select() {
+		List<RestaurantMessageBean> list = null;
+		RestaurantMessageBean rmbean = null;
 		try (// AutoCloseable
 				Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
 
 			PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
 			ResultSet rs = ps.executeQuery();
-			list = new ArrayList<RestaurantImgBean>();
+			list = new ArrayList<RestaurantMessageBean>();
 			while (rs.next()) {
-				ribean = new RestaurantImgBean();
-				ribean.setRestaurantImgId(rs.getInt(1));
-				ribean.setImg(rs.getBytes(2));
-				ribean.setRestaurantId(rs.getInt(3));
-				
-				list.add(ribean);
+				rmbean = new RestaurantMessageBean();
+				rmbean.setRestaurantMessageId(rs.getInt(1));
+				rmbean.setMessageContent(rs.getString(2));
+				rmbean.setRestaurantId(rs.getInt(3));
+				rmbean.setMemberId(rs.getInt(4));
+
+				list.add(rmbean);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -54,34 +58,44 @@ public class RestaurantImgDAOjdbc {
 	}
 
 	// 查詢SELECT_BY_RESTAURANTID
-	public RestaurantImgBean select(int RestaurantId) {
-		RestaurantImgBean ribean = null;
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.RestaurantMessageDAO#select(int)
+	 */
+	@Override
+	public RestaurantMessageBean select(int sceneId) {
+		RestaurantMessageBean rmbean = null;
 		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_RESTAURANTID);
-			ps.setInt(1, RestaurantId);
+			ps.setInt(1, sceneId);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				ribean = new RestaurantImgBean();
-				ribean.setRestaurantImgId(rs.getInt(1));
-				ribean.setImg(rs.getBytes(2));
-				ribean.setRestaurantId(rs.getInt(3));
+				rmbean = new RestaurantMessageBean();
+				rmbean.setRestaurantMessageId(rs.getInt(1));
+				rmbean.setMessageContent(rs.getString(2));
+				rmbean.setRestaurantId(rs.getInt(3));
+				rmbean.setMemberId(rs.getInt(4));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return ribean;
+		return rmbean;
 	}
 
 	// 新增INSERT
-	public RestaurantImgBean insert(RestaurantImgBean bean) {
-		RestaurantImgBean result = null;
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.RestaurantMessageDAO#insert(model.RestaurantMessageBean)
+	 */
+	@Override
+	public RestaurantMessageBean insert(RestaurantMessageBean bean) {
+		RestaurantMessageBean result = null;
 		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			if (bean != null) {
-				ps.setBytes(1, bean.getImg());
+				ps.setString(1, bean.getMessageContent());
 				ps.setInt(2, bean.getRestaurantId());
-				
+				ps.setInt(3, bean.getMemberId());
+
 				int rs = ps.executeUpdate();
 				if (rs == 1) {
 					result = bean;
@@ -94,13 +108,18 @@ public class RestaurantImgDAOjdbc {
 	}
 
 	// 修改UPDATE
-	public RestaurantImgBean update(RestaurantImgBean bean) {
-		RestaurantImgBean result = null;
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.RestaurantMessageDAO#update(model.RestaurantMessageBean)
+	 */
+	@Override
+	public RestaurantMessageBean update(RestaurantMessageBean bean) {
+		RestaurantMessageBean result = null;
 		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			if (bean != null) {
-				ps.setBytes(1, bean.getImg());
+				ps.setString(1, bean.getMessageContent());
 				ps.setInt(2, bean.getRestaurantId());
+				ps.setInt(3, bean.getMemberId());
 
 				int rs = ps.executeUpdate();
 				if (rs == 1) {
@@ -114,11 +133,15 @@ public class RestaurantImgDAOjdbc {
 	}
 
 	// 刪除DELETE
-	public boolean delete(int RestaurantImgId) {
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.RestaurantMessageDAO#delete(int)
+	 */
+	@Override
+	public boolean delete(int RestaurantMessageId) {
 		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 
-			ps.setInt(1, RestaurantImgId);
+			ps.setInt(1, RestaurantMessageId);
 
 			int rs = ps.executeUpdate();
 			if (rs == 1) {
@@ -132,37 +155,26 @@ public class RestaurantImgDAOjdbc {
 	}
 
 	public static void main(String[] args) {
-		RestaurantMessageDAOjdbc test = new RestaurantMessageDAOjdbc();
-		
-		//-----------------------圖片匯入-----------------------------------
-		
-//				File f = new File("/Users/mouse/Desktop/001.jpg");
-//				byte[] poto = new byte[(int)f.length()];
-//				FileInputStream fi = new FileInputStream(f);
-//				System.out.println(fi);
-//				fi.read(poto);
-//				fi.close();
-		
-		
+		RestaurantMessageDAO test = new RestaurantMessageDAOjdbc();
 		// ----------------------------------------------------------
-		// List<RestaurantImgBean> li= test.select(); //全部select
-		// for(RestaurantImgBean e:li){
+		// List<RestaurantMessageBean> li= test.select(); //全部select
+		// for(RestaurantMessageBean e:li){
 		// System.out.println(e);
 		// }
 		// ----------------------------------------------------------
 		// System.out.println(test.select(2)); // 單筆select
 		// ----------------------------------------------------------
-//		RestaurantImgBean ribean = new RestaurantImgBean();
-//		
-//		ribean.setRestaurantId(3);
-//		ribean.setMemberId(1);
+		RestaurantMessageBean rmbean = new RestaurantMessageBean();
+		rmbean.setMessageContent("好吃");
+		rmbean.setRestaurantId(3);
+		rmbean.setMemberId(1);
 
 		//
-//		 System.out.println(test.insert(ribean)); // 新增資料
+//		 System.out.println(test.insert(rmbean)); // 新增資料
 		// ----------------------------------------------------------
 		// System.out.println(test.select("text123")); //單筆select （帳號）
 		// ----------------------------------------------------------
-		// System.out.println(test.update(ribean)); //修改
+		// System.out.println(test.update(rmbean)); //修改
 		// ----------------------------------------------------------
 		// System.out.println(test.delete(3));//刪除
 		// ----------------------------------------------------------

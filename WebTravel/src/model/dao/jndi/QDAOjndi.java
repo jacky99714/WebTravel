@@ -1,4 +1,4 @@
-package model.dao;
+package model.dao.jndi;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,14 +15,12 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import model.QBean;
+import model.dao.QDAO;
 
 
-public class QDAOjdbc implements QDAO {
+public class QDAOjndi implements QDAO {
 
-	private static final String URL = "jdbc:sqlserver://127.0.0.1:1433;database=travel";
-	private static final String USERNAME = "sa";
-	private static final String PASSWORD = "passw0rd";
-	
+
 	private static final String SELECT_ID = "SELECT * FROM Q WHERE Qid=?";
 	private static final String SELECT_NAME = "SELECT * FROM Q WHERE Qname=?";
 	private static final String SELECT = "SELECT Qid,Qname,ans,a,b,c,d FROM Q";
@@ -34,7 +32,7 @@ public class QDAOjdbc implements QDAO {
 	
 	private Connection conn= null;
 	DataSource ds =null;
-	public QDAOjdbc() {
+	public QDAOjndi() {
 		try {
 			Context context = new InitialContext();
 			ds = (DataSource) context.lookup("java:comp/env/jdbc/xxx");
@@ -43,13 +41,11 @@ public class QDAOjdbc implements QDAO {
 		}
 		// TODO Auto-generated constructor stub
 	}
-	/* (non-Javadoc)
-	 * @see model.dao.QDAO#select()
-	 */
+
 	@Override
 	public List<QBean> select(){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn =  ds.getConnection();
 			
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
@@ -85,7 +81,6 @@ public class QDAOjdbc implements QDAO {
 	@Override
 	public QBean select(int qId){
 		try {
-//			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
 			conn= ds.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_ID);
 			ps.setInt(1, qId);
@@ -120,7 +115,7 @@ public class QDAOjdbc implements QDAO {
 	@Override
 	public QBean select(String qName){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn =  ds.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_NAME);
 			ps.setString(1, qName);
 			ResultSet rs = ps.executeQuery();
@@ -154,7 +149,7 @@ public class QDAOjdbc implements QDAO {
 	@Override
 	public boolean delete(int qId){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn =  ds.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1,qId);
 			if(ps.executeUpdate()==1){
@@ -179,7 +174,7 @@ public class QDAOjdbc implements QDAO {
 	@Override
 	public QBean insert(QBean qBean){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn =  ds.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setString(1, qBean.getQName());
 			ps.setString(2, qBean.getAns());
@@ -209,7 +204,7 @@ public class QDAOjdbc implements QDAO {
 	@Override
 	public QBean update(QBean qBean){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn =  ds.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setString(1, qBean.getQName());
 			ps.setString(2, qBean.getAns());
@@ -238,7 +233,6 @@ public class QDAOjdbc implements QDAO {
 	@Override
 	public int getCount(){
 		try {
-//			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
 			conn =ds.getConnection();
 			PreparedStatement ps = conn.prepareStatement(COUNT);
 			ResultSet rs = ps.executeQuery();
@@ -260,7 +254,7 @@ public class QDAOjdbc implements QDAO {
 	}	
 	
 	public static void main(String[] args){
-		QDAO t = new QDAOjdbc();
+		QDAO t = new QDAOjndi();
 		System.out.println("count: "+t.getCount());
 //		QBean tb = new QBean();
 //		tb.setqId(5);

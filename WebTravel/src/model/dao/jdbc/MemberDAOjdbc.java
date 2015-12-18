@@ -1,4 +1,4 @@
-package model.dao;
+package model.dao.jdbc;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -27,8 +27,9 @@ import javax.sql.DataSource;
 
 
 import model.MemberBean;
+import model.dao.MemberDAO;
 
-public class MemberDAOjdbc {
+public class MemberDAOjdbc implements MemberDAO {
 	
 //	private static final String URL = "jdbc:sqlserver://l;database=travel";
 //	private static final String USERNAME = "sa";
@@ -54,6 +55,10 @@ public class MemberDAOjdbc {
 		}
 	}
 	//查詢
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.MemberDAO#select()
+	 */
+	@Override
 	public List<MemberBean> select(){  //查詢
 		try {
 			conn =  ds.getConnection();
@@ -92,6 +97,10 @@ public class MemberDAOjdbc {
 		
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.MemberDAO#select(int)
+	 */
+	@Override
 	public MemberBean select(int memberId){
 		try {
 			conn =  ds.getConnection();
@@ -130,6 +139,10 @@ public class MemberDAOjdbc {
 		
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.MemberDAO#select(java.lang.String)
+	 */
+	@Override
 	public MemberBean select(String userName){
 		try {
 			conn =  ds.getConnection();
@@ -168,6 +181,10 @@ public class MemberDAOjdbc {
 		return null;
 	}
 	//新增
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.MemberDAO#insert(model.MemberBean)
+	 */
+	@Override
 	public MemberBean insert(MemberBean memberBean) throws FileNotFoundException{  //新增
 		try {
 			conn =  ds.getConnection();
@@ -202,6 +219,10 @@ public class MemberDAOjdbc {
 		}
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.MemberDAO#update(model.MemberBean)
+	 */
+	@Override
 	public MemberBean update(MemberBean memberBean) throws IOException{
 		try {
 			conn =  ds.getConnection();
@@ -238,6 +259,10 @@ public class MemberDAOjdbc {
 		}
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.MemberDAO#delete(java.lang.String)
+	 */
+	@Override
 	public boolean delete(String userName){
 		try {
 			conn =  ds.getConnection();
@@ -260,7 +285,7 @@ public class MemberDAOjdbc {
 		return false;
 	}
 	public static void main(String[] args) throws ParseException, IOException{
-		MemberDAOjdbc m =new MemberDAOjdbc();
+		MemberDAO m =new MemberDAOjdbc();
 		
 //-----------------------圖片匯入-----------------------------------
 		

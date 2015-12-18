@@ -1,4 +1,4 @@
-package model.dao;
+package model.dao.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.ScheduleContentBean;
+import model.dao.ScheduleContentDAO;
 
-public class ScheduleContentDAOjdbc {
+public class ScheduleContentDAOjdbc implements ScheduleContentDAO {
 	private static final String URL = "jdbc:sqlserver://10.211.55.3:1433;database=travel";
 	private static final String USERNAME = "sa";
 	private static final String PASSWORD = "sa123456";
@@ -22,6 +23,10 @@ public class ScheduleContentDAOjdbc {
 	private static final String DELETE = "delete FROM ScheduleContent where ScheduleContentID=?";
 	private Connection conn= null;
 	
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.ScheduleContentDAO#select()
+	 */
+	@Override
 	public List<ScheduleContentBean> select(){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -50,6 +55,10 @@ public class ScheduleContentDAOjdbc {
 		}
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.ScheduleContentDAO#select(int)
+	 */
+	@Override
 	public ScheduleContentBean select(int scheduleContentId){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -77,6 +86,10 @@ public class ScheduleContentDAOjdbc {
 		}
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.ScheduleContentDAO#insert(model.ScheduleContentBean)
+	 */
+	@Override
 	public boolean insert(ScheduleContentBean scheduleContentBean){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -100,6 +113,10 @@ public class ScheduleContentDAOjdbc {
 		}
 		return false;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.ScheduleContentDAO#delete(int)
+	 */
+	@Override
 	public boolean delete(int scheduleContentId){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -121,6 +138,10 @@ public class ScheduleContentDAOjdbc {
 		}
 		return false;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.ScheduleContentDAO#update(model.ScheduleContentBean)
+	 */
+	@Override
 	public ScheduleContentBean update(ScheduleContentBean scheduleContentBean){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -147,7 +168,7 @@ public class ScheduleContentDAOjdbc {
 		return null;
 	}
 	public static void main(String[] args){
-		ScheduleContentDAOjdbc s = new ScheduleContentDAOjdbc();
+		ScheduleContentDAO s = new ScheduleContentDAOjdbc();
 		ScheduleContentBean sb = new ScheduleContentBean();
 		sb.setScheduleContentId(4);;
 		sb.setScheduleOrder(2);;

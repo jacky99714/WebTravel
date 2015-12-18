@@ -1,4 +1,4 @@
-package model.dao;
+package model.dao.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,32 +8,37 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.RestaurantGradeBean;
+import model.SceneGradeBean;
+import model.dao.SceneGradreDAO;
 
 
-public class RestaurantGradeDAOjdbc {
+public class SceneGradreDAOjdbc implements SceneGradreDAO {
 	private static final String URL = "jdbc:sqlserver://10.211.55.3:1433;database=travel";
 	private static final String USERNAME = "sa";
 	private static final String PASSWORD = "sa123456";
 	
-	private static final String SELECT_MEMBERID = "SELECT * FROM RestaurantGrade WHERE MemberID=?";
-	private static final String SELECT_RESTAURANTID = "SELECT memberId,RestaurantID,Evaluate FROM RestaurantGrade WHERE RestaurantID=?";
-	private static final String SELECT = "SELECT memberId,RestaurantID,Evaluate FROM RestaurantGrade";
-	private static final String INSERT = "insert into RestaurantGrade(memberId,RestaurantID,Evaluate) values(?,?,?)";
-	private static final String UPDATE = "update RestaurantGrade set Evaluate=? where MemberID=? and RestaurantID=?";
-	private static final String DELETE = "delete FROM RestaurantGrade where memberId=? and RestaurantID=?";
+	private static final String SELECT_MEMBERID = "SELECT * FROM SceneGrade WHERE MemberID=?";
+	private static final String SELECT_SCENEID = "SELECT memberId,SceneID,Evaluate FROM SceneGrade WHERE SceneID=?";
+	private static final String SELECT = "SELECT memberId,SceneID,Evaluate FROM SceneGrade";
+	private static final String INSERT = "insert into SceneGrade(memberId,SceneID,Evaluate) values(?,?,?)";
+	private static final String UPDATE = "update SceneGrade set Evaluate=? where MemberID=? and SceneID=?";
+	private static final String DELETE = "delete FROM SceneGrade where memberId=? and SceneID=?";
 	private Connection conn= null;
 	
-	public List<RestaurantGradeBean> select(){
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.SceneGradreDAO#select()
+	 */
+	@Override
+	public List<SceneGradeBean> select(){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
-			List<RestaurantGradeBean> list = new ArrayList<RestaurantGradeBean>();
+			List<SceneGradeBean> list = new ArrayList<SceneGradeBean>();
 			while(rs.next()){
-				RestaurantGradeBean cBean =new RestaurantGradeBean();
+				SceneGradeBean cBean =new SceneGradeBean();
 				cBean.setMemberId(rs.getInt(1));
-				cBean.setRestaurantId(rs.getInt(2));
+				cBean.setSceneId(rs.getInt(2));
 				cBean.setEvaluate(rs.getInt(3));
 				list.add(cBean);
 			}
@@ -52,16 +57,20 @@ public class RestaurantGradeDAOjdbc {
 		return null;
 	}
 	
-	public List<RestaurantGradeBean> select(int restaurantId){
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.SceneGradreDAO#select(int)
+	 */
+	@Override
+	public List<SceneGradeBean> select(int sceneId){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
-			PreparedStatement ps = conn.prepareStatement(SELECT_RESTAURANTID);
-			ps.setInt(1, restaurantId);
+			PreparedStatement ps = conn.prepareStatement(SELECT_SCENEID);
+			ps.setInt(1, sceneId);
 			ResultSet rs = ps.executeQuery();
-			List<RestaurantGradeBean> list = new ArrayList<RestaurantGradeBean>();
+			List<SceneGradeBean> list = new ArrayList<SceneGradeBean>();
 			while(rs.next()){
-				RestaurantGradeBean cBean =new RestaurantGradeBean();
-				cBean.setRestaurantId(rs.getInt(2));
+				SceneGradeBean cBean =new SceneGradeBean();
+				cBean.setSceneId(rs.getInt(2));
 				cBean.setMemberId(rs.getInt(1));
 				cBean.setEvaluate(rs.getInt(3));
 				list.add(cBean);
@@ -81,16 +90,20 @@ public class RestaurantGradeDAOjdbc {
 		return null;
 	}
 	
-	public List<RestaurantGradeBean> insert(RestaurantGradeBean restaurantGradeBean){
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.SceneGradreDAO#insert(model.SceneGradeBean)
+	 */
+	@Override
+	public List<SceneGradeBean> insert(SceneGradeBean sceneGradeBean){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
 			PreparedStatement ps = conn.prepareStatement(INSERT);
-			ps.setInt(1, restaurantGradeBean.getMemberId());
-			ps.setInt(2, restaurantGradeBean.getRestaurantId());
-			ps.setInt(3, restaurantGradeBean.getEvaluate());
+			ps.setInt(1, sceneGradeBean.getMemberId());
+			ps.setInt(2, sceneGradeBean.getSceneId());
+			ps.setInt(3, sceneGradeBean.getEvaluate());
 
 			if(ps.executeUpdate()==1){
-				return this.select(restaurantGradeBean.getRestaurantId());
+				return this.select(sceneGradeBean.getSceneId());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -106,16 +119,20 @@ public class RestaurantGradeDAOjdbc {
 		return null;
 	}
 	
-	public List<RestaurantGradeBean> update(RestaurantGradeBean restaurantGradeBean){
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.SceneGradreDAO#update(model.SceneGradeBean)
+	 */
+	@Override
+	public List<SceneGradeBean> update(SceneGradeBean sceneGradeBean){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
-			ps.setInt(2, restaurantGradeBean.getMemberId());
-			ps.setInt(3, restaurantGradeBean.getRestaurantId());
-			ps.setInt(1, restaurantGradeBean.getEvaluate());
+			ps.setInt(2, sceneGradeBean.getMemberId());
+			ps.setInt(3, sceneGradeBean.getSceneId());
+			ps.setInt(1, sceneGradeBean.getEvaluate());
 
 			if(ps.executeUpdate()==1){
-				return this.select(restaurantGradeBean.getRestaurantId());
+				return this.select(sceneGradeBean.getSceneId());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -130,12 +147,16 @@ public class RestaurantGradeDAOjdbc {
 		}
 		return null;
 	}
-	public boolean delete(int memberId,int restaurantId){
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.SceneGradreDAO#delete(int, int)
+	 */
+	@Override
+	public boolean delete(int memberId,int sceneId){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1,memberId);
-			ps.setInt(2,restaurantId);
+			ps.setInt(2,sceneId);
 			if(ps.executeUpdate()==1){
 				return true;
 			}
@@ -153,25 +174,23 @@ public class RestaurantGradeDAOjdbc {
 		return false;
 	}
 	public static void main(String[] args){
-		RestaurantGradeDAOjdbc t = new RestaurantGradeDAOjdbc();
+		SceneGradreDAO t = new SceneGradreDAOjdbc();
 		
-		RestaurantGradeBean cb = new RestaurantGradeBean();
+		SceneGradeBean cb = new SceneGradeBean();
 
-		cb.setRestaurantId(1);
-		cb.setMemberId(4);
-		cb.setEvaluate(0);
+		cb.setSceneId(1);
+		cb.setMemberId(5);
+		cb.setEvaluate(11);
 //----------------------------------------------------------
 //		System.out.println(t.select(1));  //單筆select
 //----------------------------------------------------------
 //		System.out.println(t.insert(cb)); // 新增資料
 //----------------------------------------------------------
-//		System.out.println(t.select("花蓮一日遊")); //單筆select （帳號）
-//----------------------------------------------------------
 //		System.out.println(t.update(cb)); //修改
 //----------------------------------------------------------
-		System.out.println(t.delete(2,2));//刪除
+//		System.out.println(t.delete(2,2));//刪除
 //----------------------------------------------------------
-		for(RestaurantGradeBean e : t.select()){
+		for(SceneGradeBean e : t.select()){
 			System.out.println(e);
 		}
 //----------------------------------------------------------

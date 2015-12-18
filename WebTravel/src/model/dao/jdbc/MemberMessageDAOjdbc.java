@@ -1,4 +1,4 @@
-package model.dao;
+package model.dao.jdbc;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -14,9 +14,10 @@ import java.util.Calendar;
 import java.util.List;
 
 import model.MemberMessageBean;
+import model.dao.MemberMessageDAO;
 
 
-public class MemberMessageDAOjdbc {
+public class MemberMessageDAOjdbc implements MemberMessageDAO {
 	private static final String URL = "jdbc:sqlserver://10.211.55.3:1433;database=travel";
 	private static final String USERNAME = "sa";
 	private static final String PASSWORD = "sa123456";
@@ -31,6 +32,10 @@ public class MemberMessageDAOjdbc {
 	
 	private Connection conn= null;
 	
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.MemberMessageDAO#select()
+	 */
+	@Override
 	public List<MemberMessageBean> select(){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -59,6 +64,10 @@ public class MemberMessageDAOjdbc {
 		}
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.MemberMessageDAO#selectMemberId(int)
+	 */
+	@Override
 	public List<MemberMessageBean> selectMemberId(int memberId){
 		try {
 			SimpleDateFormat sf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -90,6 +99,10 @@ public class MemberMessageDAOjdbc {
 		}
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.MemberMessageDAO#select(int)
+	 */
+	@Override
 	public MemberMessageBean select(int memberMessageId){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -117,6 +130,10 @@ public class MemberMessageDAOjdbc {
 		}
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.MemberMessageDAO#insert(model.MemberMessageBean)
+	 */
+	@Override
 	public List<MemberMessageBean> insert(MemberMessageBean memberMessageBean) {
 		try {
 			SimpleDateFormat sf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -143,6 +160,10 @@ public class MemberMessageDAOjdbc {
 		}
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.MemberMessageDAO#update(model.MemberMessageBean)
+	 */
+	@Override
 	public List<MemberMessageBean> update(MemberMessageBean memberMessageBean){
 		try {
 			SimpleDateFormat sf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -171,6 +192,10 @@ public class MemberMessageDAOjdbc {
 		}
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.MemberMessageDAO#delete(int)
+	 */
+	@Override
 	public boolean delete(int memberMessageID){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -193,7 +218,7 @@ public class MemberMessageDAOjdbc {
 		return false;
 	}
 	public static void main(String[] args){
-		MemberMessageDAOjdbc t = new MemberMessageDAOjdbc();
+		MemberMessageDAO t = new MemberMessageDAOjdbc();
 		
 		MemberMessageBean tb = new MemberMessageBean();
 		tb.setMemberMessageID(2);

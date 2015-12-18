@@ -1,4 +1,4 @@
-package model.dao;
+package model.dao.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,8 +10,9 @@ import java.util.List;
 
 import model.ScheduleBean;
 import model.ThoughtBean;
+import model.dao.ScheduleDAO;
 
-public class ScheduleDAOjdbc {
+public class ScheduleDAOjdbc implements ScheduleDAO {
 	private static final String URL = "jdbc:sqlserver://10.211.55.3:1433;database=travel";
 	private static final String USERNAME = "sa";
 	private static final String PASSWORD = "sa123456";
@@ -25,6 +26,10 @@ public class ScheduleDAOjdbc {
 	private Connection conn= null;
 
 	//查詢
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.ScheduleDAO#select(int)
+	 */
+	@Override
 	public ScheduleBean select(int scheduleId){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -51,6 +56,10 @@ public class ScheduleDAOjdbc {
 		}
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.ScheduleDAO#select()
+	 */
+	@Override
 	public List<ScheduleBean> select(){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -79,6 +88,10 @@ public class ScheduleDAOjdbc {
 		return null;
 	}
 	
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.ScheduleDAO#insert(model.ScheduleBean)
+	 */
+	@Override
 	public boolean insert(ScheduleBean scheduleBean){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -102,6 +115,10 @@ public class ScheduleDAOjdbc {
 		return false;
 	}
 	
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.ScheduleDAO#update(model.ScheduleBean)
+	 */
+	@Override
 	public ScheduleBean update(ScheduleBean scheduleBean){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -125,6 +142,10 @@ public class ScheduleDAOjdbc {
 		}
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.ScheduleDAO#delete(int)
+	 */
+	@Override
 	public boolean delete(int scheduleId){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -147,7 +168,7 @@ public class ScheduleDAOjdbc {
 		return false;
 	}
 	public static void main(String[] args){
-		ScheduleDAOjdbc s = new ScheduleDAOjdbc();
+		ScheduleDAO s = new ScheduleDAOjdbc();
 		ScheduleBean sb = new ScheduleBean();
 		sb.setScheduleId(11);
 		sb.setMemberId(1);

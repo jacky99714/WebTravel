@@ -1,4 +1,4 @@
-package model.dao;
+package model.dao.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.SceneMessageBean;
+import model.dao.SceneMessageDAO;
 
-public class SceneMessageDAOjdbc {
+public class SceneMessageDAOjdbc implements SceneMessageDAO {
 	//DB連線資訊
 	private static final String URL = "jdbc:sqlserver://localhost:1433;database=travel";
 	private static final String USERNAME = "sa";
@@ -31,6 +32,10 @@ public class SceneMessageDAOjdbc {
 	private Connection conn = null;
 	
 	//查詢 SELECT_ALL
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.SceneMessageDAO#select()
+	 */
+	@Override
 	public  List<SceneMessageBean> select() {
 		List<SceneMessageBean> list = null;
 		SceneMessageBean smbean =null;
@@ -57,6 +62,10 @@ public class SceneMessageDAOjdbc {
 	}
 	
 	//查詢SELECT_BY_SCENEID
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.SceneMessageDAO#select(int)
+	 */
+	@Override
 	public  SceneMessageBean select(int sceneId) {
 		SceneMessageBean smbean =null;
 		try (
@@ -80,6 +89,10 @@ public class SceneMessageDAOjdbc {
 	}
 	
 	//新增INSERT
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.SceneMessageDAO#insert(model.SceneMessageBean)
+	 */
+	@Override
 	public SceneMessageBean insert(SceneMessageBean bean) {
 		SceneMessageBean result = null;
 		try (
@@ -103,6 +116,10 @@ public class SceneMessageDAOjdbc {
 	}
 	
 	//修改UPDATE
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.SceneMessageDAO#update(model.SceneMessageBean)
+	 */
+	@Override
 	public SceneMessageBean update(SceneMessageBean bean){
 		SceneMessageBean result = null;
 		try (
@@ -126,6 +143,10 @@ public class SceneMessageDAOjdbc {
 	}
 	
 	//刪除DELETE
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.SceneMessageDAO#delete(int)
+	 */
+	@Override
 	public boolean delete(int sceneMessageId) {
 		try (
 				Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);	
@@ -147,7 +168,7 @@ public class SceneMessageDAOjdbc {
 	
 	
 	public static void main(String[] args){
-		SceneMessageDAOjdbc test = new SceneMessageDAOjdbc();
+		SceneMessageDAO test = new SceneMessageDAOjdbc();
 //----------------------------------------------------------
 //		List<SceneMessageBean> li= test.select();  //全部select
 //		for(SceneMessageBean e:li){
