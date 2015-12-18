@@ -9,14 +9,19 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import model.QBean;
 
 
-public class QDAOjdbc {
+public class QDAOjdbc implements QDAO {
 
-	private static final String URL = "jdbc:sqlserver://10.211.55.3:1433;database=travel";
+	private static final String URL = "jdbc:sqlserver://127.0.0.1:1433;database=travel";
 	private static final String USERNAME = "sa";
-	private static final String PASSWORD = "sa123456";
+	private static final String PASSWORD = "passw0rd";
 	
 	private static final String SELECT_ID = "SELECT * FROM Q WHERE Qid=?";
 	private static final String SELECT_NAME = "SELECT * FROM Q WHERE Qname=?";
@@ -24,12 +29,28 @@ public class QDAOjdbc {
 	private static final String INSERT = "insert into Q(Qname,ans,a,b,c,d) values(?,?,?,?,?,?)";
 	private static final String UPDATE = "update Q set Qname=?,ans=?,a=?,b=?,c=?,d=? where QID=?";
 	private static final String DELETE = "delete FROM Q where QID=?";
+	private static final String COUNT = "SELECT COUNT(*)  AS count FROM Q ";
 	private SimpleDateFormat sf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	private Connection conn= null;
 	
+	private Connection conn= null;
+	DataSource ds =null;
+	public QDAOjdbc() {
+		try {
+			Context context = new InitialContext();
+			ds = (DataSource) context.lookup("java:comp/env/jdbc/xxx");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+		// TODO Auto-generated constructor stub
+	}
+	/* (non-Javadoc)
+	 * @see model.dao.QDAO#select()
+	 */
+	@Override
 	public List<QBean> select(){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<QBean> list = new ArrayList<QBean>();
@@ -58,9 +79,14 @@ public class QDAOjdbc {
 		}
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.QDAO#select(int)
+	 */
+	@Override
 	public QBean select(int qId){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+//			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn= ds.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_ID);
 			ps.setInt(1, qId);
 			ResultSet rs = ps.executeQuery();
@@ -88,6 +114,10 @@ public class QDAOjdbc {
 		}
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.QDAO#select(java.lang.String)
+	 */
+	@Override
 	public QBean select(String qName){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -118,6 +148,10 @@ public class QDAOjdbc {
 		}
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.QDAO#delete(int)
+	 */
+	@Override
 	public boolean delete(int qId){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -139,6 +173,10 @@ public class QDAOjdbc {
 		}
 		return false;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.QDAO#insert(model.QBean)
+	 */
+	@Override
 	public QBean insert(QBean qBean){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -165,6 +203,10 @@ public class QDAOjdbc {
 		}
 		return null;
 	}
+	/* (non-Javadoc)
+	 * @see model.dao.QDAO#update(model.QBean)
+	 */
+	@Override
 	public QBean update(QBean qBean){
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -192,17 +234,42 @@ public class QDAOjdbc {
 		}
 		return null;
 	}
+	
+	@Override
+	public int getCount(){
+		try {
+//			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn =ds.getConnection();
+			PreparedStatement ps = conn.prepareStatement(COUNT);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()){
+				return rs.getInt("count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			if (conn!=null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} 
+			}
+		}
+		return 0;
+	}	
+	
 	public static void main(String[] args){
-		QDAOjdbc t = new QDAOjdbc();
-		
-		QBean tb = new QBean();
-		tb.setqId(5);
-		tb.setQName("QQQQQQ");
-		tb.setAns("A");
-		tb.setA("w");
-		tb.setB("w");
-		tb.setC("w");
-		tb.setD("w");
+		QDAO t = new QDAOjdbc();
+		System.out.println("count: "+t.getCount());
+//		QBean tb = new QBean();
+//		tb.setqId(5);
+//		tb.setQName("QQQQQQ");
+//		tb.setAns("A");
+//		tb.setA("w");
+//		tb.setB("w");
+//		tb.setC("w");
+//		tb.setD("w");
 		
 //----------------------------------------------------------
 //		for(QBean e : t.select()){
@@ -215,7 +282,7 @@ public class QDAOjdbc {
 //----------------------------------------------------------
 //		System.out.println(t.select("花蓮一日遊")); //單筆select （帳號）
 //----------------------------------------------------------
-		System.out.println(t.update(tb)); //修改
+//		System.out.println(t.update(tb)); //修改
 //----------------------------------------------------------
 //		System.out.println(t.delete(1));//刪除
 //----------------------------------------------------------
