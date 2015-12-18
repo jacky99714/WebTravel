@@ -7,10 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form id="formLogin" action="" method="get">
-		<input id="name" name="name" type="text" >
-		<input id="password" name="password" type="text" >
-		<input type="button" id="btn1">
+	<form id="formLogin" action="/WebTravel/LoginServlet" method="get">
+		<input id="name" name="useid" type="text" value="${param.useid}"><br>
+		<input id="password" name="password" type="password" value="${param.password}"><br>
+		<input type="submit" id="btn1">
 	</form>
 </body>
 </html>
