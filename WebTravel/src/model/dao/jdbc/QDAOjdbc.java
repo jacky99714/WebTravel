@@ -31,27 +31,17 @@ public class QDAOjdbc implements QDAO {
 	private static final String UPDATE = "update Q set Qname=?,ans=?,a=?,b=?,c=?,d=? where QID=?";
 	private static final String DELETE = "delete FROM Q where QID=?";
 	private static final String COUNT = "SELECT COUNT(*)  AS count FROM Q ";
-	private SimpleDateFormat sf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 	
 	private Connection conn= null;
-	DataSource ds =null;
-	public QDAOjdbc() {
-		try {
-			Context context = new InitialContext();
-			ds = (DataSource) context.lookup("java:comp/env/jdbc/xxx");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-		// TODO Auto-generated constructor stub
-	}
+
 	/* (non-Javadoc)
 	 * @see model.dao.QDAO#select()
 	 */
 	@Override
 	public List<QBean> select(){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
-			
+			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);		
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<QBean> list = new ArrayList<QBean>();
@@ -86,8 +76,8 @@ public class QDAOjdbc implements QDAO {
 	@Override
 	public QBean select(int qId){
 		try {
-//			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
-			conn= ds.getConnection();
+			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+
 			PreparedStatement ps = conn.prepareStatement(SELECT_ID);
 			ps.setInt(1, qId);
 			ResultSet rs = ps.executeQuery();
@@ -239,8 +229,7 @@ public class QDAOjdbc implements QDAO {
 	@Override
 	public int getCount(){
 		try {
-//			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
-			conn =ds.getConnection();
+			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
 			PreparedStatement ps = conn.prepareStatement(COUNT);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()){

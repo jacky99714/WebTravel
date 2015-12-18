@@ -28,7 +28,7 @@ public class QDAOjndi implements QDAO {
 	private static final String UPDATE = "update Q set Qname=?,ans=?,a=?,b=?,c=?,d=? where QID=?";
 	private static final String DELETE = "delete FROM Q where QID=?";
 	private static final String COUNT = "SELECT COUNT(*)  AS count FROM Q ";
-	private SimpleDateFormat sf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 	
 	private Connection conn= null;
 	DataSource ds =null;
