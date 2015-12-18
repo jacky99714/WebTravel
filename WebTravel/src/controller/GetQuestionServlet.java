@@ -13,7 +13,8 @@ import org.json.JSONObject;
 
 import model.QBean;
 import model.dao.QDAO;
-import model.dao.jdbc.QDAOjdbc;
+import model.dao.jndi.QDAOjndi;
+
 
 /**
  * Servlet implementation class GetQuestionServlet
@@ -37,7 +38,7 @@ public class GetQuestionServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
         
-		QDAO q = new QDAOjdbc();
+		QDAO q = new QDAOjndi();
 		QBean bean =new QBean();
 		int index = (int)(Math.random()*q.getCount()+1);
 		bean = q.select(index);

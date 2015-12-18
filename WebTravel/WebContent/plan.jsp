@@ -71,7 +71,7 @@
          var imgId = 0;
          var totalImage = 0;
          var maxImg = 5;  // max image in tr tag
-         var maxLine = 5; 
+         var maxLine = 5;   
  /////////////////////////////////////////////////////////               
          function allowDrop(ev) {
              ev.preventDefault();
