@@ -182,7 +182,7 @@ public class MemberDAOjndi implements MemberDAO {
 	 * @see model.dao.jdbc.MemberDAO#insert(model.MemberBean)
 	 */
 	@Override
-	public MemberBean insert(MemberBean memberBean) throws FileNotFoundException{  //新增
+	public MemberBean insert(MemberBean memberBean) {  //新增
 		try {
 			conn =  ds.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT);
@@ -220,7 +220,7 @@ public class MemberDAOjndi implements MemberDAO {
 	 * @see model.dao.jdbc.MemberDAO#update(model.MemberBean)
 	 */
 	@Override
-	public MemberBean update(MemberBean memberBean) throws IOException{
+	public MemberBean update(MemberBean memberBean){
 		try {
 			conn =  ds.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);

@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     
-    
      <div class="navbar-wrapper navbar-fixed-top">
       <div class="container">
         <nav class="navbar navbar-inverse navbar-static-top">
@@ -11,11 +10,11 @@
 <!-- 		      <div class="row"> -->
 <!-- 			<div class="col-md-8"> -->
             <div class="navbar-header">
-              <a class="navbar-brand" href="#">旅行微革命</a>
+              <a class="navbar-brand" href="<c:url value="/index.jsp" />">旅行微革命</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav ">
-                <li class="active"><a href="#">Home</a></li>
+                <li class="dropdown"><a href="<c:url value="/index.jsp" />">Home</a></li>
 				<!-- class=active<li>當前頁面 -->
                  <li class="dropdown ">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">景點 <span class="caret"></span></a>

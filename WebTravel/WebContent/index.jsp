@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>旅行微革命</title>
-<link rel="shortcut icon" href="img/icon.ico">   
+<link rel="shortcut icon" href="<c:url value="/img/icon.ioc"/>">  
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -66,7 +66,7 @@
     <hr class="featurette-divider">
     <footer>
     <p class="pull-right"><a href="#">Back to top</a></p>
-    <p>&copy; 2015 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+    <p> 2015 Travel, Inc. &middot; <a href="#">聯絡我們</a>
     </footer>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

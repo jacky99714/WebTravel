@@ -29,7 +29,7 @@ public class LoginServlet extends HttpServlet {
 		String temp1 = request.getParameter("useid");
 		String temp2 = request.getParameter("password");
 		
-		System.out.println(temp1+":"+temp2);
+//		System.out.println(temp1+":"+temp2);
 		
 		//驗證資料--------------------------------------------
 		

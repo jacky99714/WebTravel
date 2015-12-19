@@ -1,15 +1,15 @@
 package model;
 
-
+import java.util.HashMap;
 
 import model.dao.jndi.MemberDAOjndi;
 
 public class MemberService {
-	
+	MemberDAOjndi mDAO= new MemberDAOjndi();
+	HashMap<String, String> error = new HashMap<String,String>();
+	//登入使用
 	public MemberBean login(String useid,String password){
-		MemberDAOjndi mDAO= new MemberDAOjndi();
 		MemberBean mb=  mDAO.select(useid);
-//		System.out.println(mb+":"+"service");
 		if (mb!=null) {
 			if (password != null && password.length() != 0) {
 				if(mb.getPassword().equals(password)){
@@ -17,7 +17,18 @@ public class MemberService {
 				}
 			} 
 		}
+		return null;
+	}
+	
+	//增加會員
+	public MemberBean insert(MemberBean memberBean){
+		if(memberBean!=null){
+			 MemberBean mb=mDAO.insert(memberBean);
+			 return mb;
+		}
+		
 		
 		return null;
+				
 	}
 }
