@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
 			request.getRequestDispatcher(
 					"/secure/login.jsp").forward(request, response);
 		}else{
-			session.setAttribute("loginOk", ms);
+			session.setAttribute("loginOk", ms.login(temp1, temp2));
 			response.sendRedirect(request.getContextPath()+"/index.jsp");
 		}
 		

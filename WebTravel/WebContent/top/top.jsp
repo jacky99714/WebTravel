@@ -61,12 +61,14 @@
                     <li><a href="#">我的行程規劃</a></li>
 <!--                     <li role="separator" class="divider"></li> -->
 <!--                     <li class="dropdown-header">Nav header</li> -->
-<!--                     <li><a href="#">Separated link</a></li> -->
+                    <li><a href="<c:url value="/LogoutServlet" />">登出</a></li>
 <!--                     <li><a href="#">One more separated link</a></li> -->
-
                   </ul>
                 </li>
               	</ul>
+              <ul class="nav navbar-nav navbar-right">
+               <li><a href="#">${loginOk.userName},你好</a></li>
+              </ul>
               </c:if>
 <!--               登入 -->
               </div>
