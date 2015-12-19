@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.sun.corba.se.spi.activation.Repository;
 
@@ -21,7 +22,7 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //		request.getContextPath();  /WebTravel
-		
+		HttpSession session =request.getSession();
 		
 		
 		//接收資料--------------------------------------------
@@ -36,14 +37,14 @@ public class LoginServlet extends HttpServlet {
 		
 		//呼叫Model------------------------------------------
 		MemberService ms = new MemberService();
-
 		
 		//根據Model執行結果，呼叫View-----------------------------
 		if(ms.login(temp1, temp2)==null){
 			request.getRequestDispatcher(
 					"/secure/login.jsp").forward(request, response);
 		}else{
-			response.sendRedirect("/index.jsp");
+			session.setAttribute("loginOk", ms);
+			response.sendRedirect(request.getContextPath()+"/index.jsp");
 		}
 		
 		

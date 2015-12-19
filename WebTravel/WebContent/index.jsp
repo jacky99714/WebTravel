@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,79 +19,8 @@
     <![endif]-->
   </head>
   <body style="padding:71px;">
-
-     <div class="navbar-wrapper navbar-fixed-top">
-      <div class="container">
-        <nav class="navbar navbar-inverse navbar-static-top">
-          <div class="container">
-            <div class="navbar-header">
-            <div class="btn-group btn-info">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              </div>
-              <a class="navbar-brand" href="#">旅行微革命</a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-              <ul class="nav navbar-nav ">
-                <li class="active"><a href="#">Home</a></li>
-				<!-- class=active<li>當前頁面 -->
-                 <li class="dropdown ">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">景點 <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">景點介紹</a></li>
-                    <li><a href="#">新增景點</a></li>
-					</ul>
-                </li>
-                
-                
-                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">美食 <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">美食介紹</a></li>
-                    <li><a href="#">新增美食</a></li>
-                  </ul>
-                </li>
-                
-                
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">行程規劃 <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">新增行程</a></li>
-                    <li><a href="#">行程管理</a></li>
-                  </ul>
-                </li>
-                
-                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">休閒時光 </a>
-                </li>
-                
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">會員管理<span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">我的帳號</a></li>
-                    <li><a href="#">我的收藏</a></li>
-                    <li><a href="#">我的行程規劃</a></li>
-<!--                     <li role="separator" class="divider"></li> -->
-<!--                     <li class="dropdown-header">Nav header</li> -->
-<!--                     <li><a href="#">Separated link</a></li> -->
-<!--                     <li><a href="#">One more separated link</a></li> -->
-                  </ul>
-                </li>
-                
-              </ul>
-            </div>
-          </div>
-        </nav>
-
-      </div>
-    </div>
-    
-    
-    
+<!--   將top.jsp（首頁）加進頁面 -->
+	<jsp:include page="/top/top.jsp"></jsp:include>
 
   <!-- Carousel
     ================================================== -->
@@ -126,14 +56,18 @@
     
 <!--     ---------------------------- -->
     <div class="container">
-
     
     
     </div>
     
     
-<!--     ------------------------------------- -->
-    
+<!--  -->
+
+    <hr class="featurette-divider">
+    <footer>
+    <p class="pull-right"><a href="#">Back to top</a></p>
+    <p>&copy; 2015 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+    </footer>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
