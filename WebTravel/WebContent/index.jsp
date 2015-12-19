@@ -5,8 +5,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-
+<title>旅行微革命</title>
+<link rel="shortcut icon" href="img/icon.ico">   
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
