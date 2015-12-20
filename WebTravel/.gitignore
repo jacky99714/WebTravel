@@ -1,3 +1,4 @@
+
 /bin/
 /build/
 /.settings/
@@ -5,3 +6,4 @@
 /.project
 /.gradle/
 
+/.DS_Store
