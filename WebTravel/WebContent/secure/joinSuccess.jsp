@@ -5,11 +5,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>輸入你的標題！</title>
+<title>成功加入會員</title>
 <link rel="shortcut icon" href="<c:url value="/img/icon.ico"/>">  
 
     <!-- Bootstrap -->
-     
+    
     <link href="<c:url value="/css/bootstrap.min.css"/>" rel="stylesheet">
 	
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -23,8 +23,9 @@
   <jsp:include page="/top/top.jsp"/>
 
 <!--     我是內容---------------------------- -->
-    <div class="container">
-    
+<div class="jumbotron" style="background:#FFFFFF">
+<!--     <div class="container"> -->
+    	
     
     
     
@@ -40,7 +41,6 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-   
-    <script src=" <c:url value="/js/bootstrap.min.js"/>"></script>
+    <script src="<c:url value="/js/bootstrap.min.js"/>"></script>
   </body>
 </html>

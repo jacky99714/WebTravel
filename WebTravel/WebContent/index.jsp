@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>旅行微革命</title>
-<link rel="shortcut icon" href="<c:url value="/img/icon.ioc"/>">  
+<link rel="shortcut icon" href="<c:url value="/img/icon.ico"/>">  
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">

@@ -6,7 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>加入會員</title>
-<link rel="shortcut icon" href="<c:url value="/img/icon.ioc"/>">  
+
+	<link rel="shortcut icon" href="<c:url value="/img/icon.ico"/>">  
 
     <!-- Bootstrap -->
    
@@ -30,25 +31,25 @@
 		  			<div class="form-group">
 		   				 <label class="col-sm-3 control-label" for="useid">帳號：</label>
 		   				 <div class="col-sm-5">
-		   				 <input type="text" class="form-control" name="useid" id="useid" placeholder="帳號" value="${param.useid}">
+		   				 <input type="text" class="form-control" name="useid" id="useid" placeholder="帳號" value="${param.useid}"><p class="text-danger">${errorMap.useid}</p>
 		   				 </div>
 		  			</div>
 		 			 <div class="form-group">
 		   				 <label class="col-sm-3 control-label" for="password">密碼：</label>
 		   				 <div class="col-sm-5">
-		   				 <input type="password" class="form-control" name="password" id="password" placeholder="密碼" >
+		   				 <input type="password" class="form-control" name="password" id="password" placeholder="密碼" ><p class="text-danger">${errorMap.password}</p>
 		   				 </div>
 		  			</div>
 		  			<div class="form-group">
 		   				 <label class="col-sm-3 control-label" for="password">再次確認密碼：</label>
 		   				 <div class="col-sm-5">
-		   				 <input type="text" class="form-control" name="password2" id="password2" placeholder="再次輸入密碼" >
+		   				 <input type="password" class="form-control" name="password2" id="password2" placeholder="再次輸入密碼" >
 		   				 </div>
 		  			</div>
 		  			<div class="form-group">
 		   				 <label class="col-sm-3 control-label" for="lastname">姓氏：</label>
 		   				 <div class="col-sm-5">
-		   				 <input type="text" class="form-control" name="lastname" id="lastname" placeholder="王" value="${param.lastname}">
+		   				 <input type="text" class="form-control" name="lastname" id="lastname" placeholder="王" value="${param.lastname}"><p class="text-danger">${errorMap.lastname}</p>
 		   				 </div>
 		  			</div>
 		  			<div class="form-group">
@@ -66,13 +67,13 @@
 		  			<div class="form-group">
 		   				 <label class="col-sm-3 control-label" for="birthday">生日：</label>
 		   				 <div class="col-sm-5">
-		   				 <input type="text" class="form-control" name="birthday" id="birthday" placeholder="1991-11-11" value="${param.birthday}">
+		   				 <input type="text" class="form-control" name="birthday" id="birthday" placeholder="1991-11-11" value="${param.birthday}"><p class="text-danger">${errorMap.birthday}</p>
 		   				 </div>
 		  			</div>
 		  			<div class="form-group">
 		   				 <label class="col-sm-3 control-label" for="cphone">手機電話：</label>
 		   				 <div class="col-sm-5">
-		   				 <input type="text" class="form-control" name="cphone" id="cphone" placeholder="0919191919" value="${param.cphone}">
+		   				 <input type="text" class="form-control" name="cphone" id="cphone" placeholder="0919191919" value="${param.cphone}"><p class="text-danger">${errorMap.cphone}</p>
 		   				 </div>
 		  			</div>
 		  			<div class="form-group">
@@ -84,7 +85,7 @@
 		  			<div class="form-group">
 		   				 <label class="col-sm-3 control-label"  for="email">E-mail：</label>
 		   				 <div class="col-sm-5">
-		   				 <input type="email" class="form-control" name="email" id="email" placeholder="Json@gmail.com" value="${param.email}">
+		   				 <input type="email" class="form-control" name="email" id="email" placeholder="Json@gmail.com" value="${param.email}"><p class="text-danger">${errorMap.email}</p>
 		   				 </div>
 		  			</div>
 		  			<div class="form-group">

@@ -1,6 +1,8 @@
 package model;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class MemberBean {
 
@@ -17,9 +19,22 @@ public class MemberBean {
 	private String email;
 	private byte[] photo;
 	
+	public MemberBean(){
+		
+	}
+	private static SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 	
-
-
+	public static java.util.Date converDate(String date){
+		java.util.Date rs =null;
+		try {
+			rs=sf.parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return rs;
+	}
+	
 	@Override
 	public String toString() {
 		return  "["+memberId + "," + userName + "," + password + ","
