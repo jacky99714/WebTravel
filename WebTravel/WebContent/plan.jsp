@@ -264,6 +264,8 @@
             <img id="garbage" src="img/garbage.png">
         </div> 
         
+         <img id='base64image'                 
+       			src='data:image/png;base64,${img}' />
 	<table id="tab">
 	</table>
 </body>
