@@ -34,7 +34,7 @@
             overflow: auto;
         }
         
-        #close{
+        .close{
             position: absolute;
             top: 5px;
             right: 5px;
@@ -191,49 +191,72 @@
              totalImage++;  
          } 
 
-         window.onload = function(){
-             document.getElementById("add").addEventListener("click",function(){
-                 document.getElementById('light').style.display='block';
-                 document.getElementById('fade').style.display='block';
-             });    
+        window.onload = function(){
+            document.getElementById("add").addEventListener("click",function(){
+                document.getElementById('addContent').style.display='block';
+                document.getElementById('addFavorite').style.display='none';
+                document.getElementById('fade').style.display='block';
+            });  
+             
+            document.getElementById("favorite").addEventListener("click",function(){
+                document.getElementById('addContent').style.display='none';
+                document.getElementById('addFavorite').style.display='block';
+                document.getElementById('fade').style.display='block';
+            });    
 
-             document.getElementById("close").addEventListener("click",function(){
-                 document.getElementById('light').style.display='none';
-                 document.getElementById('fade').style.display='none';
-             });   
+            document.getElementById("closeAdd").addEventListener("click",function(){
+                document.getElementById('addContent').style.display='none';
+                document.getElementById('addFavorite').style.display='none';
+                document.getElementById('fade').style.display='none';
+            });  
+            
+            document.getElementById("closeFavorite").addEventListener("click",function(){
+                document.getElementById('addContent').style.display='none';
+                document.getElementById('addFavorite').style.display='none';
+                document.getElementById('fade').style.display='none';
+            });  
+            table = document.getElementById("tab");
+            totalImage = 0;
 
-             table = document.getElementById("tab");
-             totalImage = 0;
-
-             appendImg("img/freeze_f.bmp");
-             appendImg("img/firen_f.bmp");
-             appendImg("img/firzen_f.bmp");
-             appendImg("img/john_f.bmp");
-             appendImg("img/justin_f.bmp");
-             appendImg("img/freeze_f.bmp");
-             appendImg("img/firen_f.bmp");
-             appendImg("img/firzen_f.bmp");
-             appendImg("img/john_f.bmp");
-             appendImg("img/justin_f.bmp");
-	         for(var i=1;i <= 4;i++){
-	             document.getElementById("get"+i).addEventListener("click", click);                 
-	         }
-         }	
+            appendImg("img/freeze_f.bmp");
+            appendImg("img/firen_f.bmp");
+            appendImg("img/firzen_f.bmp");
+            appendImg("img/john_f.bmp");
+            appendImg("img/justin_f.bmp");
+            appendImg("img/freeze_f.bmp");
+            appendImg("img/firen_f.bmp");
+            appendImg("img/firzen_f.bmp");
+            appendImg("img/john_f.bmp");
+            appendImg("img/justin_f.bmp");
+                for(var i=1;i <= 6;i++){
+                    document.getElementById("get"+i).addEventListener("click", click);                 
+                }
+        }	
 	</script>
 </head>
 <body>
 	<div class="head">行程規劃</div>
 
-        <div id="light" class="white_content">
-            This is the lightbox content. 
+
+        <div id="addContent" class="white_content"> 
             <img id="get1" src="img/firenAttack.png" draggable="true" ondragstart="drag(event)">
             <img id="get2" src="img/firzenAttack.png" draggable="true" ondragstart="drag(event)">
             <img id="get3" src="img/freezeAttack.png" draggable="true" ondragstart="drag(event)">
             <img id="get4" src="img/johnAttack.png" draggable="true" ondragstart="drag(event)"> 
-            <img  id="close" src="img/close.png">
+            <img  id="closeAdd" class="close" src="img/close.png">
+        </div>
+        
+        <div id="addFavorite" class="white_content"> 
+            <img id="get5" src="img/firenDefense.png" draggable="true" ondragstart="drag(event)">
+            <img id="get6" src="img/firzenDefense.png" draggable="true" ondragstart="drag(event)">
+             <img  id="closeFavorite" class="close" src="img/close.png">
         </div>
         <div id="fade" class="black_overlay"> </div>
+  
         
+        <div>
+           <img id="favorite" src="img/favorite.png">
+        </div>
         <div>
            <img id="add" src="img/add.png">
         </div>
