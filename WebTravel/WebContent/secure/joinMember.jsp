@@ -27,7 +27,7 @@
 <!-- <div class="jumbotron" style="background:#FFFFFF"> -->
 
     <div class="container">
-    	<form class="form-horizontal" id="formLogin" action="<c:url value="/JoinMemberServlet"/>" method="post">
+    	<form class="form-horizontal" id="formLogin" action="<c:url value="/JoinMemberServlet"/>" method="post" enctype="multipart/form-data">
 		  			<div class="form-group">
 		   				 <label class="col-sm-3 control-label" for="useid">帳號：</label>
 		   				 <div class="col-sm-5">

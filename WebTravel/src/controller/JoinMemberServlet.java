@@ -1,6 +1,9 @@
 package controller;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,10 +12,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.Part;
 
 import model.MemberBean;
 import model.MemberService;
+
+
 
 @WebServlet("/JoinMemberServlet")
 public class JoinMemberServlet extends HttpServlet {
@@ -35,6 +40,19 @@ public class JoinMemberServlet extends HttpServlet {
 		String temp9 = request.getParameter("email");
 		String temp10 = request.getParameter("addr");
 //		String temp11 = request.getParameter("photo");
+		
+//-----------------------------------------------------------
+		Part pho =request.getPart("photo"); 
+		InputStream in =pho.getInputStream();
+		byte[] phto =new byte[(int)pho.getSize()];
+		in.read(phto);
+		OutputStream ou = new FileOutputStream("C:/Users/Student/Desktop/04.jpg");
+		ou.write(phto);
+		ou.close();
+		in.close();
+		
+		
+//-----------------------------------------------------------
 		//驗證
 		Map<String, String> error =new HashMap<String,String>();
 		request.setAttribute("errorMap",error);
@@ -53,10 +71,10 @@ public class JoinMemberServlet extends HttpServlet {
 		}
 		java.util.Date date = null;
 		if(temp6==null || temp6.length()==0){
+			error.put("birthday", "請輸入生日");
+		}else{
 			date = MemberBean.converDate(temp6);
-			if(date==null){
-				error.put("birthday", "請輸入生日");
-			}
+			System.out.println(date);
 		}
 		if(temp7==null || temp7.length()==0){
 			error.put("cphone", "請輸入手機電話");

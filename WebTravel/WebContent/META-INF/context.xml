@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context>
+<Context path="" allowCasualMultipartParsing="true">
 	<Resource name="jdbc/xxx" auth="Container" type="javax.sql.DataSource"
                maxTotal="100" maxIdle="30" maxWaitMillis="10000"
                username="sa" password="sa123456"
                driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-               url="jdbc:sqlserver://10.211.55.3:1433;database=travel"/>
+               url="jdbc:sqlserver://localhost:1433;database=travel"/>
 </Context>

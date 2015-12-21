@@ -25,6 +25,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 
 import model.MemberBean;
 import model.dao.MemberDAO;
@@ -285,6 +286,21 @@ public class MemberDAOjdbc implements MemberDAO {
 		FileInputStream fi = new FileInputStream(f);
 		fi.read(poto);
 		fi.close();
+//		System.out.println(poto);
+//		String s = Base64.getEncoder().encodeToString(poto);
+		String s = Base64.encodeBase64URLSafeString(poto);
+//		System.out.println(s);
+		byte[] d =Base64.decodeBase64(s);
+//		byte[] d =Base64.getDecoder().decode(s);
+//		System.out.println(d);
+		
+		
+//----------------------------------------------------------
+//		FileOutputStream fo = new FileOutputStream("C:/Users/Student/Desktop/03.jpg");   //把圖片取出來放桌面 
+//		fo.write(d);
+//		fo.close();
+//----------------------------------------------------------
+		
 		
 //--------------------------假資料--------------------------------
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -302,10 +318,10 @@ public class MemberDAOjdbc implements MemberDAO {
 		mb.setPhoto(poto);
 		
 //----------------------------------------------------------
-		List<MemberBean> li= m.select();  //全部select
-		for(MemberBean e:li){
-			System.out.println(e);
-		}
+//		List<MemberBean> li= m.select();  //全部select
+//		for(MemberBean e:li){
+//			System.out.println(e);
+//		}
 //----------------------------------------------------------
 //		System.out.println(m.select(2));  //單筆select
 //----------------------------------------------------------
@@ -316,11 +332,6 @@ public class MemberDAOjdbc implements MemberDAO {
 //		System.out.println(m.update(mb)); //修改
 //----------------------------------------------------------
 //		System.out.println(m.delete("jack1"));//刪除
-//----------------------------------------------------------
-//		FileOutputStream fo = new FileOutputStream("/Users/mouse/Desktop/7.jpg");   //把圖片取出來放桌面 
-//		fo.write(m.select(6).getPhoto());
-//		fo.close();
-//----------------------------------------------------------
 		
 	}
 }
