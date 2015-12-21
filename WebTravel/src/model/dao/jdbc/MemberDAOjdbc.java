@@ -289,7 +289,7 @@ public class MemberDAOjdbc implements MemberDAO {
 //		System.out.println(poto);
 //		String s = Base64.getEncoder().encodeToString(poto);
 		String s = Base64.encodeBase64URLSafeString(poto);
-//		System.out.println(s);
+		System.out.println(s);
 		byte[] d =Base64.decodeBase64(s);
 //		byte[] d =Base64.getDecoder().decode(s);
 //		System.out.println(d);

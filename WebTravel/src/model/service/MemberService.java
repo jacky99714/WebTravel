@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import model.MemberBean;
 import model.dao.jndi.MemberDAOjndi;
-
+import org.apache.tomcat.util.codec.binary.Base64;
 public class MemberService {
 	MemberDAOjndi mDAO= new MemberDAOjndi();
 	HashMap<String, String> error = new HashMap<String,String>();
@@ -20,6 +20,12 @@ public class MemberService {
 		}
 		return null;
 	}
+	public static String convertJacky(byte[] src){
+		return Base64.encodeBase64URLSafeString(src);
+	}
+	
+	
+	
 	
 	//增加會員
 	public MemberBean insert(MemberBean memberBean){

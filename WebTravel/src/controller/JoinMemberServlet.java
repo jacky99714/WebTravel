@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,6 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+
+import org.apache.tomcat.util.codec.binary.Base64;
 
 import model.MemberBean;
 
@@ -42,16 +45,17 @@ public class JoinMemberServlet extends HttpServlet {
 //		String temp11 = request.getParameter("photo");
 		
 //-----------------------------------------------------------
+		Collection<Part> parts = request.getParts();
 		Part pho =request.getPart("photo"); 
 		InputStream in =pho.getInputStream();
 		byte[] phto =new byte[(int)pho.getSize()];
 		in.read(phto);
-		OutputStream ou = new FileOutputStream("C:/Users/Student/Desktop/04.jpg");
-		ou.write(phto);
-		ou.close();
+//		OutputStream ou = new FileOutputStream("C:/Users/Student/Desktop/04.jpg");
+//		ou.write(phto);
+//		ou.close();
 		in.close();
-		
-		
+		String s = Base64.encodeBase64URLSafeString(phto);
+		request.setAttribute("srcA",s);
 //-----------------------------------------------------------
 		//驗證
 		Map<String, String> error =new HashMap<String,String>();
@@ -100,7 +104,7 @@ public class JoinMemberServlet extends HttpServlet {
 		mb.setTelephone(temp8);
 		mb.setEmail(temp9);
 		mb.setAddress(temp10);
-		mb.setPhoto(null);
+		mb.setPhoto(phto);
 		
 		MemberBean rsbean = ms.insert(mb);
 		//view

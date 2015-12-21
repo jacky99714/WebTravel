@@ -26,8 +26,8 @@
 <div class="jumbotron" style="background:#FFFFFF">
 <!--     <div class="container"> -->
     	
-    
-    
+    <img id="s">
+   ${srcA}
     
     </div>
 <!--  -->
@@ -37,7 +37,9 @@
     <p class="pull-right"><a href="#">Back to top</a></p>
     <p> 2015 Travel, Inc. &middot; <a href="#">聯絡我們</a>
     </footer>
-
+	<script>
+	document.getElementById('s').setAttribute("src","data:image/png;base64,");
+	</script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
