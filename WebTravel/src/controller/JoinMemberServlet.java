@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import model.MemberBean;
-import model.MemberService;
 
+import model.service.MemberService;
 
 
 @WebServlet("/JoinMemberServlet")
