@@ -10,7 +10,9 @@ import javax.servlet.http.HttpSession;
 
 import com.sun.corba.se.spi.activation.Repository;
 
-import model.MemberService;
+import model.service.MemberService;
+
+
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {

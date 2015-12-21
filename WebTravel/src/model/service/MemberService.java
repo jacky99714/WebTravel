@@ -1,7 +1,8 @@
-package model;
+package model.service;
 
 import java.util.HashMap;
 
+import model.MemberBean;
 import model.dao.jndi.MemberDAOjndi;
 
 public class MemberService {

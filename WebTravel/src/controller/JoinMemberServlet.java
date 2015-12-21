@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 
 import model.MemberBean;
-import model.MemberService;
+import model.service.MemberService;
+
 
 @WebServlet("/JoinMemberServlet")
 public class JoinMemberServlet extends HttpServlet {

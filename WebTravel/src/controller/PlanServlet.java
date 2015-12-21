@@ -4,8 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Base64;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+
+import model.service.ImageToBase64Service;
 
 /**
  * Servlet implementation class PlanServlet
@@ -50,7 +52,7 @@ public class PlanServlet extends HttpServlet {
 		} catch (IOException ex) {
 		    ex.printStackTrace();
 		}
-		String img = Base64.getEncoder().encodeToString(bos.toByteArray());
+		String img = ImageToBase64Service.convert(bos.toByteArray());
 		HttpSession session = request.getSession();
 		session.setAttribute("img", img);
 
