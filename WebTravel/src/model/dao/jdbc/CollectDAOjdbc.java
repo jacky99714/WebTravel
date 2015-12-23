@@ -25,6 +25,8 @@ public class CollectDAOjdbc implements CollectDAO {
 	private static final String INSERT = "insert into Collect(memberId,sceneId,collectId) values(?,?,?)";
 	private static final String UPDATE = "update Collect set collectId=? where MemberID=? and sceneId=?";
 	private static final String DELETE = "delete FROM Collect where memberId=? and sceneId=?";
+	private static final String SELECT_SCENE =
+			"select top 1 s.SceneName from Collect as c, Scene as s where c.MemberID=? and c.SceneID = s.SceneID";  
 	private Connection conn= null;
 	
 	/* (non-Javadoc)
@@ -175,6 +177,37 @@ public class CollectDAOjdbc implements CollectDAO {
 		}
 		return false;
 	}
+	
+	@Override
+	public List<CollectBean> selectScene(int memberId) {
+		try {
+			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			PreparedStatement ps = conn.prepareStatement(SELECT_SCENE);
+			ps.setInt(1, memberId);
+			ResultSet rs = ps.executeQuery();
+			List<CollectBean> list = new ArrayList<CollectBean>();
+			while(rs.next()){
+				CollectBean cBean =new CollectBean();
+				cBean.setMemberId(rs.getInt(1));
+				cBean.setSceneId(rs.getInt(2));
+				cBean.setCollectId(rs.getInt(3));
+				list.add(cBean);
+			}
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			if (conn!=null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} 
+			}
+		}
+		return null;
+	}	
+	
 	public static void main(String[] args){
 		CollectDAO t = new CollectDAOjdbc();
 		
@@ -201,4 +234,5 @@ public class CollectDAOjdbc implements CollectDAO {
 //		System.out.println(t.delete(1,1));//刪除
 //----------------------------------------------------------
 	}
+
 }

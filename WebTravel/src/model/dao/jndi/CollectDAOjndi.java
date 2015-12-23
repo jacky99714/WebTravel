@@ -27,6 +27,8 @@ public class CollectDAOjndi implements CollectDAO {
 	private static final String INSERT = "insert into Collect(memberId,sceneId,collectId) values(?,?,?)";
 	private static final String UPDATE = "update Collect set collectId=? where MemberID=? and sceneId=?";
 	private static final String DELETE = "delete FROM Collect where memberId=? and sceneId=?";
+	private static final String SELECT_SCENE =
+				"select top 1 s.SceneName from Collect as c, Scene as s where c.MemberID=? and c.SceneID = s.SceneID";  
 	private Connection conn= null;
 	
 	DataSource ds =null;
@@ -183,6 +185,36 @@ public class CollectDAOjndi implements CollectDAO {
 		}
 		return false;
 	}
+	
+	@Override
+	public List<CollectBean> selectScene(int memberId) {
+		try {
+			conn =ds.getConnection();
+			PreparedStatement ps = conn.prepareStatement(SELECT_SCENE);
+			ps.setInt(1, memberId);
+			ResultSet rs = ps.executeQuery();
+			List<CollectBean> list = new ArrayList<CollectBean>();
+			while(rs.next()){
+				CollectBean cBean =new CollectBean();
+				cBean.setMemberId(rs.getInt(1));
+				cBean.setSceneId(rs.getInt(2));
+				cBean.setCollectId(rs.getInt(3));
+				list.add(cBean);
+			}
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			if (conn!=null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} 
+			}
+		}
+		return null;
+	}	
 	public static void main(String[] args){
 		CollectDAO t = new CollectDAOjndi();
 		
@@ -192,7 +224,7 @@ public class CollectDAOjndi implements CollectDAO {
 		cb.setCollectId(10); //對此景點收藏為 0 永久收藏為 1
 		cb.setMemberId(3); //哪一個會員
 		cb.setSceneId(4); //對哪一個景點
-
+		t.insert(cb);
 //----------------------------------------------------------
 //		for(CollectBean e : t.select()){
 //			System.out.println(e);
@@ -209,4 +241,5 @@ public class CollectDAOjndi implements CollectDAO {
 //		System.out.println(t.delete(1,1));//刪除
 //----------------------------------------------------------
 	}
+
 }

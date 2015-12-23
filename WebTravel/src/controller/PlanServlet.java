@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.bean.CollectBean;
+import model.dao.CollectDAO;
+import model.dao.jndi.CollectDAOjndi;
 import model.util.TypeConveter;
 
 /**
@@ -45,8 +48,6 @@ public class PlanServlet extends HttpServlet {
 		try {
 		    for (int readNum; (readNum = fis.read(buf)) != -1;) {
 		        bos.write(buf, 0, readNum); //no doubt here is 0
-		        //Writes len bytes from the specified byte array starting at offset off to this byte array output stream.
-		        System.out.println("read " + readNum + " bytes,");
 		    }
 		} catch (IOException ex) {
 		    ex.printStackTrace();
@@ -55,7 +56,7 @@ public class PlanServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.setAttribute("img", img);
 
-		
+	
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("plan.jsp");
 		dispatcher.forward(request, response);
