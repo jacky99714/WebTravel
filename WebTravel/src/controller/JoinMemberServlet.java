@@ -17,9 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-
-import model.MemberBean;
-
+import model.bean.MemberBean;
 import model.service.MemberService;
 
 

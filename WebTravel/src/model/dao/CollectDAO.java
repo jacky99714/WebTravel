@@ -2,7 +2,7 @@ package model.dao;
 
 import java.util.List;
 
-import model.CollectBean;
+import model.bean.CollectBean;
 
 public interface CollectDAO {
 

@@ -15,7 +15,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import model.RestaurantImgBean;
+import model.bean.RestaurantImgBean;
 import model.dao.RestaurantImgDAO;
 import model.dao.RestaurantMessageDAO;
 

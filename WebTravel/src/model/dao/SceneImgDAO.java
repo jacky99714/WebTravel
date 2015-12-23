@@ -2,7 +2,7 @@ package model.dao;
 
 import java.util.List;
 
-import model.SceneImgBean;
+import model.bean.SceneImgBean;
 
 public interface SceneImgDAO {
 

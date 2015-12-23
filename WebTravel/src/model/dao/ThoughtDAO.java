@@ -2,7 +2,7 @@ package model.dao;
 
 import java.util.List;
 
-import model.ThoughtBean;
+import model.bean.ThoughtBean;
 
 public interface ThoughtDAO {
 

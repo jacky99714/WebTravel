@@ -1,4 +1,4 @@
-package model;
+package model.bean;
 
 public class RestaurantMessageBean implements java.io.Serializable{
 

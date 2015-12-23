@@ -18,7 +18,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import model.MemberMessageBean;
+import model.bean.MemberMessageBean;
 import model.dao.MemberMessageDAO;
 
 

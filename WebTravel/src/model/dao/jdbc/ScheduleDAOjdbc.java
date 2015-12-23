@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.ScheduleBean;
-import model.ThoughtBean;
+import model.bean.ScheduleBean;
+import model.bean.ThoughtBean;
 import model.dao.ScheduleDAO;
 
 public class ScheduleDAOjdbc implements ScheduleDAO {

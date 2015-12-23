@@ -2,7 +2,7 @@ package model.dao;
 
 import java.util.List;
 
-import model.MemberMessageBean;
+import model.bean.MemberMessageBean;
 
 public interface MemberMessageDAO {
 

@@ -2,7 +2,7 @@ package model.dao;
 
 import java.util.List;
 
-import model.ScheduleContentBean;
+import model.bean.ScheduleContentBean;
 
 public interface ScheduleContentDAO {
 

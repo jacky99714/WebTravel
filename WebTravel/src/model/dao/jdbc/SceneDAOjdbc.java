@@ -8,9 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-import model.SceneBean;
+import model.bean.SceneBean;
 import model.dao.SceneDAO;
 
 public class SceneDAOjdbc implements SceneDAO {

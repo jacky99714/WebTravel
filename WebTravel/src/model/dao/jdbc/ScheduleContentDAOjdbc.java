@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.ScheduleContentBean;
+import model.bean.ScheduleContentBean;
 import model.dao.ScheduleContentDAO;
 
 public class ScheduleContentDAOjdbc implements ScheduleContentDAO {

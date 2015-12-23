@@ -2,7 +2,7 @@ package model.dao;
 
 import java.util.List;
 
-import model.RestaurantBean;
+import model.bean.RestaurantBean;
 
 public interface RestaurantDAO {
 

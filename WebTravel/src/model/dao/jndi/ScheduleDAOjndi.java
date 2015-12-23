@@ -13,8 +13,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import model.ScheduleBean;
-import model.ThoughtBean;
+import model.bean.ScheduleBean;
+import model.bean.ThoughtBean;
 import model.dao.ScheduleDAO;
 
 public class ScheduleDAOjndi implements ScheduleDAO {

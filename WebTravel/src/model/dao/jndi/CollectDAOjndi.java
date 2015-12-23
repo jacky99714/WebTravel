@@ -13,7 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import model.CollectBean;
+import model.bean.CollectBean;
 import model.dao.CollectDAO;
 
 

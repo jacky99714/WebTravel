@@ -14,8 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
-import model.service.ImageToBase64Service;
+import model.util.TypeConveter;
 
 /**
  * Servlet implementation class PlanServlet
@@ -52,7 +51,7 @@ public class PlanServlet extends HttpServlet {
 		} catch (IOException ex) {
 		    ex.printStackTrace();
 		}
-		String img = ImageToBase64Service.convert(bos.toByteArray());
+		String img = TypeConveter.base64Convert(bos.toByteArray());
 		HttpSession session = request.getSession();
 		session.setAttribute("img", img);
 

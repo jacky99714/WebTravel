@@ -2,7 +2,7 @@ package model.dao;
 
 import java.util.List;
 
-import model.QBean;
+import model.bean.QBean;
 
 public interface QDAO {
 

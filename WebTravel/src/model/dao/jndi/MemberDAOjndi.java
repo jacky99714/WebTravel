@@ -25,8 +25,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-
-import model.MemberBean;
+import model.bean.MemberBean;
 import model.dao.MemberDAO;
 
 public class MemberDAOjndi implements MemberDAO {

@@ -1,4 +1,4 @@
-package model;
+package model.bean;
 
 public class RestaurantImgBean implements java.io.Serializable{
 

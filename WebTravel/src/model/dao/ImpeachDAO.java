@@ -2,7 +2,7 @@ package model.dao;
 
 import java.util.List;
 
-import model.ImpeachBean;
+import model.bean.ImpeachBean;
 
 public interface ImpeachDAO {
 

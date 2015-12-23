@@ -13,7 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import model.RestaurantGradeBean;
+import model.bean.RestaurantGradeBean;
 import model.dao.RestaurantGradeDAO;
 
 

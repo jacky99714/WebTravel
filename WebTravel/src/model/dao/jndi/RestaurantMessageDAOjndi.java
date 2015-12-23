@@ -13,7 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import model.RestaurantMessageBean;
+import model.bean.RestaurantMessageBean;
 import model.dao.RestaurantMessageDAO;
 
 public class RestaurantMessageDAOjndi implements RestaurantMessageDAO {

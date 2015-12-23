@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.RestaurantMessageBean;
+import model.bean.RestaurantMessageBean;
 import model.dao.RestaurantMessageDAO;
 
 public class RestaurantMessageDAOjdbc implements RestaurantMessageDAO {

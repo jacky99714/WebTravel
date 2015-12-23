@@ -1,4 +1,4 @@
-package model;
+package model.bean;
 
 import java.io.File;
 import java.text.ParseException;

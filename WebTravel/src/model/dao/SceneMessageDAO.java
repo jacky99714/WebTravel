@@ -2,7 +2,7 @@ package model.dao;
 
 import java.util.List;
 
-import model.SceneMessageBean;
+import model.bean.SceneMessageBean;
 
 public interface SceneMessageDAO {
 

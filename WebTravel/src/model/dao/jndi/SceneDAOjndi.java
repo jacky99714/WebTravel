@@ -13,7 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import model.SceneBean;
+import model.bean.SceneBean;
 import model.dao.SceneDAO;
 
 public class SceneDAOjndi implements SceneDAO {

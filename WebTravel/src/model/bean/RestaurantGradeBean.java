@@ -1,4 +1,4 @@
-package model;
+package model.bean;
 public class RestaurantGradeBean {
 	private int restaurantId;
 	private int memberId;

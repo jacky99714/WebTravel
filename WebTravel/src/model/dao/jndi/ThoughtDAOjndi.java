@@ -14,8 +14,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import model.MemberBean;
-import model.ThoughtBean;
+import model.bean.MemberBean;
+import model.bean.ThoughtBean;
 import model.dao.ThoughtDAO;
 
 public class ThoughtDAOjndi implements ThoughtDAO {

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.SceneMessageBean;
+import model.bean.SceneMessageBean;
 import model.dao.SceneMessageDAO;
 
 public class SceneMessageDAOjdbc implements SceneMessageDAO {

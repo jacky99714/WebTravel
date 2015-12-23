@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
-import model.QBean;
+import model.bean.QBean;
 import model.dao.QDAO;
 import model.dao.jndi.QDAOjndi;
 

@@ -13,7 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import model.ScheduleContentBean;
+import model.bean.ScheduleContentBean;
 import model.dao.ScheduleContentDAO;
 
 public class ScheduleContentDAOjndi implements ScheduleContentDAO {

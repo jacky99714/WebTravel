@@ -9,8 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.MemberBean;
-import model.ThoughtBean;
+import model.bean.MemberBean;
+import model.bean.ThoughtBean;
 import model.dao.ThoughtDAO;
 
 public class ThoughtDAOjdbc implements ThoughtDAO {

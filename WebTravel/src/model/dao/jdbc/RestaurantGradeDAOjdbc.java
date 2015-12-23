@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.RestaurantGradeBean;
+import model.bean.RestaurantGradeBean;
 import model.dao.RestaurantGradeDAO;
 
 

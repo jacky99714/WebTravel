@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.SceneImgBean;
+import model.bean.SceneImgBean;
 import model.dao.RestaurantMessageDAO;
 import model.dao.SceneImgDAO;
 

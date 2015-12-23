@@ -16,7 +16,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import model.ImpeachBean;
+import model.bean.ImpeachBean;
 import model.dao.ImpeachDAO;
 
 

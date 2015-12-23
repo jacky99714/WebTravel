@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import model.MemberMessageBean;
+import model.bean.MemberMessageBean;
 import model.dao.MemberMessageDAO;
 
 

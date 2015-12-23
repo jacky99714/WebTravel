@@ -1,4 +1,4 @@
-package model;
+package model.bean;
 public class ScheduleBean {
 	private int scheduleId;
 	private String scheduleName;

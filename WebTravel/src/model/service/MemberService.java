@@ -2,9 +2,10 @@ package model.service;
 
 import java.util.HashMap;
 
-import model.MemberBean;
+import model.bean.MemberBean;
 import model.dao.jndi.MemberDAOjndi;
-import org.apache.tomcat.util.codec.binary.Base64;
+import model.util.TypeConveter;
+
 public class MemberService {
 	MemberDAOjndi mDAO= new MemberDAOjndi();
 	HashMap<String, String> error = new HashMap<String,String>();
@@ -21,7 +22,7 @@ public class MemberService {
 		return null;
 	}
 	public static String convertJacky(byte[] src){
-		return Base64.encodeBase64URLSafeString(src);
+		return TypeConveter.base64Convert(src);
 	}
 	
 	
