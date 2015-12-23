@@ -4,7 +4,9 @@ import java.util.HashMap;
 
 import model.bean.MemberBean;
 import model.dao.jndi.MemberDAOjndi;
-import model.util.TypeConveter;
+
+
+
 
 public class MemberService {
 	MemberDAOjndi mDAO= new MemberDAOjndi();
@@ -21,12 +23,7 @@ public class MemberService {
 		}
 		return null;
 	}
-	public static String convertJacky(byte[] src){
-		return TypeConveter.base64Convert(src);
-	}
-	
-	
-	
+
 	
 	//增加會員
 	public MemberBean insert(MemberBean memberBean){
