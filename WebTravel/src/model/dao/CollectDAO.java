@@ -15,7 +15,7 @@ public interface CollectDAO {
 
 	List<CollectBean> update(CollectBean collectBean);
 	
-	List<CollectBean> selectScene(int memberId);
+	List<String> selectScene(int memberId);
 	
 
 	boolean delete(int memberId, int sceneId);

@@ -179,21 +179,17 @@ public class CollectDAOjdbc implements CollectDAO {
 	}
 	
 	@Override
-	public List<CollectBean> selectScene(int memberId) {
+	public List<String> selectScene(int memberId) {
 		try {
 			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
 			PreparedStatement ps = conn.prepareStatement(SELECT_SCENE);
 			ps.setInt(1, memberId);
 			ResultSet rs = ps.executeQuery();
-			List<CollectBean> list = new ArrayList<CollectBean>();
+			List<String> li = new ArrayList<>();
 			while(rs.next()){
-				CollectBean cBean =new CollectBean();
-				cBean.setMemberId(rs.getInt(1));
-				cBean.setSceneId(rs.getInt(2));
-				cBean.setCollectId(rs.getInt(3));
-				list.add(cBean);
+				li.add(rs.getString(1));		
 			}
-			return list;
+			return li;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{

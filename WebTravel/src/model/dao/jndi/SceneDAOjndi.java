@@ -24,11 +24,11 @@ public class SceneDAOjndi implements SceneDAO {
 	//insert
 	private static final String INSERT = 
 			"insert into scene"
-		  + " (location,city,sceneName,sceneContent,timeStart,timeEnd,MemberId) "
-		  + "values(?, ?, ?, ?, ?, ?, ?)";
+		  + " (location,city,sceneName,scenePhoto,sceneContent,timeStart,timeEnd,MemberId) "
+		  + "values(?, ?, ?, ?, ?, ?,?,?)";
 	//update
 	private static final String UPDATE = "update scene set location=?, city=?,"
-		  + "sceneName=?, sceneContent=?, timeStart=?, timeEnd=?, MemberId=?";	
+		  + "sceneName=?,scenePhoto=?, sceneContent=?, timeStart=?, timeEnd=?, MemberId=?";	
 	//delete
 	private static final String DELETE = "delete from scene where sceneName=?";
 	private Connection conn = null;
@@ -54,15 +54,16 @@ public class SceneDAOjndi implements SceneDAO {
 			ResultSet rs = ps.executeQuery();
 			list = new ArrayList<SceneBean>();
 			while(rs.next()){
-				sbean = new SceneBean();
+				sbean = new SceneBean();				
 				sbean.setSceneId(rs.getInt(1));
 				sbean.setLocation(rs.getString(2));
 				sbean.setCity(rs.getString(3));
 				sbean.setSceneName(rs.getString(4));
-				sbean.setSceneContent(rs.getString(5));
-				sbean.setTimeStart(rs.getString(6));
-				sbean.setTimeEnd(rs.getString(7));
-				sbean.setMemberId(rs.getInt(8));
+				sbean.setScenePhoto(rs.getBytes(5));
+				sbean.setSceneContent(rs.getString(6));
+				sbean.setTimeStart(rs.getString(7));
+				sbean.setTimeEnd(rs.getString(8));
+				sbean.setMemberId(rs.getInt(9));
 				list.add(sbean);
 			}	
 		} catch (SQLException e) {
@@ -90,10 +91,11 @@ public class SceneDAOjndi implements SceneDAO {
 				sbean.setLocation(rs.getString(2));
 				sbean.setCity(rs.getString(3));
 				sbean.setSceneName(rs.getString(4));
-				sbean.setSceneContent(rs.getString(5));
-				sbean.setTimeStart(rs.getString(6));
-				sbean.setTimeEnd(rs.getString(7));
-				sbean.setMemberId(rs.getInt(8));	
+				sbean.setScenePhoto(rs.getBytes(5));
+				sbean.setSceneContent(rs.getString(6));
+				sbean.setTimeStart(rs.getString(7));
+				sbean.setTimeEnd(rs.getString(8));
+				sbean.setMemberId(rs.getInt(9));	
 			}		
 		} catch (SQLException e) {			
 			e.printStackTrace();
@@ -117,10 +119,11 @@ public class SceneDAOjndi implements SceneDAO {
 			ps.setString(1, bean.getLocation());
 			ps.setString(2, bean.getCity());
 			ps.setString(3, bean.getSceneName());
-			ps.setString(4, bean.getSceneContent());
-			ps.setString(5, bean.getTimeStart());
-			ps.setString(6, bean.getTimeEnd());
-			ps.setInt(7, bean.getMemberId());
+			ps.setBytes(4, bean.getScenePhoto());
+			ps.setString(5, bean.getSceneContent());
+			ps.setString(6, bean.getTimeStart());
+			ps.setString(7, bean.getTimeEnd());
+			ps.setInt(8, bean.getMemberId());
 					
 			int rs = ps.executeUpdate();
 			if (rs == 1){
@@ -148,10 +151,11 @@ public class SceneDAOjndi implements SceneDAO {
 			ps.setString(1, bean.getLocation());
 			ps.setString(2, bean.getCity());
 			ps.setString(3, bean.getSceneName());
-			ps.setString(4, bean.getSceneContent());
-			ps.setString(5, bean.getTimeStart());
-			ps.setString(6, bean.getTimeEnd());
-			ps.setInt(7, bean.getMemberId());
+			ps.setBytes(4, bean.getScenePhoto());
+			ps.setString(5, bean.getSceneContent());
+			ps.setString(6, bean.getTimeStart());
+			ps.setString(7, bean.getTimeEnd());
+			ps.setInt(8, bean.getMemberId());
 					
 			int rs = ps.executeUpdate();
 			if (rs == 1){

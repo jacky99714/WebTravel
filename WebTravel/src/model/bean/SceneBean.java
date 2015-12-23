@@ -9,6 +9,16 @@ public class SceneBean implements java.io.Serializable{
 	private String city;
 
 	private String sceneName;
+	
+	private byte[] scenePhoto;
+
+	public byte[] getScenePhoto() {
+		return scenePhoto;
+	}
+
+	public void setScenePhoto(byte[] scenePhoto) {
+		this.scenePhoto = scenePhoto;
+	}
 
 	private String sceneContent;
 

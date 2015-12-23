@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -244,12 +246,18 @@
             <img id="get3" src="img/freezeAttack.png" draggable="true" ondragstart="drag(event)">
             <img id="get4" src="img/johnAttack.png" draggable="true" ondragstart="drag(event)"> 
             <img  id="closeAdd" class="close" src="img/close.png">
+     
         </div>
         
         <div id="addFavorite" class="white_content"> 
             <img id="get5" src="img/firenDefense.png" draggable="true" ondragstart="drag(event)">
             <img id="get6" src="img/firzenDefense.png" draggable="true" ondragstart="drag(event)">
-             <img  id="closeFavorite" class="close" src="img/close.png">
+            <img  id="closeFavorite" class="close" src="img/close.png">
+             <div>
+            	<c:forEach var="favorite" items="${fav}">
+            		${favorite}<br>
+            	</c:forEach>
+            </div>
         </div>
         <div id="fade" class="black_overlay"> </div>
   

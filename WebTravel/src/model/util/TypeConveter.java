@@ -1,7 +1,6 @@
 package model.util;
 
 import java.util.Base64;
-
 import org.json.JSONObject;
 
 
@@ -14,7 +13,6 @@ public class TypeConveter{
 		return (new JSONObject(bean));
 	}
 	
-
 	
 
 	

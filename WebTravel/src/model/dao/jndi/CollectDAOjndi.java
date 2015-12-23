@@ -28,7 +28,7 @@ public class CollectDAOjndi implements CollectDAO {
 	private static final String UPDATE = "update Collect set collectId=? where MemberID=? and sceneId=?";
 	private static final String DELETE = "delete FROM Collect where memberId=? and sceneId=?";
 	private static final String SELECT_SCENE =
-				"select top 1 s.SceneName from Collect as c, Scene as s where c.MemberID=? and c.SceneID = s.SceneID";  
+				"select  s.SceneName from Collect as c, Scene as s where c.MemberID=? and c.SceneID = s.SceneID";  
 	private Connection conn= null;
 	
 	DataSource ds =null;
@@ -187,21 +187,17 @@ public class CollectDAOjndi implements CollectDAO {
 	}
 	
 	@Override
-	public List<CollectBean> selectScene(int memberId) {
+	public List<String> selectScene(int memberId) {
 		try {
 			conn =ds.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_SCENE);
 			ps.setInt(1, memberId);
 			ResultSet rs = ps.executeQuery();
-			List<CollectBean> list = new ArrayList<CollectBean>();
+			List<String> li = new ArrayList<>();
 			while(rs.next()){
-				CollectBean cBean =new CollectBean();
-				cBean.setMemberId(rs.getInt(1));
-				cBean.setSceneId(rs.getInt(2));
-				cBean.setCollectId(rs.getInt(3));
-				list.add(cBean);
+				li.add(rs.getString(1));		
 			}
-			return list;
+			return li;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{

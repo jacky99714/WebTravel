@@ -4,7 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import model.bean.CollectBean;
 import model.dao.CollectDAO;
 import model.dao.jndi.CollectDAOjndi;
+import model.service.PlanService;
 import model.util.TypeConveter;
 
 /**
@@ -40,6 +41,8 @@ public class PlanServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    request.setCharacterEncoding("UTF-8");
 	    response.setContentType("text/html; charset=UTF-8");
+	    
+	    PlanService ps = new PlanService();
 
 	    File file = new File("E:/bg.png");
 	    FileInputStream fis = new FileInputStream(file);
@@ -55,6 +58,9 @@ public class PlanServlet extends HttpServlet {
 		String img = TypeConveter.base64Convert(bos.toByteArray());
 		HttpSession session = request.getSession();
 		session.setAttribute("img", img);
+		List li = ps.getFavorite(1);
+	
+		session.setAttribute("fav", li);
 
 	
 
