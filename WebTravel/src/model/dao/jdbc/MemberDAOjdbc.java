@@ -18,6 +18,7 @@ import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import javax.naming.Context;
@@ -25,7 +26,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import org.apache.tomcat.util.codec.binary.Base64;
 
 import model.MemberBean;
 import model.dao.MemberDAO;
@@ -288,9 +288,9 @@ public class MemberDAOjdbc implements MemberDAO {
 		fi.close();
 //		System.out.println(poto);
 //		String s = Base64.getEncoder().encodeToString(poto);
-		String s = Base64.encodeBase64URLSafeString(poto);
+		String s = Base64.getEncoder().encodeToString(poto);
 		System.out.println(s);
-		byte[] d =Base64.decodeBase64(s);
+//		byte[] d =Base64.decodeBase64(s);
 //		byte[] d =Base64.getDecoder().decode(s);
 //		System.out.println(d);
 		

@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,9 +14,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import org.apache.tomcat.util.codec.binary.Base64;
 
 import model.MemberBean;
 
@@ -54,8 +55,9 @@ public class JoinMemberServlet extends HttpServlet {
 //		ou.write(phto);
 //		ou.close();
 		in.close();
-		String s = Base64.encodeBase64URLSafeString(phto);
-		request.setAttribute("srcA",s);
+		String s = Base64.getEncoder().encodeToString(phto);
+		HttpSession session =request.getSession();
+		session.setAttribute("srcAa",s);
 //-----------------------------------------------------------
 		//驗證
 		Map<String, String> error =new HashMap<String,String>();
