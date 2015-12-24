@@ -10,12 +10,11 @@ import java.util.List;
 
 import model.bean.SceneGradeBean;
 import model.dao.SceneGradreDAO;
+import model.util.JdbcConnection;
 
 
 public class SceneGradreDAOjdbc implements SceneGradreDAO {
-	private static final String URL = "jdbc:sqlserver://10.211.55.3:1433;database=travel";
-	private static final String USERNAME = "sa";
-	private static final String PASSWORD = "sa123456";
+
 	
 	private static final String SELECT_MEMBERID = "SELECT * FROM SceneGrade WHERE MemberID=?";
 	private static final String SELECT_SCENEID = "SELECT memberId,SceneID,Evaluate FROM SceneGrade WHERE SceneID=?";
@@ -31,7 +30,7 @@ public class SceneGradreDAOjdbc implements SceneGradreDAO {
 	@Override
 	public List<SceneGradeBean> select(){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<SceneGradeBean> list = new ArrayList<SceneGradeBean>();
@@ -46,13 +45,7 @@ public class SceneGradreDAOjdbc implements SceneGradreDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -63,7 +56,7 @@ public class SceneGradreDAOjdbc implements SceneGradreDAO {
 	@Override
 	public List<SceneGradeBean> select(int sceneId){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_SCENEID);
 			ps.setInt(1, sceneId);
 			ResultSet rs = ps.executeQuery();
@@ -79,13 +72,7 @@ public class SceneGradreDAOjdbc implements SceneGradreDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -96,7 +83,7 @@ public class SceneGradreDAOjdbc implements SceneGradreDAO {
 	@Override
 	public List<SceneGradeBean> insert(SceneGradeBean sceneGradeBean){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setInt(1, sceneGradeBean.getMemberId());
 			ps.setInt(2, sceneGradeBean.getSceneId());
@@ -108,13 +95,7 @@ public class SceneGradreDAOjdbc implements SceneGradreDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -125,7 +106,7 @@ public class SceneGradreDAOjdbc implements SceneGradreDAO {
 	@Override
 	public List<SceneGradeBean> update(SceneGradeBean sceneGradeBean){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setInt(2, sceneGradeBean.getMemberId());
 			ps.setInt(3, sceneGradeBean.getSceneId());
@@ -137,13 +118,7 @@ public class SceneGradreDAOjdbc implements SceneGradreDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -153,7 +128,7 @@ public class SceneGradreDAOjdbc implements SceneGradreDAO {
 	@Override
 	public boolean delete(int memberId,int sceneId){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1,memberId);
 			ps.setInt(2,sceneId);
@@ -163,13 +138,7 @@ public class SceneGradreDAOjdbc implements SceneGradreDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return false;
 	}

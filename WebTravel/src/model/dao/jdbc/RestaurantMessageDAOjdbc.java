@@ -10,12 +10,10 @@ import java.util.List;
 
 import model.bean.RestaurantMessageBean;
 import model.dao.RestaurantMessageDAO;
+import model.util.JdbcConnection;
 
 public class RestaurantMessageDAOjdbc implements RestaurantMessageDAO {
-	// DB連線資訊
-	private static final String URL = "jdbc:sqlserver://localhost:1433;database=travel";
-	private static final String USERNAME = "sa";
-	private static final String PASSWORD = "passw0rd";
+
 	// select
 	private static final String SELECT_ALL = "select * from RestaurantMessage";
 	private static final String SELECT_BY_RESTAURANTID = "select * from RestaurantMessage where restaurantId = ?";
@@ -37,7 +35,7 @@ public class RestaurantMessageDAOjdbc implements RestaurantMessageDAO {
 		List<RestaurantMessageBean> list = null;
 		RestaurantMessageBean rmbean = null;
 		try (// AutoCloseable
-				Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+				Connection conn = JdbcConnection.getConnection();) {
 
 			PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
 			ResultSet rs = ps.executeQuery();
@@ -64,7 +62,7 @@ public class RestaurantMessageDAOjdbc implements RestaurantMessageDAO {
 	@Override
 	public RestaurantMessageBean select(int sceneId) {
 		RestaurantMessageBean rmbean = null;
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn = JdbcConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_RESTAURANTID);
 			ps.setInt(1, sceneId);
 			ResultSet rs = ps.executeQuery();
@@ -89,7 +87,7 @@ public class RestaurantMessageDAOjdbc implements RestaurantMessageDAO {
 	@Override
 	public RestaurantMessageBean insert(RestaurantMessageBean bean) {
 		RestaurantMessageBean result = null;
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn = JdbcConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			if (bean != null) {
 				ps.setString(1, bean.getMessageContent());
@@ -114,7 +112,7 @@ public class RestaurantMessageDAOjdbc implements RestaurantMessageDAO {
 	@Override
 	public RestaurantMessageBean update(RestaurantMessageBean bean) {
 		RestaurantMessageBean result = null;
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn = JdbcConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			if (bean != null) {
 				ps.setString(1, bean.getMessageContent());
@@ -138,7 +136,7 @@ public class RestaurantMessageDAOjdbc implements RestaurantMessageDAO {
 	 */
 	@Override
 	public boolean delete(int RestaurantMessageId) {
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn = JdbcConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 
 			ps.setInt(1, RestaurantMessageId);

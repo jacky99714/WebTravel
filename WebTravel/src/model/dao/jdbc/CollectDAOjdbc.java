@@ -10,14 +10,13 @@ import java.util.List;
 
 import model.bean.CollectBean;
 import model.dao.CollectDAO;
+import model.util.JdbcConnection;
 
 
 
 
 public class CollectDAOjdbc implements CollectDAO {
-	private static final String URL = "jdbc:sqlserver://10.211.55.3:1433:1433;database=travel";
-	private static final String USERNAME = "sa";
-	private static final String PASSWORD = "sa123456";
+
 	
 	private static final String SELECT_MEMBERID = "SELECT * FROM Collect WHERE MemberID=?";
 	private static final String SELECT_SCENEID = "SELECT * FROM Collect WHERE SceneID=?";
@@ -35,7 +34,7 @@ public class CollectDAOjdbc implements CollectDAO {
 	@Override
 	public List<CollectBean> select(){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn =  JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<CollectBean> list = new ArrayList<CollectBean>();
@@ -50,13 +49,7 @@ public class CollectDAOjdbc implements CollectDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -67,7 +60,7 @@ public class CollectDAOjdbc implements CollectDAO {
 	@Override
 	public List<CollectBean> select(int memberId){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn =  JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_MEMBERID);
 			ps.setInt(1, memberId);
 			ResultSet rs = ps.executeQuery();
@@ -83,13 +76,7 @@ public class CollectDAOjdbc implements CollectDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -100,7 +87,7 @@ public class CollectDAOjdbc implements CollectDAO {
 	@Override
 	public List<CollectBean> insert(CollectBean collectBean){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn =  JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setInt(1, collectBean.getMemberId());
 			ps.setInt(2, collectBean.getSceneId());
@@ -112,13 +99,7 @@ public class CollectDAOjdbc implements CollectDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -128,7 +109,7 @@ public class CollectDAOjdbc implements CollectDAO {
 	@Override
 	public List<CollectBean> update(CollectBean collectBean){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn =  JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setInt(2, collectBean.getMemberId());
 			ps.setInt(3, collectBean.getSceneId());
@@ -140,13 +121,7 @@ public class CollectDAOjdbc implements CollectDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -157,7 +132,7 @@ public class CollectDAOjdbc implements CollectDAO {
 	@Override
 	public boolean delete(int memberId,int sceneId){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn =  JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1,memberId);
 			ps.setInt(2,sceneId);
@@ -167,13 +142,7 @@ public class CollectDAOjdbc implements CollectDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return false;
 	}
@@ -181,7 +150,7 @@ public class CollectDAOjdbc implements CollectDAO {
 	@Override
 	public List<String> selectScene(int memberId) {
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn =  JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_SCENE);
 			ps.setInt(1, memberId);
 			ResultSet rs = ps.executeQuery();
@@ -193,13 +162,7 @@ public class CollectDAOjdbc implements CollectDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}	
