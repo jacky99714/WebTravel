@@ -8,13 +8,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 
 import model.bean.ScheduleContentBean;
 import model.dao.ScheduleContentDAO;
+import model.util.DataSourceFactory;
 
 public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 
@@ -25,19 +22,11 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 	private static final String DELETE = "delete FROM ScheduleContent where ScheduleContentID=?";
 	private Connection conn= null;
 	
-	DataSource ds =null;
-	public ScheduleContentDAOjndi(){
-		try {
-			Context context = new InitialContext();
-			ds = (DataSource) context.lookup("java:comp/env/jdbc/xxx");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
+
 	@Override
 	public List<ScheduleContentBean> select(){
 		try {
-			conn =  ds.getConnection();
+			conn = DataSourceFactory.getDS().getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<ScheduleContentBean> list = new ArrayList<ScheduleContentBean>();
@@ -69,7 +58,7 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 	@Override
 	public ScheduleContentBean select(int scheduleContentId){
 		try {
-			conn =  ds.getConnection();
+			conn = DataSourceFactory.getDS().getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_ID);
 			ps.setInt(1, scheduleContentId);
 			ResultSet rs = ps.executeQuery();
@@ -100,7 +89,7 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 	@Override
 	public boolean insert(ScheduleContentBean scheduleContentBean){
 		try {
-			conn =  ds.getConnection();
+			conn = DataSourceFactory.getDS().getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setInt(1, scheduleContentBean.getScheduleOrder());
 			ps.setInt(2, scheduleContentBean.getSceneId());
@@ -127,7 +116,7 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 	@Override
 	public boolean delete(int scheduleContentId){
 		try {
-			conn =  ds.getConnection();
+			conn = DataSourceFactory.getDS().getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1, scheduleContentId);;
 			if(ps.executeUpdate()==1){
@@ -152,7 +141,7 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 	@Override
 	public ScheduleContentBean update(ScheduleContentBean scheduleContentBean){
 		try {
-			conn =  ds.getConnection();
+			conn = DataSourceFactory.getDS().getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setInt(1, scheduleContentBean.getScheduleOrder());
 			ps.setInt(2, scheduleContentBean.getSceneId());

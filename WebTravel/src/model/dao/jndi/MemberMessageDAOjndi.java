@@ -13,13 +13,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
 import model.bean.MemberMessageBean;
 import model.dao.MemberMessageDAO;
+import model.util.DataSourceFactory;
 
 
 public class MemberMessageDAOjndi implements MemberMessageDAO {
@@ -35,20 +31,11 @@ public class MemberMessageDAOjndi implements MemberMessageDAO {
 	
 	private Connection conn= null;
 	
-	DataSource ds= null; 
-	public MemberMessageDAOjndi(){
-		try {
-			Context context = new InitialContext();
-			ds = (DataSource) context.lookup("java:comp/env/jdbc/xxx");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
 	
 	@Override
 	public List<MemberMessageBean> select(){
 		try {
-			conn =  ds.getConnection();
+			conn = DataSourceFactory.getDS().getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<MemberMessageBean> list = new ArrayList<MemberMessageBean>();
@@ -82,7 +69,7 @@ public class MemberMessageDAOjndi implements MemberMessageDAO {
 		try {
 			SimpleDateFormat sf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Calendar cal = Calendar.getInstance();
-			conn =  ds.getConnection();
+			conn = DataSourceFactory.getDS().getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_MEMBERID);
 			ps.setInt(1, memberId);
 			ResultSet rs = ps.executeQuery();
@@ -115,7 +102,7 @@ public class MemberMessageDAOjndi implements MemberMessageDAO {
 	@Override
 	public MemberMessageBean select(int memberMessageId){
 		try {
-			conn =  ds.getConnection();
+			conn = DataSourceFactory.getDS().getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_ID);
 			ps.setInt(1, memberMessageId);
 			ResultSet rs = ps.executeQuery();
@@ -147,7 +134,7 @@ public class MemberMessageDAOjndi implements MemberMessageDAO {
 	public List<MemberMessageBean> insert(MemberMessageBean memberMessageBean) {
 		try {
 			SimpleDateFormat sf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			conn = ds.getConnection();
+			conn = DataSourceFactory.getDS().getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT_SETTIME);
 			ps.setString(1, memberMessageBean.getMemberMessageContent());
 			ps.setDate(2, new java.sql.Date((sf.parse(memberMessageBean.getMessaageTime())).getTime()));
@@ -177,7 +164,7 @@ public class MemberMessageDAOjndi implements MemberMessageDAO {
 	public List<MemberMessageBean> update(MemberMessageBean memberMessageBean){
 		try {
 			SimpleDateFormat sf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			conn =  ds.getConnection();
+			conn = DataSourceFactory.getDS().getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setString(1, memberMessageBean.getMemberMessageContent());
 			Date date = new java.sql.Date((sf.parse(memberMessageBean.getMessaageTime())).getTime());
@@ -208,7 +195,7 @@ public class MemberMessageDAOjndi implements MemberMessageDAO {
 	@Override
 	public boolean delete(int memberMessageID){
 		try {
-			conn = ds.getConnection();
+			conn = DataSourceFactory.getDS().getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1,memberMessageID);
 			if(ps.executeUpdate()==1){
