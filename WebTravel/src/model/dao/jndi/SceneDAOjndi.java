@@ -17,6 +17,7 @@ public class SceneDAOjndi implements SceneDAO {
 	//select
 	private static final String SELECT_ALL = "select * from scene";
 	private static final String SELECT_BY_LOCATION = "select * from scene where location = ?";	
+	private static final String SELECT_BY_ID = "select * from scene where sceneID = ?";	
 	//insert
 	private static final String INSERT = 
 			"insert into scene"
@@ -71,6 +72,33 @@ public class SceneDAOjndi implements SceneDAO {
 			 ){
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_LOCATION);
 			ps.setString(1, location);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				sbean = new SceneBean();				
+				sbean.setSceneId(rs.getInt(1));
+				sbean.setLocation(rs.getString(2));
+				sbean.setCity(rs.getString(3));
+				sbean.setSceneName(rs.getString(4));
+				sbean.setScenePhoto(rs.getBytes(5));
+				sbean.setSceneContent(rs.getString(6));
+				sbean.setTimeStart(rs.getString(7));
+				sbean.setTimeEnd(rs.getString(8));
+				sbean.setMemberId(rs.getInt(9));	
+			}		
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}
+	
+		return sbean;
+	}
+	
+	public  SceneBean select(int sceneId) {
+		SceneBean sbean =null;
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+			 ){
+			PreparedStatement ps = conn.prepareStatement(SELECT_BY_ID);
+			ps.setInt(1, sceneId);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				sbean = new SceneBean();				
