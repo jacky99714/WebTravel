@@ -131,19 +131,19 @@ public class SceneDAOjndi implements SceneDAO {
 				){
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			if(bean != null){
-			ps.setString(1, bean.getLocation());
-			ps.setString(2, bean.getCity());
-			ps.setString(3, bean.getSceneName());
-			ps.setBytes(4, bean.getScenePhoto());
-			ps.setString(5, bean.getSceneContent());
-			ps.setString(6, bean.getTimeStart());
-			ps.setString(7, bean.getTimeEnd());
-			ps.setInt(8, bean.getMemberId());
-					
-			int rs = ps.executeUpdate();
-			if (rs == 1){
-				result = bean;
-			}
+				ps.setString(1, bean.getLocation());
+				ps.setString(2, bean.getCity());
+				ps.setString(3, bean.getSceneName());
+				ps.setBytes(4, bean.getScenePhoto());
+				ps.setString(5, bean.getSceneContent());
+				ps.setString(6, bean.getTimeStart());
+				ps.setString(7, bean.getTimeEnd());
+				ps.setInt(8, bean.getMemberId());
+						
+				int rs = ps.executeUpdate();
+				if (rs == 1){
+					result = bean;
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -163,19 +163,19 @@ public class SceneDAOjndi implements SceneDAO {
 				){
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			if(bean != null){
-			ps.setString(1, bean.getLocation());
-			ps.setString(2, bean.getCity());
-			ps.setString(3, bean.getSceneName());
-			ps.setBytes(4, bean.getScenePhoto());
-			ps.setString(5, bean.getSceneContent());
-			ps.setString(6, bean.getTimeStart());
-			ps.setString(7, bean.getTimeEnd());
-			ps.setInt(8, bean.getMemberId());
-					
-			int rs = ps.executeUpdate();
-			if (rs == 1){
-				result = bean;
-			}
+				ps.setString(1, bean.getLocation());
+				ps.setString(2, bean.getCity());
+				ps.setString(3, bean.getSceneName());
+				ps.setBytes(4, bean.getScenePhoto());
+				ps.setString(5, bean.getSceneContent());
+				ps.setString(6, bean.getTimeStart());
+				ps.setString(7, bean.getTimeEnd());
+				ps.setInt(8, bean.getMemberId());
+						
+				int rs = ps.executeUpdate();
+				if (rs == 1){
+					result = bean;
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -193,14 +193,11 @@ public class SceneDAOjndi implements SceneDAO {
 				Connection conn = DataSourceConnection.getConnection(); 	
 					){
 				PreparedStatement ps = conn.prepareStatement(DELETE);
-				
-				ps.setString(1, sceneName);
-									
+				ps.setString(1, sceneName);							
 				int rs = ps.executeUpdate();
 				if (rs == 1){
 					return true;
-				}
-				
+				}			
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

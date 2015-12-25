@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+import data.SceneData;
 import model.bean.QBean;
 import model.dao.QDAO;
 import model.dao.jndi.QDAOjndi;
@@ -36,7 +37,10 @@ public class GetQuestionServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
+//		SceneData s = new SceneData();
+//		s.insert();
+		
+		request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
         
 		QDAO q = new QDAOjndi();
