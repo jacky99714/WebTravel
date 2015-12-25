@@ -5,7 +5,7 @@ public class MemberMessageBean {
 	private String memberMessageContent;
 	private String messaageTime;
 	private int memberId;
-	
+
 	@Override
 	public String toString() {
 		return "[MemberMessageID=" + memberMessageID + ", MemberMessageContent="

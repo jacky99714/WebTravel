@@ -35,9 +35,11 @@ public class MemberDAOjndi implements MemberDAO {
 //	private static final String INSERT = "insert into Member(userName,password,firstName,lastName,nickName,birthDay,address,cellphone,telephone,email) values(?,?,?,?,?,?,?,?,?,?)";
 	private static final String UPDATE = "update Member set password=?,firstName=?,lastName=?,nickName=?,birthDay=?,address=?,cellphone=?,telephone=?,email=?,photo=? where userName=?";
 //	private static final String UPDATE = "update Member set password=?,firstName=?,lastName=?,nickName=?,birthDay=?,address=?,cellphone=?,telephone=?,email=? where userName=?";
+	
+	
 	private Connection conn= null;
 	
-
+ 
 
 	@Override
 	public List<MemberBean> select(){  //查詢

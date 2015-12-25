@@ -32,6 +32,10 @@ import model.util.JdbcConnection;
 
 public class MemberDAOjdbc implements MemberDAO {
 	
+	
+	
+	
+	
 	private static final String SELECT_ID = "SELECT * FROM Member WHERE memberID=?";
 	private static final String SELECT_UESRNAME = "SELECT * FROM Member WHERE userName=?";
 	private static final String SELECT = "SELECT * FROM Member";

@@ -99,7 +99,11 @@
 				<c:if test="${not empty memberimg}">
 					<li><img style="margin-top:5px" width="40px" height="40px" src="data:image/png;base64,${memberimg}" alt="..." class="img"></li>
 				</c:if>
-               <li><a href="#">${loginOk.userName},你好</a></li>
+               <li><a href="#">${loginOk.userName},你好
+               <c:if test="${mbMessageCount!=0}">
+               <span class="badge" style="background:#CC0000">${mbMessageCount}</span>
+               </c:if>
+               </a></li>
               </ul>
               </c:if>
 <!-- 	------------------------景點------------------------ -->
