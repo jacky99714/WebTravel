@@ -11,7 +11,7 @@ import java.util.List;
 
 import model.bean.SceneMessageBean;
 import model.dao.SceneMessageDAO;
-import model.util.DataSourceFactory;
+import model.util.DataSourceConnection;
 
 public class SceneMessageDAOjndi implements SceneMessageDAO {
 	//DB連線資訊
@@ -35,7 +35,7 @@ public class SceneMessageDAOjndi implements SceneMessageDAO {
 		List<SceneMessageBean> list = null;
 		SceneMessageBean smbean =null;
 		try (//AutoCloseable
-			 Connection conn = DataSourceFactory.getDS().getConnection(); 
+			 Connection conn = DataSourceConnection.getConnection(); 
 			 ){
 			
 			PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
@@ -64,7 +64,7 @@ public class SceneMessageDAOjndi implements SceneMessageDAO {
 	public  SceneMessageBean select(int sceneId) {
 		SceneMessageBean smbean =null;
 		try (
-				Connection conn = DataSourceFactory.getDS().getConnection();
+				Connection conn = DataSourceConnection.getConnection();
 			 ){
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_SCENEID);
 			ps.setInt(1, sceneId);
@@ -91,7 +91,7 @@ public class SceneMessageDAOjndi implements SceneMessageDAO {
 	public SceneMessageBean insert(SceneMessageBean bean) {
 		SceneMessageBean result = null;
 		try (
-				Connection conn = DataSourceFactory.getDS().getConnection();
+				Connection conn = DataSourceConnection.getConnection();
 				){
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			if(bean != null){
@@ -118,7 +118,7 @@ public class SceneMessageDAOjndi implements SceneMessageDAO {
 	public SceneMessageBean update(SceneMessageBean bean){
 		SceneMessageBean result = null;
 		try (
-				Connection conn = DataSourceFactory.getDS().getConnection();
+				Connection conn = DataSourceConnection.getConnection();
 				){
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			if(bean != null){
@@ -144,7 +144,7 @@ public class SceneMessageDAOjndi implements SceneMessageDAO {
 	@Override
 	public boolean delete(int sceneMessageId) {
 		try (
-				Connection conn = DataSourceFactory.getDS().getConnection();	
+				Connection conn = DataSourceConnection.getConnection();	
 					){
 				PreparedStatement ps = conn.prepareStatement(DELETE);
 				

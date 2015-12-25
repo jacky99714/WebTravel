@@ -44,18 +44,9 @@ public class PlanServlet extends HttpServlet {
 	    
 	    PlanService ps = new PlanService();
 
-	    File file = new File("E:/bg.png");
-	    FileInputStream fis = new FileInputStream(file);
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		byte[] buf = new byte[1024];
-		try {
-		    for (int readNum; (readNum = fis.read(buf)) != -1;) {
-		        bos.write(buf, 0, readNum); //no doubt here is 0
-		    }
-		} catch (IOException ex) {
-		    ex.printStackTrace();
-		}
-		String img = TypeConveter.base64Convert(bos.toByteArray());
+	   
+
+		String img = TypeConveter.parseBase64(TypeConveter.parseByteArray("E:/bg.png"));
 		HttpSession session = request.getSession();
 		session.setAttribute("img", img);
 		List li = ps.getFavorite(1);

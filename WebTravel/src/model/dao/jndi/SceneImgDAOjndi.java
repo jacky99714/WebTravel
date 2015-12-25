@@ -14,7 +14,7 @@ import java.util.List;
 import model.bean.SceneImgBean;
 import model.dao.RestaurantMessageDAO;
 import model.dao.SceneImgDAO;
-import model.util.DataSourceFactory;
+import model.util.DataSourceConnection;
 
 public class SceneImgDAOjndi implements SceneImgDAO {
 	// DB連線資訊
@@ -36,7 +36,7 @@ public class SceneImgDAOjndi implements SceneImgDAO {
 		List<SceneImgBean> list = null;
 		SceneImgBean rmbean = null;
 		try (// AutoCloseable
-				Connection conn = DataSourceFactory.getDS().getConnection();) {
+				Connection conn = DataSourceConnection.getConnection();) {
 
 			PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
 			ResultSet rs = ps.executeQuery();
@@ -62,7 +62,7 @@ public class SceneImgDAOjndi implements SceneImgDAO {
 	@Override
 	public SceneImgBean select(int sceneId) {
 		SceneImgBean rmbean = null;
-		try (Connection conn = DataSourceFactory.getDS().getConnection();) {
+		try (Connection conn = DataSourceConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_SCENEID);
 			ps.setInt(1, sceneId);
 			ResultSet rs = ps.executeQuery();
@@ -86,7 +86,7 @@ public class SceneImgDAOjndi implements SceneImgDAO {
 	@Override
 	public SceneImgBean insert(SceneImgBean bean) {
 		SceneImgBean result = null;
-		try (Connection conn = DataSourceFactory.getDS().getConnection();) {
+		try (Connection conn = DataSourceConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			if (bean != null) {
 				ps.setBytes(1, bean.getImg());
@@ -110,7 +110,7 @@ public class SceneImgDAOjndi implements SceneImgDAO {
 	@Override
 	public SceneImgBean update(SceneImgBean bean) {
 		SceneImgBean result = null;
-		try (Connection conn = DataSourceFactory.getDS().getConnection();) {
+		try (Connection conn = DataSourceConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			if (bean != null) {
 				ps.setBytes(1, bean.getImg());
@@ -133,7 +133,7 @@ public class SceneImgDAOjndi implements SceneImgDAO {
 	 */
 	@Override
 	public boolean delete(int sceneImgId) {
-		try (Connection conn = DataSourceFactory.getDS().getConnection();) {
+		try (Connection conn = DataSourceConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 
 			ps.setInt(1, sceneImgId);

@@ -10,7 +10,7 @@ import java.util.List;
 
 import model.bean.SceneBean;
 import model.dao.SceneDAO;
-import model.util.DataSourceFactory;
+import model.util.DataSourceConnection;
 
 public class SceneDAOjndi implements SceneDAO {
 	
@@ -34,7 +34,7 @@ public class SceneDAOjndi implements SceneDAO {
 		List<SceneBean> list = null;
 		SceneBean sbean =null;
 		try (//AutoCloseable
-			Connection conn = DataSourceFactory.getDS().getConnection();
+			Connection conn = DataSourceConnection.getConnection();
 			 ){
 			
 			PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
@@ -67,7 +67,7 @@ public class SceneDAOjndi implements SceneDAO {
 	public  SceneBean select(String location) {
 		SceneBean sbean =null;
 		try (
-				Connection conn = DataSourceFactory.getDS().getConnection();
+				Connection conn = DataSourceConnection.getConnection();
 			 ){
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_LOCATION);
 			ps.setString(1, location);
@@ -99,7 +99,7 @@ public class SceneDAOjndi implements SceneDAO {
 	public SceneBean insert(SceneBean bean) {
 		SceneBean result = null;
 		try (
-				Connection conn = DataSourceFactory.getDS().getConnection();
+				Connection conn = DataSourceConnection.getConnection();
 				){
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			if(bean != null){
@@ -131,7 +131,7 @@ public class SceneDAOjndi implements SceneDAO {
 	public SceneBean update(SceneBean bean){
 		SceneBean result = null;
 		try (
-				Connection conn = DataSourceFactory.getDS().getConnection();	
+				Connection conn = DataSourceConnection.getConnection();	
 				){
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			if(bean != null){
@@ -162,7 +162,7 @@ public class SceneDAOjndi implements SceneDAO {
 	@Override
 	public boolean delete(String sceneName) {
 		try (
-				Connection conn = DataSourceFactory.getDS().getConnection(); 	
+				Connection conn = DataSourceConnection.getConnection(); 	
 					){
 				PreparedStatement ps = conn.prepareStatement(DELETE);
 				

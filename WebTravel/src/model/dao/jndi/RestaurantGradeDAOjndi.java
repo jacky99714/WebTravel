@@ -10,7 +10,7 @@ import java.util.List;
 
 import model.bean.RestaurantGradeBean;
 import model.dao.RestaurantGradeDAO;
-import model.util.DataSourceFactory;
+import model.util.DataSourceConnection;
 
 
 public class RestaurantGradeDAOjndi implements RestaurantGradeDAO {
@@ -28,7 +28,7 @@ public class RestaurantGradeDAOjndi implements RestaurantGradeDAO {
 	@Override
 	public List<RestaurantGradeBean> select(){
 		try {
-			conn = DataSourceFactory.getDS().getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<RestaurantGradeBean> list = new ArrayList<RestaurantGradeBean>();
@@ -43,13 +43,7 @@ public class RestaurantGradeDAOjndi implements RestaurantGradeDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -60,7 +54,7 @@ public class RestaurantGradeDAOjndi implements RestaurantGradeDAO {
 	@Override
 	public List<RestaurantGradeBean> select(int restaurantId){
 		try {
-			conn = DataSourceFactory.getDS().getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_RESTAURANTID);
 			ps.setInt(1, restaurantId);
 			ResultSet rs = ps.executeQuery();
@@ -76,13 +70,7 @@ public class RestaurantGradeDAOjndi implements RestaurantGradeDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -93,7 +81,7 @@ public class RestaurantGradeDAOjndi implements RestaurantGradeDAO {
 	@Override
 	public List<RestaurantGradeBean> insert(RestaurantGradeBean restaurantGradeBean){
 		try {
-			conn = DataSourceFactory.getDS().getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setInt(1, restaurantGradeBean.getMemberId());
 			ps.setInt(2, restaurantGradeBean.getRestaurantId());
@@ -105,13 +93,7 @@ public class RestaurantGradeDAOjndi implements RestaurantGradeDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -122,7 +104,7 @@ public class RestaurantGradeDAOjndi implements RestaurantGradeDAO {
 	@Override
 	public List<RestaurantGradeBean> update(RestaurantGradeBean restaurantGradeBean){
 		try {
-			conn = DataSourceFactory.getDS().getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setInt(2, restaurantGradeBean.getMemberId());
 			ps.setInt(3, restaurantGradeBean.getRestaurantId());
@@ -134,13 +116,7 @@ public class RestaurantGradeDAOjndi implements RestaurantGradeDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -150,7 +126,7 @@ public class RestaurantGradeDAOjndi implements RestaurantGradeDAO {
 	@Override
 	public boolean delete(int memberId,int restaurantId){
 		try {
-			conn = DataSourceFactory.getDS().getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1,memberId);
 			ps.setInt(2,restaurantId);
@@ -160,13 +136,7 @@ public class RestaurantGradeDAOjndi implements RestaurantGradeDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return false;
 	}

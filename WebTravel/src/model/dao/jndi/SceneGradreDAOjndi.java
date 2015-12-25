@@ -10,7 +10,7 @@ import java.util.List;
 
 import model.bean.SceneGradeBean;
 import model.dao.SceneGradreDAO;
-import model.util.DataSourceFactory;
+import model.util.DataSourceConnection;
 
 
 public class SceneGradreDAOjndi implements SceneGradreDAO {
@@ -27,7 +27,7 @@ public class SceneGradreDAOjndi implements SceneGradreDAO {
 	@Override
 	public List<SceneGradeBean> select(){
 		try {
-			conn = DataSourceFactory.getDS().getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<SceneGradeBean> list = new ArrayList<SceneGradeBean>();
@@ -42,13 +42,7 @@ public class SceneGradreDAOjndi implements SceneGradreDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -59,7 +53,7 @@ public class SceneGradreDAOjndi implements SceneGradreDAO {
 	@Override
 	public List<SceneGradeBean> select(int sceneId){
 		try {
-			conn = DataSourceFactory.getDS().getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_SCENEID);
 			ps.setInt(1, sceneId);
 			ResultSet rs = ps.executeQuery();
@@ -75,13 +69,7 @@ public class SceneGradreDAOjndi implements SceneGradreDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -92,7 +80,7 @@ public class SceneGradreDAOjndi implements SceneGradreDAO {
 	@Override
 	public List<SceneGradeBean> insert(SceneGradeBean sceneGradeBean){
 		try {
-			conn = DataSourceFactory.getDS().getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setInt(1, sceneGradeBean.getMemberId());
 			ps.setInt(2, sceneGradeBean.getSceneId());
@@ -104,13 +92,7 @@ public class SceneGradreDAOjndi implements SceneGradreDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -121,7 +103,7 @@ public class SceneGradreDAOjndi implements SceneGradreDAO {
 	@Override
 	public List<SceneGradeBean> update(SceneGradeBean sceneGradeBean){
 		try {
-			conn = DataSourceFactory.getDS().getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setInt(2, sceneGradeBean.getMemberId());
 			ps.setInt(3, sceneGradeBean.getSceneId());
@@ -133,13 +115,7 @@ public class SceneGradreDAOjndi implements SceneGradreDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -149,7 +125,7 @@ public class SceneGradreDAOjndi implements SceneGradreDAO {
 	@Override
 	public boolean delete(int memberId,int sceneId){
 		try {
-			conn = DataSourceFactory.getDS().getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1,memberId);
 			ps.setInt(2,sceneId);
@@ -159,13 +135,7 @@ public class SceneGradreDAOjndi implements SceneGradreDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return false;
 	}

@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import model.bean.QBean;
 import model.dao.QDAO;
 import model.dao.jndi.QDAOjndi;
+import model.util.TypeConveter;
 
 
 /**
@@ -42,11 +43,10 @@ public class GetQuestionServlet extends HttpServlet {
 		QBean bean =new QBean();
 		int index = (int)(Math.random()*q.getCount()+1);
 		bean = q.select(index);
-
-		JSONObject json = new JSONObject(bean);
-	
+		
+		
 		PrintWriter out = response.getWriter();
-		out.print(json);
+		out.print(TypeConveter.parseJSONObject(bean));
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
