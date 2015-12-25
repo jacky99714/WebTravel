@@ -11,11 +11,9 @@ import java.util.List;
 import model.bean.ScheduleBean;
 import model.bean.ThoughtBean;
 import model.dao.ScheduleDAO;
+import model.util.JdbcConnection;
 
 public class ScheduleDAOjdbc implements ScheduleDAO {
-	private static final String URL = "jdbc:sqlserver://10.211.55.3:1433;database=travel";
-	private static final String USERNAME = "sa";
-	private static final String PASSWORD = "sa123456";
 	
 	private static final String SELECT_ID = "SELECT * FROM Schedule WHERE ScheduleID=?";
 	private static final String SELECT = "SELECT * FROM Schedule";
@@ -32,7 +30,7 @@ public class ScheduleDAOjdbc implements ScheduleDAO {
 	@Override
 	public ScheduleBean select(int scheduleId){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_ID);
 			ps.setInt(1, scheduleId);
 			ResultSet rs = ps.executeQuery();
@@ -46,13 +44,7 @@ public class ScheduleDAOjdbc implements ScheduleDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -62,7 +54,7 @@ public class ScheduleDAOjdbc implements ScheduleDAO {
 	@Override
 	public List<ScheduleBean> select(){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<ScheduleBean> list =new ArrayList<ScheduleBean>();
@@ -77,13 +69,7 @@ public class ScheduleDAOjdbc implements ScheduleDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -94,7 +80,7 @@ public class ScheduleDAOjdbc implements ScheduleDAO {
 	@Override
 	public boolean insert(ScheduleBean scheduleBean){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setString(1, scheduleBean.getScheduleName());
 			ps.setInt(2, scheduleBean.getMemberId());
@@ -104,13 +90,7 @@ public class ScheduleDAOjdbc implements ScheduleDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return false;
 	}
@@ -121,7 +101,7 @@ public class ScheduleDAOjdbc implements ScheduleDAO {
 	@Override
 	public ScheduleBean update(ScheduleBean scheduleBean){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setInt(3, scheduleBean.getScheduleId());
 			ps.setString(1, scheduleBean.getScheduleName());
@@ -132,13 +112,7 @@ public class ScheduleDAOjdbc implements ScheduleDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -148,7 +122,7 @@ public class ScheduleDAOjdbc implements ScheduleDAO {
 	@Override
 	public boolean delete(int scheduleId){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1,scheduleId);
 			if(ps.executeUpdate()==1){
@@ -157,13 +131,7 @@ public class ScheduleDAOjdbc implements ScheduleDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return false;
 	}

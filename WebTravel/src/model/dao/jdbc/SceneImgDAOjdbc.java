@@ -13,12 +13,10 @@ import java.util.List;
 import model.bean.SceneImgBean;
 import model.dao.RestaurantMessageDAO;
 import model.dao.SceneImgDAO;
+import model.util.JdbcConnection;
 
 public class SceneImgDAOjdbc implements SceneImgDAO {
-	// DB連線資訊
-	private static final String URL = "jdbc:sqlserver://localhost:1433;database=travel";
-	private static final String USERNAME = "sa";
-	private static final String PASSWORD = "passw0rd";
+
 	// select
 	private static final String SELECT_ALL = "select * from SceneImg";
 	private static final String SELECT_BY_SCENEID = "select * from SceneImg where sceneId = ?";
@@ -40,7 +38,7 @@ public class SceneImgDAOjdbc implements SceneImgDAO {
 		List<SceneImgBean> list = null;
 		SceneImgBean rmbean = null;
 		try (// AutoCloseable
-				Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+				Connection conn = JdbcConnection.getConnection();) {
 
 			PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
 			ResultSet rs = ps.executeQuery();
@@ -66,7 +64,7 @@ public class SceneImgDAOjdbc implements SceneImgDAO {
 	@Override
 	public SceneImgBean select(int sceneId) {
 		SceneImgBean rmbean = null;
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn = JdbcConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_SCENEID);
 			ps.setInt(1, sceneId);
 			ResultSet rs = ps.executeQuery();
@@ -90,7 +88,7 @@ public class SceneImgDAOjdbc implements SceneImgDAO {
 	@Override
 	public SceneImgBean insert(SceneImgBean bean) {
 		SceneImgBean result = null;
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn = JdbcConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			if (bean != null) {
 				ps.setBytes(1, bean.getImg());
@@ -114,7 +112,7 @@ public class SceneImgDAOjdbc implements SceneImgDAO {
 	@Override
 	public SceneImgBean update(SceneImgBean bean) {
 		SceneImgBean result = null;
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn = JdbcConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			if (bean != null) {
 				ps.setBytes(1, bean.getImg());
@@ -137,7 +135,7 @@ public class SceneImgDAOjdbc implements SceneImgDAO {
 	 */
 	@Override
 	public boolean delete(int sceneImgId) {
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn = JdbcConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 
 			ps.setInt(1, sceneImgId);

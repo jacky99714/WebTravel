@@ -8,20 +8,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 
 import model.bean.RestaurantBean;
 import model.dao.RestaurantDAO;
+import model.util.DataSourceConnection;
 
 public class RestaurantDAOjndi implements RestaurantDAO {
 
-	// DB連線資訊
-	private static final String URL = "jdbc:sqlserver://localhost:1433;database=travel";
-	private static final String USERNAME = "sa";
-	private static final String PASSWORD = "passw0rd";
+
 	// select
 	private static final String SELECT_ALL = "select * from restaurant";
 	private static final String SELECT_BY_LOCATION = "select * from restaurant where location = ?";
@@ -36,21 +30,13 @@ public class RestaurantDAOjndi implements RestaurantDAO {
 	private static final String DELETE = "delete from restaurant where restaurantName=?";
 	private Connection conn = null;
 	
-	DataSource ds =null;
-	public RestaurantDAOjndi(){
-		try {
-			Context context = new InitialContext();
-			ds = (DataSource) context.lookup("java:comp/env/jdbc/xxx");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
+
 	@Override
 	public List<RestaurantBean> select() {
 		List<RestaurantBean> list = null;
 		RestaurantBean rbean = null;
 		try (// AutoCloseable
-				Connection conn = ds.getConnection();) {
+				Connection conn = DataSourceConnection.getConnection();) {
 
 			PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
 			ResultSet rs = ps.executeQuery();
@@ -84,7 +70,7 @@ public class RestaurantDAOjndi implements RestaurantDAO {
 	@Override
 	public RestaurantBean select(String location) {
 		RestaurantBean rbean = null;
-		try (Connection conn = ds.getConnection();) {
+		try (Connection conn = DataSourceConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_LOCATION);
 			ps.setString(1, location);
 			ResultSet rs = ps.executeQuery();
@@ -117,7 +103,7 @@ public class RestaurantDAOjndi implements RestaurantDAO {
 	@Override
 	public RestaurantBean insert(RestaurantBean bean) {
 		RestaurantBean result = null;
-		try (Connection conn = ds.getConnection();) {
+		try (Connection conn = DataSourceConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			if (bean != null) {
 				ps.setString(1, bean.getLocation());
@@ -150,7 +136,7 @@ public class RestaurantDAOjndi implements RestaurantDAO {
 	@Override
 	public RestaurantBean update(RestaurantBean bean) {
 		RestaurantBean result = null;
-		try (Connection conn = ds.getConnection();) {
+		try (Connection conn = DataSourceConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			if (bean != null) {
 				ps.setString(1, bean.getLocation());
@@ -182,7 +168,7 @@ public class RestaurantDAOjndi implements RestaurantDAO {
 	 */
 	@Override
 	public boolean delete(String sceneName) {
-		try (Connection conn = ds.getConnection();) {
+		try (Connection conn = DataSourceConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 
 			ps.setString(1, sceneName);

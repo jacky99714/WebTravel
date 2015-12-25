@@ -1,7 +1,6 @@
 package model.dao.jndi;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,13 +10,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
+
 
 import model.bean.ImpeachBean;
 import model.dao.ImpeachDAO;
+import model.util.DataSourceConnection;
 
 
 public class ImpeachDAOjndi implements ImpeachDAO {
@@ -36,20 +33,11 @@ public class ImpeachDAOjndi implements ImpeachDAO {
 	private SimpleDateFormat sf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private Connection conn= null;
 	
-	DataSource ds =null;
-	public ImpeachDAOjndi() {
-		try {
-			Context context = new InitialContext();
-			ds = (DataSource) context.lookup("java:comp/env/jdbc/xxx");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
 	
 	@Override
 	public boolean delete(int impeachId){
 		try {
-			conn =ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1,impeachId);
 			if(ps.executeUpdate()==1){
@@ -58,13 +46,7 @@ public class ImpeachDAOjndi implements ImpeachDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return false;
 	}
@@ -73,7 +55,7 @@ public class ImpeachDAOjndi implements ImpeachDAO {
 	@Override
 	public List<ImpeachBean> insertSceneId(ImpeachBean impeachBean){
 		try {
-			conn =ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT_SCENEID);
 			ps.setInt(1, impeachBean.getSceneId());
 			ps.setString(2, impeachBean.getImpeach());
@@ -86,13 +68,7 @@ public class ImpeachDAOjndi implements ImpeachDAO {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -100,7 +76,7 @@ public class ImpeachDAOjndi implements ImpeachDAO {
 	@Override
 	public List<ImpeachBean> insertSceneMessageId(ImpeachBean impeachBean){
 		try {
-			conn =ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT_SCENEMESSAGEID);
 			ps.setInt(1, impeachBean.getSceneMessageId());
 			ps.setString(2, impeachBean.getImpeach());
@@ -113,13 +89,7 @@ public class ImpeachDAOjndi implements ImpeachDAO {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -128,7 +98,7 @@ public class ImpeachDAOjndi implements ImpeachDAO {
 	@Override
 	public List<ImpeachBean> insertThoughtId(ImpeachBean impeachBean){
 		try {
-			conn =ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT_THOUGHTID);
 			ps.setInt(1, impeachBean.getThoughtId());
 			ps.setString(2, impeachBean.getImpeach());
@@ -141,13 +111,7 @@ public class ImpeachDAOjndi implements ImpeachDAO {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -155,7 +119,7 @@ public class ImpeachDAOjndi implements ImpeachDAO {
 	@Override
 	public List<ImpeachBean> insertRestaurantMessageId(ImpeachBean impeachBean){
 		try {
-			conn =ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT_RESTAURANTMESSAGEID);
 			ps.setInt(1, impeachBean.getRestaurantMessageId());
 			ps.setString(2, impeachBean.getImpeach());
@@ -168,13 +132,7 @@ public class ImpeachDAOjndi implements ImpeachDAO {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -182,7 +140,7 @@ public class ImpeachDAOjndi implements ImpeachDAO {
 	@Override
 	public List<ImpeachBean> insertRestaurantId(ImpeachBean impeachBean){
 		try {
-			conn =ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT_RESTAURANTID);
 			ps.setInt(1, impeachBean.getRestaurantId());
 			ps.setString(2, impeachBean.getImpeach());
@@ -195,13 +153,7 @@ public class ImpeachDAOjndi implements ImpeachDAO {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -210,7 +162,7 @@ public class ImpeachDAOjndi implements ImpeachDAO {
 	@Override
 	public List<ImpeachBean> select(){
 		try {
-			conn =ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<ImpeachBean> list = new ArrayList<ImpeachBean>();

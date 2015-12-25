@@ -13,13 +13,11 @@ import java.util.List;
 
 import model.bean.ImpeachBean;
 import model.dao.ImpeachDAO;
+import model.util.JdbcConnection;
 
 
 public class ImpeachDAOjdbc implements ImpeachDAO {
-	
-	private static final String URL = "jdbc:sqlserver://10.211.55.3:1433;database=travel";
-	private static final String USERNAME = "sa";
-	private static final String PASSWORD = "sa123456";
+
 	
 	private static final String SELECT_ID = "SELECT * FROM Impeach WHERE ImpeachID=?";
 //	private static final String SELECT_UESRNAME = "SELECT * FROM Impeach WHERE =?";
@@ -41,7 +39,7 @@ public class ImpeachDAOjdbc implements ImpeachDAO {
 	@Override
 	public boolean delete(int impeachId){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn =  JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1,impeachId);
 			if(ps.executeUpdate()==1){
@@ -50,13 +48,7 @@ public class ImpeachDAOjdbc implements ImpeachDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return false;
 	}
@@ -67,7 +59,7 @@ public class ImpeachDAOjdbc implements ImpeachDAO {
 	@Override
 	public List<ImpeachBean> insertSceneId(ImpeachBean impeachBean){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn =  JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT_SCENEID);
 			ps.setInt(1, impeachBean.getSceneId());
 			ps.setString(2, impeachBean.getImpeach());
@@ -80,13 +72,7 @@ public class ImpeachDAOjdbc implements ImpeachDAO {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -96,7 +82,7 @@ public class ImpeachDAOjdbc implements ImpeachDAO {
 	@Override
 	public List<ImpeachBean> insertSceneMessageId(ImpeachBean impeachBean){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn =  JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT_SCENEMESSAGEID);
 			ps.setInt(1, impeachBean.getSceneMessageId());
 			ps.setString(2, impeachBean.getImpeach());
@@ -109,13 +95,7 @@ public class ImpeachDAOjdbc implements ImpeachDAO {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -126,7 +106,7 @@ public class ImpeachDAOjdbc implements ImpeachDAO {
 	@Override
 	public List<ImpeachBean> insertThoughtId(ImpeachBean impeachBean){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn =  JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT_THOUGHTID);
 			ps.setInt(1, impeachBean.getThoughtId());
 			ps.setString(2, impeachBean.getImpeach());
@@ -139,13 +119,7 @@ public class ImpeachDAOjdbc implements ImpeachDAO {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -155,7 +129,7 @@ public class ImpeachDAOjdbc implements ImpeachDAO {
 	@Override
 	public List<ImpeachBean> insertRestaurantMessageId(ImpeachBean impeachBean){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn =  JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT_RESTAURANTMESSAGEID);
 			ps.setInt(1, impeachBean.getRestaurantMessageId());
 			ps.setString(2, impeachBean.getImpeach());
@@ -168,13 +142,7 @@ public class ImpeachDAOjdbc implements ImpeachDAO {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -184,7 +152,7 @@ public class ImpeachDAOjdbc implements ImpeachDAO {
 	@Override
 	public List<ImpeachBean> insertRestaurantId(ImpeachBean impeachBean){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn =  JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT_RESTAURANTID);
 			ps.setInt(1, impeachBean.getRestaurantId());
 			ps.setString(2, impeachBean.getImpeach());
@@ -197,13 +165,7 @@ public class ImpeachDAOjdbc implements ImpeachDAO {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -214,7 +176,7 @@ public class ImpeachDAOjdbc implements ImpeachDAO {
 	@Override
 	public List<ImpeachBean> select(){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<ImpeachBean> list = new ArrayList<ImpeachBean>();
@@ -235,13 +197,7 @@ public class ImpeachDAOjdbc implements ImpeachDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}

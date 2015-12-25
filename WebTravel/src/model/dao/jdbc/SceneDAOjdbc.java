@@ -17,11 +17,10 @@ import javax.sql.DataSource;
 
 import model.bean.SceneBean;
 import model.dao.SceneDAO;
+import model.util.JdbcConnection;
 
 public class SceneDAOjdbc implements SceneDAO {
-	private static final String URL = "jdbc:sqlserver://10.211.55.3:1433;database=travel";
-	private static final String USERNAME = "sa";
-	private static final String PASSWORD = "sa123456";
+
 	//select
 	private static final String SELECT_ALL = "select * from scene";
 	private static final String SELECT_BY_LOCATION = "select * from scene where location = ?";	
@@ -42,7 +41,7 @@ public class SceneDAOjdbc implements SceneDAO {
 		List<SceneBean> list = null;
 		SceneBean sbean =null;
 		try (// AutoCloseable
-				Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+				Connection conn = JdbcConnection.getConnection();) {
 			
 			PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
 			ResultSet rs = ps.executeQuery();
@@ -74,7 +73,7 @@ public class SceneDAOjdbc implements SceneDAO {
 	public  SceneBean select(String location) {
 		SceneBean sbean =null;
 		try (// AutoCloseable
-				Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+				Connection conn = JdbcConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_LOCATION);
 			ps.setString(1, location);
 			ResultSet rs = ps.executeQuery();
@@ -105,7 +104,7 @@ public class SceneDAOjdbc implements SceneDAO {
 	public SceneBean insert(SceneBean bean) {
 		SceneBean result = null;
 		try (// AutoCloseable
-				Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+				Connection conn = JdbcConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			if(bean != null){
 			ps.setString(1, bean.getLocation());
@@ -136,7 +135,7 @@ public class SceneDAOjdbc implements SceneDAO {
 	public SceneBean update(SceneBean bean){
 		SceneBean result = null;
 		try (// AutoCloseable
-				Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+				Connection cconn = JdbcConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			if(bean != null){
 			ps.setString(1, bean.getLocation());
@@ -166,7 +165,7 @@ public class SceneDAOjdbc implements SceneDAO {
 	@Override
 	public boolean delete(String sceneName) {
 		try (// AutoCloseable
-				Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+				Connection conn = JdbcConnection.getConnection();) {
 				PreparedStatement ps = conn.prepareStatement(DELETE);
 				
 				ps.setString(1, sceneName);

@@ -10,13 +10,10 @@ import java.util.List;
 
 import model.bean.SceneMessageBean;
 import model.dao.SceneMessageDAO;
+import model.util.JdbcConnection;
 
 public class SceneMessageDAOjdbc implements SceneMessageDAO {
-	//DB連線資訊
-	private static final String URL = "jdbc:sqlserver://localhost:1433;database=travel";
-	private static final String USERNAME = "sa";
 
-	private static final String PASSWORD = "sa123456";	
 	//select
 	private static final String SELECT_ALL = "select * from scenemessage";
 	private static final String SELECT_BY_SCENEID = "select * from scenemessage where sceneId = ?";	
@@ -40,7 +37,7 @@ public class SceneMessageDAOjdbc implements SceneMessageDAO {
 		List<SceneMessageBean> list = null;
 		SceneMessageBean smbean =null;
 		try (//AutoCloseable
-			 Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD); 
+			 Connection conn = JdbcConnection.getConnection(); 
 			 ){
 			
 			PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
@@ -69,7 +66,7 @@ public class SceneMessageDAOjdbc implements SceneMessageDAO {
 	public  SceneMessageBean select(int sceneId) {
 		SceneMessageBean smbean =null;
 		try (
-			 Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD); 
+			 Connection conn = JdbcConnection.getConnection();
 			 ){
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_SCENEID);
 			ps.setInt(1, sceneId);
@@ -96,7 +93,7 @@ public class SceneMessageDAOjdbc implements SceneMessageDAO {
 	public SceneMessageBean insert(SceneMessageBean bean) {
 		SceneMessageBean result = null;
 		try (
-			Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);	
+			Connection conn = JdbcConnection.getConnection();
 				){
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			if(bean != null){
@@ -123,7 +120,7 @@ public class SceneMessageDAOjdbc implements SceneMessageDAO {
 	public SceneMessageBean update(SceneMessageBean bean){
 		SceneMessageBean result = null;
 		try (
-			Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);	
+			Connection conn = JdbcConnection.getConnection();	
 				){
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			if(bean != null){
@@ -149,7 +146,7 @@ public class SceneMessageDAOjdbc implements SceneMessageDAO {
 	@Override
 	public boolean delete(int sceneMessageId) {
 		try (
-				Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);	
+				Connection conn = JdbcConnection.getConnection();
 					){
 				PreparedStatement ps = conn.prepareStatement(DELETE);
 				

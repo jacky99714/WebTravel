@@ -10,13 +10,11 @@ import java.util.List;
 
 import model.bean.RestaurantBean;
 import model.dao.RestaurantDAO;
+import model.util.JdbcConnection;
 
 public class RestaurantDAOjdbc implements RestaurantDAO {
 
-	// DB連線資訊
-	private static final String URL = "jdbc:sqlserver://localhost:1433;database=travel";
-	private static final String USERNAME = "sa";
-	private static final String PASSWORD = "passw0rd";
+
 	// select
 	private static final String SELECT_ALL = "select * from restaurant";
 	private static final String SELECT_BY_LOCATION = "select * from restaurant where location = ?";
@@ -40,7 +38,7 @@ public class RestaurantDAOjdbc implements RestaurantDAO {
 		List<RestaurantBean> list = null;
 		RestaurantBean rbean = null;
 		try (// AutoCloseable
-				Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+				Connection conn = JdbcConnection.getConnection();) {
 
 			PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
 			ResultSet rs = ps.executeQuery();
@@ -74,7 +72,7 @@ public class RestaurantDAOjdbc implements RestaurantDAO {
 	@Override
 	public RestaurantBean select(String location) {
 		RestaurantBean rbean = null;
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn = JdbcConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_LOCATION);
 			ps.setString(1, location);
 			ResultSet rs = ps.executeQuery();
@@ -107,7 +105,7 @@ public class RestaurantDAOjdbc implements RestaurantDAO {
 	@Override
 	public RestaurantBean insert(RestaurantBean bean) {
 		RestaurantBean result = null;
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn = JdbcConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			if (bean != null) {
 				ps.setString(1, bean.getLocation());
@@ -140,7 +138,7 @@ public class RestaurantDAOjdbc implements RestaurantDAO {
 	@Override
 	public RestaurantBean update(RestaurantBean bean) {
 		RestaurantBean result = null;
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn = JdbcConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			if (bean != null) {
 				ps.setString(1, bean.getLocation());
@@ -172,7 +170,7 @@ public class RestaurantDAOjdbc implements RestaurantDAO {
 	 */
 	@Override
 	public boolean delete(String sceneName) {
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn = JdbcConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 
 			ps.setString(1, sceneName);
