@@ -285,7 +285,7 @@
 					var radio,textnode,br;
 					for(var i = 0;i < 4;i++){                    //create  radios to display question's options
 						radio = createInput("noId","radio","noClass","ask",i+1);
-						textnode = document.createTextNode((i+1) +":" + questions.options[i]);
+						textnode = document.createTextNode(questions.options[i]);
 						br = document.createElement("br");
 						form.appendChild(radio);
 						form.appendChild(textnode);
