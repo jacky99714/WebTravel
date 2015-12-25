@@ -1,3 +1,5 @@
+<%@page import="controller.LoginServlet"%>
+<%@page import="model.util.TypeConveter"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -14,18 +16,23 @@
               <a class="navbar-brand" href="<c:url value="/index.jsp" />">旅行微革命</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
+            
               <ul class="nav navbar-nav ">
                 <li class="dropdown"><a href="<c:url value="/index.jsp" />">Home</a></li>
 				<!-- class=active<li>當前頁面 -->
-                 <li class="dropdown ">
+				
+<!-- 	------------------------景點------------------------ -->
+                <li class="dropdown ">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">景點 <span class="caret"></span></a>
                   <ul class="dropdown-menu">
                     <li><a href="#">景點介紹</a></li>
                     <li><a href="#">新增景點</a></li>
 					</ul>
                 </li>
+<!-- 	------------------------景點------------------------ -->
                 
                 
+<!-- 	------------------------美食------------------------ -->
                  <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">美食 <span class="caret"></span></a>
                   <ul class="dropdown-menu">
@@ -33,7 +40,9 @@
                     <li><a href="#">新增美食</a></li>
                   </ul>
                 </li>
+<!-- 	------------------------美食------------------------ -->
                 
+<!-- 	------------------------行程------------------------ -->
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">行程規劃 <span class="caret"></span></a>
                   <ul class="dropdown-menu">
@@ -41,10 +50,30 @@
                     <li><a href="#">行程管理</a></li>
                   </ul>
                 </li>
+<!-- 	------------------------行程------------------------ -->
+
+
+<!-- 	------------------------行程------------------------ -->
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">旅遊日記 <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">日記</a></li>
+                    <li><a href="#">日記分享</a></li>
+                  </ul>
+                </li>
+<!-- 	------------------------行程------------------------ -->
+
+
+<!-- 	------------------------休閒時光------------------------ -->
                  <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">休閒時光 </a>
                 </li>
               </ul>
+<!-- 	------------------------休閒時光------------------------ -->
+
+
+
+<!-- 	------------------------景點------------------------ -->
 <!--                 登入 -->
 			<c:if test="${empty loginOk}">
 				<ul class="nav navbar-nav navbar-right ">
@@ -67,17 +96,21 @@
                 </li>
               	</ul>
               <ul class="nav navbar-nav navbar-right">
+				<c:if test="${not empty memberimg}">
+					<li><img style="margin-top:5px" width="40px" height="40px" src="data:image/png;base64,${memberimg}" alt="..." class="img"></li>
+				</c:if>
                <li><a href="#">${loginOk.userName},你好</a></li>
               </ul>
               </c:if>
+<!-- 	------------------------景點------------------------ -->
 <!--               登入 -->
               </div>
             </div><!--container -->
-          </div>
         </nav>
+          </div>
 
       </div>
-    </div>
+
     
 
    

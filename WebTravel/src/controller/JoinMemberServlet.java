@@ -1,9 +1,7 @@
 package controller;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Base64;
 import java.util.Collection;
 import java.util.HashMap;
@@ -29,7 +27,7 @@ public class JoinMemberServlet extends HttpServlet {
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
+		HttpSession session =request.getSession();
 		//接收
 		String temp1 = request.getParameter("useid");
 		String temp2 = request.getParameter("password");
@@ -54,8 +52,7 @@ public class JoinMemberServlet extends HttpServlet {
 //		ou.close();
 		in.close();
 		String s = Base64.getEncoder().encodeToString(phto);
-		HttpSession session =request.getSession();
-		session.setAttribute("srcAa",s);
+		
 //-----------------------------------------------------------
 		//驗證
 		Map<String, String> error =new HashMap<String,String>();
@@ -78,7 +75,7 @@ public class JoinMemberServlet extends HttpServlet {
 			error.put("birthday", "請輸入生日");
 		}else{
 			date = MemberBean.converDate(temp6);
-			System.out.println(date);
+			System.out.println("JoinMemberServlet:"+date);
 		}
 		if(temp7==null || temp7.length()==0){
 			error.put("cphone", "請輸入手機電話");
@@ -87,7 +84,7 @@ public class JoinMemberServlet extends HttpServlet {
 			error.put("email", "請輸入電子郵件");
 		}
 		if(error!=null && !error.isEmpty()){
-			request.getRequestDispatcher("/secure/joinMember.jsp").forward(request, response);;
+			request.getRequestDispatcher("/secure/joinMember.jsp").forward(request, response);
 		}
 		
 		//model
@@ -109,7 +106,14 @@ public class JoinMemberServlet extends HttpServlet {
 		MemberBean rsbean = ms.insert(mb);
 		//view
 		if(rsbean!=null){
+			if(rsbean.getPhoto()!=null){
+				String phtoB64 =model.util.TypeConveter.parseBase64(rsbean.getPhoto());
+				session.setAttribute("phtoB64", phtoB64);
+			}
+			session.setAttribute("member", rsbean);
 			response.sendRedirect(request.getContextPath()+"/secure/joinSuccess.jsp");
+		}else{
+			request.getRequestDispatcher("/secure/joinMember.jsp").forward(request, response);
 		}
 		
 	}
