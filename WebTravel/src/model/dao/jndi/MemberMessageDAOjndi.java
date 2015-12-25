@@ -28,9 +28,28 @@ public class MemberMessageDAOjndi implements MemberMessageDAO {
 	private static final String INSERT = "insert into MemberMessage(MemberMessageContent,memberId) values(?,?)";
 	private static final String UPDATE = "update MemberMessage set MemberMessageContent=?,MessaageTime=?,memberId=? where MemberMessageID=?";
 	private static final String DELETE = "delete FROM MemberMessage where MemberMessageID=?";
-	
+	private static final String COUNT = " select count(*) from MemberMessage where MemberID=?";
+	 
 	private Connection conn= null;
-	
+	@Override
+	public int count(int memberId){
+		try {
+			conn = DataSourceConnection.getConnection();
+			PreparedStatement ps = conn.prepareStatement(COUNT);
+			ps.setInt(1, memberId);
+			ResultSet rs = ps.executeQuery();
+			int in=0;
+			while(rs.next()){
+				in = rs.getInt(1);
+			}
+		return in;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			DataSourceConnection.closeConnection();
+		}
+		return 0;
+	}
 	
 	@Override
 	public List<MemberMessageBean> select(){
@@ -179,14 +198,18 @@ public class MemberMessageDAOjndi implements MemberMessageDAO {
 		return false;
 	}
 	public static void main(String[] args){
+		
 		MemberMessageDAO t = new MemberMessageDAOjndi();
 		
-		MemberMessageBean tb = new MemberMessageBean();
-		tb.setMemberMessageID(2);
-		tb.setMemberMessageContent("會員提醒你 生日快樂");
-		tb.setMessaageTime("2011-12-22 22:44:44");
-		tb.setMemberId(3);
+
 		
+//		
+//		MemberMessageBean tb = new MemberMessageBean();
+//		tb.setMemberMessageID(2);
+//		tb.setMemberMessageContent("會員提醒你 生日快樂");
+//		tb.setMessaageTime("2011-12-22 22:44:44");
+//		tb.setMemberId(3);
+//		
 //		tb.setThoughtId(1);
 //		tb.setThoughtName("台東熱氣球");
 //		tb.setThoughtType("景點");
@@ -203,11 +226,11 @@ public class MemberMessageDAOjndi implements MemberMessageDAO {
 //----------------------------------------------------------
 //		System.out.println(t.update(tb)); //修改
 //----------------------------------------------------------
-		System.out.println(t.delete(1));//刪除
+//		System.out.println(t.delete(1));//刪除
 //----------------------------------------------------------
-		for(MemberMessageBean e : t.select()){
-			System.out.println(e);
-		}
+//		for(MemberMessageBean e : t.select()){
+//			System.out.println(e);
+//		}
 //----------------------------------------------------------
 	}
 		

@@ -16,6 +16,8 @@ public interface MemberMessageDAO {
 
 	List<MemberMessageBean> update(MemberMessageBean memberMessageBean);
 
+	int count(int memberId);
+	
 	boolean delete(int memberMessageID);
 
 }
