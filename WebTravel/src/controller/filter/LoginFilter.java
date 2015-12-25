@@ -11,7 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
 @WebFilter(
-		urlPatterns="/*"
+
 )
 public class LoginFilter implements Filter {
 
