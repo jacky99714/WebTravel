@@ -1,5 +1,6 @@
 package model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -42,11 +43,10 @@ public class MemberService {
 	//抓到會員收藏
 	public List<SceneBean> getMemberCollectScene(int memberId){
 		List<CollectBean> cbList = cDAO.select(memberId);
+		List<SceneBean> sbList = new ArrayList<SceneBean>();
 		for(CollectBean c: cbList){
-//			sDAO.
+			sbList.add(sDAO.select(c.getSceneId()));
 		}
-		
-		
-		return null;
+		return sbList;
 	}
 }
