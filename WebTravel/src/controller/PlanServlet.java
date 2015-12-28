@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -14,11 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.bean.CollectBean;
-import model.dao.CollectDAO;
-import model.dao.jndi.CollectDAOjndi;
+
 import model.service.PlanService;
-import model.util.TypeConveter;
+import other.bean.FavoriteBean;
 
 /**
  * Servlet implementation class PlanServlet
@@ -44,16 +43,11 @@ public class PlanServlet extends HttpServlet {
 	    
 	    PlanService ps = new PlanService();
 
-	   
 
-		String img = TypeConveter.parseBase64(TypeConveter.parseByteArray("E:/bg.png"));
 		HttpSession session = request.getSession();
-		session.setAttribute("img", img);
-		List li = ps.getFavorite(1);
-	
+		List<FavoriteBean> li = new ArrayList<>();
+		li = ps.getFavorite(1);
 		session.setAttribute("fav", li);
-
-	
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("plan.jsp");
 		dispatcher.forward(request, response);
