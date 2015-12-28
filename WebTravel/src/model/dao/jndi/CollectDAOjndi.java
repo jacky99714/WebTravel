@@ -10,7 +10,6 @@ import java.util.List;
 
 
 import model.bean.CollectBean;
-import model.bean.SceneBean;
 import model.dao.CollectDAO;
 import model.util.DataSourceConnection;
 import model.util.TypeConveter;

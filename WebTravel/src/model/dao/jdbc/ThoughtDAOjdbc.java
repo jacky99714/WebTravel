@@ -1,7 +1,6 @@
 package model.dao.jdbc;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.bean.MemberBean;
 import model.bean.ThoughtBean;
 import model.dao.ThoughtDAO;
 import model.util.JdbcConnection;
@@ -22,7 +20,6 @@ public class ThoughtDAOjdbc implements ThoughtDAO {
 	private static final String INSERT = "insert into Thought(thoughtName,thoughtContent,thoughtType,memberId) values(?,?,?,?)";
 	private static final String UPDATE = "update Thought set thoughtName=?,thoughtContent=?,thoughtType=?,memberId=? where ThoughtID=?";
 	private static final String DELETE = "delete FROM Thought where ThoughtID=?";
-	private SimpleDateFormat sf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private Connection conn= null;
 	
 	/* (non-Javadoc)

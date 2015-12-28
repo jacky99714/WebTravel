@@ -3,20 +3,15 @@ package model.dao.jdbc;
 
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
 import model.bean.SceneBean;
 import model.dao.SceneDAO;
+import model.util.DataSourceConnection;
 import model.util.JdbcConnection;
 
 public class SceneDAOjdbc implements SceneDAO {
@@ -70,10 +65,12 @@ public class SceneDAOjdbc implements SceneDAO {
 	 * @see model.dao.jdbc.SceneDAO#select(java.lang.String)
 	 */
 	@Override
-	public  SceneBean select(String location) {
+	public  List<SceneBean> select(String location) {
 		SceneBean sbean =null;
-		try (// AutoCloseable
-				Connection conn = JdbcConnection.getConnection();) {
+		List<SceneBean> li = new ArrayList<>();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+			 ){
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_LOCATION);
 			ps.setString(1, location);
 			ResultSet rs = ps.executeQuery();
@@ -87,13 +84,13 @@ public class SceneDAOjdbc implements SceneDAO {
 				sbean.setSceneContent(rs.getString(6));
 				sbean.setTimeStart(rs.getString(7));
 				sbean.setTimeEnd(rs.getString(8));
-				sbean.setMemberId(rs.getInt(9));	
+				sbean.setMemberId(rs.getInt(9));
+				li.add(sbean);
 			}		
 		} catch (SQLException e) {			
 			e.printStackTrace();
 		}
-	
-		return sbean;
+		return li;
 	}
 	
 	//新增INSERT

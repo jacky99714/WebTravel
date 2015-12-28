@@ -138,12 +138,41 @@
 
          function click(ev){
              var img = ev.currentTarget;
-             appendImg(img.src);       
+             appendImg(img.src,img.title);       
          }
-////////////////////////////////////////////////////////////////		
-         function createImg(imgsrc){
+////////////////////////////////////////////////////////////////
+         
+ 		function getScene(){ 
+			var select = document.getElementById("select").value;
+	    	xhr = new XMLHttpRequest();
+	    	if(xhr !== null){
+		    	xhr.addEventListener("readystatechange",callback);
+		    	xhr.open("get","GetSceneLocationServlet?location="+select,true); 
+		    	xhr.send();		      	
+	    	}else{
+	    		alert("您的瀏覽器不支援Ajax功能!!");
+	    	}
+ 		}
+
+	    function callback(){
+	    	if(xhr.readyState === 4){ 	
+	    		if(xhr.status === 200){
+			    	var data = JSON.parse(xhr.responseText);
+			    	var content = document.getElementById("content");
+			    	for(var i=1; i <= data.length;i++){
+			    		
+			    	}
+
+	    		}else{
+	    			alert(xhr.status + ":" + xhr.statusText);
+	    		}    		
+	    	}  	
+	    }
+/////////////////////////////////////////////
+         function createImg(imgsrc,title){
              var img = new Image(80,80);
              img.src = imgsrc;
+             img.title = title;
              img.id = "img"+imgId;
              img.draggable = true;
              img.setAttribute('ondragstart', 'drag(event)');
@@ -157,25 +186,25 @@
              return line;
          }
 
-         function createTd(input,imgsrc){
+         function createTd(input,imgsrc,imgtitle){
              var td = document.createElement("td");
              if(input === "line"){
                 td.appendChild(createLine());
              }else if(input === "image"){
                 td.setAttribute('ondrop', 'drop(event)');
                 td.setAttribute('ondragover', 'allowDrop(event)');
-                td.appendChild(createImg(imgsrc));
+                td.appendChild(createImg(imgsrc,imgtitle));
              }
              return td;
          }
                
-         function appendImg(imgsrc){
+         function appendImg(imgsrc,imgtitle){
       //  	 alert("total"+totalImage);
              if((maxLine * maxImg) === totalImage){
                  return;
              }
              
-             var tdImg = createTd("image",imgsrc);
+             var tdImg = createTd("image",imgsrc,imgtitle);
              var tr;
 
              if( totalImage % maxImg === 0){
@@ -217,19 +246,27 @@
                 document.getElementById('addContent').style.display='none';
                 document.getElementById('addFavorite').style.display='none';
                 document.getElementById('fade').style.display='none';
-            });  
+            }); 
+            
+            document.getElementById("sure").addEventListener("click",function(){
+            	
+            	
+            	
+            	
+            });
+            
+            document.getElementById("select").addEventListener("change", getScene);
             table = document.getElementById("tab");
             totalImage = 0;
 
-            appendImg("img/freeze_f.bmp");
-            appendImg("img/firen_f.bmp");
-            appendImg("img/firzen_f.bmp");
+            appendImg("img/freeze_f.bmp","AAA");
+            appendImg("img/firen_f.bmp","AAA");
+            appendImg("img/firzen_f.bmp","AAA");
        
  
             for(var i=1;i <= ${fn:length(fav)};i++){
                 document.getElementById("fav"+i).addEventListener("click", click);                 
-            }
-                
+            }         
                 
         }	
 	</script>
@@ -239,14 +276,22 @@
 
         <div id="addContent" class="white_content"> 
             <img  id="closeAdd" class="close" src="img/close.png">
-   			
+			<select id="select">
+				<option value="北區">北區</option>
+				<option value="中區">中區</option>
+				<option value="南區">南區</option>
+				<option value="東區">東區</option>
+			</select>
+			<div id="content">
+			
+			</div>		
         </div>
         
         <div id="addFavorite" class="white_content"> 
             <img  id="closeFavorite" class="close" src="img/close.png">
              <div>
             	<c:forEach var="fav" varStatus="status" items="${fav}">
-          		<img id= 'fav${status.count}'                
+          		<img id= 'fav${status.count}'  title="${fav.sceneName}"               
         			src='data:image/png;base64,${fav.scenePhoto}'/> <br>
             	</c:forEach>
             </div>
@@ -267,6 +312,7 @@
 
 	<table id="tab">
 	</table>
+	<button id="sure">行程確認</button>
 </body>
 
 </html>

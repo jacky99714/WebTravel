@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.List;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 
@@ -18,6 +21,10 @@ public class TypeConveter{
 	public static JSONObject parseJSONObject(Object bean){
 		return (new JSONObject(bean));
 	}
+	public static JSONArray parseJSONArray(List li){
+		return (new JSONArray(li));
+	}	
+	
 	
 	public static java.sql.Timestamp parseTimestamp(java.util.Date dateTime){
 		return (new java.sql.Timestamp(dateTime.getTime()));

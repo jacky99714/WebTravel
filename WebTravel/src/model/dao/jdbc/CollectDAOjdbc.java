@@ -1,7 +1,6 @@
 package model.dao.jdbc;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.bean.CollectBean;
-import model.bean.SceneBean;
 import model.dao.CollectDAO;
 import model.util.DataSourceConnection;
 import model.util.JdbcConnection;
@@ -96,7 +94,7 @@ public class CollectDAOjdbc implements CollectDAO {
 			ps.setInt(1, collectBean.getMemberId());
 			ps.setInt(2, collectBean.getSceneId());
 			ps.setInt(3, collectBean.getCollectId());
-
+		
 			if(ps.executeUpdate()==1){
 				return this.select(collectBean.getMemberId());
 			}

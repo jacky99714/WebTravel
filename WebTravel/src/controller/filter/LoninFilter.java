@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.bean.MemberBean;
-import model.dao.jndi.MemberDAOjndi;
 import model.dao.jndi.MemberMessageDAOjndi;
 
 @WebFilter(
