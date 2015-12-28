@@ -12,6 +12,8 @@ import java.util.List;
 import model.bean.CollectBean;
 import model.dao.CollectDAO;
 import model.util.DataSourceConnection;
+import model.util.TypeConveter;
+import other.bean.FavoriteBean;
 
 
 
@@ -25,7 +27,7 @@ public class CollectDAOjndi implements CollectDAO {
 	private static final String UPDATE = "update Collect set collectId=? where MemberID=? and sceneId=?";
 	private static final String DELETE = "delete FROM Collect where memberId=? and sceneId=?";
 	private static final String SELECT_SCENE =
-				"select  s.SceneName from Collect as c, Scene as s where c.MemberID=? and c.SceneID = s.SceneID";  
+			"select s.Location,s.City,s.SceneName,s.Scenephoto,s.SceneContent,s.TimeStart,s.TimeEnd from Collect as c join Scene as s  on c.SceneID = s.SceneID where c.MemberID=? ";  
 	private Connection conn= null;
 	
 	@Override
@@ -145,15 +147,27 @@ public class CollectDAOjndi implements CollectDAO {
 	}
 	
 	@Override
-	public List<String> selectScene(int memberId) {
+	public List<FavoriteBean> selectScene(int memberId) {
 		try {
+			//s.SceneID,s.Location,s.City,s.SceneName,s.Scenephoto,s.SceneContent,s.TimeStart,s.TimeEnd
 			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_SCENE);
 			ps.setInt(1, memberId);
 			ResultSet rs = ps.executeQuery();
-			List<String> li = new ArrayList<>();
+			List<FavoriteBean> li = new ArrayList<>();
+			FavoriteBean bean;
+			String temp;
 			while(rs.next()){
-				li.add(rs.getString(1));		
+				bean = new FavoriteBean();
+				bean.setLocation(rs.getString(1));
+				bean.setCity(rs.getString(2));
+				bean.setSceneName(rs.getString(3));
+				bean.setScenePhoto(TypeConveter.parseBase64(rs.getBytes(4)));
+			//	bean.setScenePhoto(" <img src='data:image/png;base64,"+TypeConveter.parseBase64(rs.getBytes(4))+"'/>");
+				bean.setSceneContent(rs.getString(5));
+				bean.setTimeStart(rs.getString(6));
+				bean.setTimeEnd(rs.getString(7));
+				li.add(bean);		
 			}
 			return li;
 		} catch (SQLException e) {

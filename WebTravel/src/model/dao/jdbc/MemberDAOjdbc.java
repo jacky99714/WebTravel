@@ -1,30 +1,18 @@
 package model.dao.jdbc;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Blob;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 
 import model.bean.MemberBean;
 import model.dao.MemberDAO;
@@ -106,8 +94,6 @@ public class MemberDAOjdbc implements MemberDAO {
 				mBean.setCellphone(rs.getString(9));
 				mBean.setTelephone(rs.getString(10));
 				mBean.setEmail(rs.getString(11));
-//				Blob b = rs.getBlob(12);
-//				mBean.setPhoto(rs.getBlob(12));
 				mBean.setPhoto(rs.getBytes(12));
 				return mBean;
 			}

@@ -1,7 +1,6 @@
 package model.dao.jndi;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -65,14 +64,16 @@ public class SceneDAOjndi implements SceneDAO {
 	 * @see model.dao.jdbc.SceneDAO#select(java.lang.String)
 	 */
 	@Override
-	public  SceneBean select(String location) {
+	public  List<SceneBean> select(String location) {
 		SceneBean sbean =null;
+		List<SceneBean> li = new ArrayList<>();
 		try (
 				Connection conn = DataSourceConnection.getConnection();
 			 ){
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_LOCATION);
-			ps.setString(1, location);
+			ps.setString(1,location);
 			ResultSet rs = ps.executeQuery();
+			
 			while(rs.next()){
 				sbean = new SceneBean();				
 				sbean.setSceneId(rs.getInt(1));
@@ -83,13 +84,13 @@ public class SceneDAOjndi implements SceneDAO {
 				sbean.setSceneContent(rs.getString(6));
 				sbean.setTimeStart(rs.getString(7));
 				sbean.setTimeEnd(rs.getString(8));
-				sbean.setMemberId(rs.getInt(9));	
+				sbean.setMemberId(rs.getInt(9));
+				li.add(sbean);
 			}		
 		} catch (SQLException e) {			
 			e.printStackTrace();
 		}
-	
-		return sbean;
+		return li;
 	}
 	
 	public  SceneBean select(int sceneId) {

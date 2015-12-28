@@ -3,6 +3,7 @@ package model.dao;
 import java.util.List;
 
 import model.bean.CollectBean;
+import other.bean.FavoriteBean;
 
 public interface CollectDAO {
 
@@ -15,7 +16,7 @@ public interface CollectDAO {
 
 	List<CollectBean> update(CollectBean collectBean);
 	
-	List<String> selectScene(int memberId);
+	List<FavoriteBean> selectScene(int memberId);
 	
 
 	boolean delete(int memberId, int sceneId);
