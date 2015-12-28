@@ -26,10 +26,16 @@ public class MyCollectServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session =request.getSession();
 		MemberBean mb = (MemberBean)session.getAttribute("loginOk");
+		SceneBean sb = new SceneBean();
+//		System.out.println("MyCollectServlet:"+mb);
 		if(mb!=null){
 			List<SceneBean> sceneList = memberService.getMemberCollectScene(mb.getMemberId());
-			request.setAttribute("sceneList", sceneList);
+//			System.out.println("MyCollectServlet:"+sceneList);
+			session.setAttribute("sceneList", sceneList);
 		}
+		response.sendRedirect(request.getContextPath()+"/JMember/MyCollect.jsp");
+//		request.getRequestDispatcher("/JMember/MyCollect.jsp").forward(request, response);
+		
 	}
 
 	

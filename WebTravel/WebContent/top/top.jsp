@@ -86,7 +86,7 @@
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">會員管理<span class="caret"></span></a>
                   <ul class="dropdown-menu">
                     <li><a href="#">我的帳號</a></li>
-                    <li><a href="#">我的收藏</a></li>
+                    <li><a href="<c:url value="/MyCollectServlet" />">我的收藏</a></li>
                     <li><a href="#">我的行程規劃</a></li>
 <!--                     <li role="separator" class="divider"></li> -->
 <!--                     <li class="dropdown-header">Nav header</li> -->

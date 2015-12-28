@@ -17,9 +17,9 @@ import model.bean.MemberBean;
 import model.dao.jndi.MemberDAOjndi;
 import model.dao.jndi.MemberMessageDAOjndi;
 
-@WebFilter(
-		 urlPatterns = "/*"
-		)
+//@WebFilter(
+//		 urlPatterns = "/*"
+//		)
 public class LoninFilter implements Filter {
 
     private FilterConfig filterConfig;
