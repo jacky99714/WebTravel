@@ -28,6 +28,7 @@
  	padding:71px;
  }
  .delete{}
+ .joinSchedule{}
  .imglist{width:120px;height:100px}
  </style>
   </head>
@@ -50,21 +51,19 @@
   			<th>開始時間</th>
   			<th>結束時間</th>
   			<th></th>
-
   		</thead>
   		<tbody>
    		 <c:forEach var="scene" items="${sceneList}">
-
    			<tr>
 	  			<td>${scene.sceneId}</td>
-	  			<td><img class="imglist" src="data:image/png;base64,<%=TypeConveter.parseBase64(list.get(a).getScenePhoto())%>"></td>
+	  			<td><img class="imglist" src="data:image/png;base64,<%=TypeConveter.EncodeBase64(list.get(a).getScenePhoto())%>"></td>
 	  			<td>${scene.location}</td>
 	  			<td>${scene.city}</td>
 	  			<td>${scene.sceneName}</td>
 	  			<td>${scene.sceneContent}</td>
 	  			<td>${scene.timeStart}</td>
 	  			<td>${scene.timeEnd}</td>
-	  			<td><button value="${scene.sceneId}" class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  加入行程</button>  <button value="${scene.sceneId}" class="btn btn-danger btn-xs delete" data-toggle="modal" data-target=".bs-example-modal-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  刪除</button></td>
+	  			<td><button value="${scene.sceneId}" class="btn btn-success btn-xs joinSchedule" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  加入行程</button>  <button value="${scene.sceneId}" class="btn btn-danger btn-xs delete" data-toggle="modal" data-target=".bs-example-modal-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  刪除</button></td>
 <%-- 	  			<td>${scene.memberId}</td> --%>
   			</tr>
   			<%a++;%>
@@ -74,7 +73,6 @@
     
 </div>
 <!-- Modal -->
-
 <div id="myModal001" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
@@ -94,24 +92,27 @@
 </div>
 <!--  -->
 
-<!-- <!-- Modal -->
+<!--  Modal -->
 <!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"> -->
 <!--   <div class="modal-dialog" role="document"> -->
 <!--     <div class="modal-content"> -->
 <!--       <div class="modal-header"> -->
 <!--         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
-<!--         <h4 class="modal-title" id="myModalLabel">Modal title</h4> -->
+<!--         <h4 class="modal-title" id="myModalLabel">修改</h4> -->
 <!--       </div> -->
 <!--       <div class="modal-body"> -->
-<!--         		你確定要刪除嗎? -->
+<!-- 修改內容 -->
+
+<!-- 內容結束 -->
 <!--       </div> -->
 <!--       <div class="modal-footer"> -->
-<!--         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button> -->
-<!--         <button type="button" class="btn btn-primary">確定刪除</button> -->
+<!--         <button type="button" class="btn btn-default" data-dismiss="modal">修改</button> -->
+<!--         <button type="button" class="btn btn-primary">取消</button> -->
 <!--       </div> -->
 <!--     </div> -->
 <!--   </div> -->
 <!-- </div> -->
+<!--     -->
     <hr class="featurette-divider">
     <footer>
     <p class="pull-right"><a href="#">Back to top</a></p>
