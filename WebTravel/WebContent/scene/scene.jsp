@@ -5,12 +5,21 @@
 <html>
 
 <!-- CSS -->
-<script type="text/javascript">
+<style>
+ 
+#pinkblock { 
+  z-index: 2; 
+  position: absolute; 
+  width:130px; 
+  height:130px; 
+  top:10px; 
+  left:10px; 
+  border: 1px solid #FFF; 
+ 
+  background-color: @brand-primary; 
+}
 
-.img-rounded {
-	padding:10px;
-    }
-</script>
+</style>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>旅行微革命</title>
@@ -28,99 +37,56 @@
   </head>
   <body style="padding:71px;">
 <!--   將top.jsp（首頁）加進頁面 -->
-	<jsp:include page="/top/top.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/top/top.jsp"></jsp:include>
 
 <!--     ---------------------------- -->
     <div class="container">
     
-	<!--  ===============北部===============  -->
+	
  <div class="row">
   <div class="col-md-1"></div>
   
   <div class="col-md-10">
-	<table>
+	<table class="table">
+		<!--  ===============北部===============  -->
 		<tr>
-			<td><a href="scene_location.html"><img src="img/scene01.jpg" alt="北區" class="img-rounded"></a></td>
-			<td><a href="scene_location.html"><img src="img/scene01.jpg" alt="台北市" class="img-rounded"></a></td>
-			<td><a href="scene_location.html"><img src="img/scene01.jpg" alt="新北市" class="img-rounded"></a></td>
-			<td><a href="scene_location.html"><img src="img/scene01.jpg" alt="桃園市" class="img-rounded"></a></td>
-			<td><a href="scene_location.html"><img src="img/scene01.jpg" alt="新竹縣" class="img-rounded"></a></td>
-			<td><a href="scene_location.html"><img src="img/scene01.jpg" alt="苗栗縣" class="img-rounded"></a></td>		
+			<td><a href="<%=request.getContextPath()%>/SelectLocationServlet?location=北區"><img src="img/scene01.jpg" alt="北區" class="img-rounded"></a></td>
+			<td><a href="<%=request.getContextPath()%>/SelectLocationServlet?city=台北市"><img src="img/scene01.jpg" alt="台北市" class="img-rounded"></a></td>
+			<td><a href="<%=request.getContextPath()%>/SelectLocationServlet?location=新北市"><img src="img/scene01.jpg" alt="新北市" class="img-rounded"></a></td>
+			<td><a href="<%=request.getContextPath()%>/SelectLocationServlet?location=基隆市"><img src="img/scene01.jpg" alt="基隆市" class="img-rounded"></a></td>
+			<td><a href="<%=request.getContextPath()%>/SelectLocationServlet?location=桃園市"><img src="img/scene01.jpg" alt="桃園市" class="img-rounded"></a></td>
+			<td><a href="<%=request.getContextPath()%>/SelectLocationServlet?location=新竹縣"><img src="img/scene01.jpg" alt="新竹縣" class="img-rounded"></a></td>
+			<td><a href="<%=request.getContextPath()%>/SelectLocationServlet?location=宜蘭縣"><img src="img/scene01.jpg" alt="宜蘭縣" class="img-rounded"></a></td>		
 		</tr>
-	</table>				
-  </div>
- 
-  <div class="col-md-1"></div>
- 
- </div><br>
-<!--  ===============中部===============  -->
-  <div class="row">
-  <div class="col-md-1">中部
-  <img src="images/scene02.jpg" alt="..." class="img-rounded">
-  </div>
-  <div class="col-md-1">台中市
-   <img src="images/scene02.jpg" alt="..." class="img-rounded">
-  </div>
-  <div class="col-md-1">彰化縣
-   <img src="images/scene02.jpg" alt="..." class="img-rounded">
-  </div>
-  <div class="col-md-1">南投縣
-   <img src="images/scene02.jpg" alt="..." class="img-rounded">
-  </div>
-  <div class="col-md-1">
-  
-  </div>
-  <div class="col-md-1">
- 
-  </div>
- </div> <br>
-<!--  ===============南部===============  -->
-  <div class="row">
-  <div class="col-md-1">南部
-  <img src="images/scene03.jpg" alt="..." class="img-rounded">
-  </div>
-  <div class="col-md-1">雲林縣
-   <img src="images/scene03.jpg" alt="..." class="img-rounded">
-  </div>
-  <div class="col-md-1">嘉義縣
-   <img src="images/scene03.jpg" alt="..." class="img-rounded">
-  </div>
-  <div class="col-md-1">台南市
-   <img src="images/scene03.jpg" alt="..." class="img-rounded">
-  </div>
-  <div class="col-md-1">高雄市
-   <img src="images/scene03.jpg" alt="..." class="img-rounded">
-  </div>
-  <div class="col-md-1">屏東縣
-   <img src="images/scene03.jpg" alt="..." class="img-rounded">
-  </div>
- </div> <br>
-<!--  ===============東部===============  -->
-  <div class="row">
-  <div class="col-md-1">東部
-  <img src="images/scene04.jpg" alt="..." class="img-rounded">
-  </div>
-  <div class="col-md-1">宜蘭縣
-   <img src="images/scene04.jpg" alt="..." class="img-rounded">
-  </div>
-  <div class="col-md-1">花蓮縣
-   <img src="images/scene04.jpg" alt="..." class="img-rounded">
-  </div>
-  <div class="col-md-1">台東縣
-   <img src="images/scene04.jpg" alt="..." class="img-rounded">
-  </div>
-  <div class="col-md-1">
- 
-  </div>
-  <div class="col-md-1">
-  
+		<!--  ===============中部===============  -->
+		<tr>		
+			<td><a href="<%=request.getContextPath()%>/SelectLocationServlet?location=中區"><img src="img/scene02.jpg" alt="中區" class="img-rounded"></a></td>
+			<td><a href="<%=request.getContextPath()%>/SelectLocationServlet?location=苗栗縣"><img src="img/scene02.jpg" alt="苗栗縣" class="img-rounded"></a></td>
+			<td><a href="<%=request.getContextPath()%>/SelectLocationServlet?location=台中市"><img src="img/scene02.jpg" alt="台中市" class="img-rounded"></a></td>
+			<td><a href="<%=request.getContextPath()%>/SelectLocationServlet?location=彰化縣"><img src="img/scene02.jpg" alt="彰化縣" class="img-rounded"></a></td>
+			<td><a href="<%=request.getContextPath()%>/SelectLocationServlet?location=南投縣"><img src="img/scene02.jpg" alt="南投縣" class="img-rounded"></a></td>
+			<td><a href="<%=request.getContextPath()%>/SelectLocationServlet?location=雲林縣"><img src="img/scene02.jpg" alt="雲林縣" class="img-rounded"></a></td>						
+		</tr>
+		<!--  ===============南部===============  -->
+		<tr>
+			<td><a href="<%=request.getContextPath()%>/SelectLocationServlet?location=南區"><img src="img/scene03.jpg" alt="南區" class="img-rounded"></a></td>
+			<td><a href="<%=request.getContextPath()%>/SelectLocationServlet?location=嘉義縣"><img src="img/scene03.jpg" alt="嘉義縣" class="img-rounded"></a></td>
+			<td><a href="<%=request.getContextPath()%>/SelectLocationServlet?location=台南市"><img src="img/scene03.jpg" alt="台南市" class="img-rounded"></a></td>
+			<td><a href="<%=request.getContextPath()%>/SelectLocationServlet?location=高雄市"><img src="img/scene03.jpg" alt="高雄市" class="img-rounded"></a></td>
+			<td><a href="<%=request.getContextPath()%>/SelectLocationServlet?location=屏東縣"><img src="img/scene03.jpg" alt="屏東縣" class="img-rounded"></a></td>
+			<td><a href="<%=request.getContextPath()%>/SelectLocationServlet?location=澎湖縣"><img src="img/scene03.jpg" alt="澎湖縣" class="img-rounded"></a></td>		
+			<td><a href="<%=request.getContextPath()%>/SelectLocationServlet?location=金門縣"><img src="img/scene03.jpg" alt="金門縣" class="img-rounded"></a></td>		
+		</tr>
+		<!--  ===============東部===============  -->
+		<tr>
+			<td class="td"><a href="<%=request.getContextPath()%>/SelectLocationServlet?location=東區"><img src="img/scene04.jpg" alt="東區" class="img-rounded"></a></td>
+			<td><a href="<%=request.getContextPath()%>/SelectLocationServlet?location=花蓮縣"><img src="img/scene04.jpg" alt="花蓮縣" class="img-rounded"></a></td>
+			<td><a href="<%=request.getContextPath()%>/SelectLocationServlet?location=台東縣"><img src="img/scene04.jpg" alt="台東縣" class="img-rounded"></a></td>				
+		</tr>
+	</table>		
   </div>
  </div>
-
-    
-    </div>
-    
-    
+</div>  
 <!--  -->
 
     <hr class="featurette-divider">
