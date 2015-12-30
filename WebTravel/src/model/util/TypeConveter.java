@@ -14,10 +14,20 @@ import org.json.JSONObject;
 
 
 public class TypeConveter{
-	public static String parseBase64(byte[] src){
+	public static String EncodeBase64(byte[] src){
+		if(src == null){
+			return null;
+		}
 		return Base64.getEncoder().encodeToString(src);
 	}
-	
+		
+	public static byte[] DecodeBase64(String src){
+		if(src == null){
+			return null;
+		}
+		return Base64.getDecoder().decode(src);
+	}
+
 	public static JSONObject parseJSONObject(Object bean){
 		return (new JSONObject(bean));
 	}
@@ -71,8 +81,10 @@ public class TypeConveter{
 	    return result;
 	}	
 	
-	public static byte[] parseByteArray(String src){  //parse file to byte array
-	    File file = new File(src);
+
+	
+	public static byte[] parseByteArray(String fileSrc){  //parse file to byte array
+	    File file = new File(fileSrc);
 	    FileInputStream fis = null;
 	    byte[] result = null;
 		try {
