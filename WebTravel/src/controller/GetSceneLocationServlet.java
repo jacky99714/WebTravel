@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.bean.SceneBean;
 import model.service.PlanService;
@@ -37,10 +38,11 @@ public class GetSceneLocationServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    request.setCharacterEncoding("UTF-8");
 	    response.setContentType("text/html; charset=UTF-8");
-	    
+	    HttpSession session = request.getSession();
 	    
 		PlanService ps = new PlanService();
-		List<SceneBean> li = new ArrayList<>();
+		List<FavoriteBean> li = new ArrayList<>();
+	
 		li = ps.getScene(request.getParameter("location"));
 		PrintWriter out = response.getWriter();
 		out.print(TypeConveter.parseJSONArray(li));
