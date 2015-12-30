@@ -33,7 +33,7 @@
  </style>
   </head>
   <body class="ss">
-  <jsp:include page="/top/top.jsp"/>
+  <jsp:include page="/WEB-INF/top/top.jsp"/>
 <%@ page import="model.util.*"%>
 <%ArrayList<SceneBean> list =(ArrayList<SceneBean>)session.getAttribute("sceneList"); 
 	int a = 0;

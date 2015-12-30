@@ -21,7 +21,7 @@
     <![endif]-->
   </head>
   <body style="padding:71px;">
-  <jsp:include page="/top/top.jsp"/>
+  <jsp:include page="/WEB-INF/top/top.jsp"/>
 
 <!--     我是內容---------------------------- -->
 <!-- <div class="jumbotron" style="background:#FFFFFF"> -->

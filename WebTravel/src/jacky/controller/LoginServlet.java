@@ -1,4 +1,4 @@
-package controller.jack;
+package jacky.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -53,9 +53,6 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("loginOk", mb);
 			response.sendRedirect(request.getContextPath()+"/index.jsp");
 		}
-		
-		
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
