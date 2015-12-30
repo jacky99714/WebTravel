@@ -1,14 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"  %>
+
+<%@page import="model.util.TypeConveter" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>行程規劃</title>
 	<style>
-        .black_overlay{
+		.black_overlay{
             display: none;
             position: absolute;
             top: 0%;
@@ -59,6 +61,21 @@
             border:3px ridge red;
         }
         
+        .img{
+        	 width:100px;
+        	 height:100px;
+        }
+        
+        .favcontent{
+        	display:inline-block;
+        }
+        
+        .icon{
+        	 width:200px;
+        	 height:120px;
+        	 display:inline-block;     	
+        }
+        
         table{
             border:3px ridge #DDDDDD
         }
@@ -70,7 +87,6 @@
 	
 	<script>
          var table;
-         var imgId = 0;
          var totalImage = 0;
          var maxImg = 5;  // max image in tr tag
          var maxLine = 5;   
@@ -88,7 +104,7 @@
              var src = document.getElementById (ev.dataTransfer.getData("text"));  //source image
              var srcId = src.id;
              var srcParent = src.parentNode;
-             var tar = ev.currentTarget.firstElementChild;     //target image
+             var tar = ev.currentTarget;     //target image
              if(srcParent.id === "collection"){
                  return;
              }
@@ -138,7 +154,11 @@
 
          function click(ev){
              var img = ev.currentTarget;
-             appendImg(img.src,img.title);       
+             var id = "img"+img.id.substring(3);
+             if(!document.getElementById(id)){
+            	 appendImg(img.src,id,img.title); 
+             }
+                   
          }
 ////////////////////////////////////////////////////////////////
          
@@ -158,9 +178,11 @@
 	    	if(xhr.readyState === 4){ 	
 	    		if(xhr.status === 200){
 			    	var data = JSON.parse(xhr.responseText);
-			    	var content = document.getElementById("content");
-			    	for(var i=1; i <= data.length;i++){
-			    		
+			    	var searchcontent = document.getElementById("searchcontent");  //顯示資料
+			    	searchcontent.innerHTML="";
+			    	for(var i=0; i < data.length;i++){
+			    		var img = createImg('data:image/png;base64,'+data[i].scenePhoto,data[i].sceneId,data[i].sceneName);
+			    		searchcontent.appendChild(img);
 			    	}
 
 	    		}else{
@@ -169,14 +191,14 @@
 	    	}  	
 	    }
 /////////////////////////////////////////////
-         function createImg(imgsrc,title){
-             var img = new Image(80,80);
+         function createImg(imgsrc,imgid,title){
+             var img = new Image();
              img.src = imgsrc;
              img.title = title;
-             img.id = "img"+imgId;
+             img.id = imgid;
+             img.className = "img";
              img.draggable = true;
              img.setAttribute('ondragstart', 'drag(event)');
-             imgId++;
              return img;
          }
 
@@ -186,25 +208,25 @@
              return line;
          }
 
-         function createTd(input,imgsrc,imgtitle){
+         function createTd(input,imgsrc,imgid,imgtitle){
              var td = document.createElement("td");
              if(input === "line"){
                 td.appendChild(createLine());
              }else if(input === "image"){
                 td.setAttribute('ondrop', 'drop(event)');
                 td.setAttribute('ondragover', 'allowDrop(event)');
-                td.appendChild(createImg(imgsrc,imgtitle));
+                td.appendChild(createImg(imgsrc,imgid,imgtitle));
              }
              return td;
          }
                
-         function appendImg(imgsrc,imgtitle){
+         function appendImg(imgsrc,imgid,imgtitle){
       //  	 alert("total"+totalImage);
              if((maxLine * maxImg) === totalImage){
                  return;
              }
              
-             var tdImg = createTd("image",imgsrc,imgtitle);
+             var tdImg = createTd("image",imgsrc,imgid,imgtitle);
              var tr;
 
              if( totalImage % maxImg === 0){
@@ -249,9 +271,7 @@
             }); 
             
             document.getElementById("sure").addEventListener("click",function(){
-            	
-            	
-            	
+            	      	
             	
             });
             
@@ -259,13 +279,10 @@
             table = document.getElementById("tab");
             totalImage = 0;
 
-            appendImg("img/freeze_f.bmp","AAA");
-            appendImg("img/firen_f.bmp","AAA");
-            appendImg("img/firzen_f.bmp","AAA");
        
  
-            for(var i=1;i <= ${fn:length(fav)};i++){
-                document.getElementById("fav"+i).addEventListener("click", click);                 
+            for(var i=0;i < ${fn:length(fav)};i++){	
+                document.getElementsByName("favimg")[i].addEventListener("click", click);                 
             }         
                 
         }	
@@ -282,34 +299,40 @@
 				<option value="南區">南區</option>
 				<option value="東區">東區</option>
 			</select>
-			<div id="content">
+			<div id="searchcontent">
 			
 			</div>		
         </div>
         
         <div id="addFavorite" class="white_content"> 
             <img  id="closeFavorite" class="close" src="img/close.png">
-             <div>
-            	<c:forEach var="fav" varStatus="status" items="${fav}">
-          		<img id= 'fav${status.count}'  title="${fav.sceneName}"               
-        			src='data:image/png;base64,${fav.scenePhoto}'/> <br>
+             <div class ="favcontent">
+            	<c:forEach var="fav" varStatus="status" items="${fav}">          	
+	          		<div class="favcontent">
+          				<img id= 'fav${fav.sceneId}' name="favimg" title="${fav.sceneName}"  class="img"             
+        					src='data:image/png;base64,${fav.scenePhoto}'/> 
+        				<div>${fav.sceneName}</div>
+	        		</div>
+	        		<c:if test="${status.count %5==0}">
+	        			<br/>
+	        		</c:if>
             	</c:forEach>
             </div>
         </div>
+        
         <div id="fade" class="black_overlay"> </div>
   
-        
-        <div>
-           <img id="favorite" src="img/favorite.png">
-        </div>
-        <div>
-           <img id="add" src="img/add.png">
-        </div>
-        <div  style= "width:90px;height:90px" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <img id="garbage" src="img/garbage.png">
+        <div class ="icon">
+           <img id="garbage" class ="imgicon" src="img/garbage.png"  ondrop="drop(event)" ondragover="allowDrop(event)">
         </div> 
+              
+        <div class ="icon">
+           <img id="favorite"  src="img/favorite.png">
+        </div>
         
-
+        <div class ="icon">
+           <img id="add" class ="imgicon" src="img/add.png">
+        </div>
 	<table id="tab">
 	</table>
 	<button id="sure">行程確認</button>

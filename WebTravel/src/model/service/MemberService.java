@@ -53,7 +53,10 @@ public class MemberService {
 	public boolean isDeleteMbCollect(int memberId,int sceneId){
 		return cDAO.delete(memberId, sceneId);
 	}
-	
+	//叫出景點
+	public SceneBean selectSceneId(int sceneId){
+		return sDAO.select(sceneId);
+	}
 	
 	
 }

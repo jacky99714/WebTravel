@@ -1,17 +1,29 @@
+
+
 $(function(){	
 	var ob ;
-	$('.joinSchedule').on("click",function(){
+	var joinSchedule;
+	$('.joinSchedule').on("click",function(){//加入行程
+		joinSchedule = $(this);
 		 $.ajax({
 			  'type':'get', //post、delete、put
-			  'url':'../DeleteCollectServlet',
-			  'dataType':'xml',  //json、script、html
-			  'data':{"scene":10},
-			  'success':function(){
-				  alert('ss');
+			  'url':'../AddScheduleServlet',
+			  'dataType':'json',  //json、script、html
+			  'data':{"scene":$(this).val()},
+			  'success':function(data){
+
+				  joinSchedule.removeClass("btn-warning")
+				  				.removeClass("joinSchedule")
+				  				.addClass("btn-info")
+				  				.addClass("active")
+				  				.addClass("removeSchedule")
+				  				.text("   已經加入行程");
+				  $('<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>').prependTo(joinSchedule);
+//				  joinSchedule.text("以加入行程");
 			  }
 		 })
 	})
-	$('.delete').on("click",function(){
+	$('.delete').on("click",function(){//刪除行程
 		ob= $(this)
 	})
     	$('#Closebtn').on("click",function(){
@@ -33,4 +45,22 @@ $(function(){
     		 ob.parents("tr").remove();
     		 $('#myModal001').modal('hide')
     	});
+	// ----------------------------------------------------
+	
+	$('.image-popup-no-margins').magnificPopup({
+		type : 'image',
+		closeOnContentClick : true,
+		closeBtnInside : false,
+		fixedContentPos : true,
+		mainClass : 'mfp-no-margins mfp-with-zoom', // class to remove default margin from left and right side
+		image : {
+			verticalFit : true
+		},
+		zoom : {
+			enabled : true,
+			duration : 300
+		// don't foget to change the duration also in CSS
+		}
+	});
+	
       });

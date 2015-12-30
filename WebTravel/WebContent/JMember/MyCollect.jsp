@@ -11,29 +11,29 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>我的收藏</title>
 <link rel="shortcut icon" href="<c:url value="/img/icon.ico"/>">  
-
     <!-- Bootstrap -->
-     
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link href="<c:url value="/css/bootstrap.min.css"/>" rel="stylesheet">
-	
+    <link rel="stylesheet" href="css/magnific-popup.css">
+	<script src="js/jquery.magnific-popup.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
  <style type="text/css">
  .ss{
  	padding:71px;
  }
  .delete{}
  .joinSchedule{}
+ .removeSchedule{}
  .imglist{width:120px;height:100px}
  </style>
   </head>
   <body class="ss">
-  <jsp:include page="/top/top.jsp"/>
+  <jsp:include page="/WEB-INF/top/top.jsp"/>
 <%@ page import="model.util.*"%>
 <%ArrayList<SceneBean> list =(ArrayList<SceneBean>)session.getAttribute("sceneList"); 
 	int a = 0;
@@ -56,14 +56,14 @@
    		 <c:forEach var="scene" items="${sceneList}">
    			<tr>
 	  			<td>${scene.sceneId}</td>
-	  			<td><img class="imglist" src="data:image/png;base64,<%=TypeConveter.EncodeBase64(list.get(a).getScenePhoto())%>"></td>
+	  			<td><a href="data:image/png;base64,<%=TypeConveter.EncodeBase64(list.get(a).getScenePhoto())%>" class="image-popup-no-margins"><img class="imglist" src="data:image/png;base64,<%=TypeConveter.EncodeBase64(list.get(a).getScenePhoto())%>"/></a></td>
 	  			<td>${scene.location}</td>
 	  			<td>${scene.city}</td>
 	  			<td>${scene.sceneName}</td>
 	  			<td>${scene.sceneContent}</td>
 	  			<td>${scene.timeStart}</td>
 	  			<td>${scene.timeEnd}</td>
-	  			<td><button value="${scene.sceneId}" class="btn btn-success btn-xs joinSchedule" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  加入行程</button>  <button value="${scene.sceneId}" class="btn btn-danger btn-xs delete" data-toggle="modal" data-target=".bs-example-modal-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  刪除</button></td>
+	  			<td><button value="${scene.sceneId}" class="btn btn-warning btn joinSchedule" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  加入行程</button>  <button value="${scene.sceneId}" class="btn btn-danger btn delete" data-toggle="modal" data-target=".bs-example-modal-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  刪除</button></td>
 <%-- 	  			<td>${scene.memberId}</td> --%>
   			</tr>
   			<%a++;%>
@@ -72,6 +72,7 @@
 	 </table>
     
 </div>
+
 <!-- Modal -->
 <div id="myModal001" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
   <div class="modal-dialog modal-sm">
@@ -120,12 +121,11 @@
     </footer>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src=" <c:url value="/js/bootstrap.min.js"/>"></script>
     
     <script type="text/javascript" src="../js/myCollect.js"></script>
     
-
   </body>
 </html>
