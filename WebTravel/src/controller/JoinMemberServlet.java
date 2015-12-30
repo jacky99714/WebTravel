@@ -107,7 +107,7 @@ public class JoinMemberServlet extends HttpServlet {
 		//view
 		if(rsbean!=null){
 			if(rsbean.getPhoto()!=null){
-				String phtoB64 =model.util.TypeConveter.parseBase64(rsbean.getPhoto());
+				String phtoB64 =model.util.TypeConveter.EncodeBase64(rsbean.getPhoto());
 				session.setAttribute("phtoB64", phtoB64);
 			}
 			session.setAttribute("member", rsbean);

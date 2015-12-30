@@ -46,7 +46,7 @@ public class LoginServlet extends HttpServlet {
 		}else{
 			MemberBean mb =ms.login(temp1, temp2);
 			if(mb.getPhoto()!=null){
-				String s = model.util.TypeConveter.parseBase64(mb.getPhoto());
+				String s = model.util.TypeConveter.EncodeBase64(mb.getPhoto());
 				session.setAttribute("memberimg",s);
 			}
 //			System.out.println("LoginServlet:"+s);

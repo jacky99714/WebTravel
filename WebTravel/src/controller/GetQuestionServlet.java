@@ -36,7 +36,7 @@ public class GetQuestionServlet extends HttpServlet {
 		
 		request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
-        
+
         GameService service = new GameService();	
 		PrintWriter out = response.getWriter();
 		out.print(TypeConveter.parseJSONObject(service.getQuestion()));

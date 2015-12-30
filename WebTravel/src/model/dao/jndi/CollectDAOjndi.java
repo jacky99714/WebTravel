@@ -162,7 +162,7 @@ public class CollectDAOjndi implements CollectDAO {
 				bean.setLocation(rs.getString(1));
 				bean.setCity(rs.getString(2));
 				bean.setSceneName(rs.getString(3));
-				bean.setScenePhoto(TypeConveter.parseBase64(rs.getBytes(4)));
+				bean.setScenePhoto(TypeConveter.EncodeBase64(rs.getBytes(4)));
 			//	bean.setScenePhoto(" <img src='data:image/png;base64,"+TypeConveter.parseBase64(rs.getBytes(4))+"'/>");
 				bean.setSceneContent(rs.getString(5));
 				bean.setTimeStart(rs.getString(6));
