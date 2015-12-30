@@ -3,6 +3,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+
+<!-- CSS -->
+<script type="text/javascript">
+
+.img-rounded {
+	padding:10px;
+    }
+</script>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>旅行微革命</title>
@@ -27,24 +35,23 @@
     
 	<!--  ===============北部===============  -->
  <div class="row">
-  <div class="col-md-2">北部
-  <img src="images/scene01.jpg" alt="..." class="img-rounded">
+  <div class="col-md-1"></div>
+  
+  <div class="col-md-10">
+	<table>
+		<tr>
+			<td><a href="scene_location.html"><img src="img/scene01.jpg" alt="北區" class="img-rounded"></a></td>
+			<td><a href="scene_location.html"><img src="img/scene01.jpg" alt="台北市" class="img-rounded"></a></td>
+			<td><a href="scene_location.html"><img src="img/scene01.jpg" alt="新北市" class="img-rounded"></a></td>
+			<td><a href="scene_location.html"><img src="img/scene01.jpg" alt="桃園市" class="img-rounded"></a></td>
+			<td><a href="scene_location.html"><img src="img/scene01.jpg" alt="新竹縣" class="img-rounded"></a></td>
+			<td><a href="scene_location.html"><img src="img/scene01.jpg" alt="苗栗縣" class="img-rounded"></a></td>		
+		</tr>
+	</table>				
   </div>
-  <div class="col-md-2">
-    <a href="scene_location.html"><img src="images/scene01.jpg" alt="..." class="img-rounded"></a>
-  </div>
-  <div class="col-md-2">
-   <img src="images/scene01.jpg" alt="..." class="img-rounded">
-  </div>
-  <div class="col-md-2">
-   <img src="images/scene01.jpg" alt="..." class="img-rounded">
-  </div>
-  <div class="col-md-2">
-   <img src="images/scene01.jpg" alt="..." class="img-rounded">
-  </div>
-  <div class="col-md-2">
-   <img src="images/scene01.jpg" alt="..." class="img-rounded">
-  </div>
+ 
+  <div class="col-md-1"></div>
+ 
  </div><br>
 <!--  ===============中部===============  -->
   <div class="row">
