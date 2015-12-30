@@ -20,7 +20,7 @@
   </head>
   <body style="padding:71px;">
 <!--   將top.jsp（首頁）加進頁面 -->
-	<jsp:include page="/top/top.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/top/top.jsp"></jsp:include>
 
   <!-- Carousel
     ================================================== -->

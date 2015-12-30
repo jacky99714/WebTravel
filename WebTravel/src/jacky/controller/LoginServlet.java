@@ -1,4 +1,4 @@
-package controller;
+package jacky.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -24,7 +24,7 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //		request.getContextPath();  /WebTravel
 		HttpSession session =request.getSession();
-		
+		session.removeAttribute("memberimg");
 		
 		//接收資料--------------------------------------------
 		String temp1 = request.getParameter("useid");
@@ -53,9 +53,6 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("loginOk", mb);
 			response.sendRedirect(request.getContextPath()+"/index.jsp");
 		}
-		
-		
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>登入</title>
 
-<link rel="shortcut icon" href="<c:url value="/img/icon.ioc"/>">  
+<link rel="shortcut icon" href="<c:url value="/img/icon.ico"/>">  
 
 
     <!-- Bootstrap -->
@@ -24,7 +24,7 @@
   </head>
   <body style="padding:71px;">
 
- <jsp:include page="/top/top.jsp"></jsp:include>
+ <jsp:include page="/WEB-INF/top/top.jsp"></jsp:include>
  
 <!--     ---------------------------- -->
    <div class="jumbotron" style="background:#FFFFFF">

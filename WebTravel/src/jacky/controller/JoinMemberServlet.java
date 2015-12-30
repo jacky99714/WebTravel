@@ -1,4 +1,4 @@
-package controller;
+package jacky.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
