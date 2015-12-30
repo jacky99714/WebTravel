@@ -1,4 +1,3 @@
-<%@page import="controller.LoginServlet"%>
 <%@page import="model.util.TypeConveter"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>

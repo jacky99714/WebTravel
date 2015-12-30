@@ -32,33 +32,35 @@
 <!--     我是內容---------------------------- -->
     <div class="container">
     <div class="float">
-    <form action="/pages/thought.controller" method="get">
+    <form action="ThoughtServlet" method="post" accept-charset="UTF-8">
 			<div>
 				<div>
 					<span>心得名稱</span>
 				</div>
 				<div>
-					<input type="text" sixe="70" placeholder="請勿超過40個字">
+					<input type="text" sixe="70" placeholder="請勿超過40個字" name="thoughtName"><p>${errors.thoughtName}</p>
 				</div>
 			</div>
 			<div>
-				<label>種類</label> <select>
-					<option>餐廳</option>
-					<option>景點</option>
-					<option>綜合</option>
+				<label>種類</label><p>${errors.thoughtType}</p> 
+				<select name="thoughtType">
+					<option value="Restaurant">餐廳</option>
+					<option value="Scence">景點</option>
+					<option value="Both">綜合</option>
 				</select>
 			</div>
+<!-- 			<div> -->
+<!-- 				<div> -->
+<!-- 					<span>旅行日期</span> <span>-此旅行心得是何時去的？</span> -->
+<!-- 				</div> -->
+<!-- 				<input type="text" placeholder="請選擇日期"> -->
+<!-- 			</div> -->
 			<div>
-				<div>
-					<span>旅行日期</span> <span>-此旅行心得是何時去的？</span>
-				</div>
-				<input type="text" placeholder="請選擇日期">
-			</div>
-			<div>
-				<span>心得內容</span><span> - 內容需100字以上</span>
+				<span>心得內容</span><span> - 內容需100字以上</span><p>${errors.thoughtContent}</p>
 			</div>
 			<div >
-				<textarea id="textarea"  style="width: 50%; height: 452px" ></textarea>
+				 <textarea id="textarea" rows="25" cols="95"  ></textarea>
+				 <input id="aaa" name="thoughtContent" type="hidden">
 			</div>
 			
 			<div>
@@ -76,19 +78,33 @@
 <script >
 
 $(document).ready( function() {
-    $("#textarea").Editor();                    
+    $("#textarea").Editor();
   });
-  
 
 
-// $(document).ready( function() {
-// 	addEventListener("submit", function(){
-//     var i = $("#textarea").Editor("getText"); 
-//      alert(i);
-		
-// 	})
+$(document).ready( function() {
+	addEventListener("submit", function(){
+    var thoughtContent = $("#textarea").Editor("getText"); 
+     alert(thoughtContent);
+	$('#aaa').val(thoughtContent)
 	
-//   });
+	
+// 	  $.ajax({
+// 		  'type':'get', //post、delete、put
+// 		  'url':'XMLServlet',
+// 		  'dataType':'xml',  //json、script、html
+// 		  'data':{"thoughtContent":thoughtContent},
+// 		  'success':function(data){
+// 			//data 就是一個XML DOM 
+// 			$(data).find("Category").each(function(){
+// 				//$(this) -> 表示Category物件
+// 				console.log($(this).children("CategoryID").text());
+// 				console.log($(this).children("CategoryName").text());
+// 			})
+// 		  }
+// 	  });
+	})
+  });
   
 </script>
     
