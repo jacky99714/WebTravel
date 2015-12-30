@@ -1,7 +1,7 @@
 package other.bean;
 
 public class FavoriteBean implements java.io.Serializable{
-
+	private int sceneId;
 	private String location;
 	private String city;
 	private String sceneName;
@@ -12,13 +12,19 @@ public class FavoriteBean implements java.io.Serializable{
 	private int memberId;
 
 	public String toString() {
-		return  "[" +location + "," + city + ","
+		return  "[" +sceneId + "," + location + "," + city + ","
 				+ sceneName + "," +scenePhoto+"," + sceneContent + "," + timeStart + "," + timeEnd
 				+ "," + memberId +"]";
 	}
 	
 
+	public int getSceneId() {
+		return sceneId;
+	}
 
+	public void setSceneId(int sceneId) {
+		this.sceneId = sceneId;
+	}
 	public String getLocation() {
 		return location;
 	}

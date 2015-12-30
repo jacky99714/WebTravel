@@ -13,6 +13,8 @@ import model.bean.SceneBean;
 import model.dao.SceneDAO;
 import model.util.DataSourceConnection;
 import model.util.JdbcConnection;
+import model.util.TypeConveter;
+import other.bean.FavoriteBean;
 
 public class SceneDAOjdbc implements SceneDAO {
 
@@ -65,32 +67,33 @@ public class SceneDAOjdbc implements SceneDAO {
 	 * @see model.dao.jdbc.SceneDAO#select(java.lang.String)
 	 */
 	@Override
-	public  List<SceneBean> select(String location) {
-		SceneBean sbean =null;
-		List<SceneBean> li = new ArrayList<>();
+	public  List<FavoriteBean> select(String location) {
 		try (
 				Connection conn = DataSourceConnection.getConnection();
 			 ){
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_LOCATION);
-			ps.setString(1, location);
+			ps.setString(1,location);
 			ResultSet rs = ps.executeQuery();
+			
+			List<FavoriteBean> li = new ArrayList<>();
+			FavoriteBean bean;
 			while(rs.next()){
-				sbean = new SceneBean();				
-				sbean.setSceneId(rs.getInt(1));
-				sbean.setLocation(rs.getString(2));
-				sbean.setCity(rs.getString(3));
-				sbean.setSceneName(rs.getString(4));
-				sbean.setScenePhoto(rs.getBytes(5));
-				sbean.setSceneContent(rs.getString(6));
-				sbean.setTimeStart(rs.getString(7));
-				sbean.setTimeEnd(rs.getString(8));
-				sbean.setMemberId(rs.getInt(9));
-				li.add(sbean);
-			}		
+				bean = new FavoriteBean();
+				bean.setSceneId(rs.getInt(1));
+				bean.setLocation(rs.getString(2));
+				bean.setCity(rs.getString(3));
+				bean.setSceneName(rs.getString(4));
+				bean.setScenePhoto(TypeConveter.EncodeBase64(rs.getBytes(5)));	
+				bean.setSceneContent(rs.getString(6));
+				bean.setTimeStart(rs.getString(7));
+				bean.setTimeEnd(rs.getString(8));
+				li.add(bean);		
+			}
+			return li;
 		} catch (SQLException e) {			
 			e.printStackTrace();
 		}
-		return li;
+		return null;
 	}
 	
 	//新增INSERT
