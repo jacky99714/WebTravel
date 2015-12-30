@@ -23,6 +23,8 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //		request.getContextPath();  /WebTravel
+	    request.setCharacterEncoding("UTF-8");
+	    response.setContentType("text/html; charset=UTF-8");
 		HttpSession session =request.getSession();
 		session.removeAttribute("memberimg");
 		
