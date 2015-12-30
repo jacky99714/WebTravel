@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>登入</title>
 
-<link rel="shortcut icon" href="<c:url value="/img/icon.ioc"/>">  
+<link rel="shortcut icon" href="<c:url value="/img/icon.ico"/>">  
 
 
     <!-- Bootstrap -->

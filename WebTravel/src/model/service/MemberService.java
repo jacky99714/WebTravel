@@ -49,4 +49,11 @@ public class MemberService {
 		}
 		return sbList;
 	}
+	//刪除會員的收藏
+	public boolean isDeleteMbCollect(int memberId,int sceneId){
+		return cDAO.delete(memberId, sceneId);
+	}
+	
+	
+	
 }
