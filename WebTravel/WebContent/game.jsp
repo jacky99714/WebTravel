@@ -82,35 +82,6 @@
 	</style>
 	
     <script>
-    /*
-    	object: 
-    		imgToCanvas(type,img,sx,sy,sWidth,sHeight,dx,dy,dWidth,dHeight)
-    		person(name,group,hp,mp,attack,defense,imgPerson,imgAttack,imgDefense)
-     		question(ques,options,ans)
-     		
-     		createInput(id,type,className,name,value)
-     		walk()
-     		defense()
-     		
-     		getQuestion()
-     		answerQuestion()
-     		
-     		resetPosition(pic,sx,sy,dx,dy)
-     		changeState(nextState)
-     		collide(imgA,imgB,move)
-     		pictureAppear(which)
-     		draw(which)
-     		drawImg()
-     		changeImgPosioion()
-     		stopDrawing()
-     		
-     		modify(change,type)
-     		display(number,type)
-     		
-     		reStart()
-     		choose()
-     		play()
-    */
 ///////////////////////////////////////////////////////
     	//picture object
         function imgToCanvas(type,img,sx,sy,sWidth,sHeight,dx,dy,dWidth,dHeight){
@@ -285,7 +256,7 @@
 					var radio,textnode,br;
 					for(var i = 0;i < 4;i++){                    //create  radios to display question's options
 						radio = createInput("noId","radio","noClass","ask",i+1);
-						textnode = document.createTextNode((i+1) +":" + questions.options[i]);
+						textnode = document.createTextNode(questions.options[i]);
 						br = document.createElement("br");
 						form.appendChild(radio);
 						form.appendChild(textnode);

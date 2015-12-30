@@ -1,23 +1,17 @@
 package model.dao.jndi;
 
-import java.io.File;
-import java.io.FileInputStream;
+
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
 import model.bean.SceneImgBean;
 import model.dao.RestaurantMessageDAO;
 import model.dao.SceneImgDAO;
+import model.util.DataSourceConnection;
 
 public class SceneImgDAOjndi implements SceneImgDAO {
 	// DB連線資訊
@@ -33,21 +27,13 @@ public class SceneImgDAOjndi implements SceneImgDAO {
 	// delete
 	private static final String DELETE = "delete from SceneImg where sceneImgId=?";
 	private Connection conn = null;
-	DataSource ds =null;
-	public SceneImgDAOjndi(){
-		try {
-			Context context = new InitialContext();
-			ds = (DataSource) context.lookup("java:comp/env/jdbc/xxx");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
+	
 	@Override
 	public List<SceneImgBean> select() {
 		List<SceneImgBean> list = null;
 		SceneImgBean rmbean = null;
 		try (// AutoCloseable
-				Connection conn = ds.getConnection();) {
+				Connection conn = DataSourceConnection.getConnection();) {
 
 			PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
 			ResultSet rs = ps.executeQuery();
@@ -73,7 +59,7 @@ public class SceneImgDAOjndi implements SceneImgDAO {
 	@Override
 	public SceneImgBean select(int sceneId) {
 		SceneImgBean rmbean = null;
-		try (Connection conn = ds.getConnection();) {
+		try (Connection conn = DataSourceConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_SCENEID);
 			ps.setInt(1, sceneId);
 			ResultSet rs = ps.executeQuery();
@@ -97,7 +83,7 @@ public class SceneImgDAOjndi implements SceneImgDAO {
 	@Override
 	public SceneImgBean insert(SceneImgBean bean) {
 		SceneImgBean result = null;
-		try (Connection conn = ds.getConnection();) {
+		try (Connection conn = DataSourceConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			if (bean != null) {
 				ps.setBytes(1, bean.getImg());
@@ -121,7 +107,7 @@ public class SceneImgDAOjndi implements SceneImgDAO {
 	@Override
 	public SceneImgBean update(SceneImgBean bean) {
 		SceneImgBean result = null;
-		try (Connection conn = ds.getConnection();) {
+		try (Connection conn = DataSourceConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			if (bean != null) {
 				ps.setBytes(1, bean.getImg());
@@ -144,7 +130,7 @@ public class SceneImgDAOjndi implements SceneImgDAO {
 	 */
 	@Override
 	public boolean delete(int sceneImgId) {
-		try (Connection conn = ds.getConnection();) {
+		try (Connection conn = DataSourceConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 
 			ps.setInt(1, sceneImgId);

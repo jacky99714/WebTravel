@@ -1,20 +1,19 @@
 package model.dao.jndi;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
+
 
 import model.bean.CollectBean;
 import model.dao.CollectDAO;
+import model.util.DataSourceConnection;
+import model.util.TypeConveter;
+import other.bean.FavoriteBean;
 
 
 
@@ -27,21 +26,14 @@ public class CollectDAOjndi implements CollectDAO {
 	private static final String INSERT = "insert into Collect(memberId,sceneId,collectId) values(?,?,?)";
 	private static final String UPDATE = "update Collect set collectId=? where MemberID=? and sceneId=?";
 	private static final String DELETE = "delete FROM Collect where memberId=? and sceneId=?";
+	private static final String SELECT_SCENE =
+			"select s.Location,s.City,s.SceneName,s.Scenephoto,s.SceneContent,s.TimeStart,s.TimeEnd from Collect as c join Scene as s  on c.SceneID = s.SceneID where c.MemberID=? ";  
 	private Connection conn= null;
 	
-	DataSource ds =null;
-	public CollectDAOjndi() {
-		try {
-			Context context = new InitialContext();
-			ds = (DataSource) context.lookup("java:comp/env/jdbc/xxx");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
 	@Override
 	public List<CollectBean> select(){
 		try {
-			conn =ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<CollectBean> list = new ArrayList<CollectBean>();
@@ -56,13 +48,7 @@ public class CollectDAOjndi implements CollectDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -73,7 +59,7 @@ public class CollectDAOjndi implements CollectDAO {
 	@Override
 	public List<CollectBean> select(int memberId){
 		try {
-			conn =ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_MEMBERID);
 			ps.setInt(1, memberId);
 			ResultSet rs = ps.executeQuery();
@@ -89,13 +75,7 @@ public class CollectDAOjndi implements CollectDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -106,7 +86,7 @@ public class CollectDAOjndi implements CollectDAO {
 	@Override
 	public List<CollectBean> insert(CollectBean collectBean){
 		try {
-			conn =ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setInt(1, collectBean.getMemberId());
 			ps.setInt(2, collectBean.getSceneId());
@@ -118,13 +98,7 @@ public class CollectDAOjndi implements CollectDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -134,7 +108,7 @@ public class CollectDAOjndi implements CollectDAO {
 	@Override
 	public List<CollectBean> update(CollectBean collectBean){
 		try {
-			conn =ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setInt(2, collectBean.getMemberId());
 			ps.setInt(3, collectBean.getSceneId());
@@ -146,13 +120,7 @@ public class CollectDAOjndi implements CollectDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -163,7 +131,7 @@ public class CollectDAOjndi implements CollectDAO {
 	@Override
 	public boolean delete(int memberId,int sceneId){
 		try {
-			conn =ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1,memberId);
 			ps.setInt(2,sceneId);
@@ -173,16 +141,42 @@ public class CollectDAOjndi implements CollectDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return false;
 	}
+	
+	@Override
+	public List<FavoriteBean> selectScene(int memberId) {
+		try {
+			//s.SceneID,s.Location,s.City,s.SceneName,s.Scenephoto,s.SceneContent,s.TimeStart,s.TimeEnd
+			conn = DataSourceConnection.getConnection();
+			PreparedStatement ps = conn.prepareStatement(SELECT_SCENE);
+			ps.setInt(1, memberId);
+			ResultSet rs = ps.executeQuery();
+			List<FavoriteBean> li = new ArrayList<>();
+			FavoriteBean bean;
+			String temp;
+			while(rs.next()){
+				bean = new FavoriteBean();
+				bean.setLocation(rs.getString(1));
+				bean.setCity(rs.getString(2));
+				bean.setSceneName(rs.getString(3));
+				bean.setScenePhoto(TypeConveter.EncodeBase64(rs.getBytes(4)));
+			//	bean.setScenePhoto(" <img src='data:image/png;base64,"+TypeConveter.parseBase64(rs.getBytes(4))+"'/>");
+				bean.setSceneContent(rs.getString(5));
+				bean.setTimeStart(rs.getString(6));
+				bean.setTimeEnd(rs.getString(7));
+				li.add(bean);		
+			}
+			return li;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			DataSourceConnection.closeConnection();
+		}
+		return null;
+	}	
 	public static void main(String[] args){
 		CollectDAO t = new CollectDAOjndi();
 		
@@ -192,7 +186,7 @@ public class CollectDAOjndi implements CollectDAO {
 		cb.setCollectId(10); //對此景點收藏為 0 永久收藏為 1
 		cb.setMemberId(3); //哪一個會員
 		cb.setSceneId(4); //對哪一個景點
-
+		t.insert(cb);
 //----------------------------------------------------------
 //		for(CollectBean e : t.select()){
 //			System.out.println(e);
@@ -209,4 +203,5 @@ public class CollectDAOjndi implements CollectDAO {
 //		System.out.println(t.delete(1,1));//刪除
 //----------------------------------------------------------
 	}
+
 }

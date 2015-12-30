@@ -10,7 +10,7 @@ public interface SceneDAO {
 	List<SceneBean> select();
 
 	//查詢SELECT_BY_LOCATION
-	SceneBean select(String location);
+	List<SceneBean> select(String location);
 
 	//新增INSERT
 	SceneBean insert(SceneBean bean);

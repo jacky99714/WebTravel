@@ -100,6 +100,7 @@
 					    <input type="file" id="exampleInputFile" name="photo">
 					    </div>
 					  </div>
+					  
 		 			 <button type="submit" class="btn btn-default col-md-3 col-md-offset-3">加入會員</button>
 				</form>
     

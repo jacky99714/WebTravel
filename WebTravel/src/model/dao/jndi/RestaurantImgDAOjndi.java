@@ -1,23 +1,17 @@
 package model.dao.jndi;
 
-import java.io.File;
-import java.io.FileInputStream;
+
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
 import model.bean.RestaurantImgBean;
 import model.dao.RestaurantImgDAO;
 import model.dao.RestaurantMessageDAO;
+import model.util.DataSourceConnection;
 
 public class RestaurantImgDAOjndi implements RestaurantImgDAO {
 
@@ -34,21 +28,12 @@ public class RestaurantImgDAOjndi implements RestaurantImgDAO {
 	private static final String DELETE = "delete from RestaurantImg where restaurantImgId=?";
 	private Connection conn = null;
 
-	DataSource ds =null;
-	public RestaurantImgDAOjndi(){
-		try {
-			Context context = new InitialContext();
-			ds = (DataSource) context.lookup("java:comp/env/jdbc/xxx");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
 	@Override
 	public List<RestaurantImgBean> select() {
 		List<RestaurantImgBean> list = null;
 		RestaurantImgBean ribean = null;
 		try (// AutoCloseable
-				Connection conn = ds.getConnection();) {
+				Connection conn = DataSourceConnection.getConnection();) {
 
 			PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
 			ResultSet rs = ps.executeQuery();
@@ -74,7 +59,7 @@ public class RestaurantImgDAOjndi implements RestaurantImgDAO {
 	@Override
 	public RestaurantImgBean select(int RestaurantId) {
 		RestaurantImgBean ribean = null;
-		try (Connection conn = ds.getConnection();) {
+		try (Connection conn = DataSourceConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_RESTAURANTID);
 			ps.setInt(1, RestaurantId);
 			ResultSet rs = ps.executeQuery();
@@ -98,7 +83,7 @@ public class RestaurantImgDAOjndi implements RestaurantImgDAO {
 	@Override
 	public RestaurantImgBean insert(RestaurantImgBean bean) {
 		RestaurantImgBean result = null;
-		try (Connection conn = ds.getConnection();) {
+		try (Connection conn = DataSourceConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			if (bean != null) {
 				ps.setBytes(1, bean.getImg());
@@ -122,7 +107,7 @@ public class RestaurantImgDAOjndi implements RestaurantImgDAO {
 	@Override
 	public RestaurantImgBean update(RestaurantImgBean bean) {
 		RestaurantImgBean result = null;
-		try (Connection conn = ds.getConnection();) {
+		try (Connection conn = DataSourceConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			if (bean != null) {
 				ps.setBytes(1, bean.getImg());
@@ -145,7 +130,7 @@ public class RestaurantImgDAOjndi implements RestaurantImgDAO {
 	 */
 	@Override
 	public boolean delete(int RestaurantImgId) {
-		try (Connection conn = ds.getConnection();) {
+		try (Connection conn = DataSourceConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 
 			ps.setInt(1, RestaurantImgId);

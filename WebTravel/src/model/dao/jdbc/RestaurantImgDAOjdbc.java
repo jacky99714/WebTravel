@@ -1,9 +1,7 @@
 package model.dao.jdbc;
 
-import java.io.File;
-import java.io.FileInputStream;
+
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,12 +11,10 @@ import java.util.List;
 import model.bean.RestaurantImgBean;
 import model.dao.RestaurantImgDAO;
 import model.dao.RestaurantMessageDAO;
+import model.util.JdbcConnection;
 
 public class RestaurantImgDAOjdbc implements RestaurantImgDAO {
-	// DB連線資訊
-	private static final String URL = "jdbc:sqlserver://localhost:1433;database=travel";
-	private static final String USERNAME = "sa";
-	private static final String PASSWORD = "passw0rd";
+
 	// select
 	private static final String SELECT_ALL = "select * from RestaurantImg";
 	private static final String SELECT_BY_RESTAURANTID = "select * from RestaurantImg where restaurantId = ?";
@@ -40,7 +36,7 @@ public class RestaurantImgDAOjdbc implements RestaurantImgDAO {
 		List<RestaurantImgBean> list = null;
 		RestaurantImgBean ribean = null;
 		try (// AutoCloseable
-				Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+				Connection conn = JdbcConnection.getConnection();) {
 
 			PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
 			ResultSet rs = ps.executeQuery();
@@ -66,7 +62,7 @@ public class RestaurantImgDAOjdbc implements RestaurantImgDAO {
 	@Override
 	public RestaurantImgBean select(int RestaurantId) {
 		RestaurantImgBean ribean = null;
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn = JdbcConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_RESTAURANTID);
 			ps.setInt(1, RestaurantId);
 			ResultSet rs = ps.executeQuery();
@@ -90,7 +86,7 @@ public class RestaurantImgDAOjdbc implements RestaurantImgDAO {
 	@Override
 	public RestaurantImgBean insert(RestaurantImgBean bean) {
 		RestaurantImgBean result = null;
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn = JdbcConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			if (bean != null) {
 				ps.setBytes(1, bean.getImg());
@@ -114,7 +110,7 @@ public class RestaurantImgDAOjdbc implements RestaurantImgDAO {
 	@Override
 	public RestaurantImgBean update(RestaurantImgBean bean) {
 		RestaurantImgBean result = null;
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn = JdbcConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			if (bean != null) {
 				ps.setBytes(1, bean.getImg());
@@ -137,7 +133,7 @@ public class RestaurantImgDAOjdbc implements RestaurantImgDAO {
 	 */
 	@Override
 	public boolean delete(int RestaurantImgId) {
-		try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+		try (Connection conn = JdbcConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 
 			ps.setInt(1, RestaurantImgId);

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+import model.bean.MemberBean;
 import model.service.MemberService;
 
 
@@ -44,7 +44,13 @@ public class LoginServlet extends HttpServlet {
 			request.getRequestDispatcher(
 					"/secure/login.jsp").forward(request, response);
 		}else{
-			session.setAttribute("loginOk", ms.login(temp1, temp2));
+			MemberBean mb =ms.login(temp1, temp2);
+			if(mb.getPhoto()!=null){
+				String s = model.util.TypeConveter.EncodeBase64(mb.getPhoto());
+				session.setAttribute("memberimg",s);
+			}
+//			System.out.println("LoginServlet:"+s);
+			session.setAttribute("loginOk", mb);
 			response.sendRedirect(request.getContextPath()+"/index.jsp");
 		}
 		

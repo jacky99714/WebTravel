@@ -1,29 +1,19 @@
 package model.dao.jdbc;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
 import model.bean.QBean;
 import model.dao.QDAO;
+import model.util.JdbcConnection;
 
 
 public class QDAOjdbc implements QDAO {
 
-	private static final String URL = "jdbc:sqlserver://127.0.0.1:1433;database=travel";
-	private static final String USERNAME = "sa";
-	private static final String PASSWORD = "passw0rd";
-	
 	private static final String SELECT_ID = "SELECT * FROM Q WHERE Qid=?";
 	private static final String SELECT_NAME = "SELECT * FROM Q WHERE Qname=?";
 	private static final String SELECT = "SELECT Qid,Qname,ans,a,b,c,d FROM Q";
@@ -41,7 +31,7 @@ public class QDAOjdbc implements QDAO {
 	@Override
 	public List<QBean> select(){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);		
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<QBean> list = new ArrayList<QBean>();
@@ -60,13 +50,7 @@ public class QDAOjdbc implements QDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -76,7 +60,7 @@ public class QDAOjdbc implements QDAO {
 	@Override
 	public QBean select(int qId){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 
 			PreparedStatement ps = conn.prepareStatement(SELECT_ID);
 			ps.setInt(1, qId);
@@ -95,13 +79,7 @@ public class QDAOjdbc implements QDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -111,7 +89,7 @@ public class QDAOjdbc implements QDAO {
 	@Override
 	public QBean select(String qName){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_NAME);
 			ps.setString(1, qName);
 			ResultSet rs = ps.executeQuery();
@@ -129,13 +107,7 @@ public class QDAOjdbc implements QDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -145,7 +117,7 @@ public class QDAOjdbc implements QDAO {
 	@Override
 	public boolean delete(int qId){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1,qId);
 			if(ps.executeUpdate()==1){
@@ -154,13 +126,7 @@ public class QDAOjdbc implements QDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return false;
 	}
@@ -170,7 +136,7 @@ public class QDAOjdbc implements QDAO {
 	@Override
 	public QBean insert(QBean qBean){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setString(1, qBean.getQName());
 			ps.setString(2, qBean.getAns());
@@ -184,13 +150,7 @@ public class QDAOjdbc implements QDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -200,7 +160,7 @@ public class QDAOjdbc implements QDAO {
 	@Override
 	public QBean update(QBean qBean){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setString(1, qBean.getQName());
 			ps.setString(2, qBean.getAns());
@@ -215,13 +175,7 @@ public class QDAOjdbc implements QDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -229,7 +183,7 @@ public class QDAOjdbc implements QDAO {
 	@Override
 	public int getCount(){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(COUNT);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()){
@@ -238,13 +192,7 @@ public class QDAOjdbc implements QDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return 0;
 	}	

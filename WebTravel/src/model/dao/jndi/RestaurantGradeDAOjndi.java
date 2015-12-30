@@ -1,20 +1,15 @@
 package model.dao.jndi;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
 import model.bean.RestaurantGradeBean;
 import model.dao.RestaurantGradeDAO;
+import model.util.DataSourceConnection;
 
 
 public class RestaurantGradeDAOjndi implements RestaurantGradeDAO {
@@ -28,19 +23,11 @@ public class RestaurantGradeDAOjndi implements RestaurantGradeDAO {
 	private static final String DELETE = "delete FROM RestaurantGrade where memberId=? and RestaurantID=?";
 	private Connection conn= null;
 	
-	DataSource ds =null;
-	public RestaurantGradeDAOjndi(){
-		try {
-			Context context = new InitialContext();
-			ds = (DataSource) context.lookup("java:comp/env/jdbc/xxx");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
+
 	@Override
 	public List<RestaurantGradeBean> select(){
 		try {
-			conn =  ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<RestaurantGradeBean> list = new ArrayList<RestaurantGradeBean>();
@@ -55,13 +42,7 @@ public class RestaurantGradeDAOjndi implements RestaurantGradeDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -72,7 +53,7 @@ public class RestaurantGradeDAOjndi implements RestaurantGradeDAO {
 	@Override
 	public List<RestaurantGradeBean> select(int restaurantId){
 		try {
-			conn =  ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_RESTAURANTID);
 			ps.setInt(1, restaurantId);
 			ResultSet rs = ps.executeQuery();
@@ -88,13 +69,7 @@ public class RestaurantGradeDAOjndi implements RestaurantGradeDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -105,7 +80,7 @@ public class RestaurantGradeDAOjndi implements RestaurantGradeDAO {
 	@Override
 	public List<RestaurantGradeBean> insert(RestaurantGradeBean restaurantGradeBean){
 		try {
-			conn =  ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setInt(1, restaurantGradeBean.getMemberId());
 			ps.setInt(2, restaurantGradeBean.getRestaurantId());
@@ -117,13 +92,7 @@ public class RestaurantGradeDAOjndi implements RestaurantGradeDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -134,7 +103,7 @@ public class RestaurantGradeDAOjndi implements RestaurantGradeDAO {
 	@Override
 	public List<RestaurantGradeBean> update(RestaurantGradeBean restaurantGradeBean){
 		try {
-			conn =  ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setInt(2, restaurantGradeBean.getMemberId());
 			ps.setInt(3, restaurantGradeBean.getRestaurantId());
@@ -146,13 +115,7 @@ public class RestaurantGradeDAOjndi implements RestaurantGradeDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -162,7 +125,7 @@ public class RestaurantGradeDAOjndi implements RestaurantGradeDAO {
 	@Override
 	public boolean delete(int memberId,int restaurantId){
 		try {
-			conn =  ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1,memberId);
 			ps.setInt(2,restaurantId);
@@ -172,13 +135,7 @@ public class RestaurantGradeDAOjndi implements RestaurantGradeDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return false;
 	}

@@ -1,7 +1,6 @@
 package model.dao.jdbc;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,12 +9,11 @@ import java.util.List;
 
 import model.bean.RestaurantGradeBean;
 import model.dao.RestaurantGradeDAO;
+import model.util.JdbcConnection;
 
 
 public class RestaurantGradeDAOjdbc implements RestaurantGradeDAO {
-	private static final String URL = "jdbc:sqlserver://10.211.55.3:1433;database=travel";
-	private static final String USERNAME = "sa";
-	private static final String PASSWORD = "sa123456";
+
 	
 	private static final String SELECT_MEMBERID = "SELECT * FROM RestaurantGrade WHERE MemberID=?";
 	private static final String SELECT_RESTAURANTID = "SELECT memberId,RestaurantID,Evaluate FROM RestaurantGrade WHERE RestaurantID=?";
@@ -31,7 +29,7 @@ public class RestaurantGradeDAOjdbc implements RestaurantGradeDAO {
 	@Override
 	public List<RestaurantGradeBean> select(){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<RestaurantGradeBean> list = new ArrayList<RestaurantGradeBean>();
@@ -46,13 +44,7 @@ public class RestaurantGradeDAOjdbc implements RestaurantGradeDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -63,7 +55,7 @@ public class RestaurantGradeDAOjdbc implements RestaurantGradeDAO {
 	@Override
 	public List<RestaurantGradeBean> select(int restaurantId){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_RESTAURANTID);
 			ps.setInt(1, restaurantId);
 			ResultSet rs = ps.executeQuery();
@@ -79,13 +71,7 @@ public class RestaurantGradeDAOjdbc implements RestaurantGradeDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -96,7 +82,7 @@ public class RestaurantGradeDAOjdbc implements RestaurantGradeDAO {
 	@Override
 	public List<RestaurantGradeBean> insert(RestaurantGradeBean restaurantGradeBean){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setInt(1, restaurantGradeBean.getMemberId());
 			ps.setInt(2, restaurantGradeBean.getRestaurantId());
@@ -108,13 +94,7 @@ public class RestaurantGradeDAOjdbc implements RestaurantGradeDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -125,7 +105,7 @@ public class RestaurantGradeDAOjdbc implements RestaurantGradeDAO {
 	@Override
 	public List<RestaurantGradeBean> update(RestaurantGradeBean restaurantGradeBean){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setInt(2, restaurantGradeBean.getMemberId());
 			ps.setInt(3, restaurantGradeBean.getRestaurantId());
@@ -137,13 +117,7 @@ public class RestaurantGradeDAOjdbc implements RestaurantGradeDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -153,7 +127,7 @@ public class RestaurantGradeDAOjdbc implements RestaurantGradeDAO {
 	@Override
 	public boolean delete(int memberId,int restaurantId){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1,memberId);
 			ps.setInt(2,restaurantId);
@@ -163,13 +137,7 @@ public class RestaurantGradeDAOjdbc implements RestaurantGradeDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return false;
 	}

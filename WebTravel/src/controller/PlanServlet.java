@@ -1,10 +1,8 @@
 package controller;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.util.TypeConveter;
+
+import model.service.PlanService;
+import other.bean.FavoriteBean;
 
 /**
  * Servlet implementation class PlanServlet
@@ -37,25 +37,12 @@ public class PlanServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    request.setCharacterEncoding("UTF-8");
 	    response.setContentType("text/html; charset=UTF-8");
-
-	    File file = new File("E:/bg.png");
-	    FileInputStream fis = new FileInputStream(file);
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		byte[] buf = new byte[1024];
-		try {
-		    for (int readNum; (readNum = fis.read(buf)) != -1;) {
-		        bos.write(buf, 0, readNum); //no doubt here is 0
-		        //Writes len bytes from the specified byte array starting at offset off to this byte array output stream.
-		        System.out.println("read " + readNum + " bytes,");
-		    }
-		} catch (IOException ex) {
-		    ex.printStackTrace();
-		}
-		String img = TypeConveter.base64Convert(bos.toByteArray());
+	    
+	    PlanService ps = new PlanService();
+		List<FavoriteBean> li = new ArrayList<>();
+		li = ps.getFavorite(1);
 		HttpSession session = request.getSession();
-		session.setAttribute("img", img);
-
-		
+		session.setAttribute("fav", li);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("plan.jsp");
 		dispatcher.forward(request, response);

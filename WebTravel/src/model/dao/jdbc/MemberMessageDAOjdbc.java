@@ -2,7 +2,6 @@ package model.dao.jdbc;
 
 import java.sql.Connection;
 import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,12 +14,11 @@ import java.util.List;
 
 import model.bean.MemberMessageBean;
 import model.dao.MemberMessageDAO;
+import model.util.DataSourceConnection;
+import model.util.JdbcConnection;
 
 
 public class MemberMessageDAOjdbc implements MemberMessageDAO {
-	private static final String URL = "jdbc:sqlserver://10.211.55.3:1433;database=travel";
-	private static final String USERNAME = "sa";
-	private static final String PASSWORD = "sa123456";
 	
 	private static final String SELECT_MEMBERID = "SELECT * FROM MemberMessage WHERE MemberID=?";
 	private static final String SELECT_ID = "SELECT * FROM MemberMessage WHERE MemberMessageID=?";
@@ -29,16 +27,35 @@ public class MemberMessageDAOjdbc implements MemberMessageDAO {
 	private static final String INSERT = "insert into MemberMessage(MemberMessageContent,memberId) values(?,?)";
 	private static final String UPDATE = "update MemberMessage set MemberMessageContent=?,MessaageTime=?,memberId=? where MemberMessageID=?";
 	private static final String DELETE = "delete FROM MemberMessage where MemberMessageID=?";
-	
+	private static final String COUNT = " select count(*) from MemberMessage where MemberID=?";
 	private Connection conn= null;
 	
+	public int count(int memberId){
+		try {
+			conn = JdbcConnection.getConnection();
+			PreparedStatement ps = conn.prepareStatement(COUNT);
+			ps.setInt(1, memberId);
+			ResultSet rs = ps.executeQuery();
+			int in=0;
+			while(rs.next()){
+				in = rs.getInt(1);
+			}
+		return in;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			DataSourceConnection.closeConnection();
+		}
+		return 0;
+	}
+
 	/* (non-Javadoc)
 	 * @see model.dao.jdbc.MemberMessageDAO#select()
 	 */
 	@Override
 	public List<MemberMessageBean> select(){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<MemberMessageBean> list = new ArrayList<MemberMessageBean>();
@@ -54,13 +71,7 @@ public class MemberMessageDAOjdbc implements MemberMessageDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -72,7 +83,7 @@ public class MemberMessageDAOjdbc implements MemberMessageDAO {
 		try {
 			SimpleDateFormat sf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Calendar cal = Calendar.getInstance();
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_MEMBERID);
 			ps.setInt(1, memberId);
 			ResultSet rs = ps.executeQuery();
@@ -89,13 +100,7 @@ public class MemberMessageDAOjdbc implements MemberMessageDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -105,7 +110,7 @@ public class MemberMessageDAOjdbc implements MemberMessageDAO {
 	@Override
 	public MemberMessageBean select(int memberMessageId){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_ID);
 			ps.setInt(1, memberMessageId);
 			ResultSet rs = ps.executeQuery();
@@ -120,13 +125,7 @@ public class MemberMessageDAOjdbc implements MemberMessageDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -137,7 +136,7 @@ public class MemberMessageDAOjdbc implements MemberMessageDAO {
 	public List<MemberMessageBean> insert(MemberMessageBean memberMessageBean) {
 		try {
 			SimpleDateFormat sf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT_SETTIME);
 			ps.setString(1, memberMessageBean.getMemberMessageContent());
 			ps.setDate(2, new java.sql.Date((sf.parse(memberMessageBean.getMessaageTime())).getTime()));
@@ -150,13 +149,7 @@ public class MemberMessageDAOjdbc implements MemberMessageDAO {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -167,7 +160,7 @@ public class MemberMessageDAOjdbc implements MemberMessageDAO {
 	public List<MemberMessageBean> update(MemberMessageBean memberMessageBean){
 		try {
 			SimpleDateFormat sf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setString(1, memberMessageBean.getMemberMessageContent());
 			Date date = new java.sql.Date((sf.parse(memberMessageBean.getMessaageTime())).getTime());
@@ -182,13 +175,7 @@ public class MemberMessageDAOjdbc implements MemberMessageDAO {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -198,7 +185,7 @@ public class MemberMessageDAOjdbc implements MemberMessageDAO {
 	@Override
 	public boolean delete(int memberMessageID){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1,memberMessageID);
 			if(ps.executeUpdate()==1){
@@ -207,25 +194,21 @@ public class MemberMessageDAOjdbc implements MemberMessageDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return false;
 	}
 	public static void main(String[] args){
-		MemberMessageDAO t = new MemberMessageDAOjdbc();
+		MemberMessageDAOjdbc t = new MemberMessageDAOjdbc();
 		
 		MemberMessageBean tb = new MemberMessageBean();
-		tb.setMemberMessageID(2);
-		tb.setMemberMessageContent("會員提醒你 生日快樂");
-		tb.setMessaageTime("2011-12-22 22:44:44");
-		tb.setMemberId(3);
+//		tb.setMemberMessageID(2);
+//		tb.setMemberMessageContent("會員提醒你 生日快樂");
+//		tb.setMessaageTime("2011-12-22 22:44:44");
+//		tb.setMemberId(3);
 		
+		
+//		System.out.println(t.count(1));
 //		tb.setThoughtId(1);
 //		tb.setThoughtName("台東熱氣球");
 //		tb.setThoughtType("景點");
@@ -242,11 +225,11 @@ public class MemberMessageDAOjdbc implements MemberMessageDAO {
 //----------------------------------------------------------
 //		System.out.println(t.update(tb)); //修改
 //----------------------------------------------------------
-		System.out.println(t.delete(1));//刪除
+//		System.out.println(t.delete(1));//刪除
 //----------------------------------------------------------
-		for(MemberMessageBean e : t.select()){
-			System.out.println(e);
-		}
+//		for(MemberMessageBean e : t.select()){
+//			System.out.println(e);
+//		}
 //----------------------------------------------------------
 	}
 		

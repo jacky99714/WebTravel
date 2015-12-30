@@ -20,6 +20,7 @@ public class LogoutServlet extends HttpServlet {
 		
 			HttpSession session = request.getSession();
 			session.removeAttribute("loginOk");
+			session.removeAttribute("memberimg");
 			response.sendRedirect(request.getContextPath()+"/index.jsp");
 	}
 

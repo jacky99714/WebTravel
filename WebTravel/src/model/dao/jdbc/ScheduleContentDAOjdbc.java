@@ -1,7 +1,6 @@
 package model.dao.jdbc;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,11 +9,10 @@ import java.util.List;
 
 import model.bean.ScheduleContentBean;
 import model.dao.ScheduleContentDAO;
+import model.util.JdbcConnection;
 
 public class ScheduleContentDAOjdbc implements ScheduleContentDAO {
-	private static final String URL = "jdbc:sqlserver://10.211.55.3:1433;database=travel";
-	private static final String USERNAME = "sa";
-	private static final String PASSWORD = "sa123456";
+
 	
 	private static final String SELECT_ID = "SELECT * FROM ScheduleContent WHERE ScheduleContentID=?";
 	private static final String SELECT = "SELECT ScheduleContentId,ScheduleOrder,SceneID,ScheduleID FROM ScheduleContent";
@@ -29,7 +27,7 @@ public class ScheduleContentDAOjdbc implements ScheduleContentDAO {
 	@Override
 	public List<ScheduleContentBean> select(){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<ScheduleContentBean> list = new ArrayList<ScheduleContentBean>();
@@ -45,13 +43,7 @@ public class ScheduleContentDAOjdbc implements ScheduleContentDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -61,7 +53,7 @@ public class ScheduleContentDAOjdbc implements ScheduleContentDAO {
 	@Override
 	public ScheduleContentBean select(int scheduleContentId){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_ID);
 			ps.setInt(1, scheduleContentId);
 			ResultSet rs = ps.executeQuery();
@@ -76,13 +68,7 @@ public class ScheduleContentDAOjdbc implements ScheduleContentDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}
@@ -92,7 +78,7 @@ public class ScheduleContentDAOjdbc implements ScheduleContentDAO {
 	@Override
 	public boolean insert(ScheduleContentBean scheduleContentBean){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setInt(1, scheduleContentBean.getScheduleOrder());
 			ps.setInt(2, scheduleContentBean.getSceneId());
@@ -103,13 +89,7 @@ public class ScheduleContentDAOjdbc implements ScheduleContentDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return false;
 	}
@@ -119,7 +99,7 @@ public class ScheduleContentDAOjdbc implements ScheduleContentDAO {
 	@Override
 	public boolean delete(int scheduleContentId){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1, scheduleContentId);;
 			if(ps.executeUpdate()==1){
@@ -128,13 +108,7 @@ public class ScheduleContentDAOjdbc implements ScheduleContentDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return false;
 	}
@@ -144,7 +118,7 @@ public class ScheduleContentDAOjdbc implements ScheduleContentDAO {
 	@Override
 	public ScheduleContentBean update(ScheduleContentBean scheduleContentBean){
 		try {
-			conn =  DriverManager.getConnection(URL,USERNAME,PASSWORD);
+			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setInt(1, scheduleContentBean.getScheduleOrder());
 			ps.setInt(2, scheduleContentBean.getSceneId());
@@ -157,13 +131,7 @@ public class ScheduleContentDAOjdbc implements ScheduleContentDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			JdbcConnection.closeConnection();
 		}
 		return null;
 	}

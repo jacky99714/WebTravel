@@ -1,7 +1,8 @@
 package model.dao.jdbc;
 
+
+
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,52 +11,47 @@ import java.util.List;
 
 import model.bean.SceneBean;
 import model.dao.SceneDAO;
+import model.util.DataSourceConnection;
+import model.util.JdbcConnection;
 
 public class SceneDAOjdbc implements SceneDAO {
-	//DB連線資訊
-	private static final String URL = "jdbc:sqlserver://localhost:1433;database=travel";
-	private static final String USERNAME = "sa";
-	private static final String PASSWORD = "passw0rd";	
+
 	//select
 	private static final String SELECT_ALL = "select * from scene";
 	private static final String SELECT_BY_LOCATION = "select * from scene where location = ?";	
 	//insert
 	private static final String INSERT = 
 			"insert into scene"
-		  + " (location,city,sceneName,sceneContent,timeStart,timeEnd,MemberId) "
-		  + "values(?, ?, ?, ?, ?, ?, ?)";
+		  + " (location,city,sceneName,scenePhoto,sceneContent,timeStart,timeEnd,MemberId) "
+		  + "values(?, ?, ?, ?, ?, ?,?,?)";
 	//update
 	private static final String UPDATE = "update scene set location=?, city=?,"
-		  + "sceneName=?, sceneContent=?, timeStart=?, timeEnd=?, MemberId=?";	
+		  + "sceneName=?,scenePhoto=?, sceneContent=?, timeStart=?, timeEnd=?, MemberId=?";	
 	//delete
 	private static final String DELETE = "delete from scene where sceneName=?";
 	private Connection conn = null;
 	
-	//查詢 SELECT_ALL
-	/* (non-Javadoc)
-	 * @see model.dao.jdbc.SceneDAO#select()
-	 */
 	@Override
 	public  List<SceneBean> select() {
 		List<SceneBean> list = null;
 		SceneBean sbean =null;
-		try (//AutoCloseable
-			 Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD); 
-			 ){
+		try (// AutoCloseable
+				Connection conn = JdbcConnection.getConnection();) {
 			
 			PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
 			ResultSet rs = ps.executeQuery();
 			list = new ArrayList<SceneBean>();
 			while(rs.next()){
-				sbean = new SceneBean();
+				sbean = new SceneBean();				
 				sbean.setSceneId(rs.getInt(1));
 				sbean.setLocation(rs.getString(2));
 				sbean.setCity(rs.getString(3));
 				sbean.setSceneName(rs.getString(4));
-				sbean.setSceneContent(rs.getString(5));
-				sbean.setTimeStart(rs.getString(6));
-				sbean.setTimeEnd(rs.getString(7));
-				sbean.setMemberId(rs.getInt(8));
+				sbean.setScenePhoto(rs.getBytes(5));
+				sbean.setSceneContent(rs.getString(6));
+				sbean.setTimeStart(rs.getString(7));
+				sbean.setTimeEnd(rs.getString(8));
+				sbean.setMemberId(rs.getInt(9));
 				list.add(sbean);
 			}	
 		} catch (SQLException e) {
@@ -69,10 +65,11 @@ public class SceneDAOjdbc implements SceneDAO {
 	 * @see model.dao.jdbc.SceneDAO#select(java.lang.String)
 	 */
 	@Override
-	public  SceneBean select(String location) {
+	public  List<SceneBean> select(String location) {
 		SceneBean sbean =null;
+		List<SceneBean> li = new ArrayList<>();
 		try (
-			 Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD); 
+				Connection conn = DataSourceConnection.getConnection();
 			 ){
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_LOCATION);
 			ps.setString(1, location);
@@ -83,16 +80,17 @@ public class SceneDAOjdbc implements SceneDAO {
 				sbean.setLocation(rs.getString(2));
 				sbean.setCity(rs.getString(3));
 				sbean.setSceneName(rs.getString(4));
-				sbean.setSceneContent(rs.getString(5));
-				sbean.setTimeStart(rs.getString(6));
-				sbean.setTimeEnd(rs.getString(7));
-				sbean.setMemberId(rs.getInt(8));	
+				sbean.setScenePhoto(rs.getBytes(5));
+				sbean.setSceneContent(rs.getString(6));
+				sbean.setTimeStart(rs.getString(7));
+				sbean.setTimeEnd(rs.getString(8));
+				sbean.setMemberId(rs.getInt(9));
+				li.add(sbean);
 			}		
 		} catch (SQLException e) {			
 			e.printStackTrace();
 		}
-	
-		return sbean;
+		return li;
 	}
 	
 	//新增INSERT
@@ -102,18 +100,18 @@ public class SceneDAOjdbc implements SceneDAO {
 	@Override
 	public SceneBean insert(SceneBean bean) {
 		SceneBean result = null;
-		try (
-			Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);	
-				){
+		try (// AutoCloseable
+				Connection conn = JdbcConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			if(bean != null){
 			ps.setString(1, bean.getLocation());
 			ps.setString(2, bean.getCity());
 			ps.setString(3, bean.getSceneName());
-			ps.setString(4, bean.getSceneContent());
-			ps.setString(5, bean.getTimeStart());
-			ps.setString(6, bean.getTimeEnd());
-			ps.setInt(7, bean.getMemberId());
+			ps.setBytes(4, bean.getScenePhoto());
+			ps.setString(5, bean.getSceneContent());
+			ps.setString(6, bean.getTimeStart());
+			ps.setString(7, bean.getTimeEnd());
+			ps.setInt(8, bean.getMemberId());
 					
 			int rs = ps.executeUpdate();
 			if (rs == 1){
@@ -133,18 +131,18 @@ public class SceneDAOjdbc implements SceneDAO {
 	@Override
 	public SceneBean update(SceneBean bean){
 		SceneBean result = null;
-		try (
-			Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);	
-				){
+		try (// AutoCloseable
+				Connection cconn = JdbcConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			if(bean != null){
 			ps.setString(1, bean.getLocation());
 			ps.setString(2, bean.getCity());
 			ps.setString(3, bean.getSceneName());
-			ps.setString(4, bean.getSceneContent());
-			ps.setString(5, bean.getTimeStart());
-			ps.setString(6, bean.getTimeEnd());
-			ps.setInt(7, bean.getMemberId());
+			ps.setBytes(4, bean.getScenePhoto());
+			ps.setString(5, bean.getSceneContent());
+			ps.setString(6, bean.getTimeStart());
+			ps.setString(7, bean.getTimeEnd());
+			ps.setInt(8, bean.getMemberId());
 					
 			int rs = ps.executeUpdate();
 			if (rs == 1){
@@ -163,9 +161,8 @@ public class SceneDAOjdbc implements SceneDAO {
 	 */
 	@Override
 	public boolean delete(String sceneName) {
-		try (
-				Connection conn = DriverManager.getConnection(URL,USERNAME,PASSWORD);	
-					){
+		try (// AutoCloseable
+				Connection conn = JdbcConnection.getConnection();) {
 				PreparedStatement ps = conn.prepareStatement(DELETE);
 				
 				ps.setString(1, sceneName);

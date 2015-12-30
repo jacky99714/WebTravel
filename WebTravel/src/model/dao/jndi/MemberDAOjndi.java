@@ -1,38 +1,22 @@
 package model.dao.jndi;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
+
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Blob;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
 import model.bean.MemberBean;
 import model.dao.MemberDAO;
+import model.util.DataSourceConnection;
 
 public class MemberDAOjndi implements MemberDAO {
-	
-//	private static final String URL = "jdbc:sqlserver://l;database=travel";
-//	private static final String USERNAME = "sa";
-//	private static final String PASSWORD = "sa123456";
 	
 	private static final String SELECT_ID = "SELECT * FROM Member WHERE memberID=?";
 	private static final String SELECT_UESRNAME = "SELECT * FROM Member WHERE userName=?";
@@ -42,22 +26,16 @@ public class MemberDAOjndi implements MemberDAO {
 //	private static final String INSERT = "insert into Member(userName,password,firstName,lastName,nickName,birthDay,address,cellphone,telephone,email) values(?,?,?,?,?,?,?,?,?,?)";
 	private static final String UPDATE = "update Member set password=?,firstName=?,lastName=?,nickName=?,birthDay=?,address=?,cellphone=?,telephone=?,email=?,photo=? where userName=?";
 //	private static final String UPDATE = "update Member set password=?,firstName=?,lastName=?,nickName=?,birthDay=?,address=?,cellphone=?,telephone=?,email=? where userName=?";
+	
+	
 	private Connection conn= null;
 	
-	DataSource ds= null; 
-	public MemberDAOjndi(){
-		try {
-			Context context = new InitialContext();
-			ds = (DataSource) context.lookup("java:comp/env/jdbc/xxx");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
+ 
 
 	@Override
 	public List<MemberBean> select(){  //查詢
 		try {
-			conn =  ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<MemberBean> list = new ArrayList<MemberBean>();
@@ -82,13 +60,7 @@ public class MemberDAOjndi implements MemberDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		
 		return null;
@@ -99,7 +71,7 @@ public class MemberDAOjndi implements MemberDAO {
 	@Override
 	public MemberBean select(int memberId){
 		try {
-			conn =  ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_ID);
 			ps.setInt(1, memberId);
 			ResultSet rs = ps.executeQuery();
@@ -124,13 +96,7 @@ public class MemberDAOjndi implements MemberDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		
 		return null;
@@ -141,7 +107,7 @@ public class MemberDAOjndi implements MemberDAO {
 	@Override
 	public MemberBean select(String userName){
 		try {
-			conn =  ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_UESRNAME);
 			ps.setString(1, userName);
 			ResultSet rs = ps.executeQuery();
@@ -165,13 +131,7 @@ public class MemberDAOjndi implements MemberDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		
 		return null;
@@ -183,7 +143,7 @@ public class MemberDAOjndi implements MemberDAO {
 	@Override
 	public MemberBean insert(MemberBean memberBean) {  //新增
 		try {
-			conn =  ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setString(1, memberBean.getUserName());
 			ps.setBytes(2, memberBean.getPassword().getBytes());
@@ -205,13 +165,7 @@ public class MemberDAOjndi implements MemberDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -221,7 +175,7 @@ public class MemberDAOjndi implements MemberDAO {
 	@Override
 	public MemberBean update(MemberBean memberBean){
 		try {
-			conn =  ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setString(10, memberBean.getUserName());
 			ps.setBytes(1, memberBean.getPassword().getBytes());
@@ -245,13 +199,7 @@ public class MemberDAOjndi implements MemberDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -261,7 +209,7 @@ public class MemberDAOjndi implements MemberDAO {
 	@Override
 	public boolean delete(String userName){
 		try {
-			conn =  ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setString(1,userName);
 			if(ps.executeUpdate()==1){
@@ -270,13 +218,7 @@ public class MemberDAOjndi implements MemberDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return false;
 	}

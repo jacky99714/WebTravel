@@ -1,21 +1,15 @@
 package model.dao.jndi;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
 import model.bean.ScheduleBean;
-import model.bean.ThoughtBean;
 import model.dao.ScheduleDAO;
+import model.util.DataSourceConnection;
 
 public class ScheduleDAOjndi implements ScheduleDAO {
 
@@ -28,19 +22,11 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 	
 	private Connection conn= null;
 
-	DataSource ds =null;
-	public ScheduleDAOjndi(){
-		try {
-			Context context = new InitialContext();
-			ds = (DataSource) context.lookup("java:comp/env/jdbc/xxx");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
+	
 	@Override
 	public ScheduleBean select(int scheduleId){
 		try {
-			conn =  ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_ID);
 			ps.setInt(1, scheduleId);
 			ResultSet rs = ps.executeQuery();
@@ -54,13 +40,7 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -70,7 +50,7 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 	@Override
 	public List<ScheduleBean> select(){
 		try {
-			conn =  ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<ScheduleBean> list =new ArrayList<ScheduleBean>();
@@ -85,13 +65,7 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -102,7 +76,7 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 	@Override
 	public boolean insert(ScheduleBean scheduleBean){
 		try {
-			conn =  ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setString(1, scheduleBean.getScheduleName());
 			ps.setInt(2, scheduleBean.getMemberId());
@@ -112,13 +86,7 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return false;
 	}
@@ -129,7 +97,7 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 	@Override
 	public ScheduleBean update(ScheduleBean scheduleBean){
 		try {
-			conn =  ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setInt(3, scheduleBean.getScheduleId());
 			ps.setString(1, scheduleBean.getScheduleName());
@@ -140,13 +108,7 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -156,7 +118,7 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 	@Override
 	public boolean delete(int scheduleId){
 		try {
-			conn =  ds.getConnection();
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1,scheduleId);
 			if(ps.executeUpdate()==1){
@@ -165,13 +127,7 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			if (conn!=null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} 
-			}
+			DataSourceConnection.closeConnection();
 		}
 		return false;
 	}

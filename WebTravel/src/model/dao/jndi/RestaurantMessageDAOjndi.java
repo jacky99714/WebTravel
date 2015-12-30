@@ -1,20 +1,15 @@
 package model.dao.jndi;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
 import model.bean.RestaurantMessageBean;
 import model.dao.RestaurantMessageDAO;
+import model.util.DataSourceConnection;
 
 public class RestaurantMessageDAOjndi implements RestaurantMessageDAO {
 
@@ -30,21 +25,13 @@ public class RestaurantMessageDAOjndi implements RestaurantMessageDAO {
 	private static final String DELETE = "delete from RestaurantMessage where restaurantMessageId=?";
 	private Connection conn = null;
 
-	DataSource ds =null;
-	public RestaurantMessageDAOjndi(){
-		try {
-			Context context = new InitialContext();
-			ds = (DataSource) context.lookup("java:comp/env/jdbc/xxx");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
+
 	@Override
 	public List<RestaurantMessageBean> select() {
 		List<RestaurantMessageBean> list = null;
 		RestaurantMessageBean rmbean = null;
 		try (// AutoCloseable
-				Connection conn =ds.getConnection();) {
+			Connection conn = DataSourceConnection.getConnection();) {
 
 			PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
 			ResultSet rs = ps.executeQuery();
@@ -71,7 +58,7 @@ public class RestaurantMessageDAOjndi implements RestaurantMessageDAO {
 	@Override
 	public RestaurantMessageBean select(int sceneId) {
 		RestaurantMessageBean rmbean = null;
-		try (Connection conn =ds.getConnection();) {
+		try (Connection conn = DataSourceConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_RESTAURANTID);
 			ps.setInt(1, sceneId);
 			ResultSet rs = ps.executeQuery();
@@ -96,7 +83,7 @@ public class RestaurantMessageDAOjndi implements RestaurantMessageDAO {
 	@Override
 	public RestaurantMessageBean insert(RestaurantMessageBean bean) {
 		RestaurantMessageBean result = null;
-		try (Connection conn =ds.getConnection();) {
+		try (Connection conn = DataSourceConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			if (bean != null) {
 				ps.setString(1, bean.getMessageContent());
@@ -121,7 +108,7 @@ public class RestaurantMessageDAOjndi implements RestaurantMessageDAO {
 	@Override
 	public RestaurantMessageBean update(RestaurantMessageBean bean) {
 		RestaurantMessageBean result = null;
-		try (Connection conn =ds.getConnection();) {
+		try (Connection conn = DataSourceConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			if (bean != null) {
 				ps.setString(1, bean.getMessageContent());
@@ -145,7 +132,7 @@ public class RestaurantMessageDAOjndi implements RestaurantMessageDAO {
 	 */
 	@Override
 	public boolean delete(int RestaurantMessageId) {
-		try (Connection conn =ds.getConnection();) {
+		try (Connection conn = DataSourceConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 
 			ps.setInt(1, RestaurantMessageId);
