@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.bean.SceneBean;
 import model.service.SceneService;
 import model.util.TypeConveter;
+import other.bean.FavoriteBean;
 
 /**
  * Servlet implementation class SelectLocationServlet
@@ -32,7 +33,7 @@ public class SelectLocationServlet extends HttpServlet {
 
 		// 接收資料
 		SceneService sceneservice = new SceneService();
-		List<SceneBean> li = new ArrayList<>();
+		List<FavoriteBean> li = new ArrayList<>();
 		li = sceneservice.getLocation(request.getParameter("location"));
 		PrintWriter out = response.getWriter();
 		out.print(TypeConveter.parseJSONArray(li));
