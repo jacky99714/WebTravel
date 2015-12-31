@@ -101,7 +101,8 @@
 					    </div>
 					  </div>
 					  
-		 			 <button type="submit" class="btn btn-default col-md-3 col-md-offset-3">加入會員</button>
+		 			 <button id="btn" type="button" class="btn btn-default col-md-3 col-md-offset-3">一鍵輸入</button>
+		 			 <button type="submit" class="btn btn-default col-md-3">加入會員</button>
 				</form>
     
     
@@ -119,6 +120,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="<c:url value="/js/bootstrap.min.js" />"></script>
+    <script type="text/javascript">
+   		 $(function(){
+   			 $('useid').text("jjjjjj");
+   			 
+   		 });//$end
     
+    </script>
   </body>
 </html>

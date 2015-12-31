@@ -5,6 +5,9 @@
 
     <link href="<c:url value="/css/bootstrap.min.css"/>" rel="stylesheet">
     
+    
+    
+    
      <div class="navbar-wrapper navbar-fixed-top">
       <div class="container">
         <nav class="navbar navbar-inverse navbar-static-top">
@@ -57,7 +60,7 @@
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">旅遊日記 <span class="caret"></span></a>
                   <ul class="dropdown-menu">
                     <li><a href="#">日記</a></li>
-                    <li><a href="#">日記分享</a></li>
+                    <li><a href="<c:url value="/Thought.jsp" />">日記分享</a></li>
                   </ul>
                 </li>
 <!-- 	------------------------行程------------------------ -->
@@ -84,7 +87,7 @@
                <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">會員管理<span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="#">我的帳號</a></li>
+                    <li><a href="<c:url value="/JMember/MyMember.jsp" />">我的帳號</a></li>
                     <li><a href="<c:url value="/MyCollectServlet" />">我的收藏</a></li>
                     <li><a href="#">我的行程規劃</a></li>
 <!--                     <li role="separator" class="divider"></li> -->
@@ -115,5 +118,3 @@
       </div>
 
     
-
-   

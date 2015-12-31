@@ -21,6 +21,12 @@ public class TypeConveter{
 		return Base64.getEncoder().encodeToString(src);
 	}
 		
+	public static String EncodeStringBase64(String src){
+		if(src == null){
+			return null;
+		}
+		 return EncodeBase64(src.getBytes());
+	}	
 	public static byte[] DecodeBase64(String src){
 		if(src == null){
 			return null;

@@ -29,6 +29,8 @@ public class AddScheduleServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	    request.setCharacterEncoding("UTF-8");
+	    response.setContentType("text/html; charset=UTF-8");
 		List<String> list = new ArrayList<String>();
 		list.clear();
 		JSONArray jsonArray;
