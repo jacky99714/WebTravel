@@ -91,11 +91,11 @@
          var maxLine = 5;   
          var scheduleArray = [];
 ///////////////////////////////////////////////////////////
-		function schedule(memberId,scheduleName,scheduleOrder,sceneID){
+		function schedule(memberId,scheduleName,scheduleOrder,sceneId){
 			this.memberId = memberId;
 			this.scheduleName = scheduleName;
 			this.scheduleOrder = scheduleOrder;
-			this.sceneID = sceneID;
+			this.sceneId = sceneId;
 		}
 
  /////////////////////////////////////////////////////////               

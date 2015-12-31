@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,6 +92,7 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 		return false;
 	}
 	
+
 	/* (non-Javadoc)
 	 * @see model.dao.jdbc.ScheduleDAO#update(model.ScheduleBean)
 	 */
@@ -131,6 +133,30 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 		}
 		return false;
 	}
+	
+	@Override
+	public int getInsertId(ScheduleBean scheduleBean){
+		try {
+			conn = DataSourceConnection.getConnection();
+			PreparedStatement ps = conn.prepareStatement(INSERT,Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1, scheduleBean.getScheduleName());
+			ps.setInt(2, scheduleBean.getMemberId());
+			if(ps.executeUpdate()==1){
+				ResultSet rs = ps.getGeneratedKeys();
+				if(rs.next()){
+					return rs.getInt(1);
+				}else{
+					return 0;
+				}	
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			DataSourceConnection.closeConnection();
+		}
+		return 0;
+	}		
+	
 	public static void main(String[] args){
 		ScheduleDAO s = new ScheduleDAOjndi();
 		ScheduleBean sb = new ScheduleBean();

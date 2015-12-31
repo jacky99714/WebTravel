@@ -17,4 +17,6 @@ public interface ScheduleDAO {
 
 	boolean delete(int scheduleId);
 
+	int getInsertId(ScheduleBean scheduleBean);
+
 }
