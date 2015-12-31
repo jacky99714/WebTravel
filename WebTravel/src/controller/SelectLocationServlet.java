@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,17 +35,21 @@ public class SelectLocationServlet extends HttpServlet {
 		// 接收資料
 		SceneService sceneservice = new SceneService();
 		List<FavoriteBean> li = new ArrayList<>();
-		li = sceneservice.getLocation(request.getParameter("location"));
-		PrintWriter out = response.getWriter();
-		out.print(TypeConveter.parseJSONArray(li));
+		String lo = request.getParameter("location");
+					
 		// 驗證資料
-
+		if ( lo.equals("北區") || lo.equals("中區") ||lo.equals("南區") ||lo.equals("東區")) {
+			li = sceneservice.getLocation(lo);
+		}
 		// 轉換資料
 
 		// model
-
-		// model執行結果，View
+		PrintWriter out = response.getWriter();
+		out.print(TypeConveter.parseJSONArray(li));
 		
+		// model執行結果，View
+//		RequestDispatcher rd = request.getRequestDispatcher("scene_location.jsp");
+//		rd.forward(request, response);
 	}
 
 	
