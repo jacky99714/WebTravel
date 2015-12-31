@@ -2,8 +2,12 @@ package jacky.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -14,24 +18,27 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.json.JSONArray;
+
 import model.bean.MemberBean;
 import model.service.MemberService;
 
 
-@WebServlet("/JoinMemberServlet")
-public class JoinMemberServlet extends HttpServlet {
+@WebServlet("/UpdataMemberServlet")
+public class UpdataMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    public JoinMemberServlet() {
+    public UpdataMemberServlet() {
         super();
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	    request.setCharacterEncoding("UTF-8");
-	    response.setContentType("text/html; charset=UTF-8");
+	    response.setContentType("application/json; charset=UTF-8");
 		HttpSession session =request.getSession();
+		PrintWriter out = response.getWriter();
+		JSONArray jsonArray ;
+		List<String> list = new ArrayList<String>();
 		//接收
-		String temp1 = request.getParameter("useid");
-		String temp2 = request.getParameter("password");
 		String temp3 = request.getParameter("lastname");
 		String temp4 = request.getParameter("firstname");
 		String temp5 = request.getParameter("nickname");
@@ -40,33 +47,17 @@ public class JoinMemberServlet extends HttpServlet {
 		String temp8 = request.getParameter("hphone");
 		String temp9 = request.getParameter("email");
 		String temp10 = request.getParameter("addr");
+		System.out.println("UpdataMemberServlet:"+temp10);
+		System.out.println("UpdataMemberServlet:"+temp3);
+		System.out.println("UpdataMemberServlet:"+temp5);
+		System.out.println("UpdataMemberServlet:"+temp6);
+//		String temp11 = request.getParameter("photo");
 		
-//-----------------------------------------------------------
-		Collection<Part> parts = request.getParts();
-		Part pho =request.getPart("photo"); 
-		String s;
-		byte[] phto=null;
-		if(pho!=null){
-			InputStream in =pho.getInputStream();
-			phto =new byte[(int)pho.getSize()];
-			in.read(phto);
-//		OutputStream ou = new FileOutputStream("C:/Users/Student/Desktop/04.jpg");
-//		ou.write(phto);
-//		ou.close();
-			in.close();
-		}
 		
 //-----------------------------------------------------------
 		//驗證
 		Map<String, String> error =new HashMap<String,String>();
 		request.setAttribute("errorMap",error);
-		
-		if(temp1==null || temp1.length()==0){
-			error.put("useid", "請輸入帳號");
-		}
-		if(temp2==null || temp2.length()==0){
-			error.put("password", "請輸入密碼");
-		}
 		if(temp3==null || temp3.length()==0){
 			error.put("lastname", "請輸入姓氏");
 		}
@@ -87,36 +78,43 @@ public class JoinMemberServlet extends HttpServlet {
 			error.put("email", "請輸入電子郵件");
 		}
 		if(error!=null && !error.isEmpty()){
-			request.getRequestDispatcher("/secure/joinMember.jsp").forward(request, response);
-		}
-		
-		//model
-		MemberService ms = new MemberService();
-		MemberBean mb = new MemberBean();
-		
-		mb.setUserName(temp1);
-		mb.setPassword(temp2);
-		mb.setLastName(temp3);
-		mb.setFirstName(temp4);
-		mb.setNickName(temp5);
-		mb.setBirthDay(date);
-		mb.setCellphone(temp7);
-		mb.setTelephone(temp8);
-		mb.setEmail(temp9);
-		mb.setAddress(temp10);
-		mb.setPhoto(phto);
-		
-		MemberBean rsbean = ms.insert(mb);
-		//view
-		if(rsbean!=null){
-			if(rsbean.getPhoto()!=null){
-				String phtoB64 =model.util.TypeConveter.EncodeBase64(rsbean.getPhoto());
-				session.setAttribute("phtoB64", phtoB64);
-			}
-			session.setAttribute("member", rsbean);
-			response.sendRedirect(request.getContextPath()+"/secure/joinSuccess.jsp");
+
+			request.getRequestDispatcher(
+					"/secure/login.jsp").forward(request, response);
 		}else{
-			request.getRequestDispatcher("/secure/joinMember.jsp").forward(request, response);
+			//model
+			MemberService ms = new MemberService();
+			MemberBean mb = new MemberBean();
+			MemberBean oldMb =(MemberBean)session.getAttribute("loginOk");
+			mb.setUserName(oldMb.getUserName());
+			mb.setLastName(temp3);
+			mb.setFirstName(temp4);
+			mb.setNickName(temp5);
+			mb.setBirthDay(date);
+			mb.setCellphone(temp7);
+			mb.setTelephone(temp8);
+			mb.setEmail(temp9);
+			mb.setAddress(temp10);
+			
+			MemberBean rsbean = ms.updateContext(mb);
+			System.out.println("UpdataMemberSerlet:"+rsbean);
+			//view
+			if(rsbean!=null){
+				if(rsbean.getPhoto()!=null){
+					String phtoB64 =model.util.TypeConveter.EncodeBase64(rsbean.getPhoto());
+					session.setAttribute("phtoB64", phtoB64);
+				}
+				session.removeAttribute("loginOk");
+				session.setAttribute("member", rsbean);
+				session.setAttribute("loginOk", rsbean);
+				list.add("成功");
+				jsonArray = new JSONArray(list);
+				out.print(jsonArray);
+			}else{
+				list.add("失敗");
+				jsonArray = new JSONArray(list);
+				out.print(jsonArray);
+			}
 		}
 		
 	}
