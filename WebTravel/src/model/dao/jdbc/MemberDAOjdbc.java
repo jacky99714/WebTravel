@@ -16,6 +16,7 @@ import java.util.List;
 
 import model.bean.MemberBean;
 import model.dao.MemberDAO;
+import model.util.DataSourceConnection;
 import model.util.JdbcConnection;
 
 public class MemberDAOjdbc implements MemberDAO {
@@ -32,11 +33,38 @@ public class MemberDAOjdbc implements MemberDAO {
 //	private static final String INSERT = "insert into Member(userName,password,firstName,lastName,nickName,birthDay,address,cellphone,telephone,email) values(?,?,?,?,?,?,?,?,?,?)";
 	private static final String UPDATE = "update Member set password=?,firstName=?,lastName=?,nickName=?,birthDay=?,address=?,cellphone=?,telephone=?,email=?,photo=? where userName=?";
 //	private static final String UPDATE = "update Member set password=?,firstName=?,lastName=?,nickName=?,birthDay=?,address=?,cellphone=?,telephone=?,email=? where userName=?";
+	private static final String UPDATE_CONTEXT = "update Member set firstName=?,lastName=?,nickName=?,birthDay=?,address=?,cellphone=?,telephone=?,email=? where userName=?";
 	private Connection conn= null;
 	//查詢
 	/* (non-Javadoc)
 	 * @see model.dao.jdbc.MemberDAO#select()
 	 */
+	public MemberBean updateContext(MemberBean memberBean){
+		try {
+			conn = JdbcConnection.getConnection();
+			PreparedStatement ps = conn.prepareStatement(UPDATE_CONTEXT);
+			ps.setString(1, memberBean.getFirstName());
+			ps.setString(2, memberBean.getLastName());
+			ps.setString(3, memberBean.getNickName());
+			ps.setDate(4, new java.sql.Date(memberBean.getBirthDay().getTime()));
+			ps.setString(5, memberBean.getAddress());
+			ps.setString(6, memberBean.getCellphone());
+			ps.setString(7, memberBean.getTelephone());
+			ps.setString(8, memberBean.getEmail());
+			ps.setString(9, memberBean.getUserName());
+			if(ps.executeUpdate()==1){
+				return this.select(memberBean.getUserName());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			JdbcConnection.closeConnection();
+		}
+		return null;
+	}
+	
+	
+	
 	@Override
 	public List<MemberBean> select(){  //查詢
 		try {
@@ -231,7 +259,7 @@ public class MemberDAOjdbc implements MemberDAO {
 		
 //-----------------------圖片匯入-----------------------------------
 		
-		File f = new File("C:/Users/Student/Desktop/02.jpg");
+		File f = new File("C:/Users/Student/Desktop/Member.png");
 		byte[] poto = new byte[(int)f.length()];
 		FileInputStream fi = new FileInputStream(f);
 		fi.read(poto);
@@ -255,11 +283,11 @@ public class MemberDAOjdbc implements MemberDAO {
 //--------------------------假資料--------------------------------
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		MemberBean mb = new MemberBean();
-		mb.setUserName("jack21");
+		mb.setUserName("jack1");
 		mb.setPassword("B");
 		mb.setFirstName("王");
 		mb.setLastName("翔");
-		mb.setNickName("mousssse");
+		mb.setNickName("moujjjjjjjsssse");
 		mb.setBirthDay(sdf.parse("1991-11-22"));
 		mb.setAddress("台北市");
 		mb.setCellphone("0919929sss9393");
@@ -280,6 +308,7 @@ public class MemberDAOjdbc implements MemberDAO {
 //		System.out.println(m.select("text123")); //單筆select （帳號）
 //----------------------------------------------------------
 //		System.out.println(m.update(mb)); //修改
+		System.out.println(m.updateContext(mb)); //修改
 //----------------------------------------------------------
 //		System.out.println(m.delete("jack1"));//刪除
 		

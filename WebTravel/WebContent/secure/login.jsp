@@ -50,11 +50,11 @@
 		   		<form class="form-inline" id="formLogin" action="<c:url value="/LoginServlet"/>" method="get">
 		  			<div class="form-group">
 		   				 <label class="sr-only" for="useid">帳號：</label>
-		   				 <input type="text" class="form-control" name="useid" id="useid" placeholder="帳號" value="${param.useid}">
+		   				 <input type="text" class="form-control" name="useid" id="useid" placeholder="帳號" value="${param.useid}"><c:if test="${not empty error}"><div style="color:red">${error.useid}</div></c:if>
 		  			</div><br>
 		 			 <div class="form-group">
 		   				 <label class="sr-only" for="password">密碼：</label>
-		   				 <input type="password" class="form-control" name="password" id="password" placeholder="密碼" value="${param.password}">
+		   				 <input type="password" class="form-control" name="password" id="password" placeholder="密碼" value="${param.password}"><c:if test="${not empty error}"><div style="color:red">${error.password}</div></c:if>
 		  			</div><br>
 		 			 <button type="submit" class="btn btn-default">登入</button>
 				</form>

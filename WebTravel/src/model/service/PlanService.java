@@ -3,11 +3,14 @@ package model.service;
 import java.util.List;
 
 import model.bean.SceneBean;
+import model.bean.ScheduleBean;
+import model.bean.ScheduleContentBean;
 import model.dao.CollectDAO;
 import model.dao.SceneDAO;
 import model.dao.jndi.CollectDAOjndi;
 import model.dao.jndi.SceneDAOjndi;
 import other.bean.FavoriteBean;
+import other.bean.MyScheduleBean;
 
 public class PlanService {
 //	 private static final String sql =
@@ -28,7 +31,11 @@ public class PlanService {
 		 }	 
 	 }
 	 
-	 public void insertSchedule(){
-		 
-	 }
+//	 public void insertSchedule(){
+//		 MyScheduleBean bean = new  MyScheduleBean();
+//		 ScheduleBean sb = new ScheduleBean();
+//		 ScheduleContentBean scheduleContentBean = new ScheduleContentBean();
+//		 sb.setMemberId(memberId);
+//		 sb.setScheduleName(scheduleName);
+//	 }
 }

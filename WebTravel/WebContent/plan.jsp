@@ -3,7 +3,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"  %>
 
-<%@page import="model.util.TypeConveter" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -90,6 +89,15 @@
          var totalImage = 0;
          var maxImg = 5;  // max image in tr tag
          var maxLine = 5;   
+         var scheduleArray = [];
+///////////////////////////////////////////////////////////
+		function schedule(memberId,scheduleName,scheduleOrder,sceneID){
+			this.memberId = memberId;
+			this.scheduleName = scheduleName;
+			this.scheduleOrder = scheduleOrder;
+			this.sceneID = sceneID;
+		}
+
  /////////////////////////////////////////////////////////               
          function allowDrop(ev) {
              ev.preventDefault();
@@ -190,6 +198,30 @@
 	    		}    		
 	    	}  	
 	    }
+	    
+	    function createSchedule(arrayObject){
+	    	xhr = new XMLHttpRequest();
+	    	if(xhr !== null){	    
+	  
+		    	xhr.addEventListener("readystatechange",callbackSchedule);
+		    	xhr.open("post","TestServlet",true); 
+		    	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		    	xhr.send("json="+arrayObject);		      	
+	    	}else{
+	    		alert("您的瀏覽器不支援Ajax功能!!");
+	    	}	    	
+	    }
+	    
+	    function callbackSchedule(){
+	    	if(xhr.readyState === 4){ 	
+	    		if(xhr.status === 200){
+			  //  	var data = JSON.parse(xhr.responseText);
+			   
+	    		}else{
+	    			alert(xhr.status + ":" + xhr.statusText);
+	    		}    		
+	    	}  	
+	    }	    
 /////////////////////////////////////////////
          function createImg(imgsrc,imgid,title){
              var img = new Image();
@@ -246,6 +278,7 @@
          } 
 
         window.onload = function(){
+        	table = document.getElementById("tab");
             document.getElementById("add").addEventListener("click",function(){
                 document.getElementById('addContent').style.display='block';
                 document.getElementById('addFavorite').style.display='none';
@@ -271,12 +304,28 @@
             }); 
             
             document.getElementById("sure").addEventListener("click",function(){
-            	      	
+            	var text =  document.getElementById('scheduleName').value;
+            	scheduleArray = null;
+            	scheduleArray = [];
+            	//schedule(memberId,scheduleName,scheduleOrder,sceneID)
+            	var td = document.getElementsByTagName("td");
+            	var num = 0;
+            	for (var i = 0; i < td.length;i++){
+            		if(i % 2 == 0){
+            			var img = td[i].firstElementChild;
+
+            			scheduleArray[num] = new schedule("1",text,num+1,img.id.substring(3));
+            			num++;
+            		}
+            	}
+            	// schedule(memberId,scheduleName,scheduleOrder,sceneID)
+           
+              	createSchedule(JSON.stringify(scheduleArray));    	
             	
             });
             
             document.getElementById("select").addEventListener("change", getScene);
-            table = document.getElementById("tab");
+           
             totalImage = 0;
 
        
@@ -335,6 +384,7 @@
         </div>
 	<table id="tab">
 	</table>
+	<input id="scheduleName" type="text" placeholder="行程名稱"/>
 	<button id="sure">行程確認</button>
 </body>
 

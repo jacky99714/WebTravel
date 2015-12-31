@@ -752,6 +752,7 @@
                              new imgToCanvas("person","img/john.png",0,0,80,80,350,200,80,80),
                              new imgToCanvas("attack","img/johnAttack.png",0,0,80,80,270,200,80,80),
                                              null); 
+         
 
             display(0,"userhp");
             display(0,"usermp");
@@ -882,7 +883,6 @@
                                     new imgToCanvas("attack","img/freezeAttack.png",0,0,80,80,110,200,80,80),
                                     new imgToCanvas("defense","img/freezeDefense.png",0,0,80,80,110,200,80,80));			
             }
-
             user.imgPerson.img.onload = function(){
                 display(user.hp,"userhp");
                 display(user.mp,"usermp");

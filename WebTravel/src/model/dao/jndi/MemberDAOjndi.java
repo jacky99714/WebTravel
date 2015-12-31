@@ -25,12 +25,36 @@ public class MemberDAOjndi implements MemberDAO {
 	private static final String INSERT = "insert into Member(userName,password,firstName,lastName,nickName,birthDay,address,cellphone,telephone,email,photo) values(?,?,?,?,?,?,?,?,?,?,?)";
 //	private static final String INSERT = "insert into Member(userName,password,firstName,lastName,nickName,birthDay,address,cellphone,telephone,email) values(?,?,?,?,?,?,?,?,?,?)";
 	private static final String UPDATE = "update Member set password=?,firstName=?,lastName=?,nickName=?,birthDay=?,address=?,cellphone=?,telephone=?,email=?,photo=? where userName=?";
-//	private static final String UPDATE = "update Member set password=?,firstName=?,lastName=?,nickName=?,birthDay=?,address=?,cellphone=?,telephone=?,email=? where userName=?";
+	private static final String UPDATE_PASS = "update Member set password=?,firstName=?,lastName=?,nickName=?,birthDay=?,address=?,cellphone=?,telephone=?,email=? where userName=?";
+	private static final String UPDATE_IMG = "update Member set password=?,firstName=?,lastName=?,nickName=?,birthDay=?,address=?,cellphone=?,telephone=?,email=? where userName=?";
+	private static final String UPDATE_CONTEXT = "update Member set firstName=?,lastName=?,nickName=?,birthDay=?,address=?,cellphone=?,telephone=?,email=? where userName=?";
 	
 	
 	private Connection conn= null;
 	
- 
+	public MemberBean updateContext(MemberBean memberBean){
+		try {
+			conn = DataSourceConnection.getConnection();
+			PreparedStatement ps = conn.prepareStatement(UPDATE_CONTEXT);
+			ps.setString(1, memberBean.getFirstName());
+			ps.setString(2, memberBean.getLastName());
+			ps.setString(3, memberBean.getNickName());
+			ps.setDate(4, new java.sql.Date(memberBean.getBirthDay().getTime()));
+			ps.setString(5, memberBean.getAddress());
+			ps.setString(6, memberBean.getCellphone());
+			ps.setString(7, memberBean.getTelephone());
+			ps.setString(8, memberBean.getEmail());
+			ps.setString(9, memberBean.getUserName());
+			if(ps.executeUpdate()==1){
+				return this.select(memberBean.getUserName());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			DataSourceConnection.closeConnection();
+		}
+		return null;
+	}
 
 	@Override
 	public List<MemberBean> select(){  //查詢

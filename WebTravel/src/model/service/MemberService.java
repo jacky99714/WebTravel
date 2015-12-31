@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.sun.org.apache.regexp.internal.recompile;
+
 import model.bean.CollectBean;
 import model.bean.MemberBean;
 import model.bean.SceneBean;
 import model.dao.jndi.CollectDAOjndi;
 import model.dao.jndi.MemberDAOjndi;
 import model.dao.jndi.SceneDAOjndi;
+import model.util.TypeConveter;
 
 
 
@@ -18,7 +21,6 @@ public class MemberService {
 	MemberDAOjndi mDAO= new MemberDAOjndi();
 	CollectDAOjndi cDAO = new CollectDAOjndi();
 	SceneDAOjndi sDAO = new SceneDAOjndi();
-	
 	HashMap<String, String> error = new HashMap<String,String>();
 	//登入使用
 	public MemberBean login(String useid,String password){
@@ -35,6 +37,8 @@ public class MemberService {
 	//增加會員
 	public MemberBean insert(MemberBean memberBean){
 		if(memberBean!=null){
+//				String p= TypeConveter.EncodeBase64(memberBean.getPassword().getBytes());
+//				memberBean.setPassword(p);
 			 MemberBean mb=mDAO.insert(memberBean);
 			 return mb;
 		}
@@ -57,6 +61,12 @@ public class MemberService {
 	public SceneBean selectSceneId(int sceneId){
 		return sDAO.select(sceneId);
 	}
-	
+	//修改會員資料
+	public MemberBean updateContext(MemberBean memberBean){
+		if(memberBean!=null){
+			return mDAO.updateContext(memberBean);
+		}
+		return null;
+	}
 	
 }

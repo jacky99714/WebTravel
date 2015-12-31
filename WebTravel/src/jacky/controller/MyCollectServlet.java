@@ -25,6 +25,8 @@ public class MyCollectServlet extends HttpServlet {
     }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	    request.setCharacterEncoding("UTF-8");
+	    response.setContentType("text/html; charset=UTF-8");
 		HttpSession session =request.getSession();
 		MemberBean mb = (MemberBean)session.getAttribute("loginOk");
 		SceneBean sb = new SceneBean();
