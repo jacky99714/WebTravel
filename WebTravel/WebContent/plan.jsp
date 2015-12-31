@@ -90,6 +90,14 @@
          var totalImage = 0;
          var maxImg = 5;  // max image in tr tag
          var maxLine = 5;   
+         
+///////////////////////////////////////////////////////////
+		function scheduleObject(memberId,scheduleName,scheduleOrder){
+			this.memberId = memberId;
+			this.scheduleName = scheduleName;
+			this.scheduleOrder = scheduleOrder;
+		}
+
  /////////////////////////////////////////////////////////               
          function allowDrop(ev) {
              ev.preventDefault();
@@ -190,6 +198,30 @@
 	    		}    		
 	    	}  	
 	    }
+	    
+	    function createSchedule(arrayObject){
+	    	xhr = new XMLHttpRequest();
+	    	if(xhr !== null){
+	    		
+		    	xhr.addEventListener("readystatechange",callbackSchedule);
+		    	xhr.open("post","TestServlet",true); 
+		    	xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+		    	xhr.send(arrayObject);		      	
+	    	}else{
+	    		alert("您的瀏覽器不支援Ajax功能!!");
+	    	}	    	
+	    }
+	    
+	    function callbackSchedule(){
+	    	if(xhr.readyState === 4){ 	
+	    		if(xhr.status === 200){
+			    	var data = JSON.parse(xhr.responseText);
+			   
+	    		}else{
+	    			alert(xhr.status + ":" + xhr.statusText);
+	    		}    		
+	    	}  	
+	    }	    
 /////////////////////////////////////////////
          function createImg(imgsrc,imgid,title){
              var img = new Image();
@@ -271,7 +303,11 @@
             }); 
             
             document.getElementById("sure").addEventListener("click",function(){
-            	      	
+            	var schedule = [];
+            	for( var i=0; i<totalImage;i++){
+            		schedule[i] = scheduleObject(1,i+"日遊",i);
+            	}	
+            	createSchedule(schedule);    	
             	
             });
             
