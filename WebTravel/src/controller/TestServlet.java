@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import model.bean.SceneBean;
+
 /**
  * Servlet implementation class TestServlet
  */
@@ -31,21 +33,14 @@ public class TestServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		JSONArray jObj = new JSONArray(request.getParameter("arrayObject")); 
-//		StringBuffer jb = new StringBuffer();
-//		  String line = null;
-//		  try {
-//		    BufferedReader reader = request.getReader();
-//		    while ((line = reader.readLine()) != null)
-//		      jb.append(line);
-//		  } catch (Exception e) { /*report an error*/ }
-		  System.out.println("jsonobject"+jObj );
-//		  try {
-//		    JSONObject jsonObject = JSONObject.fromObject(jb.toString());
-//		  } catch (ParseException e) {
-//		    // crash and burn
-//		    throw new IOException("Error parsing JSON request string");
-//		  }
+		System.out.println("TTTTT");
+
+		JSONArray jsonArr = new JSONArray(request.getParameter("json")); 
+		for(int i = 0; i < jsonArr.length();i++){
+			System.out.println("param i"+i+"  "+jsonArr.getJSONObject(i));	
+		}
+	
+
 	}
 
 	/**
