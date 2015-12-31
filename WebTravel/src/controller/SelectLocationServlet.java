@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
+
 import model.bean.SceneBean;
 import model.service.SceneService;
 import model.util.TypeConveter;
@@ -38,18 +40,21 @@ public class SelectLocationServlet extends HttpServlet {
 		String lo = request.getParameter("location");
 					
 		// 驗證資料
-		if ( lo.equals("北區") || lo.equals("中區") ||lo.equals("南區") ||lo.equals("東區")) {
+		if ( "北區".equals(lo) || "中區".equals(lo) ||"南區".equals(lo) ||"東區".equals(lo)) {
 			li = sceneservice.getLocation(lo);
+			JSONArray scenelist = TypeConveter.parseJSONArray(li); 
 		}
 		// 轉換資料
 
 		// model
-		PrintWriter out = response.getWriter();
-		out.print(TypeConveter.parseJSONArray(li));
 		
-		// model執行結果，View
-//		RequestDispatcher rd = request.getRequestDispatcher("scene_location.jsp");
-//		rd.forward(request, response);
+		//PrintWriter out = response.getWriter();
+		//out.print(TypeConveter.parseJSONArray(li));
+		
+		// View
+		RequestDispatcher rd = request.getRequestDispatcher("/scene/scene_location.jsp");
+		rd.forward(request, response);
+		
 	}
 
 	
