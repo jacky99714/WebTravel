@@ -38,11 +38,11 @@
 					<span>心得名稱</span>
 				</div>
 				<div>
-					<input type="text" sixe="70" placeholder="請勿超過40個字" name="thoughtName"><p>${errors.thoughtName}</p>
+					<input type="text" sixe="70" placeholder="請勿超過40個字" name="thoughtName"><p color='red'  size="-3">${errors.thoughtName}</p>
 				</div>
 			</div>
 			<div>
-				<label>種類</label><p>${errors.thoughtType}</p> 
+				<label>種類</label><p color='red'  size="-3">${errors.thoughtType}</p> 
 				<select name="thoughtType">
 					<option value="Restaurant">餐廳</option>
 					<option value="Scence">景點</option>
@@ -56,7 +56,7 @@
 <!-- 				<input type="text" placeholder="請選擇日期"> -->
 <!-- 			</div> -->
 			<div>
-				<span>心得內容</span><span> - 內容需100字以上</span><p>${errors.thoughtContent}</p>
+				<span>心得內容</span><span> - 內容需100字以上</span><p color='red'  size="-3">${errors.thoughtContent}</p>
 			</div>
 			<div >
 				 <textarea id="textarea" rows="25" cols="95"  ></textarea>
