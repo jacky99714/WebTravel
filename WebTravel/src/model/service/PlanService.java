@@ -18,7 +18,6 @@ import model.dao.jndi.SceneDAOjndi;
 import model.dao.jndi.ScheduleContentDAOjndi;
 import model.dao.jndi.ScheduleDAOjndi;
 import other.bean.FavoriteBean;
-import other.bean.MyScheduleBean;
 
 public class PlanService {
 //	 private static final String sql =
