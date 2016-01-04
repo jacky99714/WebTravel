@@ -4,15 +4,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.sun.org.apache.regexp.internal.recompile;
-
 import model.bean.CollectBean;
 import model.bean.MemberBean;
 import model.bean.SceneBean;
+import model.bean.ScheduleBean;
+import model.bean.ScheduleContentBean;
 import model.dao.jndi.CollectDAOjndi;
 import model.dao.jndi.MemberDAOjndi;
 import model.dao.jndi.SceneDAOjndi;
+import model.dao.jndi.ScheduleContentDAOjndi;
+import model.dao.jndi.ScheduleDAOjndi;
 import model.util.TypeConveter;
+import other.bean.FavoriteBean;
 
 
 
@@ -21,6 +24,8 @@ public class MemberService {
 	MemberDAOjndi mDAO= new MemberDAOjndi();
 	CollectDAOjndi cDAO = new CollectDAOjndi();
 	SceneDAOjndi sDAO = new SceneDAOjndi();
+	ScheduleDAOjndi scheduleDAO = new ScheduleDAOjndi();
+	ScheduleContentDAOjndi scheduleContentDAO = new ScheduleContentDAOjndi();
 	HashMap<String, String> error = new HashMap<String,String>();
 	//登入使用
 	public MemberBean login(String useid,String password){
@@ -68,11 +73,43 @@ public class MemberService {
 		}
 		return null;
 	}
+	//修改資料
 	public MemberBean updata(MemberBean memberBean){
 		if(memberBean!=null){
 			return mDAO.update(memberBean);
 		}
 		return null;
 	}
-	
+	//找出行程名稱
+	public List<ScheduleBean> select(int MemberId){
+		return scheduleDAO.selectMember(MemberId) ;
+	}
+	//找出行程內容
+	public List<ScheduleContentBean> selectScheduleContentBean(int ScheduleContentId) {
+		return scheduleContentDAO.selectSchedule(ScheduleContentId);
+	}
+	public List<SceneBean> selectSceneBean(List<ScheduleContentBean> listSCB){
+		List<SceneBean> list = new ArrayList<SceneBean>();
+		for(ScheduleContentBean s :listSCB){
+			list.add(sDAO.select(s.getSceneId()));
+		}
+		return list;	
+	}
+	public List<FavoriteBean> selectFavoriteBean(List<SceneBean> list){
+		List<FavoriteBean> listFB = new ArrayList<FavoriteBean>();
+		for(SceneBean s : list){
+			FavoriteBean fb = new FavoriteBean();
+			fb.setCity(s.getCity());
+			fb.setLocation(s.getLocation());
+			fb.setMemberId(s.getMemberId());
+			fb.setSceneContent(s.getSceneContent());
+			fb.setSceneId(s.getSceneId());
+			fb.setSceneName(s.getSceneName());
+			fb.setScenePhoto(TypeConveter.EncodeBase64(s.getScenePhoto()));
+			fb.setTimeEnd(s.getTimeEnd());
+			fb.setTimeStart(s.getTimeStart());
+			listFB.add(fb);
+		}
+		return listFB;
+	}
 }

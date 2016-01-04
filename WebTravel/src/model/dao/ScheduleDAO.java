@@ -18,5 +18,6 @@ public interface ScheduleDAO {
 	boolean delete(int scheduleId);
 
 	int getInsertId(ScheduleBean scheduleBean);
-
+	
+	public List<ScheduleBean> selectMember(int MemberId);
 }

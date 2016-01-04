@@ -15,5 +15,7 @@ public interface ScheduleContentDAO {
 	boolean delete(int scheduleContentId);
 
 	ScheduleContentBean update(ScheduleContentBean scheduleContentBean);
+	
+	public List<ScheduleContentBean> selectSchedule(int scheduleID);
 
 }

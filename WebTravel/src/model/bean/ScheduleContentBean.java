@@ -9,7 +9,7 @@ public class ScheduleContentBean {
 	
 	@Override
 	public String toString() {
-		return "[行程id："+ scheduleContentId + ",行程順序：" + scheduleOrder
+		return "[行程內容id："+ scheduleContentId + ",行程順序：" + scheduleOrder
 				+ ",景點id：" + sceneId + ",行程id：" + scheduleId + "]";
 	}
 	public int getScheduleContentId() {

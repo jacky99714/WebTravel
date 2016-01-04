@@ -116,7 +116,14 @@
         <h4 class="modal-title" id="myModalLabel01">更換你的大頭貼</h4>
       </div>
       <div class="modal-body">
-      	<img style="width:210px;height:210px;" id="img001">
+      
+      <dir class="row">
+    	<div class="col-md-4 col-md-offset-3">
+    	<img style="width:210px;height:210px;" id="img001">
+    	</div>
+
+    </dir><!-- row END -->
+      	
       	 <hr class="featurette-divider">
       	 
       	 
