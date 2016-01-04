@@ -16,7 +16,7 @@ public class ThoughtDAOjndi implements ThoughtDAO {
 	
 	
 	private static final String SELECT_ID = "SELECT * FROM Thought WHERE ThoughtID=?";
-	private static final String SELECT_UESRNAME = "SELECT * FROM Thought WHERE thoughtName=?";
+	private static final String SELECT_TYPE = "SELECT * FROM Thought WHERE thoughtType=?";
 	private static final String SELECT = "SELECT * FROM Thought";
 	private static final String INSERT = "insert into Thought(thoughtName,thoughtContent,thoughtType,memberId) values(?,?,?,?)";
 	private static final String UPDATE = "update Thought set thoughtName=?,thoughtContent=?,thoughtType=?,memberId=? where ThoughtID=?";
@@ -52,21 +52,23 @@ public class ThoughtDAOjndi implements ThoughtDAO {
 	 * @see model.dao.jdbc.ThoughtDAO#select(java.lang.String)
 	 */
 	@Override
-	public ThoughtBean select(String thoughtName){
+	public List<ThoughtBean> select(String thoughtType){
 		try {
 			conn = DataSourceConnection.getConnection();
-			PreparedStatement ps = conn.prepareStatement(SELECT_UESRNAME);
-			ps.setString(1, thoughtName);
+			PreparedStatement ps = conn.prepareStatement(SELECT_TYPE);
+			ps.setString(1, thoughtType);
 			ResultSet rs = ps.executeQuery();
 			ThoughtBean tBean =new ThoughtBean();
+			List<ThoughtBean> list = new ArrayList<ThoughtBean>();
 			while(rs.next()){
 				tBean.setThoughtId(rs.getInt(1));
 				tBean.setThoughtName(rs.getString(2));
 				tBean.setThoughtContent(rs.getString(3));
 				tBean.setThoughtType(rs.getString(4));
 				tBean.setMemberId(rs.getInt(5));
+				list.add(tBean);
 			}
-			return tBean;
+			return list;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
@@ -136,7 +138,7 @@ public class ThoughtDAOjndi implements ThoughtDAO {
 			ps.setString(3, thoughtBean.getThoughtType());
 			ps.setInt(4, thoughtBean.getMemberId());
 			if(ps.executeUpdate()==1){
-				return this.select(thoughtBean.getThoughtName());
+				return this.select(thoughtBean.getThoughtId());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
