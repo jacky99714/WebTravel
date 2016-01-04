@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 
@@ -42,14 +43,16 @@ public class SelectLocationServlet extends HttpServlet {
 		// 驗證資料
 		if ( "北區".equals(lo) || "中區".equals(lo) ||"南區".equals(lo) ||"東區".equals(lo)) {
 			li = sceneservice.getLocation(lo);
-			JSONArray scenelist = TypeConveter.parseJSONArray(li); 
+			
 		}
 		// 轉換資料
-
+		//JSONArray scenelist = TypeConveter.parseJSONArray(li); 
 		// model
+		HttpSession session = request.getSession();
+		session.setAttribute("li", li);
 		
-		//PrintWriter out = response.getWriter();
-		//out.print(TypeConveter.parseJSONArray(li));
+//		PrintWriter out = response.getWriter();
+//		out.print(scenelist);
 		
 		// View
 		RequestDispatcher rd = request.getRequestDispatcher("/scene/scene_location.jsp");
