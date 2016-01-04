@@ -9,6 +9,7 @@ import java.util.List;
 
 import model.bean.ScheduleBean;
 import model.dao.ScheduleDAO;
+import model.util.DataSourceConnection;
 import model.util.JdbcConnection;
 
 public class ScheduleDAOjdbc implements ScheduleDAO {
@@ -133,6 +134,31 @@ public class ScheduleDAOjdbc implements ScheduleDAO {
 		}
 		return false;
 	}
+	
+	@Override
+	public int getInsertId(ScheduleBean scheduleBean){
+		try {
+			conn = JdbcConnection.getConnection();
+			PreparedStatement ps = conn.prepareStatement(INSERT);
+			ps.setString(1, scheduleBean.getScheduleName());
+			ps.setInt(2, scheduleBean.getMemberId());
+			
+			if(ps.executeUpdate()==1){
+				ResultSet rs = ps.getGeneratedKeys();
+				if(rs.next()){
+					return rs.getInt(1);
+				}else{
+					return 0;
+				}	
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			DataSourceConnection.closeConnection();
+		}
+		return 0;
+	}		
+	
 	public static void main(String[] args){
 		ScheduleDAO s = new ScheduleDAOjdbc();
 		ScheduleBean sb = new ScheduleBean();

@@ -34,6 +34,7 @@ public class MyCollectServlet extends HttpServlet {
 		if(mb!=null){
 			List<SceneBean> sceneList = memberService.getMemberCollectScene(mb.getMemberId());
 //			System.out.println("MyCollectServlet:"+sceneList);
+			session.removeAttribute("sceneList");
 			session.setAttribute("sceneList", sceneList);
 		}
 		response.sendRedirect(request.getContextPath()+"/JMember/MyCollect.jsp");

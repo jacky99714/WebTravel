@@ -26,8 +26,10 @@ public class ThoughtDAOjndi implements ThoughtDAO {
 	
 	@Override
 	public List<ThoughtBean> select(){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try(
+				Connection conn = DataSourceConnection.getConnection();
+				)  {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<ThoughtBean> list = new ArrayList<ThoughtBean>();
@@ -53,8 +55,10 @@ public class ThoughtDAOjndi implements ThoughtDAO {
 	 */
 	@Override
 	public ThoughtBean select(String thoughtName){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_UESRNAME);
 			ps.setString(1, thoughtName);
 			ResultSet rs = ps.executeQuery();
@@ -79,8 +83,10 @@ public class ThoughtDAOjndi implements ThoughtDAO {
 	 */
 	@Override
 	public ThoughtBean select(int thoughtId){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_ID);
 			ps.setInt(1, thoughtId);
 			ResultSet rs = ps.executeQuery();
@@ -105,8 +111,10 @@ public class ThoughtDAOjndi implements ThoughtDAO {
 	 */
 	@Override
 	public ThoughtBean update(ThoughtBean thoughtBean){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setInt(5, thoughtBean.getThoughtId());
 			ps.setString(1, thoughtBean.getThoughtName());
@@ -128,8 +136,10 @@ public class ThoughtDAOjndi implements ThoughtDAO {
 	 */
 	@Override
 	public ThoughtBean insert(ThoughtBean thoughtBean){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setString(1, thoughtBean.getThoughtName());
 			ps.setString(2, thoughtBean.getThoughtContent());
@@ -150,8 +160,10 @@ public class ThoughtDAOjndi implements ThoughtDAO {
 	 */
 	@Override
 	public boolean delete(int thoughtId){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1,thoughtId);
 			if(ps.executeUpdate()==1){

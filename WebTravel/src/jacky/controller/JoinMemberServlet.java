@@ -2,7 +2,6 @@ package jacky.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Base64;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,19 +40,21 @@ public class JoinMemberServlet extends HttpServlet {
 		String temp8 = request.getParameter("hphone");
 		String temp9 = request.getParameter("email");
 		String temp10 = request.getParameter("addr");
-//		String temp11 = request.getParameter("photo");
 		
 //-----------------------------------------------------------
 		Collection<Part> parts = request.getParts();
 		Part pho =request.getPart("photo"); 
-		InputStream in =pho.getInputStream();
-		byte[] phto =new byte[(int)pho.getSize()];
-		in.read(phto);
+		String s;
+		byte[] phto=null;
+		if(pho!=null){
+			InputStream in =pho.getInputStream();
+			phto =new byte[(int)pho.getSize()];
+			in.read(phto);
 //		OutputStream ou = new FileOutputStream("C:/Users/Student/Desktop/04.jpg");
 //		ou.write(phto);
 //		ou.close();
-		in.close();
-		String s = Base64.getEncoder().encodeToString(phto);
+			in.close();
+		}
 		
 //-----------------------------------------------------------
 		//驗證

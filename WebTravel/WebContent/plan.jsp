@@ -91,11 +91,11 @@
          var maxLine = 5;   
          var scheduleArray = [];
 ///////////////////////////////////////////////////////////
-		function schedule(memberId,scheduleName,scheduleOrder,sceneID){
+		function schedule(memberId,scheduleName,scheduleOrder,sceneId){
 			this.memberId = memberId;
 			this.scheduleName = scheduleName;
 			this.scheduleOrder = scheduleOrder;
-			this.sceneID = sceneID;
+			this.sceneId = sceneId;
 		}
 
  /////////////////////////////////////////////////////////               
@@ -165,8 +165,7 @@
              var id = "img"+img.id.substring(3);
              if(!document.getElementById(id)){
             	 appendImg(img.src,id,img.title); 
-             }
-                   
+             }              
          }
 ////////////////////////////////////////////////////////////////
          
@@ -174,7 +173,7 @@
 			var select = document.getElementById("select").value;
 	    	xhr = new XMLHttpRequest();
 	    	if(xhr !== null){
-		    	xhr.addEventListener("readystatechange",callback);
+		    	xhr.addEventListener("readystatechange",callbackScene);
 		    	xhr.open("get","GetSceneLocationServlet?location="+select,true); 
 		    	xhr.send();		      	
 	    	}else{
@@ -182,14 +181,15 @@
 	    	}
  		}
 
-	    function callback(){
+	    function callbackScene(){
 	    	if(xhr.readyState === 4){ 	
 	    		if(xhr.status === 200){
 			    	var data = JSON.parse(xhr.responseText);
-			    	var searchcontent = document.getElementById("searchcontent");  //顯示資料
+			    	var searchcontent = document.getElementById("searchContent");  //顯示資料
 			    	searchcontent.innerHTML="";
 			    	for(var i=0; i < data.length;i++){
-			    		var img = createImg('data:image/png;base64,'+data[i].scenePhoto,data[i].sceneId,data[i].sceneName);
+			    		var img = createImg('data:image/png;base64,'+data[i].scenePhoto,"sea"+data[i].sceneId,data[i].sceneName);
+			    		img.addEventListener("click", click);
 			    		searchcontent.appendChild(img);
 			    	}
 
@@ -204,7 +204,7 @@
 	    	if(xhr !== null){	    
 	  
 		    	xhr.addEventListener("readystatechange",callbackSchedule);
-		    	xhr.open("post","TestServlet",true); 
+		    	xhr.open("post","InsertScheduleServlet",true); 
 		    	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		    	xhr.send("json="+arrayObject);		      	
 	    	}else{
@@ -215,6 +215,7 @@
 	    function callbackSchedule(){
 	    	if(xhr.readyState === 4){ 	
 	    		if(xhr.status === 200){
+	    			alert("success insert");
 			  //  	var data = JSON.parse(xhr.responseText);
 			   
 	    		}else{
@@ -280,25 +281,25 @@
         window.onload = function(){
         	table = document.getElementById("tab");
             document.getElementById("add").addEventListener("click",function(){
-                document.getElementById('addContent').style.display='block';
+                document.getElementById('addSearch').style.display='block';
                 document.getElementById('addFavorite').style.display='none';
                 document.getElementById('fade').style.display='block';
             });  
              
             document.getElementById("favorite").addEventListener("click",function(){
-                document.getElementById('addContent').style.display='none';
+                document.getElementById('addSearch').style.display='none';
                 document.getElementById('addFavorite').style.display='block';
                 document.getElementById('fade').style.display='block';
             });    
 
             document.getElementById("closeAdd").addEventListener("click",function(){
-                document.getElementById('addContent').style.display='none';
+                document.getElementById('addSearch').style.display='none';
                 document.getElementById('addFavorite').style.display='none';
                 document.getElementById('fade').style.display='none';
             });  
             
             document.getElementById("closeFavorite").addEventListener("click",function(){
-                document.getElementById('addContent').style.display='none';
+                document.getElementById('addSearch').style.display='none';
                 document.getElementById('addFavorite').style.display='none';
                 document.getElementById('fade').style.display='none';
             }); 
@@ -314,8 +315,9 @@
             		if(i % 2 == 0){
             			var img = td[i].firstElementChild;
 
-            			scheduleArray[num] = new schedule("1",text,num+1,img.id.substring(3));
+            			scheduleArray[num] = new schedule(1,text,num+1,img.id.substring(3));
             			num++;
+            			//${loginOk.memberId}
             		}
             	}
             	// schedule(memberId,scheduleName,scheduleOrder,sceneID)
@@ -325,7 +327,7 @@
             });
             
             document.getElementById("select").addEventListener("change", getScene);
-           
+            getScene();
             totalImage = 0;
 
        
@@ -340,52 +342,52 @@
 <body>
 	<div class="head">行程規劃</div>
 
-        <div id="addContent" class="white_content"> 
-            <img  id="closeAdd" class="close" src="img/close.png">
-			<select id="select">
-				<option value="北區">北區</option>
-				<option value="中區">中區</option>
-				<option value="南區">南區</option>
-				<option value="東區">東區</option>
-			</select>
-			<div id="searchcontent">
-			
-			</div>		
-        </div>
+	<div id="addSearch" class="white_content"> 
+		<img  id="closeAdd" class="close" src="img/close.png"/>
+		<select id="select">
+			<option value="北區">北區</option>
+			<option value="中區">中區</option>
+			<option value="南區">南區</option>
+			<option value="東區">東區</option>
+		</select>
+		<div id="searchContent"></div>			
+	</div>
         
-        <div id="addFavorite" class="white_content"> 
-            <img  id="closeFavorite" class="close" src="img/close.png">
-             <div class ="favcontent">
-            	<c:forEach var="fav" varStatus="status" items="${fav}">          	
-	          		<div class="favcontent">
-          				<img id= 'fav${fav.sceneId}' name="favimg" title="${fav.sceneName}"  class="img"             
-        					src='data:image/png;base64,${fav.scenePhoto}'/> 
-        				<div>${fav.sceneName}</div>
-	        		</div>
-	        		<c:if test="${status.count %5==0}">
-	        			<br/>
-	        		</c:if>
-            	</c:forEach>
-            </div>
-        </div>
+    <div id="addFavorite" class="white_content"> 
+		<img  id="closeFavorite" class="close" src="img/close.png"/>
+		<div class ="favcontent">
+			<c:forEach var="fav" varStatus="status" items="${fav}">          	
+	          	<div class="favcontent">
+          			<img id= 'fav${fav.sceneId}' name="favimg" title="${fav.sceneName}"  class="img"             
+        				src='data:image/png;base64,${fav.scenePhoto}'/> 
+        			<div>${fav.sceneName}</div>
+	        	</div>
+	        	<c:if test="${status.count %5==0}">
+	        		<br/>
+	        	</c:if>
+            </c:forEach>
+           </div>
+	</div>
         
-        <div id="fade" class="black_overlay"> </div>
+    <div id="fade" class="black_overlay"> </div>
   
-        <div class ="icon">
-           <img id="garbage" class ="imgicon" src="img/garbage.png"  ondrop="drop(event)" ondragover="allowDrop(event)">
-        </div> 
+	<div class ="icon">
+	   <img id="garbage" class ="imgicon" src="img/garbage.png"  ondrop="drop(event)" ondragover="allowDrop(event)"/>
+	</div> 
               
-        <div class ="icon">
-           <img id="favorite"  src="img/favorite.png">
-        </div>
+    <div class ="icon">
+       <img id="favorite"  src="img/favorite.png">
+    </div>
         
-        <div class ="icon">
-           <img id="add" class ="imgicon" src="img/add.png">
-        </div>
+    <div class ="icon">
+       <img id="add" class ="imgicon" src="img/add.png">
+    </div>
+        
+    <div>
+	    <input id="scheduleName" type="text" placeholder="行程名稱"/>
+		<button id="sure">行程確認</button>   
+    </div>
 	<table id="tab">
 	</table>
-	<input id="scheduleName" type="text" placeholder="行程名稱"/>
-	<button id="sure">行程確認</button>
 </body>
-
 </html>
