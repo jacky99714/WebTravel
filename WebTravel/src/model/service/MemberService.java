@@ -68,5 +68,11 @@ public class MemberService {
 		}
 		return null;
 	}
+	public MemberBean updata(MemberBean memberBean){
+		if(memberBean!=null){
+			return mDAO.update(memberBean);
+		}
+		return null;
+	}
 	
 }
