@@ -1,7 +1,6 @@
 package model.dao.jdbc;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,6 +24,11 @@ public class ScheduleContentDAOjdbc implements ScheduleContentDAO {
 	/* (non-Javadoc)
 	 * @see model.dao.jdbc.ScheduleContentDAO#select()
 	 */
+	public List<ScheduleContentBean> selectSchedule(int scheduleID){
+		return null;
+	}
+	
+	
 	@Override
 	public List<ScheduleContentBean> select(){
 		try {

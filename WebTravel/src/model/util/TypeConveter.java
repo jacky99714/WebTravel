@@ -7,17 +7,40 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.List;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 
 public class TypeConveter{
-	public static String parseBase64(byte[] src){
+	public static String EncodeBase64(byte[] src){
+		if(src == null){
+			return null;
+		}
 		return Base64.getEncoder().encodeToString(src);
 	}
-	
+		
+	public static String EncodeStringBase64(String src){
+		if(src == null){
+			return null;
+		}
+		 return EncodeBase64(src.getBytes());
+	}	
+	public static byte[] DecodeBase64(String src){
+		if(src == null){
+			return null;
+		}
+		return Base64.getDecoder().decode(src);
+	}
+
 	public static JSONObject parseJSONObject(Object bean){
 		return (new JSONObject(bean));
 	}
+	public static JSONArray parseJSONArray(List li){
+		return (new JSONArray(li));
+	}	
+	
 	
 	public static java.sql.Timestamp parseTimestamp(java.util.Date dateTime){
 		return (new java.sql.Timestamp(dateTime.getTime()));
@@ -64,8 +87,10 @@ public class TypeConveter{
 	    return result;
 	}	
 	
-	public static byte[] parseByteArray(String src){  //parse file to byte array
-	    File file = new File(src);
+
+	
+	public static byte[] parseByteArray(String fileSrc){  //parse file to byte array
+	    File file = new File(fileSrc);
 	    FileInputStream fis = null;
 	    byte[] result = null;
 		try {

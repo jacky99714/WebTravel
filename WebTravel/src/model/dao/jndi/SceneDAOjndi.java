@@ -1,7 +1,6 @@
 package model.dao.jndi;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,12 +10,15 @@ import java.util.List;
 import model.bean.SceneBean;
 import model.dao.SceneDAO;
 import model.util.DataSourceConnection;
+import model.util.TypeConveter;
+import other.bean.FavoriteBean;
 
 public class SceneDAOjndi implements SceneDAO {
 	
 	//select
 	private static final String SELECT_ALL = "select * from scene";//把sql語法塞進java程式
 	private static final String SELECT_BY_LOCATION = "select * from scene where location = ?";	
+	private static final String SELECT_BY_ID = "select * from scene where sceneID = ?";	
 	//insert
 	private static final String INSERT = 
 			"insert into scene"
@@ -65,13 +67,42 @@ public class SceneDAOjndi implements SceneDAO {
 	 * @see model.dao.jdbc.SceneDAO#select(java.lang.String)
 	 */
 	@Override
-	public  SceneBean select(String location) {
-		SceneBean sbean =null;
+	public  List<FavoriteBean> select(String location) {
 		try (
 				Connection conn = DataSourceConnection.getConnection();
 			 ){
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_LOCATION);
-			ps.setString(1, location);
+			ps.setString(1,location);
+			ResultSet rs = ps.executeQuery();
+			
+			List<FavoriteBean> li = new ArrayList<>();
+			FavoriteBean bean;
+			while(rs.next()){
+				bean = new FavoriteBean();
+				bean.setSceneId(rs.getInt(1));
+				bean.setLocation(rs.getString(2));
+				bean.setCity(rs.getString(3));
+				bean.setSceneName(rs.getString(4));
+				bean.setScenePhoto(TypeConveter.EncodeBase64(rs.getBytes(5)));	
+				bean.setSceneContent(rs.getString(6));
+				bean.setTimeStart(rs.getString(7));
+				bean.setTimeEnd(rs.getString(8));
+				li.add(bean);		
+			}
+			return li;
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public  SceneBean select(int sceneId) {
+		SceneBean sbean =null;
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+			 ){
+			PreparedStatement ps = conn.prepareStatement(SELECT_BY_ID);
+			ps.setInt(1, sceneId);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				sbean = new SceneBean();				
@@ -104,19 +135,19 @@ public class SceneDAOjndi implements SceneDAO {
 				){
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			if(bean != null){
-			ps.setString(1, bean.getLocation());//如果今天insert是有東西的，就可以設置欄位
-			ps.setString(2, bean.getCity());
-			ps.setString(3, bean.getSceneName());
-			ps.setBytes(4, bean.getScenePhoto());
-			ps.setString(5, bean.getSceneContent());
-			ps.setString(6, bean.getTimeStart());
-			ps.setString(7, bean.getTimeEnd());
-			ps.setInt(8, bean.getMemberId());
-					
-			int rs = ps.executeUpdate();
-			if (rs == 1){
-				result = bean;
-			}
+				ps.setString(1, bean.getLocation());
+				ps.setString(2, bean.getCity());
+				ps.setString(3, bean.getSceneName());
+				ps.setBytes(4, bean.getScenePhoto());
+				ps.setString(5, bean.getSceneContent());
+				ps.setString(6, bean.getTimeStart());
+				ps.setString(7, bean.getTimeEnd());
+				ps.setInt(8, bean.getMemberId());
+						
+				int rs = ps.executeUpdate();
+				if (rs == 1){
+					result = bean;
+			  }
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -136,19 +167,19 @@ public class SceneDAOjndi implements SceneDAO {
 				){
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			if(bean != null){
-			ps.setString(1, bean.getLocation());
-			ps.setString(2, bean.getCity());
-			ps.setString(3, bean.getSceneName());
-			ps.setBytes(4, bean.getScenePhoto());
-			ps.setString(5, bean.getSceneContent());
-			ps.setString(6, bean.getTimeStart());
-			ps.setString(7, bean.getTimeEnd());
-			ps.setInt(8, bean.getMemberId());
-					
-			int rs = ps.executeUpdate();
-			if (rs == 1){
-				result = bean;//update傳到bean裡
-			}
+				ps.setString(1, bean.getLocation());
+				ps.setString(2, bean.getCity());
+				ps.setString(3, bean.getSceneName());
+				ps.setBytes(4, bean.getScenePhoto());
+				ps.setString(5, bean.getSceneContent());
+				ps.setString(6, bean.getTimeStart());
+				ps.setString(7, bean.getTimeEnd());
+				ps.setInt(8, bean.getMemberId());
+						
+				int rs = ps.executeUpdate();
+				if (rs == 1){
+					result = bean;
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -166,14 +197,11 @@ public class SceneDAOjndi implements SceneDAO {
 				Connection conn = DataSourceConnection.getConnection(); 	
 					){
 				PreparedStatement ps = conn.prepareStatement(DELETE);
-				
-				ps.setString(1, sceneName);
-									
+				ps.setString(1, sceneName);							
 				int rs = ps.executeUpdate();
 				if (rs == 1){
 					return true;
-				}
-				
+				}			
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

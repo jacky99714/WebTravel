@@ -8,12 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.json.JSONObject;
-
-import model.bean.QBean;
-import model.dao.QDAO;
-import model.dao.jndi.QDAOjndi;
+import model.service.GameService;
 import model.util.TypeConveter;
 
 
@@ -36,18 +31,15 @@ public class GetQuestionServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
+
+		
+		request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
-        
-		QDAO q = new QDAOjndi();
-		QBean bean =new QBean();
-		int index = (int)(Math.random()*q.getCount()+1);
-		bean = q.select(index);
-		
-		
+
+        GameService service = new GameService();	
 		PrintWriter out = response.getWriter();
-		out.print(TypeConveter.parseJSONObject(bean));
-//		response.getWriter().append("Served at: ").append(request.getContextPath());
+		out.print(TypeConveter.parseJSONObject(service.getQuestion()));
+
 	}
 
 	/**

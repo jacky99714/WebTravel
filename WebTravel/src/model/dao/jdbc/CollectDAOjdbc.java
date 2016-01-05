@@ -1,7 +1,6 @@
 package model.dao.jdbc;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +9,10 @@ import java.util.List;
 
 import model.bean.CollectBean;
 import model.dao.CollectDAO;
+import model.util.DataSourceConnection;
 import model.util.JdbcConnection;
+import model.util.TypeConveter;
+import other.bean.FavoriteBean;
 
 
 
@@ -25,7 +27,7 @@ public class CollectDAOjdbc implements CollectDAO {
 	private static final String UPDATE = "update Collect set collectId=? where MemberID=? and sceneId=?";
 	private static final String DELETE = "delete FROM Collect where memberId=? and sceneId=?";
 	private static final String SELECT_SCENE =
-			"select top 1 s.SceneName from Collect as c, Scene as s where c.MemberID=? and c.SceneID = s.SceneID";  
+			"select s.SceneID, s.Location,s.City,s.SceneName,s.Scenephoto,s.SceneContent,s.TimeStart,s.TimeEnd from Collect as c join Scene as s  on c.SceneID = s.SceneID where c.MemberID=? ";  
 	private Connection conn= null;
 	
 	/* (non-Javadoc)
@@ -92,7 +94,7 @@ public class CollectDAOjdbc implements CollectDAO {
 			ps.setInt(1, collectBean.getMemberId());
 			ps.setInt(2, collectBean.getSceneId());
 			ps.setInt(3, collectBean.getCollectId());
-
+		
 			if(ps.executeUpdate()==1){
 				return this.select(collectBean.getMemberId());
 			}
@@ -148,21 +150,33 @@ public class CollectDAOjdbc implements CollectDAO {
 	}
 	
 	@Override
-	public List<String> selectScene(int memberId) {
+	public List<FavoriteBean> selectScene(int memberId) {
 		try {
-			conn =  JdbcConnection.getConnection();
+			//s.SceneID,s.Location,s.City,s.SceneName,s.Scenephoto,s.SceneContent,s.TimeStart,s.TimeEnd
+			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_SCENE);
 			ps.setInt(1, memberId);
 			ResultSet rs = ps.executeQuery();
-			List<String> li = new ArrayList<>();
+			List<FavoriteBean> li = new ArrayList<>();
+			FavoriteBean bean;
+			String temp;
 			while(rs.next()){
-				li.add(rs.getString(1));		
+				bean = new FavoriteBean();
+				bean.setSceneId(rs.getInt(1));
+				bean.setLocation(rs.getString(2));
+				bean.setCity(rs.getString(3));
+				bean.setSceneName(rs.getString(4));
+				bean.setScenePhoto(TypeConveter.EncodeBase64(rs.getBytes(5)));	
+				bean.setSceneContent(rs.getString(6));
+				bean.setTimeStart(rs.getString(7));
+				bean.setTimeEnd(rs.getString(8));
+				li.add(bean);		
 			}
 			return li;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			JdbcConnection.closeConnection();
+			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}	

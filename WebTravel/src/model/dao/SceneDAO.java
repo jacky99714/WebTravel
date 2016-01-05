@@ -3,6 +3,7 @@ package model.dao;
 import java.util.List;
 
 import model.bean.SceneBean;
+import other.bean.FavoriteBean;
 
 public interface SceneDAO {
 
@@ -10,7 +11,7 @@ public interface SceneDAO {
 	List<SceneBean> select();
 
 	//查詢SELECT_BY_LOCATION
-	SceneBean select(String location);
+	List<FavoriteBean> select(String location);
 
 	//新增INSERT
 	SceneBean insert(SceneBean bean);

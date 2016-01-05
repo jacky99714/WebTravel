@@ -1,7 +1,6 @@
 package model.dao.jndi;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,8 +25,10 @@ public class SceneGradreDAOjndi implements SceneGradreDAO {
 	
 	@Override
 	public List<SceneGradeBean> select(){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<SceneGradeBean> list = new ArrayList<SceneGradeBean>();
@@ -52,8 +53,10 @@ public class SceneGradreDAOjndi implements SceneGradreDAO {
 	 */
 	@Override
 	public List<SceneGradeBean> select(int sceneId){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_SCENEID);
 			ps.setInt(1, sceneId);
 			ResultSet rs = ps.executeQuery();
@@ -79,8 +82,10 @@ public class SceneGradreDAOjndi implements SceneGradreDAO {
 	 */
 	@Override
 	public List<SceneGradeBean> insert(SceneGradeBean sceneGradeBean){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setInt(1, sceneGradeBean.getMemberId());
 			ps.setInt(2, sceneGradeBean.getSceneId());
@@ -102,8 +107,10 @@ public class SceneGradreDAOjndi implements SceneGradreDAO {
 	 */
 	@Override
 	public List<SceneGradeBean> update(SceneGradeBean sceneGradeBean){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setInt(2, sceneGradeBean.getMemberId());
 			ps.setInt(3, sceneGradeBean.getSceneId());
@@ -124,8 +131,10 @@ public class SceneGradreDAOjndi implements SceneGradreDAO {
 	 */
 	@Override
 	public boolean delete(int memberId,int sceneId){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1,memberId);
 			ps.setInt(2,sceneId);

@@ -12,6 +12,8 @@ import java.util.List;
 import model.bean.CollectBean;
 import model.dao.CollectDAO;
 import model.util.DataSourceConnection;
+import model.util.TypeConveter;
+import other.bean.FavoriteBean;
 
 
 
@@ -25,13 +27,15 @@ public class CollectDAOjndi implements CollectDAO {
 	private static final String UPDATE = "update Collect set collectId=? where MemberID=? and sceneId=?";
 	private static final String DELETE = "delete FROM Collect where memberId=? and sceneId=?";
 	private static final String SELECT_SCENE =
-				"select  s.SceneName from Collect as c, Scene as s where c.MemberID=? and c.SceneID = s.SceneID";  
+			"select s.SceneID, s.Location,s.City,s.SceneName,s.Scenephoto,s.SceneContent,s.TimeStart,s.TimeEnd from Collect as c join Scene as s  on c.SceneID = s.SceneID where c.MemberID=? ";  
 	private Connection conn= null;
 	
 	@Override
 	public List<CollectBean> select(){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try(
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<CollectBean> list = new ArrayList<CollectBean>();
@@ -56,8 +60,10 @@ public class CollectDAOjndi implements CollectDAO {
 	 */
 	@Override
 	public List<CollectBean> select(int memberId){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_MEMBERID);
 			ps.setInt(1, memberId);
 			ResultSet rs = ps.executeQuery();
@@ -83,8 +89,10 @@ public class CollectDAOjndi implements CollectDAO {
 	 */
 	@Override
 	public List<CollectBean> insert(CollectBean collectBean){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setInt(1, collectBean.getMemberId());
 			ps.setInt(2, collectBean.getSceneId());
@@ -105,8 +113,10 @@ public class CollectDAOjndi implements CollectDAO {
 	 */
 	@Override
 	public List<CollectBean> update(CollectBean collectBean){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setInt(2, collectBean.getMemberId());
 			ps.setInt(3, collectBean.getSceneId());
@@ -128,8 +138,10 @@ public class CollectDAOjndi implements CollectDAO {
 	 */
 	@Override
 	public boolean delete(int memberId,int sceneId){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1,memberId);
 			ps.setInt(2,sceneId);
@@ -145,15 +157,29 @@ public class CollectDAOjndi implements CollectDAO {
 	}
 	
 	@Override
-	public List<String> selectScene(int memberId) {
-		try {
-			conn = DataSourceConnection.getConnection();
+	public List<FavoriteBean> selectScene(int memberId) {
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+			//s.SceneID,s.Location,s.City,s.SceneName,s.Scenephoto,s.SceneContent,s.TimeStart,s.TimeEnd
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_SCENE);
 			ps.setInt(1, memberId);
 			ResultSet rs = ps.executeQuery();
-			List<String> li = new ArrayList<>();
+			List<FavoriteBean> li = new ArrayList<>();
+			FavoriteBean bean;
+			String temp;
 			while(rs.next()){
-				li.add(rs.getString(1));		
+				bean = new FavoriteBean();
+				bean.setSceneId(rs.getInt(1));
+				bean.setLocation(rs.getString(2));
+				bean.setCity(rs.getString(3));
+				bean.setSceneName(rs.getString(4));
+				bean.setScenePhoto(TypeConveter.EncodeBase64(rs.getBytes(5)));	
+				bean.setSceneContent(rs.getString(6));
+				bean.setTimeStart(rs.getString(7));
+				bean.setTimeEnd(rs.getString(8));
+				li.add(bean);		
 			}
 			return li;
 		} catch (SQLException e) {

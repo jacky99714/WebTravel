@@ -21,5 +21,7 @@ public interface MemberDAO {
 	MemberBean update(MemberBean memberBean) throws IOException;
 
 	boolean delete(String userName);
+	
+	MemberBean updateContext(MemberBean memberBean);
 
 }

@@ -10,13 +10,22 @@ import javax.sql.DataSource;
 
 public class DataSourceConnection {
 	private static Connection conn = null;
+	private static DataSource ds;
+	
+	static{
+		Context context;
+		try {
+			context = new InitialContext();
+			ds = (DataSource) context.lookup("java:comp/env/jdbc/xxx");
+		}catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public static Connection getConnection(){
-		try {
-			Context context = new InitialContext();
-			DataSource ds = (DataSource) context.lookup("java:comp/env/jdbc/xxx");
+		try {			
 			conn = ds.getConnection();
-		} catch (NamingException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return conn;		
@@ -30,6 +39,7 @@ public class DataSourceConnection {
 				e.printStackTrace();
 			} 
 		}
+		
 	}
 	
 }

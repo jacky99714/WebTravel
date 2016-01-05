@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>登入</title>
 
-<link rel="shortcut icon" href="<c:url value="/img/icon.ioc"/>">  
+<link rel="shortcut icon" href="<c:url value="/img/icon.ico"/>">  
 
 
     <!-- Bootstrap -->
@@ -24,7 +24,7 @@
   </head>
   <body style="padding:71px;">
 
- <jsp:include page="/top/top.jsp"></jsp:include>
+ <jsp:include page="/WEB-INF/top/top.jsp"></jsp:include>
  
 <!--     ---------------------------- -->
    <div class="jumbotron" style="background:#FFFFFF">
@@ -50,11 +50,11 @@
 		   		<form class="form-inline" id="formLogin" action="<c:url value="/LoginServlet"/>" method="get">
 		  			<div class="form-group">
 		   				 <label class="sr-only" for="useid">帳號：</label>
-		   				 <input type="text" class="form-control" name="useid" id="useid" placeholder="帳號" value="${param.useid}">
+		   				 <input type="text" class="form-control" name="useid" id="useid" placeholder="帳號" value="${param.useid}"><c:if test="${not empty error}"><div style="color:red">${error.useid}</div></c:if>
 		  			</div><br>
 		 			 <div class="form-group">
 		   				 <label class="sr-only" for="password">密碼：</label>
-		   				 <input type="password" class="form-control" name="password" id="password" placeholder="密碼" value="${param.password}">
+		   				 <input type="password" class="form-control" name="password" id="password" placeholder="密碼" value="${param.password}"><c:if test="${not empty error}"><div style="color:red">${error.password}</div></c:if>
 		  			</div><br>
 		 			 <button type="submit" class="btn btn-default">登入</button>
 				</form>
