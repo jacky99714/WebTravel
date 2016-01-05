@@ -8,82 +8,8 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>行程規劃</title>
-	<style>
-		.black_overlay{
-            display: none;
-            position: absolute;
-            top: 0%;
-            left: 0%;
-            width: 100%;
-            height: 100%;
-            background-color: black;
-            z-index:1001;
-            -moz-opacity: 0.8;
-            opacity:.80;
-            filter: alpha(opacity=80);
-        }
+	<link rel=stylesheet type="text/css" href="plan.css">
 
-        .white_content {
-            display: none;
-            position: absolute;
-            top: 10%;
-            left: 10%;
-            width: 75%;
-            height: 75%;
-            padding: 16px;
-            border: 16px solid orange;
-            background-color: white;
-            z-index:1002;
-            overflow: auto;
-        }
-        
-        .close{
-            position: absolute;
-            top: 5px;
-            right: 5px;
-        }
-        
-        .head{
-            text-align: center;
-            font-size:36px;
-        }
-
-        .box {		
-            border:3px ridge #DDDDDD;  
-            width:560px;
-            height:140px;	
-        }
-	
- 		.line{
-            width:100px;
-            height:0px;
-            border:3px ridge red;
-        }
-        
-        .img{
-        	 width:100px;
-        	 height:100px;
-        }
-        
-        .favcontent{
-        	display:inline-block;
-        }
-        
-        .icon{
-        	 width:200px;
-        	 height:120px;
-        	 display:inline-block;     	
-        }
-        
-        table{
-            border:3px ridge #DDDDDD
-        }
-    
-        td{
-            border:3px ridge purple;  
-        }
-	</style>
-	
 	<script>
          var table;
          var totalImage = 0;
@@ -112,14 +38,14 @@
              var src = document.getElementById (ev.dataTransfer.getData("text"));  //source image
              var srcId = src.id;
              var srcParent = src.parentNode;
-             var tar = ev.currentTarget;     //target image
+             var tar = ev.currentTarget;     //target td
              if(srcParent.id === "collection"){
                  return;
              }
 
              if(tar.id !== "garbage"){ 
                  var tarId = tar.id;
-                 ev.currentTarget.replaceChild(src,tar);      //(new,old)
+                 ev.currentTarget.parentNode.replaceChild(src,tar);      //(new,old)
                  srcParent.appendChild(tar);                        
                  tar.id = srcId;     //exchangeId
                  src.id = tarId;                    
@@ -168,43 +94,49 @@
              }              
          }
 ////////////////////////////////////////////////////////////////
-         
- 		function getScene(){ 
-			var select = document.getElementById("select").value;
+  		function getImage(content){ 	
 	    	xhr = new XMLHttpRequest();
 	    	if(xhr !== null){
-		    	xhr.addEventListener("readystatechange",callbackScene);
-		    	xhr.open("get","GetSceneLocationServlet?location="+select,true); 
-		    	xhr.send();		      	
+		    	if(content==="favcontent"){
+		    		xhr.addEventListener("readystatechange",callbackFavorite);
+		    		xhr.open("get","${pageContext.request.contextPath}/GetFavoriteServlet",true); 
+		    	}else if(content==="searchContent"){
+		    		xhr.addEventListener("readystatechange",callbackSearch);
+		    		var select = document.getElementById("select").value;
+		    		xhr.open("get","${pageContext.request.contextPath}/GetSceneLocationServlet?location="+select,true); 
+		    	}
+		    	xhr.send();	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
 	    	}
  		}
 
-	    function callbackScene(){
+	    function callbackSearch(){
 	    	if(xhr.readyState === 4){ 	
 	    		if(xhr.status === 200){
 			    	var data = JSON.parse(xhr.responseText);
-			    	var searchcontent = document.getElementById("searchContent");  //顯示資料
-			    	searchcontent.innerHTML="";
-			    	for(var i=0; i < data.length;i++){
-			    		var img = createImg('data:image/png;base64,'+data[i].scenePhoto,"sea"+data[i].sceneId,data[i].sceneName);
-			    		img.addEventListener("click", click);
-			    		searchcontent.appendChild(img);
-			    	}
-
+			    	createImgContent(data,"searchContent");
 	    		}else{
 	    			alert(xhr.status + ":" + xhr.statusText);
 	    		}    		
 	    	}  	
 	    }
 	    
+	    function callbackFavorite(){
+	    	if(xhr.readyState === 4){ 	
+	    		if(xhr.status === 200){
+			    	var data = JSON.parse(xhr.responseText);
+			    	createImgContent(data,"favcontent");
+	    		}else{
+	    			alert(xhr.status + ":" + xhr.statusText);
+	    		}    		
+	    	}  	
+	    }	    
 	    function createSchedule(arrayObject){
 	    	xhr = new XMLHttpRequest();
 	    	if(xhr !== null){	    
-	  
 		    	xhr.addEventListener("readystatechange",callbackSchedule);
-		    	xhr.open("post","InsertScheduleServlet",true); 
+		    	xhr.open("post","${pageContext.request.contextPath}/InsertScheduleServlet",true); 
 		    	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		    	xhr.send("json="+arrayObject);		      	
 	    	}else{
@@ -215,15 +147,29 @@
 	    function callbackSchedule(){
 	    	if(xhr.readyState === 4){ 	
 	    		if(xhr.status === 200){
-	    			alert("success insert");
-			  //  	var data = JSON.parse(xhr.responseText);
-			   
+	    			alert("success insert");   
 	    		}else{
 	    			alert(xhr.status + ":" + xhr.statusText);
 	    		}    		
 	    	}  	
 	    }	    
 /////////////////////////////////////////////
+		 function createImgContent(data,content){
+		    	var searchcontent = document.getElementById(content);  //顯示資料
+		    	searchcontent.innerHTML="";
+		    	for(var i=0; i < data.length;i++){
+		            var div = document.createElement("div");
+		            div.className = "favcontent";        
+		    		var img = createImg('data:image/png;base64,'+data[i].scenePhoto,"fav"+data[i].sceneId,data[i].sceneName);
+		    		img.addEventListener("click", click);
+		    		var divName = document.createElement("div");
+		    		var text = document.createTextNode(data[i].sceneName);
+		    		divName.appendChild(text);
+		    		div.appendChild(img);
+		    		div.appendChild(divName);
+		    		searchcontent.appendChild(div);
+		    	}	
+		 } 
          function createImg(imgsrc,imgid,title){
              var img = new Image();
              img.src = imgsrc;
@@ -232,6 +178,8 @@
              img.className = "img";
              img.draggable = true;
              img.setAttribute('ondragstart', 'drag(event)');
+             img.setAttribute('ondrop', 'drop(event)');
+             img.setAttribute('ondragover', 'allowDrop(event)');
              return img;
          }
 
@@ -246,8 +194,8 @@
              if(input === "line"){
                 td.appendChild(createLine());
              }else if(input === "image"){
-                td.setAttribute('ondrop', 'drop(event)');
-                td.setAttribute('ondragover', 'allowDrop(event)');
+//                 td.setAttribute('ondrop', 'drop(event)');
+//                 td.setAttribute('ondragover', 'allowDrop(event)');
                 td.appendChild(createImg(imgsrc,imgid,imgtitle));
              }
              return td;
@@ -326,15 +274,13 @@
             	
             });
             
-            document.getElementById("select").addEventListener("change", getScene);
-            getScene();
+            document.getElementById("select").addEventListener("change", function(){
+            	getImage("searchContent");
+            });
+            getImage("favcontent");
+            getImage("searchContent");
+   
             totalImage = 0;
-
-       
- 
-            for(var i=0;i < ${fn:length(fav)};i++){	
-                document.getElementsByName("favimg")[i].addEventListener("click", click);                 
-            }         
                 
         }	
 	</script>
@@ -350,23 +296,12 @@
 			<option value="南區">南區</option>
 			<option value="東區">東區</option>
 		</select>
-		<div id="searchContent"></div>			
+		<div id ="searchContent" ></div>
 	</div>
         
     <div id="addFavorite" class="white_content"> 
-		<img  id="closeFavorite" class="close" src="img/close.png"/>
-		<div class ="favcontent">
-			<c:forEach var="fav" varStatus="status" items="${fav}">          	
-	          	<div class="favcontent">
-          			<img id= 'fav${fav.sceneId}' name="favimg" title="${fav.sceneName}"  class="img"             
-        				src='data:image/png;base64,${fav.scenePhoto}'/> 
-        			<div>${fav.sceneName}</div>
-	        	</div>
-	        	<c:if test="${status.count %5==0}">
-	        		<br/>
-	        	</c:if>
-            </c:forEach>
-           </div>
+		<img  id="closeFavorite" class="close" src="img/close.png"/>		      	
+        <div id="favcontent"></div>
 	</div>
         
     <div id="fade" class="black_overlay"> </div>
