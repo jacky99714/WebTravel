@@ -23,7 +23,7 @@ public class DataSourceConnection {
 	}
 	
 	public static Connection getConnection(){
-		try {	
+		try {			
 			conn = ds.getConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();

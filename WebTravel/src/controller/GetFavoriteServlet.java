@@ -1,11 +1,13 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import model.bean.MemberBean;
 import model.service.PlanService;
+import model.util.TypeConveter;
 import other.bean.FavoriteBean;
 
 /**
@@ -40,17 +43,16 @@ public class GetFavoriteServlet extends HttpServlet {
 	    
 	    PlanService ps = new PlanService();
 		List<FavoriteBean> li = new ArrayList<>();
+
+		
 		HttpSession session = request.getSession();
 		MemberBean bean = (MemberBean) session.getAttribute("loginOk");
+		System.out.println("beanAAA"+bean);
 		if(bean != null){
 			li = ps.getFavorite(bean.getMemberId());
 		}
-		
-		
-		session.setAttribute("fav", li);
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher("plan.jsp");
-		dispatcher.forward(request, response);
+		PrintWriter out = response.getWriter();
+		out.print(TypeConveter.parseJSONArray(li));		
 	}
 
 	/**

@@ -30,7 +30,6 @@ public class AddScheduleServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    request.setCharacterEncoding("UTF-8");
-	    response.setContentType("text/html; charset=UTF-8");
 		List<String> list = new ArrayList<String>();
 		list.clear();
 		JSONArray jsonArray;
@@ -38,7 +37,6 @@ public class AddScheduleServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 //		session.removeAttribute("scheduleList");
 		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF8");
 		PrintWriter out= response.getWriter();
 		MemberService memberService = new MemberService();
 		String temp1 = request.getParameter("scene");

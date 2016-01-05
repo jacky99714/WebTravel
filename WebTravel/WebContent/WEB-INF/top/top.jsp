@@ -48,7 +48,8 @@
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">行程規劃 <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="GetFavoriteServlet">新增行程</a></li>
+                  
+                    <li><a href="<c:url value="/plan/plan.jsp" />">新增行程</a></li>
                     <li><a href="#">行程管理</a></li>
                   </ul>
                 </li>
@@ -67,8 +68,9 @@
 
 
 <!-- 	------------------------休閒時光------------------------ -->
-                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">休閒時光 </a>
+
+                 <li >
+                  <a href="<c:url value="/game/game.jsp" />">休閒時光 </a>
                 </li>
               </ul>
 <!-- 	------------------------休閒時光------------------------ -->
@@ -89,7 +91,7 @@
                   <ul class="dropdown-menu">
                     <li><a href="<c:url value="/JMember/MyMember.jsp" />">我的帳號</a></li>
                     <li><a href="<c:url value="/MyCollectServlet" />">我的收藏</a></li>
-                    <li><a href="#">我的行程規劃</a></li>
+                    <li><a href="<c:url value="/MyScheduleServlet" />">我的行程規劃</a></li>
 <!--                     <li role="separator" class="divider"></li> -->
 <!--                     <li class="dropdown-header">Nav header</li> -->
                     <li><a href="<c:url value="/LogoutServlet" />">登出</a></li>

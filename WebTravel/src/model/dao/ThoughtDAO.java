@@ -8,8 +8,8 @@ public interface ThoughtDAO {
 
 	List<ThoughtBean> select();
 
-	ThoughtBean select(String thoughtName);
-
+	List<ThoughtBean> select(String thoughtType);
+	
 	ThoughtBean select(int thoughtId);
 
 	ThoughtBean update(ThoughtBean thoughtBean);

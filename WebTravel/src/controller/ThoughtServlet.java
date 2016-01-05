@@ -74,7 +74,7 @@ public class ThoughtServlet extends HttpServlet {
 		bean.setThoughtType(temp3);
 		//bean.setThoughtContent(TypeConveter.EncodeStringBase64(temp4));
 		bean.setThoughtContent(temp4);
-		bean.setMemberId(1);
+		bean.setMemberId(2);
 //		bean.setMemberId(temp5);
 		ThoughtBean inbean = thoughtDao.insert(bean);
 		ThoughtBean b=thoughtDao.select(inbean.getThoughtId());

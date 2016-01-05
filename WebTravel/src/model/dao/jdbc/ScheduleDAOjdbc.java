@@ -19,9 +19,41 @@ public class ScheduleDAOjdbc implements ScheduleDAO {
 	private static final String INSERT = "insert into Schedule(scheduleName,memberId) values(?,?)";
 	private static final String UPDATE = "update Schedule set scheduleName=?,memberId=? where scheduleID=?";
 	private static final String DELETE = "delete FROM Schedule where ScheduleID=?";
+	private static final String SELECT_MEMBERID = "SELECT * FROM Schedule WHERE MEMBERID=?";
 	
 	private Connection conn= null;
 
+	
+	
+	
+	//對會員的行程做select
+		public List<ScheduleBean> selectMember(int MemberId){
+			try (
+					Connection conn = JdbcConnection.getConnection();
+					) {
+//				conn = DataSourceConnection.getConnection();
+				PreparedStatement ps = conn.prepareStatement(SELECT_MEMBERID);
+				ps.setInt(1, MemberId);
+				ResultSet rs = ps.executeQuery();
+				List<ScheduleBean> list = new ArrayList<ScheduleBean>();
+				while(rs.next()){
+					ScheduleBean sBean =new ScheduleBean();
+					sBean.setScheduleId(rs.getInt(1));
+					sBean.setMemberId(rs.getInt(2));
+					sBean.setScheduleName(rs.getString(3));
+					list.add(sBean);
+				}
+				return list;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally{
+				JdbcConnection.closeConnection();
+			}
+			return null;
+		}
+	
+	
+	
 	//查詢
 	/* (non-Javadoc)
 	 * @see model.dao.jdbc.ScheduleDAO#select(int)
@@ -165,10 +197,11 @@ public class ScheduleDAOjdbc implements ScheduleDAO {
 		sb.setScheduleId(11);
 		sb.setMemberId(1);
 		sb.setScheduleName("知本泡湯旅行祕笈");
+		System.out.println(s.selectMember(1));
 //----------------------------------------------------------
-		for(ScheduleBean e : s.select()){
-			System.out.println(e);
-		}
+//		for(ScheduleBean e : s.selectMember(1)){
+//			System.out.println(e);
+//		}
 //----------------------------------------------------------
 //		System.out.println(s.select(1));  //單筆select
 //----------------------------------------------------------
