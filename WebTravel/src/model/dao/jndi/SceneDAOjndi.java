@@ -15,7 +15,7 @@ import model.util.DataSourceConnection;
 public class SceneDAOjndi implements SceneDAO {
 	
 	//select
-	private static final String SELECT_ALL = "select * from scene";
+	private static final String SELECT_ALL = "select * from scene";//把sql語法塞進java程式
 	private static final String SELECT_BY_LOCATION = "select * from scene where location = ?";	
 	//insert
 	private static final String INSERT = 
@@ -33,16 +33,17 @@ public class SceneDAOjndi implements SceneDAO {
 	public  List<SceneBean> select() {
 		List<SceneBean> list = null;
 		SceneBean sbean =null;
-		try (//AutoCloseable
+		try (
+			//AutoCloseable
 			Connection conn = DataSourceConnection.getConnection();
 			 ){
 			
-			PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
-			ResultSet rs = ps.executeQuery();
+			PreparedStatement ps = conn.prepareStatement(SELECT_ALL);//把sql動態指令丟進來
+			ResultSet rs = ps.executeQuery();// 結果集
 			list = new ArrayList<SceneBean>();
 			while(rs.next()){
 				sbean = new SceneBean();				
-				sbean.setSceneId(rs.getInt(1));
+				sbean.setSceneId(rs.getInt(1));//set欄位、get取得欄位資料
 				sbean.setLocation(rs.getString(2));
 				sbean.setCity(rs.getString(3));
 				sbean.setSceneName(rs.getString(4));
@@ -103,7 +104,7 @@ public class SceneDAOjndi implements SceneDAO {
 				){
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			if(bean != null){
-			ps.setString(1, bean.getLocation());
+			ps.setString(1, bean.getLocation());//如果今天insert是有東西的，就可以設置欄位
 			ps.setString(2, bean.getCity());
 			ps.setString(3, bean.getSceneName());
 			ps.setBytes(4, bean.getScenePhoto());
@@ -146,7 +147,7 @@ public class SceneDAOjndi implements SceneDAO {
 					
 			int rs = ps.executeUpdate();
 			if (rs == 1){
-				result = bean;
+				result = bean;//update傳到bean裡
 			}
 			}
 		} catch (SQLException e) {

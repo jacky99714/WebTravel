@@ -23,25 +23,26 @@ public class SceneDAOjdbc implements SceneDAO {
 
 	//select
 	private static final String SELECT_ALL = "select * from scene";
-	private static final String SELECT_BY_LOCATION = "select * from scene where location = ?";	
+	private static final String SELECT_BY_LOCATION = "select * from scene where location = ?";
+	private static final String SELECT_BY_SCENENAME= "select * from scene where sceneName = ?";
 	//insert
 	private static final String INSERT = 
 			"insert into scene"
-		  + " (location,city,sceneName,scenePhoto,sceneContent,timeStart,timeEnd,MemberId) "
-		  + "values(?, ?, ?, ?, ?, ?,?,?)";
+		  + "(location,city,sceneName,scenePhoto,sceneContent,timeStart,timeEnd,MemberId)"
+		  + "values(?,?,?,?,?,?,?,?)";
 	//update
 	private static final String UPDATE = "update scene set location=?, city=?,"
 		  + "sceneName=?,scenePhoto=?, sceneContent=?, timeStart=?, timeEnd=?, MemberId=?";	
 	//delete
 	private static final String DELETE = "delete from scene where sceneName=?";
-	private Connection conn = null;
+//	private Connection conn = null;
 	
 	@Override
 	public  List<SceneBean> select() {
 		List<SceneBean> list = null;
 		SceneBean sbean =null;
 		try (// AutoCloseable
-				Connection conn = JdbcConnection.getConnection();) {
+				 Connection conn = JdbcConnection.getConnection();) {//建立連線
 			
 			PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
 			ResultSet rs = ps.executeQuery();
@@ -73,7 +74,7 @@ public class SceneDAOjdbc implements SceneDAO {
 	public  SceneBean select(String location) {
 		SceneBean sbean =null;
 		try (// AutoCloseable
-				Connection conn = JdbcConnection.getConnection();) {
+			Connection conn = JdbcConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_LOCATION);
 			ps.setString(1, location);
 			ResultSet rs = ps.executeQuery();
@@ -95,6 +96,8 @@ public class SceneDAOjdbc implements SceneDAO {
 	
 		return sbean;
 	}
+	
+	
 	
 	//新增INSERT
 	/* (non-Javadoc)
@@ -135,7 +138,7 @@ public class SceneDAOjdbc implements SceneDAO {
 	public SceneBean update(SceneBean bean){
 		SceneBean result = null;
 		try (// AutoCloseable
-				Connection cconn = JdbcConnection.getConnection();) {
+				Connection conn = JdbcConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			if(bean != null){
 			ps.setString(1, bean.getLocation());
@@ -206,7 +209,7 @@ public class SceneDAOjdbc implements SceneDAO {
 //		System.out.println(test.select("text123")); //單筆select （帳號）
 //----------------------------------------------------------
 //		System.out.println(test.update(sbean)); //修改
-//----------------------------------------------------------
+//9----------------------------------------------------------
 		System.out.println(test.delete("安平古堡"));//刪除
 //----------------------------------------------------------
 //		FileOutputStream fo = new FileOutputStream("/Users/mouse/Desktop/4.jpg");   //把圖片取出來放桌面 
