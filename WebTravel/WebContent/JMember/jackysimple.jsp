@@ -25,7 +25,6 @@
 <!--     我是內容---------------------------- -->
     <div class="container-fluid">
     
-    
     <dir class="row">
     	<div class="col-md-4">
     	
@@ -34,6 +33,32 @@
     	
     	</div>
     </dir><!-- row END -->
+    
+    
+    <!--  Modal -->
+<!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"> -->
+<!--   <div class="modal-dialog" role="document"> -->
+<!--     <div class="modal-content"> -->
+<!--       <div class="modal-header"> -->
+<!--         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+<!--         <h4 class="modal-title" id="myModalLabel">修改</h4> -->
+<!--       </div> -->
+<!--       <div class="modal-body"> -->
+<!-- 修改內容 -->
+
+<!-- 內容結束 -->
+<!--       </div> -->
+<!--       <div class="modal-footer"> -->
+<!--         <button type="button" class="btn btn-default" data-dismiss="modal">修改</button> -->
+<!--         <button type="button" class="btn btn-primary">取消</button> -->
+<!--       </div> -->
+<!--     </div> -->
+<!--   </div> -->
+<!-- </div> -->
+<!--     -->
+    
+    
+    
     
     
     </div>

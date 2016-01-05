@@ -15,6 +15,7 @@ import model.util.DataSourceConnection;
 public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 
 	private static final String SELECT_ID = "SELECT * FROM ScheduleContent WHERE ScheduleContentID=?";
+	private static final String SELECT_SCHEDULEID = "SELECT * FROM ScheduleContent WHERE ScheduleID=?";
 	private static final String SELECT = "SELECT ScheduleContentId,ScheduleOrder,SceneID,ScheduleID FROM ScheduleContent";
 	private static final String INSERT = "insert into ScheduleContent(scheduleOrder,sceneId,scheduleId) values(?,?,?)";
 	private static final String UPDATE = "update ScheduleContent set scheduleOrder=?,sceneId=? ,scheduleId=? where ScheduleContentID=?";
@@ -22,10 +23,39 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 	private Connection conn= null;
 	
 
+	public List<ScheduleContentBean> selectSchedule(int scheduleID){
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
+			PreparedStatement ps = conn.prepareStatement(SELECT_SCHEDULEID);
+			ps.setInt(1, scheduleID);
+			ResultSet rs = ps.executeQuery();
+			List<ScheduleContentBean> list = new ArrayList<ScheduleContentBean>();
+			while(rs.next()){
+				ScheduleContentBean sBean =new ScheduleContentBean();
+				sBean.setScheduleContentId(rs.getInt(1));
+				sBean.setScheduleOrder(rs.getInt(2));
+				sBean.setSceneId(rs.getInt(3));
+				sBean.setScheduleId(rs.getInt(4));
+				list.add(sBean);
+			}
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			DataSourceConnection.closeConnection();
+		}
+		return null;
+	}
+	
+	
 	@Override
 	public List<ScheduleContentBean> select(){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<ScheduleContentBean> list = new ArrayList<ScheduleContentBean>();
@@ -50,8 +80,10 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 	 */
 	@Override
 	public ScheduleContentBean select(int scheduleContentId){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_ID);
 			ps.setInt(1, scheduleContentId);
 			ResultSet rs = ps.executeQuery();
@@ -75,8 +107,10 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 	 */
 	@Override
 	public boolean insert(ScheduleContentBean scheduleContentBean){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try(
+				Connection conn = DataSourceConnection.getConnection();
+				)  {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setInt(1, scheduleContentBean.getScheduleOrder());
 			ps.setInt(2, scheduleContentBean.getSceneId());
@@ -96,8 +130,10 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 	 */
 	@Override
 	public boolean delete(int scheduleContentId){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try(
+				Connection conn = DataSourceConnection.getConnection();
+				)  {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1, scheduleContentId);;
 			if(ps.executeUpdate()==1){
@@ -115,8 +151,10 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 	 */
 	@Override
 	public ScheduleContentBean update(ScheduleContentBean scheduleContentBean){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try(
+				Connection conn = DataSourceConnection.getConnection();
+				)  {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setInt(1, scheduleContentBean.getScheduleOrder());
 			ps.setInt(2, scheduleContentBean.getSceneId());

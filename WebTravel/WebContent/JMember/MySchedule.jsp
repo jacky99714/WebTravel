@@ -1,0 +1,101 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>我的行程</title>
+<link rel="shortcut icon" href="<c:url value="/img/icon.ico"/>">  
+
+    <!-- Bootstrap -->
+     
+    <link href="<c:url value="/css/bootstrap.min.css"/>" rel="stylesheet">
+	
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+   <style type="text/css">
+   .scheduleId{}
+   .scheduleSelect{}
+   .table>tbody>tr>td{
+ 	border-top:0px !important;
+ }
+   .strong1{
+     font-size:larger;
+   }
+   </style> 
+    
+    
+  </head>
+  
+  <body style="padding:71px;">
+  <jsp:include page="/WEB-INF/top/top.jsp"/>
+
+<!--     我是內容---------------------------- -->
+    <div class="container-fluid">
+    	
+    <h1 style="text-align:center;">我的行程</h1>
+    <dir class="row">
+    	<div class="col-md-8 col-md-offset-2">
+    	<table class="table table-hover">
+    	<c:forEach items="${listSchedule}" var="Schedule">
+    		<tr>
+    			<td value="${Schedule.scheduleId}" id="${Schedule.scheduleId}" class="scheduleId"><strong class="strong1">${Schedule.scheduleName}</strong></td>
+    			<td style="width:200px;"><button value="${Schedule.scheduleId}" class="btn btn-warning btn scheduleSelect" data-toggle="modal" data-target=".bs-example-modal-lg">編輯行程</button>  <button value="${Schedule.scheduleId}" class="btn btn-danger btn delete" data-toggle="modal" data-target=".bs-example-modal-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  刪除</button></td>
+    		</tr>
+    	</c:forEach>
+    	</table>
+    	</div>
+    </dir><!-- row END -->
+    
+    
+    <!--  Modal -->
+<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">修改</h4>
+      </div>
+      <div class="modal-body">
+		<table>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default">修改</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+    
+    
+    </div>
+<!--  -->
+
+    <hr class="featurette-divider">
+    <footer>
+    <p class="pull-right"><a href="#">Back to top</a></p>
+    <p> 2015 Travel, Inc. &middot; <a href="#">聯絡我們</a>
+    </footer>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+   
+    <script src=" <c:url value="/js/bootstrap.min.js"/>"></script>
+    <script src="js/MySchedule.js"></script>
+  </body>
+</html>

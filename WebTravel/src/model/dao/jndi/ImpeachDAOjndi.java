@@ -36,8 +36,10 @@ public class ImpeachDAOjndi implements ImpeachDAO {
 	
 	@Override
 	public boolean delete(int impeachId){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try(
+				Connection conn = DataSourceConnection.getConnection();
+				)  {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1,impeachId);
 			if(ps.executeUpdate()==1){
@@ -54,8 +56,10 @@ public class ImpeachDAOjndi implements ImpeachDAO {
 
 	@Override
 	public List<ImpeachBean> insertSceneId(ImpeachBean impeachBean){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT_SCENEID);
 			ps.setInt(1, impeachBean.getSceneId());
 			ps.setString(2, impeachBean.getImpeach());
@@ -75,8 +79,10 @@ public class ImpeachDAOjndi implements ImpeachDAO {
 
 	@Override
 	public List<ImpeachBean> insertSceneMessageId(ImpeachBean impeachBean){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try(
+				Connection conn = DataSourceConnection.getConnection();
+				)  {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT_SCENEMESSAGEID);
 			ps.setInt(1, impeachBean.getSceneMessageId());
 			ps.setString(2, impeachBean.getImpeach());
@@ -97,8 +103,10 @@ public class ImpeachDAOjndi implements ImpeachDAO {
 
 	@Override
 	public List<ImpeachBean> insertThoughtId(ImpeachBean impeachBean){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT_THOUGHTID);
 			ps.setInt(1, impeachBean.getThoughtId());
 			ps.setString(2, impeachBean.getImpeach());
@@ -118,8 +126,10 @@ public class ImpeachDAOjndi implements ImpeachDAO {
 
 	@Override
 	public List<ImpeachBean> insertRestaurantMessageId(ImpeachBean impeachBean){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT_RESTAURANTMESSAGEID);
 			ps.setInt(1, impeachBean.getRestaurantMessageId());
 			ps.setString(2, impeachBean.getImpeach());
@@ -139,8 +149,10 @@ public class ImpeachDAOjndi implements ImpeachDAO {
 
 	@Override
 	public List<ImpeachBean> insertRestaurantId(ImpeachBean impeachBean){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT_RESTAURANTID);
 			ps.setInt(1, impeachBean.getRestaurantId());
 			ps.setString(2, impeachBean.getImpeach());
@@ -161,8 +173,10 @@ public class ImpeachDAOjndi implements ImpeachDAO {
 
 	@Override
 	public List<ImpeachBean> select(){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<ImpeachBean> list = new ArrayList<ImpeachBean>();

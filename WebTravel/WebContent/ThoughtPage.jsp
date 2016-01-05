@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>輸入你的標題！</title>
+<title>日記</title>
 <link rel="shortcut icon" href="<c:url value="/img/icon.ico"/>">  
 
     <!-- Bootstrap -->
@@ -24,19 +24,17 @@
 
 <!--     我是內容---------------------------- -->
 	<div class="container">
-		<form action="#" method="post" accept-charset="UTF-8">
+		
 			<div>
-				<label>類型:</label> <select name="add1">
-					<option value="Restaurant">餐廳</option>
-					<option value="Scence">景點</option>
-					<option value="Both">綜合</option>
+				<label>類型:</label> 
+				<select name="add1" id="select">
+					<option value="餐廳">餐廳</option>
+					<option value="景點">景點</option>
+					<option value="綜合">綜合</option>
 				</select>
 				<button id="button1" class="btn btn-primary">Search</button>
 			</div>
 			<div id="div1"></div>
-			
-		</form>
-
 
 	</div>
 	<!--  -->
@@ -55,8 +53,42 @@
     <script src="js/jquery-2.1.4.min.js"></script>
     
     <script type="text/javascript">
-    	
-    </script>
+	    var btn = document.getElementById("button1");
+		btn.addEventListener("click",getType);
+    	function getType() {
+			var select = document.getElementById("select").value;
+			xhr = new XMLHttpRequest();
+			if (xhr !== null) {
+				xhr.addEventListener("readystatechange",callbackType);
+				xhr.open("get", "DisplayThoughtServlet?thoughtType="+ select, true);
+				xhr.send();
+			} else {
+				alert("您的瀏覽器不支援Ajax功能!!");
+			}
+		}
+	
+		function callbackType() {
+			if (xhr.readyState === 4) {
+				if (xhr.status === 200) {
+					var data = JSON.parse(xhr.responseText);
+					for (var i=0;i<data.length;i++){
+						console.log(data[i].thoughtId);
+						console.log(data[i].thoughtName);
+						console.log(data[i].thoughtContent);
+						console.log(data[i].memberId);
+// 					alert(data[0]);
+// 					console.log(data);
+					}
+					var myDiv = document.getElementById("div1");
+			    	myDiv.innerHTML = "<h3>" + data + "</h3>";
+				}else {
+					alert(xhr.status + ":" + xhr.statusText);
+				}
+			}
+		}
+		
+		
+</script>
     
     
     

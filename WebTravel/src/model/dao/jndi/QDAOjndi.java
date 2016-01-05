@@ -30,8 +30,10 @@ public class QDAOjndi implements QDAO {
 
 	@Override
 	public List<QBean> select(){
-		try {
-			conn = DataSourceConnection.getConnection();		
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();		
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<QBean> list = new ArrayList<QBean>();
@@ -59,8 +61,10 @@ public class QDAOjndi implements QDAO {
 	 */
 	@Override
 	public QBean select(int qId){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_ID);
 			ps.setInt(1, qId);
 			ResultSet rs = ps.executeQuery();
@@ -87,8 +91,10 @@ public class QDAOjndi implements QDAO {
 	 */
 	@Override
 	public QBean select(String qName){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_NAME);
 			ps.setString(1, qName);
 			ResultSet rs = ps.executeQuery();
@@ -121,8 +127,10 @@ public class QDAOjndi implements QDAO {
 	 */
 	@Override
 	public boolean delete(int qId){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1,qId);
 			if(ps.executeUpdate()==1){
@@ -140,8 +148,8 @@ public class QDAOjndi implements QDAO {
 	 */
 	@Override
 	public QBean insert(QBean qBean){
-		try (Connection conn = DataSourceConnection.getConnection();){
-			
+
+		try (Connection conn = DataSourceConnection.getConnection();){		
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setString(1, qBean.getQName());
 			ps.setString(2, qBean.getAns());
@@ -163,8 +171,9 @@ public class QDAOjndi implements QDAO {
 	 */
 	@Override
 	public QBean update(QBean qBean){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setString(1, qBean.getQName());
 			ps.setString(2, qBean.getAns());
@@ -186,8 +195,10 @@ public class QDAOjndi implements QDAO {
 	
 	@Override
 	public int getCount(){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(COUNT);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()){

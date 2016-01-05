@@ -91,7 +91,7 @@
                   <ul class="dropdown-menu">
                     <li><a href="<c:url value="/JMember/MyMember.jsp" />">我的帳號</a></li>
                     <li><a href="<c:url value="/MyCollectServlet" />">我的收藏</a></li>
-                    <li><a href="#">我的行程規劃</a></li>
+                    <li><a href="<c:url value="/MyScheduleServlet" />">我的行程規劃</a></li>
 <!--                     <li role="separator" class="divider"></li> -->
 <!--                     <li class="dropdown-header">Nav header</li> -->
                     <li><a href="<c:url value="/LogoutServlet" />">登出</a></li>
