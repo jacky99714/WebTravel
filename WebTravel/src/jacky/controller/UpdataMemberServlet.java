@@ -37,20 +37,19 @@ public class UpdataMemberServlet extends HttpServlet {
 		HttpSession session =request.getSession();
 		PrintWriter out = response.getWriter();
 		JSONArray jsonArray ;
-		List<String> list = new ArrayList<String>();
+		List<MemberBean> list = new ArrayList<MemberBean>();
 		//接收
 		String temp3 = request.getParameter("lastname");
 		String temp4 = request.getParameter("firstname");
 		String temp5 = request.getParameter("nickname");
-		String temp6 = request.getParameter("birthday");
 		String temp7 = request.getParameter("cphone");
 		String temp8 = request.getParameter("hphone");
 		String temp9 = request.getParameter("email");
 		String temp10 = request.getParameter("addr");
-		System.out.println("UpdataMemberServlet:"+temp10);
-		System.out.println("UpdataMemberServlet:"+temp3);
-		System.out.println("UpdataMemberServlet:"+temp5);
-		System.out.println("UpdataMemberServlet:"+temp6);
+//		System.out.println("UpdataMemberServlet:"+temp10);
+//		System.out.println("UpdataMemberServlet:"+temp3);
+//		System.out.println("UpdataMemberServlet:"+temp5);
+//		System.out.println("UpdataMemberServlet:"+temp6);
 //		String temp11 = request.getParameter("photo");
 		
 		
@@ -63,13 +62,6 @@ public class UpdataMemberServlet extends HttpServlet {
 		}
 		if(temp3==null || temp3.length()==0){
 			error.put("firstname", "請輸入名字");
-		}
-		java.util.Date date = null;
-		if(temp6==null || temp6.length()==0){
-			error.put("birthday", "請輸入生日");
-		}else{
-			date = MemberBean.converDate(temp6);
-			System.out.println("JoinMemberServlet:"+date);
 		}
 		if(temp7==null || temp7.length()==0){
 			error.put("cphone", "請輸入手機電話");
@@ -90,14 +82,13 @@ public class UpdataMemberServlet extends HttpServlet {
 			mb.setLastName(temp3);
 			mb.setFirstName(temp4);
 			mb.setNickName(temp5);
-			mb.setBirthDay(date);
 			mb.setCellphone(temp7);
 			mb.setTelephone(temp8);
 			mb.setEmail(temp9);
 			mb.setAddress(temp10);
 			
 			MemberBean rsbean = ms.updateContext(mb);
-			System.out.println("UpdataMemberSerlet:"+rsbean);
+//			System.out.println("UpdataMemberSerlet:"+rsbean);
 			//view
 			if(rsbean!=null){
 				if(rsbean.getPhoto()!=null){
@@ -105,13 +96,19 @@ public class UpdataMemberServlet extends HttpServlet {
 					session.setAttribute("phtoB64", phtoB64);
 				}
 				session.removeAttribute("loginOk");
+				session.removeAttribute("member");
 				session.setAttribute("member", rsbean);
 				session.setAttribute("loginOk", rsbean);
-				list.add("成功");
+				list.clear();
+				System.out.println("list.clear():"+list);
+				list.add(rsbean);
+				System.out.println("list:"+list);
 				jsonArray = new JSONArray(list);
+//				System.out.println("UpdataMemberServlet:"+jsonArray);
 				out.print(jsonArray);
 			}else{
-				list.add("失敗");
+				MemberBean mbs =(MemberBean)session.getAttribute("loginOk");
+				list.add(mbs);
 				jsonArray = new JSONArray(list);
 				out.print(jsonArray);
 			}

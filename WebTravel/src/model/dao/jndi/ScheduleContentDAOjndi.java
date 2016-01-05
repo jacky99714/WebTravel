@@ -24,8 +24,10 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 
 	@Override
 	public List<ScheduleContentBean> select(){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<ScheduleContentBean> list = new ArrayList<ScheduleContentBean>();
@@ -50,8 +52,10 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 	 */
 	@Override
 	public ScheduleContentBean select(int scheduleContentId){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_ID);
 			ps.setInt(1, scheduleContentId);
 			ResultSet rs = ps.executeQuery();
@@ -75,8 +79,10 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 	 */
 	@Override
 	public boolean insert(ScheduleContentBean scheduleContentBean){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try(
+				Connection conn = DataSourceConnection.getConnection();
+				)  {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setInt(1, scheduleContentBean.getScheduleOrder());
 			ps.setInt(2, scheduleContentBean.getSceneId());
@@ -96,8 +102,10 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 	 */
 	@Override
 	public boolean delete(int scheduleContentId){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try(
+				Connection conn = DataSourceConnection.getConnection();
+				)  {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1, scheduleContentId);;
 			if(ps.executeUpdate()==1){
@@ -115,8 +123,10 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 	 */
 	@Override
 	public ScheduleContentBean update(ScheduleContentBean scheduleContentBean){
-		try {
-			conn = DataSourceConnection.getConnection();
+		try(
+				Connection conn = DataSourceConnection.getConnection();
+				)  {
+//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setInt(1, scheduleContentBean.getScheduleOrder());
 			ps.setInt(2, scheduleContentBean.getSceneId());
