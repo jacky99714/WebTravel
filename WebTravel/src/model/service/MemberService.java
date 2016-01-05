@@ -118,5 +118,8 @@ public class MemberService {
 	public boolean deletescheduleContent(int scheduleId){
 		return scheduleContentDAO.delete(scheduleId);
 	}
-	
+	//新增行程內容
+	public boolean insertScheduleContent(ScheduleContentBean bean){
+		return scheduleContentDAO.insert(bean);
+	}
 }

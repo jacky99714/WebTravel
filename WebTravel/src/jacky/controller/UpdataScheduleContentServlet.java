@@ -12,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import model.bean.MemberBean;
+import model.bean.ScheduleContentBean;
 import model.service.MemberService;
 
 
@@ -28,16 +29,23 @@ public class UpdataScheduleContentServlet extends HttpServlet {
 		response.setContentType("application/json");
 //		JSONObject jsonObject = new JSONObject(request.getParameter("a"));
 		JSONArray jsonArray = new JSONArray(request.getParameter("a"));
-		System.out.println("UpdataScheduleContentServlet:"+jsonArray);
+//		System.out.println("UpdataScheduleContentServlet:"+jsonArray);
 		HttpSession session = request.getSession();
 		MemberBean mb = (MemberBean)session.getAttribute("loginOk");
 		String scheduleId = (String)session.getAttribute("ScheduleId");
-		System.out.println("UpdataScheduleContentServlet:"+scheduleId);
+//		System.out.println("UpdataScheduleContentServlet:"+scheduleId);
 		MemberService ms = new MemberService();
 		if(mb!=null){
 			ms.deletescheduleContent(new Integer(scheduleId));
+			int a = 1;
 			for(Object s :jsonArray){
 				int i =new Integer(s.toString());
+				ScheduleContentBean bean = new ScheduleContentBean();
+				bean.setSceneId(i);
+				bean.setScheduleOrder(a);
+				a++;
+				bean.setScheduleId(new Integer(scheduleId));
+				ms.insertScheduleContent(bean);
 			}
 		}
 	}

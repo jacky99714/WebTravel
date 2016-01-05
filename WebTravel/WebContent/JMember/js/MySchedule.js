@@ -68,10 +68,8 @@ $(function(){
 			  'url':'../UpdataScheduleContentServlet',
 			  'dataType':'json',  //json、script、html
 			  'data':{"a":JSON.stringify(a)}
-//			  'success':function(data){
-//				  
-//			  }
 		})
+		$('#myModal').modal('hide')
 	})//'#Upbtn''click'end
 
 });//$end
