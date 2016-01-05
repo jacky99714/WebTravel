@@ -88,6 +88,7 @@ public class MemberService {
 	public List<ScheduleContentBean> selectScheduleContentBean(int ScheduleContentId) {
 		return scheduleContentDAO.selectSchedule(ScheduleContentId);
 	}
+	//用行程內容找出個人行程的景點
 	public List<SceneBean> selectSceneBean(List<ScheduleContentBean> listSCB){
 		List<SceneBean> list = new ArrayList<SceneBean>();
 		for(ScheduleContentBean s :listSCB){
@@ -95,6 +96,7 @@ public class MemberService {
 		}
 		return list;	
 	}
+	//轉成另一個景點BEAN 圖片是String格式
 	public List<FavoriteBean> selectFavoriteBean(List<SceneBean> list){
 		List<FavoriteBean> listFB = new ArrayList<FavoriteBean>();
 		for(SceneBean s : list){
@@ -111,5 +113,13 @@ public class MemberService {
 			listFB.add(fb);
 		}
 		return listFB;
+	}
+	//刪除該行程的內容
+	public boolean deletescheduleContent(int scheduleId){
+		return scheduleContentDAO.delete(scheduleId);
+	}
+	//新增行程內容
+	public boolean insertScheduleContent(ScheduleContentBean bean){
+		return scheduleContentDAO.insert(bean);
 	}
 }
