@@ -27,7 +27,7 @@
                 <li class="dropdown ">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">景點 <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="#">景點介紹</a></li>
+                    <li><a href="<c:url value="/scene/scene.jsp" />">景點介紹</a></li>
                     <li><a href="#">新增景點</a></li>
 					</ul>
                 </li>
