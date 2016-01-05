@@ -41,14 +41,13 @@ public class MyScheduleContentServlet extends HttpServlet {
 			MemberService ms = new MemberService();
 			PrintWriter out = response.getWriter();
 			String scheduleId = request.getParameter("Schedule");
+			session.setAttribute("ScheduleId", scheduleId);
 //			System.out.println("MyScheduleContentServlet:"+scheduleId);
 			List<ScheduleContentBean> listSCB = ms.selectScheduleContentBean(new Integer(scheduleId));
 //			System.out.println("MyScheduleContentServlet:"+listSCB);
 			List<SceneBean> listSB = ms.selectSceneBean(listSCB);
 //			System.out.println("MyScheduleContentServlet:"+listSB);
 			List<FavoriteBean> listFB =ms.selectFavoriteBean(listSB);
-//			System.out.println(listFB);
-
 			jsonArray = new JSONArray(listFB);
 			out.println(jsonArray);
 	}

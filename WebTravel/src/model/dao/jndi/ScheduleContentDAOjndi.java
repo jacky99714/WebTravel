@@ -15,11 +15,12 @@ import model.util.DataSourceConnection;
 public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 
 	private static final String SELECT_ID = "SELECT * FROM ScheduleContent WHERE ScheduleContentID=?";
-	private static final String SELECT_SCHEDULEID = "SELECT * FROM ScheduleContent WHERE ScheduleID=?";
+	private static final String SELECT_SCHEDULEID = "SELECT * FROM ScheduleContent WHERE ScheduleID=? order by ScheduleOrder";
 	private static final String SELECT = "SELECT ScheduleContentId,ScheduleOrder,SceneID,ScheduleID FROM ScheduleContent";
 	private static final String INSERT = "insert into ScheduleContent(scheduleOrder,sceneId,scheduleId) values(?,?,?)";
 	private static final String UPDATE = "update ScheduleContent set scheduleOrder=?,sceneId=? ,scheduleId=? where ScheduleContentID=?";
 	private static final String DELETE = "delete FROM ScheduleContent where ScheduleContentID=?";
+	private static final String DELETE_SCHEDULEID = "delete FROM ScheduleContent where ScheduleID=?";
 	private Connection conn= null;
 	
 
@@ -134,7 +135,7 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 				Connection conn = DataSourceConnection.getConnection();
 				)  {
 //			conn = DataSourceConnection.getConnection();
-			PreparedStatement ps = conn.prepareStatement(DELETE);
+			PreparedStatement ps = conn.prepareStatement(DELETE_SCHEDULEID);
 			ps.setInt(1, scheduleContentId);;
 			if(ps.executeUpdate()==1){
 				return true;

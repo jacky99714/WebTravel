@@ -19,6 +19,7 @@ public class ScheduleContentDAOjdbc implements ScheduleContentDAO {
 	private static final String INSERT = "insert into ScheduleContent(scheduleOrder,sceneId,scheduleId) values(?,?,?)";
 	private static final String UPDATE = "update ScheduleContent set scheduleOrder=?,sceneId=? ,scheduleId=? where ScheduleContentID=?";
 	private static final String DELETE = "delete FROM ScheduleContent where ScheduleContentID=?";
+	private static final String DELETE_SCHEDULEID = "delete FROM ScheduleContent where ScheduleID=?";
 	private Connection conn= null;
 	
 	/* (non-Javadoc)
@@ -105,7 +106,7 @@ public class ScheduleContentDAOjdbc implements ScheduleContentDAO {
 	public boolean delete(int scheduleContentId){
 		try {
 			conn = JdbcConnection.getConnection();
-			PreparedStatement ps = conn.prepareStatement(DELETE);
+			PreparedStatement ps = conn.prepareStatement(DELETE_SCHEDULEID);
 			ps.setInt(1, scheduleContentId);;
 			if(ps.executeUpdate()==1){
 				return true;

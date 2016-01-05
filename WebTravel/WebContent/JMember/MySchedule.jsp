@@ -11,7 +11,9 @@
     <!-- Bootstrap -->
      
     <link href="<c:url value="/css/bootstrap.min.css"/>" rel="stylesheet">
-	
+    <link href="css/jquery-ui.css" rel="stylesheet">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	    <script src="js/jquery-ui.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -27,6 +29,7 @@
    .strong1{
      font-size:larger;
    }
+   .di{}
    </style> 
     
     
@@ -51,6 +54,24 @@
     	</table>
     	</div>
     </dir><!-- row END -->
+
+ 
+
+<!-- <table> -->
+<!-- 	<tbody> -->
+<!-- <!-- 		<tr id="sortable"> -->
+<!-- 			<td class="ui-state-default">1111111111111111111</td> -->
+<!-- 			<td class="ui-state-default">2222222222222222222</td> -->
+<!-- 			<td class="ui-state-default">3333333333333333333</td> -->
+<!-- 			<td class="ui-state-default">4444444444444444444</td> -->
+<!-- 			<td class="ui-state-default">5555555555555555555</td> -->
+<!-- 		</tr> -->
+	
+<!-- 	</tbody> -->
+
+<!-- </table> -->
+    
+    
     
     
     <!--  Modal -->
@@ -59,20 +80,34 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">修改</h4>
+        <h4 class="modal-title" id="myModalLabel">拖曳照片修改行程順序</h4>
       </div>
       <div class="modal-body">
-		<table>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-		</table>
+<!-- 		<table class="table"> -->
+<!-- 			<thead> -->
+<!-- 				<th></th> -->
+<!-- 				<th></th> -->
+<!-- 				<th></th> -->
+<!-- 				<th></th> -->
+<!-- 			</thead> -->
+<!-- 			<tbody> -->
+<!-- 				<tr id="sortable"> -->
+
+  
+
+<!-- 				</tr> -->
+<!-- 			</tbody> -->
+<!-- 		</table> -->
+
+		<div class="row" id="sortable">
+		
+		</div>
+
+
+
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default">修改</button>
+        <button type="button" id="Upbtn" class="btn btn-default">修改</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
       </div>
     </div>
@@ -92,10 +127,12 @@
     </footer>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+   
     <!-- Include all compiled plugins (below), or include individual files as needed -->
    
     <script src=" <c:url value="/js/bootstrap.min.js"/>"></script>
     <script src="js/MySchedule.js"></script>
+
+    
   </body>
 </html>
