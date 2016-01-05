@@ -263,7 +263,7 @@
             		if(i % 2 == 0){
             			var img = td[i].firstElementChild;
 
-            			scheduleArray[num] = new schedule(1,text,num+1,img.id.substring(3));
+            			scheduleArray[num] = new schedule(${loginOk.memberId},text,num+1,img.id.substring(3));
             			num++;
             			//${loginOk.memberId}
             		}
