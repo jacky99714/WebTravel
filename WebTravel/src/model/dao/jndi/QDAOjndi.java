@@ -148,10 +148,8 @@ public class QDAOjndi implements QDAO {
 	 */
 	@Override
 	public QBean insert(QBean qBean){
-		try (
-				Connection conn = DataSourceConnection.getConnection();
-				) {
-//			conn = DataSourceConnection.getConnection();
+
+		try (Connection conn = DataSourceConnection.getConnection();){		
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setString(1, qBean.getQName());
 			ps.setString(2, qBean.getAns());
@@ -164,8 +162,7 @@ public class QDAOjndi implements QDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			DataSourceConnection.closeConnection();
+
 		}
 		return null;
 	}
@@ -177,7 +174,6 @@ public class QDAOjndi implements QDAO {
 		try (
 				Connection conn = DataSourceConnection.getConnection();
 				) {
-//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setString(1, qBean.getQName());
 			ps.setString(2, qBean.getAns());

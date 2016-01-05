@@ -44,9 +44,9 @@
 			<div>
 				<label>種類</label><p color='red'  size="-3">${errors.thoughtType}</p> 
 				<select name="thoughtType">
-					<option value="Restaurant">餐廳</option>
-					<option value="Scence">景點</option>
-					<option value="Both">綜合</option>
+					<option value="餐廳">餐廳</option>
+					<option value="景點">景點</option>
+					<option value="綜合">綜合</option>
 				</select>
 			</div>
 <!-- 			<div> -->
