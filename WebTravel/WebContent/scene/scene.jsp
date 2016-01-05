@@ -4,22 +4,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
-<!-- CSS -->
-<style>
- 
-#pinkblock { 
-  z-index: 2; 
-  position: absolute; 
-  width:130px; 
-  height:130px; 
-  top:10px; 
-  left:10px; 
-  border: 1px solid #FFF; 
- 
-  background-color: @brand-primary; 
-}
-
-</style>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>旅行微革命</title>

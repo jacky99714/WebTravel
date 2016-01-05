@@ -16,13 +16,41 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 
 	
 	private static final String SELECT_ID = "SELECT * FROM Schedule WHERE ScheduleID=?";
+	private static final String SELECT_MEMBERID = "SELECT * FROM Schedule WHERE MEMBERID=?";
 	private static final String SELECT = "SELECT * FROM Schedule";
 	private static final String INSERT = "insert into Schedule(scheduleName,memberId) values(?,?)";
 	private static final String UPDATE = "update Schedule set scheduleName=?,memberId=? where scheduleID=?";
 	private static final String DELETE = "delete FROM Schedule where ScheduleID=?";
 	
 	private Connection conn= null;
-
+	
+	
+	//對會員的行程做select
+	public List<ScheduleBean> selectMember(int MemberId){
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+				) {
+//			conn = DataSourceConnection.getConnection();
+			PreparedStatement ps = conn.prepareStatement(SELECT_MEMBERID);
+			ps.setInt(1, MemberId);
+			ResultSet rs = ps.executeQuery();
+			List<ScheduleBean> list = new ArrayList<ScheduleBean>();
+			while(rs.next()){
+				ScheduleBean sBean =new ScheduleBean();
+				sBean.setScheduleId(rs.getInt(1));
+				sBean.setMemberId(rs.getInt(2));
+				sBean.setScheduleName(rs.getString(3));
+				list.add(sBean);
+			}
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			DataSourceConnection.closeConnection();
+		}
+		return null;
+	}
+	
 	
 	@Override
 	public ScheduleBean select(int scheduleId){
