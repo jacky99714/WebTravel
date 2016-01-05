@@ -10,10 +10,12 @@ public class AddFavoriteService {
 	CollectDAO collectdao = new CollectDAOjndi();
 	//新增收藏
 	public List<CollectBean> addFavorite(CollectBean cBean) {
-		collectdao.insert(cBean);
-		
-		
+		if (cBean != null) {
+			return collectdao.insert(cBean);
+		}
 		return null;
+		
+		 
 	}
 	
 	

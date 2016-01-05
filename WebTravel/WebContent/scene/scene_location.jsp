@@ -83,7 +83,7 @@
 		   <span class="glyphicon glyphicon-align-left" aria-hidden="true" ></span> 介紹
 		   </button>
 		   
-           <button type="button" id="btnadd" class="btn btn-success btn-sm" onclick="addFavorite()">
+           <button type="button" id="btnadd" class="btn btn-success btn-sm">
 		   <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> 收藏
 		   </button>
            
@@ -116,9 +116,9 @@
 		    	//步驟二對Server端發出要求
 		    	//當readyState屬性改變的時候會觸發readystatachange事件
 		    	//readyState會從0->1->2->3->4 所以readystatechange事件會被觸發4次
-		    	xhr.addEventListener("readystatechange",callback);
-		    	xhr.open("get","/SceneAddFavoriteServlet",true); //true表示非同步
-		    	xhr.send("memberId=${loginOk.memberId}&sceneId=${sceneli.sceneContent}&collectId=1");
+		    	xhr.addEventListener("readystatechange");
+		    	xhr.open("get","<%=request.getContextPath()%>/SceneAddFavoriteServlet?sceneId=1",true); //true表示非同步
+		    	xhr.send();
 		    	
 		    	
 	    	}else{
@@ -127,27 +127,11 @@
 
 	    }
 	    
-	    function callback(){
-	    	console.log("readyState : " + xhr.readyState);
-	    	
-	    	//readyState=4 表示資料已經回傳到client端了
-	    	if(xhr.readyState == 4){
-	    		//status=200表示Server端程式的執行沒有錯誤
-	    		if(xhr.status == 200){
-	    			//步驟三接收Server端回應的結果(string)
-			    	var data = xhr.responseText;
-			    	
-			    	//將結果顯示到網頁上
-			    	var myDiv = document.getElementById("div1");
-			    	myDiv.innerHTML = "<h3>" + data + "</h3>";
-	    		}else{
-	    			alert(xhr.status + ":" + xhr.statusText);
-	    		}    		
-	    	}
+	   
 	    	
 	    	
 	    	
-	    }
+	   
 	</script>
 
 </body>
