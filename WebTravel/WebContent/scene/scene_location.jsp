@@ -77,13 +77,14 @@
       <img style="width:300px;height:200px;" src="data:image/jpg;base64,${sceneli.scenePhoto}"/>
       <div class="caption">
         <h3>${sceneli.sceneName}</h3>
-        <p>${sceneli.sceneContent}</p> 
-                <p>
+        <p>${sceneli.sceneContent}</p>
+        
+        <p>
            <button type="button" class="btn btn-primary btn-sm" value="${sceneli.sceneName}" onclick="self.location.href='<%=request.getContextPath()%>/SelectSceneContextServlet'">
 		   <span class="glyphicon glyphicon-align-left" aria-hidden="true" ></span> 介紹
 		   </button>
 		   
-           <button type="button" id="btnadd" class="btn btn-success btn-sm">
+           <button type="button" value="${sceneli.sceneId}" class="btn btn-success btn-sm">
 		   <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> 收藏
 		   </button>
            
@@ -97,42 +98,46 @@
     </div>
   </div>
   </c:forEach>
-
+ 
 </div><!-- class="row" -->
-<!-- JavaScript Ajax非同步 addFavorite -->
-<script>
-	   //找到要控制的元素   物件導向  物件.屬性  = ""   物件.方法();
-	    var btn = document.getElementById("btnadd");
-	    //綁訂事件
-	    btn.addEventListener("click",load);
-	    //btn.onclick = load;
-	 
-	    var xhr = null;
-	    function load(){	
-	    	//步驟一建立Ajax物件
-	    	xhr = new XMLHttpRequest();
-	    	
-	    	if(xhr != null){
-		    	//步驟二對Server端發出要求
-		    	//當readyState屬性改變的時候會觸發readystatachange事件
-		    	//readyState會從0->1->2->3->4 所以readystatechange事件會被觸發4次
-		    	xhr.addEventListener("readystatechange");
-		    	xhr.open("get","<%=request.getContextPath()%>/SceneAddFavoriteServlet?sceneId=1",true); //true表示非同步
-		    	xhr.send();
-		    	
-		    	
-	    	}else{
-	    		alert("您的瀏覽器不支援Ajax功能!!");
-	    	}
+<!-- JavaScript Jquery Ajax非同步 addFavorite -->
+<script type="text/javascript">
+	$(function(){
+		//加入收藏
+		var btn;
+		$(":button").on("click",function(){
+			btn = $(this)
+		})//butten
+		
+		$(".btn btn-success btn-sm").on("click",function(){				
+			var mb = <%=session.getAttribute("loginOk")%>;
+			if (mb != null){
+				$.ajax({
+					  "type":"get",
+					  "url":"<%=request.getContextPath()%>/SceneAddFavoriteServlet",
+					  "data":{"sceneId":btn.val()},
+					  "datatype":"text",
+					})
+				alert("收藏成功");
+			} else{
+				alert("請登入會員");
+			}//if
+		})//btn btn-success btn-sm
+		
+				
+		
+	});//jquery
 
-	    }
-	    
-	   
-	    	
-	    	
-	    	
-	   
-	</script>
+	
+	
+	
+</script>
+<!--  -->
 
+    <hr class="featurette-divider">
+    <footer>
+    <p class="pull-right"><a href="#">Back to top</a></p>
+    <p> 2015 Travel, Inc. &middot; <a href="#">聯絡我們</a>
+    </footer>
 </body>
 </html>
