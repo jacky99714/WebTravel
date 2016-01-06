@@ -55,9 +55,9 @@ public class SelectLocationServlet extends HttpServlet {
 //		out.print(scenelist);
 		
 		// View
-		RequestDispatcher rd = request.getRequestDispatcher("/scene/scene_location.jsp");
-		rd.forward(request, response);
-		
+//		RequestDispatcher rd = request.getRequestDispatcher("/scene/scene_location.jsp");
+//		rd.forward(request, response);
+		response.sendRedirect(request.getContextPath()+"/scene/scene_location.jsp");
 	}
 
 	

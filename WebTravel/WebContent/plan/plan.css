@@ -1,0 +1,45 @@
+
+
+.box {		
+	border:3px ridge #DDDDDD;  
+	width:560px;
+	height:140px;	
+}
+
+.line{
+	width:100px;
+	height:0px;
+	border:2px solid red;
+}
+     
+.img{
+	width:100px;
+	height:100px;
+}
+
+.imgContent{
+	width:100px;
+	height:100px;
+	margin:15px;
+	text-align:center;
+	display:inline-block;
+}
+
+#content{
+	width:280px;
+    height: 600px;
+    overflow: auto;
+  	border-width:5px;	
+    border-style:groove;
+}
+
+
+table{
+	margin-top:10px;
+	border-collapse: collapse;
+}
+
+td{
+	border:2px inset; 
+
+}

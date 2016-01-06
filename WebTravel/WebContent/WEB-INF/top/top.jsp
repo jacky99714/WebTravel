@@ -27,7 +27,7 @@
                 <li class="dropdown ">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">景點 <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="#">景點介紹</a></li>
+                    <li><a href="<c:url value="/scene/scene.jsp" />">景點介紹</a></li>
                     <li><a href="#">新增景點</a></li>
 					</ul>
                 </li>
@@ -48,7 +48,8 @@
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">行程規劃 <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="GetFavoriteServlet">新增行程</a></li>
+                  
+                    <li><a href="<c:url value="/plan/plan.jsp" />">新增行程</a></li>
                     <li><a href="#">行程管理</a></li>
                   </ul>
                 </li>
@@ -67,8 +68,9 @@
 
 
 <!-- 	------------------------休閒時光------------------------ -->
-                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">休閒時光 </a>
+
+                 <li >
+                  <a href="<c:url value="/game/game.jsp" />">休閒時光 </a>
                 </li>
               </ul>
 <!-- 	------------------------休閒時光------------------------ -->
