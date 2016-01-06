@@ -30,7 +30,6 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 		try (
 				Connection conn = DataSourceConnection.getConnection();
 				) {
-//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_MEMBERID);
 			ps.setInt(1, MemberId);
 			ResultSet rs = ps.executeQuery();
@@ -45,8 +44,6 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 			return list;
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -57,7 +54,6 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 		try (
 				Connection conn = DataSourceConnection.getConnection();
 				) {
-//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_ID);
 			ps.setInt(1, scheduleId);
 			ResultSet rs = ps.executeQuery();
@@ -70,8 +66,6 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 			return sBean;
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -83,7 +77,6 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 		try (
 				Connection conn = DataSourceConnection.getConnection();
 				) {
-//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT);
 			ResultSet rs = ps.executeQuery();
 			List<ScheduleBean> list =new ArrayList<ScheduleBean>();
@@ -97,8 +90,6 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 			return list;
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -111,7 +102,6 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 		try (
 				Connection conn = DataSourceConnection.getConnection();
 				) {
-//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setString(1, scheduleBean.getScheduleName());
 			ps.setInt(2, scheduleBean.getMemberId());
@@ -120,8 +110,6 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			DataSourceConnection.closeConnection();
 		}
 		return false;
 	}
@@ -135,7 +123,6 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 		try (
 				Connection conn = DataSourceConnection.getConnection();
 				) {
-//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setInt(3, scheduleBean.getScheduleId());
 			ps.setString(1, scheduleBean.getScheduleName());
@@ -145,8 +132,6 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -158,7 +143,6 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 		try (
 				Connection conn = DataSourceConnection.getConnection();
 				) {
-//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE);
 			ps.setInt(1,scheduleId);
 			if(ps.executeUpdate()==1){
@@ -166,8 +150,6 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			DataSourceConnection.closeConnection();
 		}
 		return false;
 	}
@@ -177,7 +159,6 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 		try (
 				Connection conn = DataSourceConnection.getConnection();
 				) {
-//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT,Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, scheduleBean.getScheduleName());
 			ps.setInt(2, scheduleBean.getMemberId());
@@ -191,8 +172,6 @@ public class ScheduleDAOjndi implements ScheduleDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			DataSourceConnection.closeConnection();
 		}
 		return 0;
 	}		
