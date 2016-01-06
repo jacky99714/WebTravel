@@ -39,7 +39,8 @@ public class PlanService {
 	 }
 	 
 	 public void insertSchedule(JSONArray jsonArr){
-    	 	 if(jsonArr.length() < 1){
+
+    	 if(jsonArr.length() < 1){
 			 return;
 		 }
 		 ScheduleBean scheduleBean = getScheduleBean(jsonArr);
@@ -57,6 +58,7 @@ public class PlanService {
 	 }
 	 
 	 private ScheduleBean getScheduleBean(JSONArray jsonArr){
+
 		 JSONObject jsonObj =  jsonArr.getJSONObject(0);
 		 ScheduleBean bean = new ScheduleBean();
 		 bean.setMemberId(jsonObj.getInt("memberId"));

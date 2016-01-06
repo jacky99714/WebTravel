@@ -32,6 +32,7 @@ public class JoinMemberServlet extends HttpServlet {
 		//接收
 		String temp1 = request.getParameter("useid");
 		String temp2 = request.getParameter("password");
+		String temp22 = request.getParameter("password2");
 		String temp3 = request.getParameter("lastname");
 		String temp4 = request.getParameter("firstname");
 		String temp5 = request.getParameter("nickname");
@@ -66,6 +67,9 @@ public class JoinMemberServlet extends HttpServlet {
 		}
 		if(temp2==null || temp2.length()==0){
 			error.put("password", "請輸入密碼");
+		}
+		if(temp22==null || temp22.length()==0){
+			error.put("password2", "請輸入密碼");
 		}
 		if(temp3==null || temp3.length()==0){
 			error.put("lastname", "請輸入姓氏");

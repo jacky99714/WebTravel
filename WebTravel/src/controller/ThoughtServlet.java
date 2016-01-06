@@ -30,11 +30,8 @@ public class ThoughtServlet extends HttpServlet {
 		String temp2 = request.getParameter("thoughtName");
 		String temp3 = request.getParameter("thoughtType");
 		String temp4 = request.getParameter("thoughtContent");
-//		MemberBean mb = (MemberBean)session.getAttribute("loginOk");
-		
-		System.out.println("temp2"+temp2);
-		System.out.println("temp3"+temp3);
-		System.out.println("temp4"+temp4);
+		MemberBean mb = (MemberBean)session.getAttribute("loginOk");
+		int temp5 = mb.getMemberId();
 		
 		
 		//驗證資料
@@ -52,7 +49,7 @@ public class ThoughtServlet extends HttpServlet {
 		if(temp4 == null || temp4.trim().length()==0){
 			errors.put("thoughtContent", "請輸入內容");
 		}
-//		if(mb == null){
+//		if(temp5 === null){
 //			request.getRequestDispatcher("index.jsp").forward(request, response);
 //		}
 		if(errors != null && !errors.isEmpty()){
@@ -61,7 +58,6 @@ public class ThoughtServlet extends HttpServlet {
 		}
 			
 		//轉換資料
-//		int memberId = mb.getMemberId();
 		
 		//model
 		ThoughtDAO thoughtDao = new ThoughtDAOjndi();
@@ -74,7 +70,7 @@ public class ThoughtServlet extends HttpServlet {
 		bean.setThoughtType(temp3);
 		//bean.setThoughtContent(TypeConveter.EncodeStringBase64(temp4));
 		bean.setThoughtContent(temp4);
-		bean.setMemberId(2);
+		bean.setMemberId(temp5);
 //		bean.setMemberId(temp5);
 		ThoughtBean inbean = thoughtDao.insert(bean);
 		ThoughtBean b=thoughtDao.select(inbean.getThoughtId());

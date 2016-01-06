@@ -21,8 +21,8 @@ public class ThoughtDAOjndi implements ThoughtDAO {
 	private static final String INSERT = "insert into Thought(thoughtName,thoughtContent,thoughtType,memberId) values(?,?,?,?)";
 	private static final String UPDATE = "update Thought set thoughtName=?,thoughtContent=?,thoughtType=?,memberId=? where ThoughtID=?";
 	private static final String DELETE = "delete FROM Thought where ThoughtID=?";
-	private SimpleDateFormat sf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	private Connection conn= null;
+
+
 	
 	@Override
 	public List<ThoughtBean> select(){
@@ -63,9 +63,10 @@ public class ThoughtDAOjndi implements ThoughtDAO {
 			PreparedStatement ps = conn.prepareStatement(SELECT_TYPE);
 			ps.setString(1, thoughtType);
 			ResultSet rs = ps.executeQuery();
-			ThoughtBean tBean =new ThoughtBean();
+			ThoughtBean tBean= null;
 			List<ThoughtBean> list = new ArrayList<ThoughtBean>();
 			while(rs.next()){
+				tBean = new ThoughtBean();
 				tBean.setThoughtId(rs.getInt(1));
 				tBean.setThoughtName(rs.getString(2));
 				tBean.setThoughtContent(rs.getString(3));
@@ -76,8 +77,6 @@ public class ThoughtDAOjndi implements ThoughtDAO {
 			return list;
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -104,8 +103,6 @@ public class ThoughtDAOjndi implements ThoughtDAO {
 			return tBean;
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -129,8 +126,6 @@ public class ThoughtDAOjndi implements ThoughtDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -153,8 +148,6 @@ public class ThoughtDAOjndi implements ThoughtDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -174,8 +167,6 @@ public class ThoughtDAOjndi implements ThoughtDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			DataSourceConnection.closeConnection();
 		}
 		return false;
 	}

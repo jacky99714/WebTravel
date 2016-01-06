@@ -51,6 +51,7 @@
    
     <script src=" <c:url value="/js/bootstrap.min.js"/>"></script>
     <script src="js/jquery-2.1.4.min.js"></script>
+<!--     <script type="text/javascript" src="http://masonry.desandro.com/jquery.masonry.min.js"></script> -->
     
     <script type="text/javascript">
 	    var btn = document.getElementById("button1");
@@ -71,22 +72,51 @@
 			if (xhr.readyState === 4) {
 				if (xhr.status === 200) {
 					var data = JSON.parse(xhr.responseText);
+					var myDiv = document.getElementById("div1");
+					while(myDiv.hasChildNodes()){
+						myDiv.removeChild(myDiv.lastChild);
+					}
 					for (var i=0;i<data.length;i++){
 						console.log(data[i].thoughtId);
 						console.log(data[i].thoughtName);
 						console.log(data[i].thoughtContent);
 						console.log(data[i].memberId);
-// 					alert(data[0]);
-// 					console.log(data);
+	// 					alert(data[0]);
+	// 					console.log(data);
+						
+						var name = data[i].thoughtName;
+						var content = data[i].thoughtContent;
+						
+						//抓出心得名稱
+						var div2 = document.createElement("div");
+						div2.className="col-md-4";
+						var title = document.createElement("h3");
+						var txtH3 = document.createTextNode(name);
+						title.appendChild(txtH3);
+						div2.appendChild(title);
+						myDiv.appendChild(div2);
+						
+						//抓出心得內容
+						var contents = document.createElement("p");
+						contents.innerHTML = content;
+						div2.appendChild(contents);
+	// 					myDiv.innerHTML=data[i].thoughtContent;
 					}
-					var myDiv = document.getElementById("div1");
-			    	myDiv.innerHTML = "<h3>" + data + "</h3>";
+// 			    		myDiv.innerHTML = "<h3>" + data + "</h3>";
 				}else {
 					alert(xhr.status + ":" + xhr.statusText);
 				}
 			}
 		}
-		
+// 		$(function(){
+// 			$('#div1').imagesLoaded(function () {
+// 		        $('#div1').masonry({        
+// 		            itemSelector: '.div2',
+// 		            columnWidth: 364,
+// 		            animate:true
+// 		        });
+// 			});
+// 		});
 		
 </script>
     
