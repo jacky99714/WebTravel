@@ -42,6 +42,7 @@ public class DisplayThoughtServlet extends HttpServlet {
 
         PrintWriter out = response.getWriter();
         out.print(TypeConveter.parseJSONArray(li));
+        session.setAttribute("list", li);
         
 	}
 

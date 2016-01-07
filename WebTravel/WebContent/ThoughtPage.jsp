@@ -34,8 +34,36 @@
 				</select>
 				<button id="button1" class="btn btn-primary">Search</button>
 			</div>
-			<div id="div1"></div>
-
+		<div id="div1" class="row">
+<!-- 		<div class="row"> -->
+<%-- 			<c:forEach var="thoughtli" items="${li}"> --%>
+<!-- 				<div class="col-xs-6 col-md-3"> -->
+<!-- 					<div class="thumbnail"> -->
+					
+<!-- 					<a href="https://www.google.com.tw" class="thumbnail"><img src="img/Carousel01.jpg" -->
+<!-- 						alt="a"></a> -->
+<!-- 						<div class="caption"> -->
+<!-- 						<div> -->
+<%-- 							<h3>${thoughtli.thoughtName}</h3> --%>
+<!-- 						</div> -->
+<%-- 						<div >${thoughtli.thoughtContent}</div> --%>
+<!-- 					</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<%-- 			</c:forEach> --%>
+<!-- 		</div> -->
+<!-- 		</div> -->
+<c:forEach var="thoughtlist" items="${list}">
+		<div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <img src="img/Carousel01.jpg" alt="a">
+      <div class="caption">
+        <h3>${thoughtlist.thoughtName}</h3>
+        <p>${thoughtlist.thoughtContent}</p>
+      </div>
+    </div>
+  </div>
+  </c:forEach>
 	</div>
 	<!--  -->
 
@@ -49,8 +77,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
    
-    <script src=" <c:url value="/js/bootstrap.min.js"/>"></script>
-    <script src="js/jquery-2.1.4.min.js"></script>
+<%--     <script src=" <c:url value="/js/bootstrap.min.js"/>"></script> --%>
+<!--     <script src="js/jquery-2.1.4.min.js"></script> -->
 <!--     <script type="text/javascript" src="http://masonry.desandro.com/jquery.masonry.min.js"></script> -->
     
     <script type="text/javascript">
@@ -98,6 +126,7 @@
 						
 						//抓出心得內容
 						var contents = document.createElement("p");
+						contents.className="col-md-8";
 						contents.innerHTML = content;
 						div2.appendChild(contents);
 	// 					myDiv.innerHTML=data[i].thoughtContent;
