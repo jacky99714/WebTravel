@@ -13,7 +13,6 @@
 	<script>
          var table;
          var totalImage = 0;
-         var imgCounter = 0;
          var maxImg = 4;  // max image in tr tag
          var maxLine = 5;   
          var scheduleArray = [];
@@ -51,6 +50,8 @@
                  srcTd.appendChild(createImgTitle(tar.title)); 
                           
              }else{
+         
+            	 deleteImg(src.id.substring(3));
                  var tr = srcTd.parentNode;
                  totalImage --;
                  if(srcTd.nextElementSibling !== null){
@@ -89,7 +90,10 @@
 
          function click(ev){
              var img = ev.currentTarget;
-           	 appendImg(img.src,img.alt,img.title);                       
+             var sceneId = img.id.substring(3);
+             if(!document.getElementById("img"+sceneId)){
+            	 appendImg(img.src,sceneId,img.title);    
+             }    	                    
          }
 ////////////////////////////////////////////////////////////////
   		function getFavorite(){
@@ -114,6 +118,29 @@
 	    	}  	
 	    }
 	    
+  		function getSchedule(){
+	    	xhr = new XMLHttpRequest();
+	    	if(xhr !== null){	
+	    		alert("getSchedule");
+	    		table.innerHTML = "";
+	    		xhr.addEventListener("readystatechange",callbackSchedule);
+	    		xhr.open("get","${pageContext.request.contextPath}/GetScheduleServlet",true); 
+		    	xhr.send();	
+	    	}else{
+	    		alert("您的瀏覽器不支援Ajax功能!!");
+	    	}	
+		}
+		
+	    function callbackSchedule(){
+	    	if(xhr.readyState === 4){ 	
+	    		if(xhr.status === 200){
+			    	var data = JSON.parse(xhr.responseText);
+			    	appendScheduleContent(data);
+	    		}else{
+	    			alert(xhr.status + ":" + xhr.statusText);
+	    		}    		
+	    	}  	
+	    }	    
   		function getSearch(select){ 	
 	    	xhr = new XMLHttpRequest();
 	    	if(xhr !== null){ 	
@@ -140,7 +167,7 @@
 	    function createSchedule(arrayObject){
 	    	xhr = new XMLHttpRequest();
 	    	if(xhr !== null){	    
-		    	xhr.addEventListener("readystatechange",callbackSchedule);
+		    	xhr.addEventListener("readystatechange",callbackCreateSchedule);
 		    	xhr.open("post","${pageContext.request.contextPath}/InsertScheduleServlet",true); 
 		    	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		    	xhr.send("json="+arrayObject);		      	
@@ -149,7 +176,7 @@
 	    	}	    	
 	    }
 	    
-	    function callbackSchedule(){
+	    function callbackCreateSchedule(){
 	    	if(xhr.readyState === 4){ 	
 	    		if(xhr.status === 200){
 	    			alert("success insert");   
@@ -158,6 +185,17 @@
 	    		}    		
 	    	}  	
 	    }	    
+	    
+	    function deleteImg(sceneid){
+	    	xhr = new XMLHttpRequest();
+	    	if(xhr !== null){	    
+	    		xhr.addEventListener("readystatechange",callbackSearch);	  
+	    		xhr.open("get","${pageContext.request.contextPath}/deleteSchedule?deleteId="+sceneid,true); 	
+		    	xhr.send();		      	
+	    	}else{
+	    		alert("您的瀏覽器不支援Ajax功能!!");
+	    	}		    	
+	    }
 /////////////////////////////////////////////
 		 function createImgContent(data){
 		    	var content = document.getElementById("content");  //顯示資料
@@ -165,7 +203,8 @@
 		    	for(var i=0; i < data.length;i++){
 		            var div = document.createElement("div");
 		            div.className = "imgContent";        
-		    		var img = createImg('data:image/png;base64,'+data[i].scenePhoto,"sceneId"+data[i].sceneId,data[i].sceneName);
+		    		var img = createImg('data:image/png;base64,'+data[i].scenePhoto,data[i].sceneId,data[i].sceneName);
+		    		img.id = "fav"+data[i].sceneId;
 		    		img.addEventListener("click", click);
 		    		var divName = document.createElement("div");
 		    		var text = document.createTextNode(data[i].sceneName);
@@ -175,18 +214,25 @@
 		    		content.appendChild(div);
 		    	}	
 		 } 
+		 
+		 function appendScheduleContent(data){  
+			 	table.innerHTML = "";
+			 	totalImage = 0;
+		    	for(var i=0; i < data.length;i++){     
+		    		var img = createImg('data:image/png;base64,'+data[i].scenePhoto,data[i].sceneId,data[i].sceneName);
+		    		appendImg(img.src,img.id,img.title);
+		    	}	
+		 } 		 
          function createImg(imgsrc,sceneId,title){
              var img = new Image();
              img.src = imgsrc;
-             img.alt = sceneId;
+             img.id = "img"+sceneId;
              img.title = title;
-             img.id = imgCounter;
              img.className = "img";
              img.draggable = true;
              img.setAttribute('ondragstart', 'drag(event)');
              img.setAttribute('ondrop', 'drop(event)');
              img.setAttribute('ondragover', 'allowDrop(event)');
-             imgCounter++;
              return img;
          }
 
@@ -256,7 +302,7 @@
             	for (var i = 0; i < td.length;i++){
             		if(i % 2 == 0){
             			var img = td[i].firstElementChild;
-            			scheduleArray[num] = new schedule(${loginOk.memberId},text,num+1,img.alt.substring(7));
+            			scheduleArray[num] = new schedule(${loginOk.memberId},text,num+1,img.id.substring(2));
             			num++;
             			//${loginOk.memberId}
             		}
@@ -267,6 +313,8 @@
             	
             });
             
+            getSchedule();
+            getFavorite();
             document.getElementById("fav").addEventListener("click", function(){
             	getFavorite();
             });       

@@ -10,14 +10,21 @@
 	<link href="<c:url value="/game/game.css"/>" rel="stylesheet">  
 
 </head>
-<body>	
-		<div class="game">
-			<div id="box" class="box"></div>	
-			
-			<div class="littlefig">
-				<img id="photo2" >	
-			</div>
-			
+<body style="padding:71px;">	
+	<jsp:include page="/WEB-INF/top/top.jsp"/>
+	<div class="game">
+		<div id="box" class="box"></div>	
+	
+		<div class="bar">
+			<div class="enemybartext">BOSS HP:</div>
+			<div class="enemybarline">	
+				<div id="enemyhp"></div> 
+			</div>			 			
+		</div>
+		
+		<div class="user">
+			<img class="littlephoto" id="photo2" >	
+		
 			<div class="userbar">
 				<div class="bar">
 					<div class="bartext">HP:</div>
@@ -32,29 +39,18 @@
 						<div id="usermp"></div> 	  
 					</div> 
 				</div>				
-			</div>
-		
-			<div class="bar">
-				<div class="enemybartext">BOSS HP:</div>
-				<div class="enemybarline">	
-					<div id="enemyhp"></div> 
-				</div>			 			
-			</div>
-			<div id="btn" class="allbtn">
-				<input class ="btn" id="reStart" type="button" value="重新開始"/>
-			</div>
-		
-			<canvas id="canvas" width=" 460" height="300"> 		
-			</canvas>	
-			<audio  id="backAudio">
-				<source src="audio/bgsound.mp3" type="audio/mp3"/>	
-			</audio>		
-		
-		
-		
+			</div>		
 		</div>
 			
-
+		<div id="btn" class="allbtn">
+			<input class ="btn" id="reStart" type="button" value="重新開始"/>
+		</div>
+	
+		<canvas id="canvas" width=" 460" height="300"> </canvas>	
+		<audio  id="backAudio">
+			<source src="audio/bgsound.mp3" type="audio/mp3"/>	
+		</audio>		
+	</div>
 	
 </body><script type="text/javascript" src="game.js"></script>
 </html>

@@ -15,7 +15,7 @@ import model.util.TypeConveter;
 /**
  * Servlet implementation class GetQuestionServlet
  */
-@WebServlet("/GetQuestionServlet")
+@WebServlet("/game/GetQuestionServlet")
 public class GetQuestionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
