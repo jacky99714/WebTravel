@@ -24,13 +24,15 @@
 <script src="js/bootstrap.min.js"></script>
 <link href="css/editor.css" type="text/css" rel="stylesheet"/>
 <script src="js/editor.js"></script>
- 
+ <style type="text/css">
+ .d{width:200px;height:200px}
+ </style>
   </head>
   <body style="padding:71px;">
   <jsp:include page="/WEB-INF/top/top.jsp"/>
 
 <!--     我是內容---------------------------- -->
-    <div class="container">
+    <div class="container-fluid">
     <div class="float">
     <form action="ThoughtServlet" method="post" accept-charset="UTF-8">
 			<div>

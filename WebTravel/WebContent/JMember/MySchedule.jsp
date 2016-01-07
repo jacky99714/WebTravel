@@ -80,7 +80,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">拖曳照片修改行程順序</h4>
+        <h4 class="modal-title" style="text-align:center;font-weight:900;" id="myModalLabel">拖曳照片修改行程順序</h4>
       </div>
       <div class="modal-body">
 <!-- 		<table class="table"> -->

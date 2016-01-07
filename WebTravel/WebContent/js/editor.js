@@ -165,7 +165,7 @@ You should have received a copy of the GNU General Public License along with thi
 							});
 							var image = $('<img/>',{
 								src:e.target.result,
-								title:escape(imageFile.name)
+								title:escape(imageFile.name),
 							}).appendTo(a).click(function(){
 								$('#imageList').data('current', $(this).attr('src'));
 								});
