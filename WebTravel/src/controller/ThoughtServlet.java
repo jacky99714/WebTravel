@@ -64,7 +64,7 @@ public class ThoughtServlet extends HttpServlet {
 		ThoughtBean bean = new ThoughtBean();
 		
 //		int temp5 = mb.getMemberId();
-		
+//		String content = ("<span>"+temp4+"</span>");
 		bean.setThoughtId(1);
 		bean.setThoughtName(temp2);
 		bean.setThoughtType(temp3);
