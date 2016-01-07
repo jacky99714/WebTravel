@@ -2,34 +2,29 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.bean.MemberBean;
-import model.service.PlanService;
+import model.bean.SceneBean;
 import model.util.TypeConveter;
-import other.bean.FavoriteBean;
 
 /**
- * Servlet implementation class PlanServlet
+ * Servlet implementation class deleteSchedule
  */
-@WebServlet("/GetFavoriteServlet")
-public class GetFavoriteServlet extends HttpServlet {
+@WebServlet("/deleteSchedule")
+public class deleteSchedule extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetFavoriteServlet() {
+    public deleteSchedule() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,26 +33,26 @@ public class GetFavoriteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    request.setCharacterEncoding("UTF-8");
-	    response.setContentType("text/html; charset=UTF-8");
-	    
-	    PlanService ps = new PlanService();
-		List<FavoriteBean> li = new ArrayList<>();
-
-		
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+	
+		int delete= Integer.parseInt(request.getParameter("deleteId"));
 		HttpSession session = request.getSession();
-		MemberBean bean = (MemberBean) session.getAttribute("loginOk");
-		if(bean != null){
-			li = ps.getFavorite(bean.getMemberId());
+		List<SceneBean> scheduleList =  (List<SceneBean>)session.getAttribute("scheduleList");
+		for(SceneBean bean:scheduleList){
+			if(bean.getSceneId() == delete){
+				scheduleList.remove(bean); 
+			}
 		}
-		PrintWriter out = response.getWriter();
-		out.print(TypeConveter.parseJSONArray(li));		
+		
+
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
