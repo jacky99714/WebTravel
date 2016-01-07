@@ -35,8 +35,7 @@
 
 </head>
   <body style="padding:71px;">
-
-  
+<div class="s" id="${loginOk.memberId}"></div>  
 <div class="row">
 <!--   <div class="col-sm-6 col-md-3"> -->
 <!--     <div class="thumbnail"> -->
@@ -109,13 +108,15 @@
 			btn = $(this)
 		})//butten
 		
-		$(".btn btn-success btn-sm").on("click",function(){				
-			var mb = <%=session.getAttribute("loginOk")%>;
+		$(".btn-success").on("click",function(){	
+			
+			var mb = $(".s").attr("id");
+			alert(mb);
 			if (mb != null){
 				$.ajax({
 					  "type":"get",
 					  "url":"<%=request.getContextPath()%>/SceneAddFavoriteServlet",
-					  "data":{"sceneId":btn.val()},
+					  "data":{"sceneId": $(this).val()},
 					  "datatype":"text",
 					})
 				alert("收藏成功");
