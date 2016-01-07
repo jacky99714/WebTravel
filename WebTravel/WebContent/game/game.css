@@ -1,8 +1,15 @@
+.game{
+	border:3px ridge #DDDDDD;  
+	width:800px;
+	height:800px;
+	margin:0 auto;
+}
+
+
 .box{
     border:3px ridge #DDDDDD;  
-    margin-bottom:5px;
-    width:560px;
-    height:140px;					 
+    margin:3px;
+    height:160px;				 
 }
 
 .box img{
@@ -17,7 +24,7 @@
     display:inline-block;	
     word-break: break-all;
     font-size:16px;
-    width:410px;
+   
     padding:5px;
 }
 

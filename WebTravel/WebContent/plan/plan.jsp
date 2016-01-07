@@ -1,19 +1,20 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"  %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>行程規劃</title>
+	<link rel="shortcut icon" href="<c:url value="/img/icon.ico"/>">
+	<link href="<c:url value="/css/bootstrap.min.css"/>" rel="stylesheet">  
 	<link rel=stylesheet type="text/css" href="plan.css">
 
 	<script>
          var table;
          var totalImage = 0;
-         var maxImg = 5;  // max image in tr tag
+         var imgCounter = 0;
+         var maxImg = 4;  // max image in tr tag
          var maxLine = 5;   
          var scheduleArray = [];
 ///////////////////////////////////////////////////////////
@@ -36,29 +37,29 @@
          function drop(ev) {
              ev.preventDefault();
              var src = document.getElementById (ev.dataTransfer.getData("text"));  //source image
-             var srcId = src.id;
-             var srcParent = src.parentNode;
-             var tar = ev.currentTarget;     //target td
-             if(srcParent.id === "collection"){
-                 return;
-             }
+             var srcTd = src.parentNode;
+             var tar = ev.currentTarget;     //target 
+      
 
              if(tar.id !== "garbage"){ 
-                 var tarId = tar.id;
-                 ev.currentTarget.parentNode.replaceChild(src,tar);      //(new,old)
-                 srcParent.appendChild(tar);                        
-                 tar.id = srcId;     //exchangeId
-                 src.id = tarId;                    
+                 var tarTd = tar.parentNode;
+             	 tarTd.innerHTML = "";
+             	 tarTd.appendChild(src); 
+             	 tarTd.appendChild(createImgTitle(src.title)); 
+                 srcTd.innerHTML = "";
+                 srcTd.appendChild(tar);     
+                 srcTd.appendChild(createImgTitle(tar.title)); 
+                          
              }else{
-                 var tr = srcParent.parentNode;
+                 var tr = srcTd.parentNode;
                  totalImage --;
-                 if(srcParent.nextElementSibling !== null){
-                     tr.removeChild(srcParent.nextElementSibling);
-                 }else if(srcParent.previousElementSibling !== null){
-                     tr.removeChild(srcParent.previousElementSibling);
+                 if(srcTd.nextElementSibling !== null){
+                     tr.removeChild(srcTd.nextElementSibling);
+                 }else if(srcTd.previousElementSibling !== null){
+                     tr.removeChild(srcTd.previousElementSibling);
                  }
-                 srcParent.removeChild(src);  
-                 tr.removeChild(srcParent);
+          
+                 tr.removeChild(srcTd);
 
                  var trNum =  Math.ceil((totalImage+1) / maxImg); // how many tr tag
                  var srcLine = parseInt((tr.id).substring(2));  //source image tr number
@@ -88,23 +89,36 @@
 
          function click(ev){
              var img = ev.currentTarget;
-             var id = "img"+img.id.substring(3);
-             if(!document.getElementById(id)){
-            	 appendImg(img.src,id,img.title); 
-             }              
+           	 appendImg(img.src,img.alt,img.title);                       
          }
 ////////////////////////////////////////////////////////////////
-  		function getImage(content){ 	
+  		function getFavorite(){
 	    	xhr = new XMLHttpRequest();
-	    	if(xhr !== null){
-		    	if(content==="favcontent"){
-		    		xhr.addEventListener("readystatechange",callbackFavorite);
-		    		xhr.open("get","${pageContext.request.contextPath}/GetFavoriteServlet",true); 
-		    	}else if(content==="searchContent"){
-		    		xhr.addEventListener("readystatechange",callbackSearch);
-		    		var select = document.getElementById("select").value;
-		    		xhr.open("get","${pageContext.request.contextPath}/GetSceneLocationServlet?location="+select,true); 
-		    	}
+	    	if(xhr !== null){	
+	    		xhr.addEventListener("readystatechange",callbackFavorite);
+	    		xhr.open("get","${pageContext.request.contextPath}/GetFavoriteServlet",true); 
+		    	xhr.send();	
+	    	}else{
+	    		alert("您的瀏覽器不支援Ajax功能!!");
+	    	}	
+		}
+		
+	    function callbackFavorite(){
+	    	if(xhr.readyState === 4){ 	
+	    		if(xhr.status === 200){
+			    	var data = JSON.parse(xhr.responseText);
+			    	createImgContent(data);
+	    		}else{
+	    			alert(xhr.status + ":" + xhr.statusText);
+	    		}    		
+	    	}  	
+	    }
+	    
+  		function getSearch(select){ 	
+	    	xhr = new XMLHttpRequest();
+	    	if(xhr !== null){ 	
+	    		xhr.addEventListener("readystatechange",callbackSearch);	  
+	    		xhr.open("get","${pageContext.request.contextPath}/GetSceneLocationServlet?location="+select,true); 	
 		    	xhr.send();	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
@@ -115,23 +129,14 @@
 	    	if(xhr.readyState === 4){ 	
 	    		if(xhr.status === 200){
 			    	var data = JSON.parse(xhr.responseText);
-			    	createImgContent(data,"searchContent");
+			    	createImgContent(data);
 	    		}else{
 	    			alert(xhr.status + ":" + xhr.statusText);
 	    		}    		
 	    	}  	
 	    }
 	    
-	    function callbackFavorite(){
-	    	if(xhr.readyState === 4){ 	
-	    		if(xhr.status === 200){
-			    	var data = JSON.parse(xhr.responseText);
-			    	createImgContent(data,"favcontent");
-	    		}else{
-	    			alert(xhr.status + ":" + xhr.statusText);
-	    		}    		
-	    	}  	
-	    }	    
+    
 	    function createSchedule(arrayObject){
 	    	xhr = new XMLHttpRequest();
 	    	if(xhr !== null){	    
@@ -154,60 +159,69 @@
 	    	}  	
 	    }	    
 /////////////////////////////////////////////
-		 function createImgContent(data,content){
-		    	var searchcontent = document.getElementById(content);  //顯示資料
-		    	searchcontent.innerHTML="";
+		 function createImgContent(data){
+		    	var content = document.getElementById("content");  //顯示資料
+		    	content.innerHTML="";
 		    	for(var i=0; i < data.length;i++){
 		            var div = document.createElement("div");
-		            div.className = "favcontent";        
-		    		var img = createImg('data:image/png;base64,'+data[i].scenePhoto,"fav"+data[i].sceneId,data[i].sceneName);
+		            div.className = "imgContent";        
+		    		var img = createImg('data:image/png;base64,'+data[i].scenePhoto,"sceneId"+data[i].sceneId,data[i].sceneName);
 		    		img.addEventListener("click", click);
 		    		var divName = document.createElement("div");
 		    		var text = document.createTextNode(data[i].sceneName);
 		    		divName.appendChild(text);
 		    		div.appendChild(img);
 		    		div.appendChild(divName);
-		    		searchcontent.appendChild(div);
+		    		content.appendChild(div);
 		    	}	
 		 } 
-         function createImg(imgsrc,imgid,title){
+         function createImg(imgsrc,sceneId,title){
              var img = new Image();
              img.src = imgsrc;
+             img.alt = sceneId;
              img.title = title;
-             img.id = imgid;
+             img.id = imgCounter;
              img.className = "img";
              img.draggable = true;
              img.setAttribute('ondragstart', 'drag(event)');
              img.setAttribute('ondrop', 'drop(event)');
              img.setAttribute('ondragover', 'allowDrop(event)');
+             imgCounter++;
              return img;
          }
 
          function createLine(){
-             var line = document.createElement("div");
-             line.className = "line";
-             return line;
+        	 var img = new Image();
+        	 img.src = "img/forward.png";
+        	 img.className = "img";
+             return img;
          }
 
-         function createTd(input,imgsrc,imgid,imgtitle){
+         function createTd(input,imgsrc,sceneId,title){
              var td = document.createElement("td");
              if(input === "line"){
                 td.appendChild(createLine());
              }else if(input === "image"){
-//                 td.setAttribute('ondrop', 'drop(event)');
-//                 td.setAttribute('ondragover', 'allowDrop(event)');
-                td.appendChild(createImg(imgsrc,imgid,imgtitle));
+                td.appendChild(createImg(imgsrc,sceneId,title));
+                td.appendChild(createImgTitle(title));
              }
              return td;
          }
+         
+         function createImgTitle(imgtitle){
+    		var divName = document.createElement("div");
+    		var text = document.createTextNode(imgtitle);
+    		divName.appendChild(text);
+    		return divName;
+         }
                
-         function appendImg(imgsrc,imgid,imgtitle){
+         function appendImg(imgsrc,sceneId,title){
       //  	 alert("total"+totalImage);
              if((maxLine * maxImg) === totalImage){
                  return;
              }
              
-             var tdImg = createTd("image",imgsrc,imgid,imgtitle);
+             var tdImg = createTd("image",imgsrc,sceneId,title);
              var tr;
 
              if( totalImage % maxImg === 0){
@@ -228,32 +242,12 @@
 
         window.onload = function(){
         	table = document.getElementById("tab");
-            document.getElementById("add").addEventListener("click",function(){
-                document.getElementById('addSearch').style.display='block';
-                document.getElementById('addFavorite').style.display='none';
-                document.getElementById('fade').style.display='block';
-            });  
-             
-            document.getElementById("favorite").addEventListener("click",function(){
-                document.getElementById('addSearch').style.display='none';
-                document.getElementById('addFavorite').style.display='block';
-                document.getElementById('fade').style.display='block';
-            });    
-
-            document.getElementById("closeAdd").addEventListener("click",function(){
-                document.getElementById('addSearch').style.display='none';
-                document.getElementById('addFavorite').style.display='none';
-                document.getElementById('fade').style.display='none';
-            });  
-            
-            document.getElementById("closeFavorite").addEventListener("click",function(){
-                document.getElementById('addSearch').style.display='none';
-                document.getElementById('addFavorite').style.display='none';
-                document.getElementById('fade').style.display='none';
-            }); 
-            
             document.getElementById("sure").addEventListener("click",function(){
             	var text =  document.getElementById('scheduleName').value;
+            	if(text === ""){
+            		alert("schedule name");
+            		return;
+            	}
             	scheduleArray = null;
             	scheduleArray = [];
             	//schedule(memberId,scheduleName,scheduleOrder,sceneID)
@@ -262,8 +256,7 @@
             	for (var i = 0; i < td.length;i++){
             		if(i % 2 == 0){
             			var img = td[i].firstElementChild;
-
-            			scheduleArray[num] = new schedule(${loginOk.memberId},text,num+1,img.id.substring(3));
+            			scheduleArray[num] = new schedule(${loginOk.memberId},text,num+1,img.alt.substring(7));
             			num++;
             			//${loginOk.memberId}
             		}
@@ -274,55 +267,78 @@
             	
             });
             
-            document.getElementById("select").addEventListener("change", function(){
-            	getImage("searchContent");
+            document.getElementById("fav").addEventListener("click", function(){
+            	getFavorite();
+            });       
+            document.getElementById("北區").addEventListener("click", function(){
+            	getSearch("北區");
+            });            
+            document.getElementById("中區").addEventListener("click", function(){
+            	getSearch("中區");
             });
-            getImage("favcontent");
-            getImage("searchContent");
+            document.getElementById("南區").addEventListener("click", function(){
+            	getSearch("南區");
+            });
+            document.getElementById("東區").addEventListener("click", function(){
+            	getSearch("東區");
+            });            
+
    
             totalImage = 0;
                 
         }	
 	</script>
 </head>
-<body>
-	<div class="head">行程規劃</div>
+<body style="padding:71px;">
+	<jsp:include page="/WEB-INF/top/top.jsp"></jsp:include>
+    <div class="container-fluid">
+   		<div class="row">
+	  		
+			<input id="scheduleName" type="text" placeholder="行程名稱"/>
+			<button id="sure">行程確認</button>    		
+   		</div>
+   		<hr/>
+	    <div class="row">	
+	  		<div class="col-md-8">
+				<img id="garbage" class ="imgicon" src="img/garbage.png"  ondrop="drop(event)" ondragover="allowDrop(event)"/>	
+				<table id="tab">
+				</table>   		
+	  		</div>
+	  		<div class="col-md-4">
+				<div class="btn-group" role="group" aria-label="fileMenu">
+					<button id="fav" class="btn btn-default">我的收藏 </button>
+				  	<div class="btn-group" role="group">
+				    	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					                          搜尋景點
+					      	<span class="caret"></span>
+				    	</button>
+					    <ul class="dropdown-menu">
+		 					<li id="北區"><a>北區</a></li>
+		            		<li role="separator" class="divider"></li>
+		            		<li id="中區"><a>中區</a></li>
+		            		<li role="separator" class="divider"></li>
+		            		<li id="南區"><a>南區</a></li>
+		            		<li role="separator" class="divider"></li>
+		            		<li id="東區"><a>東區</a></li>
+					    </ul>
+				  	</div>
+				</div>	 
+				<div id="content"></div>
+				
+				 		
+    		</div>
+		</div>
+	</div>
+    <hr class="featurette-divider">
+    <footer>
+    <p class="pull-right"><a href="#">Back to top</a></p>
+    <p> 2015 Travel, Inc. &middot; <a href="#">聯絡我們</a>
+    </footer>
 
-	<div id="addSearch" class="white_content"> 
-		<img  id="closeAdd" class="close" src="img/close.png"/>
-		<select id="select">
-			<option value="北區">北區</option>
-			<option value="中區">中區</option>
-			<option value="南區">南區</option>
-			<option value="東區">東區</option>
-		</select>
-		<div id ="searchContent" ></div>
-	</div>
-        
-    <div id="addFavorite" class="white_content"> 
-		<img  id="closeFavorite" class="close" src="img/close.png"/>		      	
-        <div id="favcontent"></div>
-	</div>
-        
-    <div id="fade" class="black_overlay"> </div>
-  
-	<div class ="icon">
-	   <img id="garbage" class ="imgicon" src="img/garbage.png"  ondrop="drop(event)" ondragover="allowDrop(event)"/>
-	</div> 
-              
-    <div class ="icon">
-       <img id="favorite"  src="img/favorite.png">
-    </div>
-        
-    <div class ="icon">
-       <img id="add" class ="imgicon" src="img/add.png">
-    </div>
-        
-    <div>
-	    <input id="scheduleName" type="text" placeholder="行程名稱"/>
-		<button id="sure">行程確認</button>   
-    </div>
-	<table id="tab">
-	</table>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+   
+    <script src=" <c:url value="/js/bootstrap.min.js"/>"></script>
 </body>
 </html>

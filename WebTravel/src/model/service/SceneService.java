@@ -21,7 +21,15 @@ public class SceneService {
 	//搜尋城市
 	public List<FavoriteBean> getCity(String city) {
 		if (city != null) {
-			return sceneDao.select(city);
+			return sceneDao.selectCity(city);
+		}
+		return null;
+	}
+	
+	//搜尋景點
+	public FavoriteBean getName(String sceneName) {
+		if (sceneName != null) {
+			return sceneDao.selectName(sceneName);
 		}
 		return null;
 	}

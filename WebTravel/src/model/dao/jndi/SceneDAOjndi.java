@@ -19,6 +19,8 @@ public class SceneDAOjndi implements SceneDAO {
 	private static final String SELECT_ALL = "select * from scene";//把sql語法塞進java程式
 	private static final String SELECT_BY_LOCATION = "select * from scene where location = ?";	
 	private static final String SELECT_BY_ID = "select * from scene where sceneID = ?";	
+	private static final String SELECT_BY_CITY = "select * from scene where city = ?";	
+	private static final String SELECT_BY_NAME = "select * from scene where sceneName = ?";	
 	//insert
 	private static final String INSERT = 
 			"insert into scene"
@@ -99,6 +101,76 @@ public class SceneDAOjndi implements SceneDAO {
 		return null;
 	}
 	
+	//查詢SELECT_BY_CITY
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.SceneDAO#select(java.lang.String)
+	 */
+	@Override
+	public  List<FavoriteBean> selectCity(String city) {
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+			 ){
+			PreparedStatement ps = conn.prepareStatement(SELECT_BY_CITY);
+			ps.setString(1,city);
+			ResultSet rs = ps.executeQuery();
+			
+			List<FavoriteBean> li = new ArrayList<>();
+			FavoriteBean bean;
+			while(rs.next()){
+				bean = new FavoriteBean();
+				bean.setSceneId(rs.getInt(1));
+				bean.setLocation(rs.getString(2));
+				bean.setCity(rs.getString(3));
+				bean.setSceneName(rs.getString(4));
+				bean.setScenePhoto(TypeConveter.EncodeBase64(rs.getBytes(5)));	
+				bean.setSceneContent(rs.getString(6));
+				bean.setTimeStart(rs.getString(7));
+				bean.setTimeEnd(rs.getString(8));
+				li.add(bean);		
+			}
+			return li;
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	//查詢SELECT_BY_NAME
+	/* (non-Javadoc)
+	 * @see model.dao.jdbc.SceneDAO#select(java.lang.String)
+	 */
+	@Override
+	public  FavoriteBean selectName(String sceneName) {
+		FavoriteBean sbean =null;
+		try (
+				Connection conn = DataSourceConnection.getConnection();
+			 ){
+			PreparedStatement ps = conn.prepareStatement(SELECT_BY_NAME);
+			ps.setString(1, sceneName);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				sbean = new FavoriteBean();				
+				sbean.setSceneId(rs.getInt(1));
+				sbean.setLocation(rs.getString(2));
+				sbean.setCity(rs.getString(3));
+				sbean.setSceneName(rs.getString(4));
+				sbean.setScenePhoto(TypeConveter.EncodeBase64(rs.getBytes(5)));
+				sbean.setSceneContent(rs.getString(6));
+				sbean.setTimeStart(rs.getString(7));
+				sbean.setTimeEnd(rs.getString(8));
+				sbean.setMemberId(rs.getInt(9));	
+			}		
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}
+	
+		return sbean;
+	}
+	//查詢SELECT_BY_ID
+		/* (non-Javadoc)
+		 * @see model.dao.jdbc.SceneDAO#select(java.lang.String)
+		 */
 	public  SceneBean select(int sceneId) {
 		SceneBean sbean =null;
 		try (
@@ -234,20 +306,22 @@ public class SceneDAOjndi implements SceneDAO {
 //			System.out.println(e);
 //		}
 //----------------------------------------------------------
-//		System.out.println(test.select("北區"));  //單筆select
+		System.out.println(test.select("北區"));  //單筆select
 //----------------------------------------------------------
-		SceneBean sbean = new SceneBean();
-		sbean.setLocation("南區");
-		sbean.setCity("台南市xxx");
-		sbean.setSceneName("安平古堡");
-		sbean.setSceneContent("安平古堡XXXXXXX");
-		sbean.setTimeStart("09:00");
-		sbean.setTimeEnd("21:00");
+
+
+//		FavoriteBean sbean = new FavoriteBean();
+//		sbean.setLocation("南區");
+//		sbean.setCity("台南市xxx");
+//		sbean.setSceneName("安平古堡");
+//		sbean.setSceneContent("安平古堡XXXXXXX");
+//		sbean.setTimeStart("09:00");
+//		sbean.setTimeEnd("21:00");
 //    	sbean.setMemberId(1);
-//		  
-		System.out.println(test.insert(sbean)); // 新增資料
+//		
+//		System.out.println(test.insert(sbean)); // 新增資料
 //----------------------------------------------------------
-//		System.out.println(test.select("text123")); //單筆select （帳號）
+//		System.out.println(test.selectcity("台北101")); //單筆select （帳號）
 //----------------------------------------------------------
 //		System.out.println(test.update(sbean)); //修改
 //----------------------------------------------------------

@@ -28,7 +28,6 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 		try (
 				Connection conn = DataSourceConnection.getConnection();
 				) {
-//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(SELECT_SCHEDULEID);
 			ps.setInt(1, scheduleID);
 			ResultSet rs = ps.executeQuery();
@@ -44,8 +43,6 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 			return list;
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -71,8 +68,6 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 			return list;
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -98,8 +93,6 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 			return sBean;
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
@@ -111,7 +104,6 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 		try(
 				Connection conn = DataSourceConnection.getConnection();
 				)  {
-//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setInt(1, scheduleContentBean.getScheduleOrder());
 			ps.setInt(2, scheduleContentBean.getSceneId());
@@ -121,8 +113,6 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			DataSourceConnection.closeConnection();
 		}
 		return false;
 	}
@@ -134,7 +124,6 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 		try(
 				Connection conn = DataSourceConnection.getConnection();
 				)  {
-//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(DELETE_SCHEDULEID);
 			ps.setInt(1, scheduleContentId);;
 			if(ps.executeUpdate()==1){
@@ -142,8 +131,6 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			DataSourceConnection.closeConnection();
 		}
 		return false;
 	}
@@ -155,7 +142,6 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 		try(
 				Connection conn = DataSourceConnection.getConnection();
 				)  {
-//			conn = DataSourceConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setInt(1, scheduleContentBean.getScheduleOrder());
 			ps.setInt(2, scheduleContentBean.getSceneId());
@@ -167,8 +153,6 @@ public class ScheduleContentDAOjndi implements ScheduleContentDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			DataSourceConnection.closeConnection();
 		}
 		return null;
 	}
