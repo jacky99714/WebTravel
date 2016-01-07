@@ -101,7 +101,7 @@
               	</ul>
               <ul class="nav navbar-nav navbar-right">
 				<c:if test="${not empty memberimg}">
-					<li><img style="margin-top:5px" width="40px" height="40px" src="data:image/png;base64,${memberimg}" alt="..." class="img"></li>
+					<li><img style="margin-top:5px" width="40px" height="40px" src="data:image/png;base64,${memberimg}" alt="..." class="imgtoptop"></li>
 				</c:if>
                <li><a href="#">${loginOk.userName},你好
                <c:if test="${mbMessageCount!=0}">

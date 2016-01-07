@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,18 +26,23 @@ public class SceneAddFavoriteServlet extends HttpServlet {
 		
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=UTF-8");
+		PrintWriter out = response.getWriter();
 		// 接收資料
 		
 		String sid = request.getParameter("sceneId");
-		
-		
+				
 		HttpSession session = request.getSession();
 		MemberBean mb = (MemberBean)session.getAttribute("loginOk");
 		int mid = mb.getMemberId();
 		
 		Integer cid = 1;
 		// 驗證資料
-
+		
+			
+		
+			
+			
+		
 		// 轉換資料
 		int isid = Integer.valueOf(sid);
 		// model

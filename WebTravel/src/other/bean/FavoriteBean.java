@@ -13,7 +13,7 @@ public class FavoriteBean implements java.io.Serializable{
 
 	public String toString() {
 		return  "[" +sceneId + "," + location + "," + city + ","
-				+ sceneName + "," +scenePhoto+"," + sceneContent + "," + timeStart + "," + timeEnd
+				+ sceneName +"," + sceneContent + "," + timeStart + "," + timeEnd
 				+ "," + memberId +"]";
 	}
 	

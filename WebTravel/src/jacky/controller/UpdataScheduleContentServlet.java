@@ -34,6 +34,9 @@ public class UpdataScheduleContentServlet extends HttpServlet {
 		MemberBean mb = (MemberBean)session.getAttribute("loginOk");
 		String scheduleId = (String)session.getAttribute("ScheduleId");
 //		System.out.println("UpdataScheduleContentServlet:"+scheduleId);
+		
+		
+		
 		MemberService ms = new MemberService();
 		if(mb!=null){
 			ms.deletescheduleContent(new Integer(scheduleId));
@@ -50,6 +53,7 @@ public class UpdataScheduleContentServlet extends HttpServlet {
 		}
 	}
 
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}

@@ -21,6 +21,7 @@ public class SceneDAOjdbc implements SceneDAO {
 	//select
 	private static final String SELECT_ALL = "select * from scene";
 	private static final String SELECT_BY_LOCATION = "select * from scene where location = ?";	
+	private static final String SELECT_BY_CITY = "select * from scene where city = ?";	
 	//insert
 	private static final String INSERT = 
 			"insert into scene"
@@ -96,6 +97,19 @@ public class SceneDAOjdbc implements SceneDAO {
 		return null;
 	}
 	
+	@Override
+	public List<FavoriteBean> selectCity(String city) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	@Override
+	public FavoriteBean selectName(String scenename) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	//新增INSERT
 	/* (non-Javadoc)
 	 * @see model.dao.jdbc.SceneDAO#insert(model.SceneBean)

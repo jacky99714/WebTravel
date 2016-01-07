@@ -11,7 +11,8 @@
     <!-- Bootstrap -->
      
     <link href="<c:url value="/css/bootstrap.min.css"/>" rel="stylesheet">
-    <link href="css/jquery-ui.css" rel="stylesheet">
+    
+    <link href="<c:url value="/JMember/css/jquery-ui.css"/>" rel="stylesheet">
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	    <script src="js/jquery-ui.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -80,7 +81,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">拖曳照片修改行程順序</h4>
+        <h4 class="modal-title" style="text-align:center;font-weight:900;" id="myModalLabel">拖曳照片修改行程順序</h4>
       </div>
       <div class="modal-body">
 <!-- 		<table class="table"> -->
@@ -131,7 +132,7 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
    
     <script src=" <c:url value="/js/bootstrap.min.js"/>"></script>
-    <script src="js/MySchedule.js"></script>
+    <script src="<c:url value="/JMember/js/MySchedule.js"/>"></script>
 
     
   </body>

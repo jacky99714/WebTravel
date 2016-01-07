@@ -47,7 +47,6 @@ public class GetFavoriteServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		MemberBean bean = (MemberBean) session.getAttribute("loginOk");
-		System.out.println("beanAAA"+bean);
 		if(bean != null){
 			li = ps.getFavorite(bean.getMemberId());
 		}
