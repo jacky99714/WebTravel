@@ -46,28 +46,37 @@ public class AddScheduleServlet extends HttpServlet {
 			sceneId = new Integer(temp1);
 			List<SceneBean> scheduleList=(ArrayList<SceneBean>)session.getAttribute("scheduleList");
 			System.out.println("scheduleList="+scheduleList);
-			if(scheduleList!=null){
+			if(scheduleList!=null){//session 有此行程所以要刪除此行程
+				boolean n = true;//判斷session 是否有沒有行程 沒有此行程就去加入行程(false) 有此行程就刪除(true)
 				for(SceneBean sceneBean :scheduleList){
 					if(sceneBean.equals(memberService.selectSceneId(sceneId))){
-						list.add("已在行程內");
+						list.add("deletesuccess");
+						scheduleList.remove(sceneBean);
+						System.out.println("ADD scheduleList:"+scheduleList);
+						session.setAttribute("scheduleList", scheduleList);
 						jsonArray=new JSONArray(list);
 						System.out.println("jsonArray="+jsonArray);
+						n=false;
 						out.print(jsonArray);
 						return;
 					}
 				}
-				scheduleList.add(memberService.selectSceneId(sceneId));
-				session.setAttribute("scheduleList", scheduleList);
-				list.add("session 沒有此值 所以已加入");
-				System.out.println(list);
-				jsonArray=new JSONArray(list);
-				out.print(jsonArray);
-			}else{
+				if (n) {//session 裡面沒有此行程 所以將景點加入session
+					scheduleList.add(memberService.selectSceneId(sceneId));
+					System.out.println("END scheduleList:"+scheduleList);
+					session.setAttribute("scheduleList", scheduleList);
+					list.add("joinsuccess");
+					System.out.println(list);
+					jsonArray = new JSONArray(list);
+					out.print(jsonArray);
+				}
+			}else{//如果沒有session  new 一個加入行程
 				List<SceneBean> listSceneBean = new ArrayList<SceneBean>();
 				SceneBean sceneBean =memberService.selectSceneId(sceneId);
 				listSceneBean.add(sceneBean);
+				System.out.println("END scheduleList:"+listSceneBean);
 				session.setAttribute("scheduleList", listSceneBean);
-				list.add("沒有此session 加入session 已加入");
+				list.add("joinsuccess");
 				System.out.println(list);
 				jsonArray=new JSONArray(list);
 				out.print(jsonArray);
