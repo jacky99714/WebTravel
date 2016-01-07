@@ -30,8 +30,8 @@ public class ThoughtServlet extends HttpServlet {
 		String temp2 = request.getParameter("thoughtName");
 		String temp3 = request.getParameter("thoughtType");
 		String temp4 = request.getParameter("thoughtContent");
-		MemberBean mb = (MemberBean)session.getAttribute("loginOk");
-		int temp5 = mb.getMemberId();
+//		MemberBean mb = (MemberBean)session.getAttribute("loginOk");
+//		int temp5 = mb.getMemberId();
 		
 		
 		//驗證資料
@@ -70,7 +70,7 @@ public class ThoughtServlet extends HttpServlet {
 		bean.setThoughtType(temp3);
 		//bean.setThoughtContent(TypeConveter.EncodeStringBase64(temp4));
 		bean.setThoughtContent(temp4);
-		bean.setMemberId(temp5);
+		bean.setMemberId(1);
 //		bean.setMemberId(temp5);
 		ThoughtBean inbean = thoughtDao.insert(bean);
 		ThoughtBean b=thoughtDao.select(inbean.getThoughtId());

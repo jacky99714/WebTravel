@@ -98,6 +98,7 @@
 						
 						//抓出心得內容
 						var contents = document.createElement("p");
+						contents.className="col-md-8";
 						contents.innerHTML = content;
 						div2.appendChild(contents);
 	// 					myDiv.innerHTML=data[i].thoughtContent;
