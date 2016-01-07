@@ -121,8 +121,7 @@
   		function getSchedule(){
 	    	xhr = new XMLHttpRequest();
 	    	if(xhr !== null){	
-	    		alert("getSchedule");
-	    		table.innerHTML = "";
+	    		alert("getSchedule()");
 	    		xhr.addEventListener("readystatechange",callbackSchedule);
 	    		xhr.open("get","${pageContext.request.contextPath}/GetScheduleServlet",true); 
 		    	xhr.send();	
@@ -130,17 +129,20 @@
 	    		alert("您的瀏覽器不支援Ajax功能!!");
 	    	}	
 		}
-		
+
 	    function callbackSchedule(){
 	    	if(xhr.readyState === 4){ 	
 	    		if(xhr.status === 200){
+	    			alert("callbackSchedule");
 			    	var data = JSON.parse(xhr.responseText);
 			    	appendScheduleContent(data);
 	    		}else{
 	    			alert(xhr.status + ":" + xhr.statusText);
 	    		}    		
 	    	}  	
-	    }	    
+	    }	
+	    
+  
   		function getSearch(select){ 	
 	    	xhr = new XMLHttpRequest();
 	    	if(xhr !== null){ 	
@@ -189,7 +191,7 @@
 	    function deleteImg(sceneid){
 	    	xhr = new XMLHttpRequest();
 	    	if(xhr !== null){	    
-	    		xhr.addEventListener("readystatechange",callbackSearch);	  
+	    		xhr.addEventListener("readystatechange",null);	  
 	    		xhr.open("get","${pageContext.request.contextPath}/deleteSchedule?deleteId="+sceneid,true); 	
 		    	xhr.send();		      	
 	    	}else{
@@ -218,6 +220,7 @@
 		 function appendScheduleContent(data){  
 			 	table.innerHTML = "";
 			 	totalImage = 0;
+			 	alert("data.length: "+data.length);
 		    	for(var i=0; i < data.length;i++){     
 		    		var img = createImg('data:image/png;base64,'+data[i].scenePhoto,data[i].sceneId,data[i].sceneName);
 		    		appendImg(img.src,img.id,img.title);
