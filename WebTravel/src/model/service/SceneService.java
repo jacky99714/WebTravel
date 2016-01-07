@@ -25,7 +25,6 @@ public class SceneService {
 		}
 		return null;
 	}
-	
 	//搜尋景點
 	public FavoriteBean getName(String sceneName) {
 		if (sceneName != null) {
@@ -47,6 +46,12 @@ public class SceneService {
 		}
 		return null;		
 	}
+	public boolean deletescene(int sceneId){
+		if(sceneId != 0){
+			return sceneDao.delete(sceneId);
+		}
+		return false;
+	}  
 
 	
 	

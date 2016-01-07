@@ -28,7 +28,7 @@ public class SceneDAOjndi implements SceneDAO {
 		  + "values(?, ?, ?, ?, ?, ?,?,?)";
 	//update
 	private static final String UPDATE = "update scene set location=?, city=?,"
-		  + "sceneName=?,scenePhoto=?, sceneContent=?, timeStart=?, timeEnd=?, MemberId=?";	
+		  + "sceneName=?,scenePhoto=?, sceneContent=?, timeStart=?, timeEnd=?, MemberId=? where sceneid=?";	
 	//delete
 	private static final String DELETE_NAME = "delete from scene where sceneName=?";
 	private static final String DELETE_ID  = "delete from scene where sceneid=?";
