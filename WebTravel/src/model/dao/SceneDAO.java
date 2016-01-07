@@ -28,4 +28,6 @@ public interface SceneDAO {
 	//刪除DELETE
 	boolean delete(String sceneName);
 
+	SceneBean select(int sceneId);
+
 }

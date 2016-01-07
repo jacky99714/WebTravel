@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.service.PlanService;
 import model.util.TypeConveter;
 import other.bean.FavoriteBean;
 
@@ -37,10 +38,11 @@ public class GetScheduleServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		HttpSession session = request.getSession();
 	
-		
-		List<FavoriteBean> li =  (List<FavoriteBean>)session.getAttribute("scheduleList");
+		List<Integer> li =  (List<Integer>)session.getAttribute("scheduleList");
+		PlanService ps = new PlanService(); 
+		List<FavoriteBean> fav = ps.getSchedule(li);
 		PrintWriter out = response.getWriter();
-		out.print(TypeConveter.parseJSONArray(li));		
+		out.print(TypeConveter.parseJSONArray(fav));		
 	}
 
 	/**

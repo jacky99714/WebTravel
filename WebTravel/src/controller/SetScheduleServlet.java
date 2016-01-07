@@ -15,14 +15,14 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class setScheduleServlet
  */
-@WebServlet("/setScheduleServlet")
-public class setScheduleServlet extends HttpServlet {
+@WebServlet("/SetScheduleServlet")
+public class SetScheduleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public setScheduleServlet() {
+    public SetScheduleServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,27 +35,32 @@ public class setScheduleServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");		
 		
-		
-		int sceneId = Integer.parseInt(request.getParameter("sceneId"));
-		boolean insert = false;
-		List<Integer> li = new ArrayList<>();
-		HttpSession session = request.getSession();
+		try{
+			int sceneId = Integer.parseInt(request.getParameter("sceneId"));
+			boolean insert = false;
+			List<Integer> li = new ArrayList<>();
+			HttpSession session = request.getSession();
 
-		if(session.getAttribute("scheduleList") == null){
-			li.add(sceneId);
-			session.setAttribute("scheduleList",li);
-		}else{
-			li = (List<Integer>)session.getAttribute("scheduleList");
-			for(int key: li){
-				if(key == sceneId){
-					insert = true;   //session 有相同景點
-					break;
-				}
-			}
-			if(!insert){
+			if(session.getAttribute("scheduleList") == null){
 				li.add(sceneId);
+				session.setAttribute("scheduleList",li);
+			}else{
+				li = (List<Integer>)session.getAttribute("scheduleList");
+				for(int key: li){
+					if(key == sceneId){
+						insert = true;   //session 有相同景點
+						break;
+					}
+				}
+				if(!insert){
+					li.add(sceneId);
+				}			
 			}			
-		}	
+		}catch(NumberFormatException e){
+			System.out.println(request.getParameter("sceneId"));
+			System.out.println("it is not a number");
+		}
+	
 	}
 
 	/**
