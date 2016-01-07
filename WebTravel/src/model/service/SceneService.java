@@ -25,4 +25,24 @@ public class SceneService {
 		}
 		return null;
 	}
+	//新增景點
+	public SceneBean insertscene(SceneBean bean){
+		if (bean != null){
+			return sceneDao.insert(bean);			
+		}
+		return null;
+	}
+	//修改景點
+	public SceneBean updatescene(SceneBean bean){
+		if (bean != null){
+			return sceneDao.update(bean);			
+		}
+		return null;		
+	}
+
+	
+	
+	
+	
+	
 }

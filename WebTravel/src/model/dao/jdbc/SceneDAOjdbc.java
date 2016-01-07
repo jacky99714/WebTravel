@@ -31,7 +31,8 @@ public class SceneDAOjdbc implements SceneDAO {
 	private static final String UPDATE = "update scene set location=?, city=?,"
 		  + "sceneName=?,scenePhoto=?, sceneContent=?, timeStart=?, timeEnd=?, MemberId=?";	
 	//delete
-	private static final String DELETE = "delete from scene where sceneName=?";
+	private static final String DELETE_NAME = "delete from scene where sceneName=?";
+	private static final String DELETE_ID ="delete from scene where sceneId=?";
 //	private Connection conn = null;
 	
 	@Override
@@ -166,11 +167,12 @@ public class SceneDAOjdbc implements SceneDAO {
 	/* (non-Javadoc)
 	 * @see model.dao.jdbc.SceneDAO#delete(java.lang.String)
 	 */
+	
 	@Override
 	public boolean delete(String sceneName) {
 		try (// AutoCloseable
 				Connection conn = JdbcConnection.getConnection();) {
-				PreparedStatement ps = conn.prepareStatement(DELETE);
+				PreparedStatement ps = conn.prepareStatement(DELETE_NAME);
 				
 				ps.setString(1, sceneName);
 									
@@ -184,8 +186,27 @@ public class SceneDAOjdbc implements SceneDAO {
 			}
 		return false;
 	}
-	
-	
+		
+	@Override
+	public boolean delete(int sceneId) {
+		try (// AutoCloseable
+				Connection conn = JdbcConnection.getConnection();) {
+				PreparedStatement ps = conn.prepareStatement(DELETE_ID);
+				
+				ps.setInt(1, sceneId);
+									
+				int rs = ps.executeUpdate();
+				if (rs == 1){
+					return true;
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		return false;
+		
+	}
+
 	public static void main(String[] args){
 		SceneDAO test = new SceneDAOjdbc();
 //----------------------------------------------------------
@@ -198,20 +219,21 @@ public class SceneDAOjdbc implements SceneDAO {
 //----------------------------------------------------------
 		SceneBean sbean = new SceneBean();
 		sbean.setLocation("南區");
-		sbean.setCity("台南市xxx");
+		sbean.setCity("台北市123456");
 		sbean.setSceneName("安平古堡");
 		sbean.setSceneContent("安平古堡XXXXXXX");
 		sbean.setTimeStart("09:00");
 		sbean.setTimeEnd("21:00");
-    	sbean.setMemberId(1);
-//		
+    	sbean.setMemberId(4);
+//    	sbean.setSceneId(7);
+		
 //		System.out.println(test.insert(sbean)); // 新增資料
 //----------------------------------------------------------
 //		System.out.println(test.select("text123")); //單筆select （帳號）
 //----------------------------------------------------------
-//		System.out.println(test.update(sbean)); //修改
+		System.out.println(test.update(sbean)); //修改
 //9----------------------------------------------------------
-		System.out.println(test.delete("安平古堡"));//刪除
+//		System.out.println(test.delete("安平古堡"));//刪除
 //----------------------------------------------------------
 //		FileOutputStream fo = new FileOutputStream("/Users/mouse/Desktop/4.jpg");   //把圖片取出來放桌面 
 //		fo.write(m.select(2).getPhoto(), 0, t);

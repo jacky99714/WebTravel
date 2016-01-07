@@ -17,9 +17,6 @@ import model.dao.jndi.ScheduleDAOjndi;
 import model.util.TypeConveter;
 import other.bean.FavoriteBean;
 
-
-
-
 public class MemberService {
 	MemberDAOjndi mDAO= new MemberDAOjndi();
 	CollectDAOjndi cDAO = new CollectDAOjndi();

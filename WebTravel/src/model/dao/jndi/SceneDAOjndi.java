@@ -28,7 +28,10 @@ public class SceneDAOjndi implements SceneDAO {
 	private static final String UPDATE = "update scene set location=?, city=?,"
 		  + "sceneName=?,scenePhoto=?, sceneContent=?, timeStart=?, timeEnd=?, MemberId=?";	
 	//delete
-	private static final String DELETE = "delete from scene where sceneName=?";
+	private static final String DELETE_NAME = "delete from scene where sceneName=?";
+	private static final String DELETE_ID  = "delete from scene where sceneid=?";
+	
+	
 	private Connection conn = null;
 	
 	@Override
@@ -196,7 +199,7 @@ public class SceneDAOjndi implements SceneDAO {
 		try (
 				Connection conn = DataSourceConnection.getConnection(); 	
 					){
-				PreparedStatement ps = conn.prepareStatement(DELETE);
+				PreparedStatement ps = conn.prepareStatement(DELETE_NAME);
 				ps.setString(1, sceneName);							
 				int rs = ps.executeUpdate();
 				if (rs == 1){
@@ -207,8 +210,22 @@ public class SceneDAOjndi implements SceneDAO {
 			}
 		return false;
 	}
-	
-	
+	@Override
+	public boolean delete(int sceneId) {
+		try (
+				Connection conn = DataSourceConnection.getConnection(); 	
+					){
+				PreparedStatement ps = conn.prepareStatement(DELETE_ID);
+				ps.setInt(1, sceneId);							
+				int rs = ps.executeUpdate();
+				if (rs == 1){
+					return true;
+				}			
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		return false;
+	}
 	public static void main(String[] args){
 		SceneDAO test = new SceneDAOjndi();
 //----------------------------------------------------------
@@ -226,15 +243,15 @@ public class SceneDAOjndi implements SceneDAO {
 		sbean.setSceneContent("安平古堡XXXXXXX");
 		sbean.setTimeStart("09:00");
 		sbean.setTimeEnd("21:00");
-    	sbean.setMemberId(1);
-//		
-//		System.out.println(test.insert(sbean)); // 新增資料
+//    	sbean.setMemberId(1);
+//		  
+		System.out.println(test.insert(sbean)); // 新增資料
 //----------------------------------------------------------
 //		System.out.println(test.select("text123")); //單筆select （帳號）
 //----------------------------------------------------------
 //		System.out.println(test.update(sbean)); //修改
 //----------------------------------------------------------
-		System.out.println(test.delete("安平古堡"));//刪除
+//		System.out.println(test.delete("安平古堡"));//刪除
 //----------------------------------------------------------
 //		FileOutputStream fo = new FileOutputStream("/Users/mouse/Desktop/4.jpg");   //把圖片取出來放桌面 
 //		fo.write(m.select(2).getPhoto(), 0, t);
