@@ -13,6 +13,7 @@ public interface QDAO {
 	QBean select(String qName);
 
 	boolean delete(int qId);
+	
 
 	QBean insert(QBean qBean);
 

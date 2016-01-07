@@ -16,7 +16,7 @@ import other.bean.FavoriteBean;
 public class SceneDAOjndi implements SceneDAO {
 	
 	//select
-	private static final String SELECT_ALL = "select * from scene";
+	private static final String SELECT_ALL = "select * from scene";//把sql語法塞進java程式
 	private static final String SELECT_BY_LOCATION = "select * from scene where location = ?";	
 	private static final String SELECT_BY_ID = "select * from scene where sceneID = ?";	
 	private static final String SELECT_BY_CITY = "select * from scene where city = ?";	
@@ -28,25 +28,29 @@ public class SceneDAOjndi implements SceneDAO {
 		  + "values(?, ?, ?, ?, ?, ?,?,?)";
 	//update
 	private static final String UPDATE = "update scene set location=?, city=?,"
-		  + "sceneName=?,scenePhoto=?, sceneContent=?, timeStart=?, timeEnd=?, MemberId=?";	
+		  + "sceneName=?,scenePhoto=?, sceneContent=?, timeStart=?, timeEnd=?, MemberId=? where sceneid=?";	
 	//delete
-	private static final String DELETE = "delete from scene where sceneName=?";
+	private static final String DELETE_NAME = "delete from scene where sceneName=?";
+	private static final String DELETE_ID  = "delete from scene where sceneid=?";
+	
+	
 	private Connection conn = null;
 	
 	@Override
 	public  List<SceneBean> select() {
 		List<SceneBean> list = null;
 		SceneBean sbean =null;
-		try (//AutoCloseable
+		try (
+			//AutoCloseable
 			Connection conn = DataSourceConnection.getConnection();
 			 ){
 			
-			PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
-			ResultSet rs = ps.executeQuery();
+			PreparedStatement ps = conn.prepareStatement(SELECT_ALL);//把sql動態指令丟進來
+			ResultSet rs = ps.executeQuery();// 結果集
 			list = new ArrayList<SceneBean>();
 			while(rs.next()){
 				sbean = new SceneBean();				
-				sbean.setSceneId(rs.getInt(1));
+				sbean.setSceneId(rs.getInt(1));//set欄位、get取得欄位資料
 				sbean.setLocation(rs.getString(2));
 				sbean.setCity(rs.getString(3));
 				sbean.setSceneName(rs.getString(4));
@@ -218,7 +222,7 @@ public class SceneDAOjndi implements SceneDAO {
 				int rs = ps.executeUpdate();
 				if (rs == 1){
 					result = bean;
-				}
+			  }
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -267,7 +271,7 @@ public class SceneDAOjndi implements SceneDAO {
 		try (
 				Connection conn = DataSourceConnection.getConnection(); 	
 					){
-				PreparedStatement ps = conn.prepareStatement(DELETE);
+				PreparedStatement ps = conn.prepareStatement(DELETE_NAME);
 				ps.setString(1, sceneName);							
 				int rs = ps.executeUpdate();
 				if (rs == 1){
@@ -278,8 +282,22 @@ public class SceneDAOjndi implements SceneDAO {
 			}
 		return false;
 	}
-	
-	
+	@Override
+	public boolean delete(int sceneId) {
+		try (
+				Connection conn = DataSourceConnection.getConnection(); 	
+					){
+				PreparedStatement ps = conn.prepareStatement(DELETE_ID);
+				ps.setInt(1, sceneId);							
+				int rs = ps.executeUpdate();
+				if (rs == 1){
+					return true;
+				}			
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		return false;
+	}
 	public static void main(String[] args){
 		SceneDAO test = new SceneDAOjndi();
 //----------------------------------------------------------
@@ -290,6 +308,8 @@ public class SceneDAOjndi implements SceneDAO {
 //----------------------------------------------------------
 		System.out.println(test.select("北區"));  //單筆select
 //----------------------------------------------------------
+
+
 //		FavoriteBean sbean = new FavoriteBean();
 //		sbean.setLocation("南區");
 //		sbean.setCity("台南市xxx");

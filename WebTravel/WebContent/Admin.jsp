@@ -56,10 +56,10 @@
                 <li class="nav-header"> <a href="#" data-toggle="collapse" data-target="#menu1"><h4>管理景點區</h4></a>   <!-- <i class="glyphicon glyphicon-chevron-down"></i>-->
                     <ul class="nav nav-stacked collapse" id="menu1">
                         <!--<li class="active"> <a href="#"></a></li>-->                                                          <!--<i class="glyphicon glyphicon-home"></i> -->
-                        <li><a href="#">新增景點<span class="badge badge-info"></span></a></li>                           <!--<i class="glyphicon glyphicon-envelope"></i> -->
-                        <li><a href="#">修改景點</a></li>                                                                   <!--<i class="glyphicon glyphicon-home"></i>--> 
-                        <li><a href="#">刪除景點</a></li>                                                                  <!--<i class="glyphicon glyphicon-comment"></i> -->
-                        <li><a href="#">審核檢舉</a></li>                                                                <!--<i class="glyphicon glyphicon-user"></i>--> 
+                        <li><a href="#" name="action" ="insert">新增景點<span class="badge badge-info"></span></a></li>                           <!--<i class="glyphicon glyphicon-envelope"></i> -->
+                        <li><a href="#" name="action" value="update">修改景點</a></li>                                                                   <!--<i class="glyphicon glyphicon-home"></i>--> 
+                        <li><a href="#" name="action">刪除景點</a></li>                                                                  <!--<i class="glyphicon glyphicon-comment"></i> -->
+                        <li><a href="#" name="action">審核檢舉</a></li>                                                                <!--<i class="glyphicon glyphicon-user"></i>--> 
                         <!--<li><a href="#">Transactions</a></li>-->                                                              <!--<i class="glyphicon glyphicon-flag"></i> -->
                         <!--<li><a href="#">Rules</a></li>-->                                                             <!--<i class="glyphicon glyphicon-exclamation-sign"></i>-->    
                         <!--<li><a href="#">Logout</a></li>-->                                                                    <!--<i class="glyphicon glyphicon-off"></i>--> 
