@@ -37,8 +37,40 @@
   <body style="padding:71px;">
 <div class="s" id="${loginOk.memberId}"></div>  
 <div class="row">
-
-  <c:forEach var="sceneli" items="${li}">
+<!--   <div class="col-sm-6 col-md-3"> -->
+<!--     <div class="thumbnail"> -->
+<!--       <img data-src="holder.js/300x200" alt="..."> -->
+<!--       <div class="caption"> -->
+<!--         <h3>台北101</h3> -->
+<!--         <p>台北101是位於中華民國台灣臺北市信義區的摩天大樓，樓高509.2公尺，地上樓層共有101層、另有地下5層，總樓地板面積37萬4千平方公尺，由李祖原聯合建築師事務所設計、KTRT團隊建造，</p> -->
+<!--         <p> -->
+<!--            <button type="button" class="btn btn-primary btn-sm"> -->
+<!-- 		   <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span> 介紹 -->
+<!-- 		   </button> -->
+		   
+<!--            <button type="button" class="btn btn-success btn-sm"> -->
+<!-- 		   <span class="glyphicon glyphicon-star" aria-hidden="true"></span> 收藏 -->
+<!-- 		   </button> -->
+           
+<!--            <button class="btn btn-warning btn joinSchedule btn-sm"> -->
+<!--            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  行程 -->
+<!--            </button> -->
+         
+<!-- 		</p> -->
+<!--         <div class="ratings"> -->
+<!--            <p class="pull-right">15 reviews</p> -->
+<!--            <p> -->
+<!--            <span class="glyphicon glyphicon-star"></span> -->
+<!--            <span class="glyphicon glyphicon-star"></span> -->
+<!--            <span class="glyphicon glyphicon-star"></span> -->
+<!--            <span class="glyphicon glyphicon-star"></span> -->
+<!--            <span class="glyphicon glyphicon-star-empty"></span> -->
+<!--            </p> -->
+<!--         </div> -->
+<!--       </div> -->
+<!--     </div> -->
+<!--   </div> -->
+  <c:forEach var="sceneli" items="${listcity}">
    <div class="col-sm-6 col-md-3">
     <div class="thumbnail">
       <img style="width:300px;height:200px;" src="data:image/jpg;base64,${sceneli.scenePhoto}"/>
@@ -46,15 +78,15 @@
         <h3>${sceneli.sceneName}</h3>
         <p>${sceneli.sceneContent}</p>
         
-        <p><!-- 介紹 button -->
-           <button type="button" class="btn btn-primary btn-sm" value="${sceneli.sceneName}" onclick="location.href='<%=request.getContextPath()%>/SelectSceneContextServlet?sceneName=${sceneli.sceneName}'">
+        <p>
+           <button type="button" class="btn btn-primary btn-sm" value="${sceneli.sceneName}" onclick="self.location.href='<%=request.getContextPath()%>/SelectSceneContextServlet'">
 		   <span class="glyphicon glyphicon-align-left" aria-hidden="true" ></span> 介紹
 		   </button>
-		   <!-- 收藏 button -->
+		   
            <button type="button" value="${sceneli.sceneId}" class="btn btn-success btn-sm">
 		   <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> 收藏
 		   </button>
-           <!-- 行程  button-->
+           
            <button class="btn btn-warning btn joinSchedule btn-sm">
            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  行程
            </button>
@@ -70,13 +102,14 @@
 <!-- JavaScript Jquery Ajax非同步 addFavorite -->
 <script type="text/javascript">
 	$(function(){
-		//選當前button
+		//加入收藏
 		var btn;
 		$(":button").on("click",function(){
 			btn = $(this)
 		})//butten
-		//加入收藏
-		$(".btn-success").on("click",function(){				
+		
+		$(".btn-success").on("click",function(){	
+			
 			var mb = $(".s").attr("id");
 			alert(mb);
 			if (mb != null){
@@ -91,17 +124,8 @@
 				alert("請登入會員");
 			}//if
 		})//btn btn-success btn-sm
-			
-		//轉至景點介紹
-// 			$(".btn-primary").on("click",function(){
-// 				$.ajax({
-// 				"type":"get",
-<%-- 				"url":"<%=request.getContextPath()%>/SelectSceneContextServlet", --%>
-// 				"data":{"sceneName": $(this).val()},
-// 				"datatype":"text",
-// 				});
-
-// 			})	
+		
+				
 		
 	});//jquery
 
