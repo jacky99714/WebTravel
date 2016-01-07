@@ -73,7 +73,7 @@ window.onload = function(){
 
 window.onkeydown = function (e) {
     var code = e.keyCode ? e.keyCode : e.which;
-    if (code === 39){                                    //->
+    if (code === 88){                                    //x
         if(document.getElementById("userWalkBtn")){
             walk();	
         }   	
@@ -149,7 +149,7 @@ function getQuestion(){
 	if(xhr !== null){
 
     	xhr.addEventListener("readystatechange",callback);
-    	xhr.open("get","../GetQuestionServlet",true); 
+    	xhr.open("get","GetQuestionServlet",true); 
     	xhr.send();		      	
 	}else{
 		alert("您的瀏覽器不支援Ajax功能!!");
@@ -649,13 +649,14 @@ function reStart(){
     }
 
     content = document.createElement("div");
-    content.className = "noimgtext";
-    content.style.width = "550px";
+    content.className = "introduce";
     document.getElementById("photo2").src = "img/noChoose_f.png";
     var operation = "在某一天，天上突然降臨了一位魔王，由於他喜歡到處詢問根旅遊相關的問題，答不出來的人會被他殺害，使的村民苦不堪言，希望有勇者能除去魔王。";
-    operation = operation + "如果勇者能解決魔王，村民將會奉上優惠卷作為報答。<br/><br/>";
+    operation = operation + "如果勇者能解決魔王，村民將會奉上優惠卷作為報答。<br/>";
+    operation = operation + "遊戲操作說明:<br/>";
     operation = operation + "可以使用鍵盤或滑鼠操作，在魔王攻擊時，可耗損魔力使用金鍾罩抵擋。<br/>";
-    operation = operation + "鍵盤:r是重新開始，s是遊戲開始，->是走路，z是金鐘罩，c是選擇角色。<br/>";
+    operation = operation + "鍵盤:<br/>";
+    operation = operation + "R是重新開始，S是遊戲開始  X是尋找敵人，Z是金鐘罩，C是選擇角色。<br/>";
     operation = operation + "可使用數字1、2、3、4、enter鍵回答魔王所問的問題。";
     content.innerHTML = operation;	
     box.appendChild(content);
@@ -696,7 +697,7 @@ function reStart(){
         clearInterval(start);
         start = null;				
     }	
-    start = setInterval(choose,3000);
+    start = setInterval(choose,1000);
 }
 
 //user choose a character which he wants to use
@@ -715,6 +716,7 @@ function choose(){
     box.innerHTML = "";			
     photo = document.createElement("img");
     photo.src = "img/firzen_f.bmp";
+    photo.className = "photo";
     box.appendChild(photo);		
     content = document.createElement("div");
     content.className = "text";
@@ -724,15 +726,15 @@ function choose(){
     if(choice === 0){
         photo.src = "img/firzen_f.bmp";
         fig.src = "img/firzen_f.bmp";
-        content.innerHTML="冰火人，來自傳說中的冰火島，擁有絕技冰火兩重天，屬於平衡性的角色";
+        content.innerHTML="冰火人，來自傳說中的冰火島，擁有絕技冰火兩重天，屬於平衡性的角色。";
     }else if(choice === 1){
         photo.src = "img/firen_f.bmp";
         fig.src = "img/firen_f.bmp";
-        content.innerHTML="火人，來自傳說中的烈火島，擁有絕技火炎彈，屬於攻擊性的角色";
+        content.innerHTML="火人，來自傳說中的烈火島，擁有絕技火炎彈，屬於攻擊性的角色。";
     }else{
         photo.src = "img/freeze_f.bmp";
         fig.src = "img/freeze_f.bmp";
-        content.innerHTML="冰人，來自傳說中的寒冰島，擁有絕技急凍球，屬於防禦性的角色";
+        content.innerHTML="冰人，來自傳說中的寒冰島，擁有絕技急凍球，屬於防禦性的角色。";
     }
 
     if(!document.getElementById("select")){
@@ -767,7 +769,7 @@ function play(){
     }
 
     if(!document.getElementById("userWalkBtn")){
-            walkBtn = createInput("userWalkBtn","button","btn","noName","走路");
+            walkBtn = createInput("userWalkBtn","button","btn","noName","尋找敵人");
             allbtn.appendChild(walkBtn);
             walkBtn.addEventListener("click",function(){	
                     walk();

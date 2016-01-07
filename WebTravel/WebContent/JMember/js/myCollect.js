@@ -1,24 +1,56 @@
 
 
 $(function(){	
+	
+	$.ajax({
+		  'type':'get', //post、delete、put
+		  'url':'../GetJoinScheduleServlet',
+		  'dataType':'json',  //json、script、html
+		  'success':function(datas){
+			$.each(datas,function(index,data){
+					$("#s"+data.sceneId).removeClass("btn-warning")
+	  				.removeClass("joinSchedule")
+	  				.addClass("btn-info")
+	  				.addClass("active")
+	  				.addClass("removeSchedule")
+	  				.text("   已經加入行程");
+			$('<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>').prependTo($("#s"+data.sceneId));
+			})
+		  }
+	  });
+	
+	
+	
+	
+	
 	var ob ;
 	var joinSchedule;
 	$('.joinSchedule').on("click",function(){//加入行程
 		joinSchedule = $(this);
 		 $.ajax({
 			  'type':'get', //post、delete、put
+			  'async':true,
 			  'url':'../AddScheduleServlet',
 			  'dataType':'json',  //json、script、html
 			  'data':{"scene":$(this).val()},
 			  'success':function(data){
-
-				  joinSchedule.removeClass("btn-warning")
-				  				.removeClass("joinSchedule")
-				  				.addClass("btn-info")
-				  				.addClass("active")
-				  				.addClass("removeSchedule")
-				  				.text("   已經加入行程");
-				  $('<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>').prependTo(joinSchedule);
+				  if(data=="deletesuccess"){
+					  joinSchedule.removeClass("btn-info")
+					  .removeClass("active")
+					  .removeClass("removeSchedule")
+					  .addClass("btn-warning")
+					  .addClass("joinSchedule")
+					  .text("   加入行程");
+					  $('<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>').prependTo(joinSchedule);
+				  }else{
+					  joinSchedule.removeClass("btn-warning")
+					  .removeClass("joinSchedule")
+					  .addClass("btn-info")
+					  .addClass("active")
+					  .addClass("removeSchedule")
+					  .text("   已經加入行程");
+					  $('<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>').prependTo(joinSchedule);
+				  }
 //				  joinSchedule.text("以加入行程");
 			  }
 		 })

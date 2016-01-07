@@ -11,7 +11,7 @@
     <!-- Bootstrap -->
      
     <link href="<c:url value="/css/bootstrap.min.css"/>" rel="stylesheet">
-    <link href="css/datepicker.css" rel="stylesheet">
+    <link href="<c:url value="/JMember/css/datepicker.css"/>" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -226,10 +226,7 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
    
     <script src=" <c:url value="/js/bootstrap.min.js"/>"></script>
-    
-    	<script type="text/javascript" src="js/bootstrap-datepicker.js"></script>
-    
-    
-    <script type="text/javascript" src="js/MyMember.js"></script>
+    <script type="text/javascript" src="<c:url value="/JMember/js/bootstrap-datepicker.js"/>"></script>
+    <script type="text/javascript" src="<c:url value="/JMember/js/MyMember.js"/>"></script>
   </body>
 </html>

@@ -14,7 +14,7 @@
     <!-- Bootstrap -->
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link href="<c:url value="/css/bootstrap.min.css"/>" rel="stylesheet">
-    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="<c:url value="/JMember/css/magnific-popup.css"/>">
 	<script src="js/jquery.magnific-popup.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -63,7 +63,7 @@
 	  			<td>${scene.sceneContent}</td>
 	  			<td>${scene.timeStart}</td>
 	  			<td>${scene.timeEnd}</td>
-	  			<td><button value="${scene.sceneId}" class="btn btn-warning btn joinSchedule" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  加入行程</button>  <button value="${scene.sceneId}" class="btn btn-danger btn delete" data-toggle="modal" data-target=".bs-example-modal-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  刪除</button></td>
+	  			<td><button id="s${scene.sceneId}" value="${scene.sceneId}" class="btn btn-warning btn joinSchedule" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  加入行程</button>  <button value="${scene.sceneId}" class="btn btn-danger btn delete" data-toggle="modal" data-target=".bs-example-modal-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  刪除</button></td>
 <%-- 	  			<td>${scene.memberId}</td> --%>
   			</tr>
   			<%a++;%>
@@ -124,8 +124,8 @@
     
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src=" <c:url value="/js/bootstrap.min.js"/>"></script>
-    
-    <script type="text/javascript" src="js/myCollect.js"></script>
-    
+   
+    <script type="text/javascript" src=" <c:url value="/JMember/js/myCollect.js"/>"></script>
+    </script>
   </body>
 </html>
