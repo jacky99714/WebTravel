@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class setScheduleServlet
  */
-@WebServlet("/AddScheduleServlet")
+@WebServlet("/plan/AddScheduleServlet")
 public class AddScheduleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
