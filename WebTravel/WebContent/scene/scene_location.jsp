@@ -96,13 +96,13 @@
 		//加入行程
 		$(".btn-warning").on("click",function(){				
 			
-				$.ajax({
-					  "type":"get",
-					  "url":"<%=request.getContextPath()%>/plan/AddScheduleServlet",
-					  "data":{"sceneId": $(this).val()},
-					  "datatype":"text",
-					})
-				alert("加入成功");
+// 				$.ajax({
+// 					  "type":"get",
+<%-- 					  "url":"<%=request.getContextPath()%>/plan/AddScheduleServlet", --%>
+// 					  "data":{"sceneId": $(this).val()},
+// 					  "datatype":"text",
+// 					})
+// 				alert("加入成功");
 		
 				$.ajax({
 					  "type":"get",

@@ -79,9 +79,9 @@
                 <!-- 留言 Form -->
                 <div class="well">
                     <h4>留言:</h4>
-                    <form role="form" action="" method="post">
+                    <form role="form" action="<%=request.getContextPath()%>/SceneMessage?secneId=${namebean.sceneId}" method="post">
                         <div class="form-group">
-                            <textarea class="form-control" rows="3"></textarea>
+                            <textarea class="form-control" rows="3" name="message"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
