@@ -12,6 +12,9 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import model.bean.SceneBean;
+import other.bean.FavoriteBean;
+
 
 public class TypeConveter{
 	public static String EncodeBase64(byte[] src){
@@ -107,5 +110,20 @@ public class TypeConveter{
 		return result;		
 	}
 	
-	
+	public static FavoriteBean parseFavoriteBean(SceneBean bean){  
+		FavoriteBean fb = null;
+		if(bean != null){
+			fb = new FavoriteBean();
+			fb.setSceneId(bean.getSceneId());
+			fb.setLocation(bean.getLocation());
+			fb.setCity(bean.getCity());
+			fb.setSceneName(bean.getSceneName());
+			fb.setScenePhoto(TypeConveter.EncodeBase64(bean.getScenePhoto()));
+			fb.setSceneContent(bean.getSceneContent());
+			fb.setTimeStart(bean.getTimeStart());
+			fb.setTimeEnd(bean.getTimeEnd());
+			fb.setMemberId(bean.getMemberId());			
+		}
+		return fb;
+	}	
 }

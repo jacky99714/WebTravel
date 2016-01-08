@@ -25,7 +25,6 @@ public class SceneService {
 		}
 		return null;
 	}
-	
 	//搜尋景點
 	public FavoriteBean getName(String sceneName) {
 		if (sceneName != null) {
@@ -33,4 +32,30 @@ public class SceneService {
 		}
 		return null;
 	}
+	//新增景點
+	public SceneBean insertscene(SceneBean bean){
+		if (bean != null){
+			return sceneDao.insert(bean);			
+		}
+		return null;
+	}
+	//修改景點
+	public SceneBean updatescene(SceneBean bean){
+		if (bean != null){
+			return sceneDao.update(bean);			
+		}
+		return null;		
+	}
+	public boolean deletescene(int sceneId){
+		if(sceneId != 0){
+			return sceneDao.delete(sceneId);
+		}
+		return false;
+	}  
+
+	
+	
+	
+	
+	
 }

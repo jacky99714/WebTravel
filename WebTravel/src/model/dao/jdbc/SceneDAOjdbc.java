@@ -20,26 +20,29 @@ public class SceneDAOjdbc implements SceneDAO {
 
 	//select
 	private static final String SELECT_ALL = "select * from scene";
-	private static final String SELECT_BY_LOCATION = "select * from scene where location = ?";	
+	private static final String SELECT_BY_LOCATION = "select * from scene where location = ?";
+	private static final String SELECT_BY_SCENENAME= "select * from scene where sceneName = ?";
 	private static final String SELECT_BY_CITY = "select * from scene where city = ?";	
+	private static final String SELECT_BY_ID = "select * from scene where sceneID = ?";
 	//insert
 	private static final String INSERT = 
 			"insert into scene"
-		  + " (location,city,sceneName,scenePhoto,sceneContent,timeStart,timeEnd,MemberId) "
-		  + "values(?, ?, ?, ?, ?, ?,?,?)";
+		  + "(location,city,sceneName,scenePhoto,sceneContent,timeStart,timeEnd,MemberId)"
+		  + "values(?,?,?,?,?,?,?,?)";
 	//update
 	private static final String UPDATE = "update scene set location=?, city=?,"
-		  + "sceneName=?,scenePhoto=?, sceneContent=?, timeStart=?, timeEnd=?, MemberId=?";	
+		  + "sceneName=?,scenePhoto=?, sceneContent=?, timeStart=?, timeEnd=?, MemberId=? where sceneId=?";	
 	//delete
-	private static final String DELETE = "delete from scene where sceneName=?";
-	private Connection conn = null;
+	private static final String DELETE_NAME = "delete from scene where sceneName=?";
+	private static final String DELETE_ID ="delete from scene where sceneId=?";
+//	private Connection conn = null;
 	
 	@Override
 	public  List<SceneBean> select() {
 		List<SceneBean> list = null;
 		SceneBean sbean =null;
 		try (// AutoCloseable
-				Connection conn = JdbcConnection.getConnection();) {
+				 Connection conn = JdbcConnection.getConnection();) {//建立連線
 			
 			PreparedStatement ps = conn.prepareStatement(SELECT_ALL);
 			ResultSet rs = ps.executeQuery();
@@ -72,6 +75,7 @@ public class SceneDAOjdbc implements SceneDAO {
 		try (
 				Connection conn = DataSourceConnection.getConnection();
 			 ){
+
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_LOCATION);
 			ps.setString(1,location);
 			ResultSet rs = ps.executeQuery();
@@ -96,6 +100,8 @@ public class SceneDAOjdbc implements SceneDAO {
 		}
 		return null;
 	}
+	
+	
 	
 	@Override
 	public List<FavoriteBean> selectCity(String city) {
@@ -149,7 +155,7 @@ public class SceneDAOjdbc implements SceneDAO {
 	public SceneBean update(SceneBean bean){
 		SceneBean result = null;
 		try (// AutoCloseable
-				Connection cconn = JdbcConnection.getConnection();) {
+				Connection conn = JdbcConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			if(bean != null){
 			ps.setString(1, bean.getLocation());
@@ -160,6 +166,7 @@ public class SceneDAOjdbc implements SceneDAO {
 			ps.setString(6, bean.getTimeStart());
 			ps.setString(7, bean.getTimeEnd());
 			ps.setInt(8, bean.getMemberId());
+			ps.setInt(9, bean.getSceneId());
 					
 			int rs = ps.executeUpdate();
 			if (rs == 1){
@@ -176,11 +183,12 @@ public class SceneDAOjdbc implements SceneDAO {
 	/* (non-Javadoc)
 	 * @see model.dao.jdbc.SceneDAO#delete(java.lang.String)
 	 */
+	
 	@Override
 	public boolean delete(String sceneName) {
 		try (// AutoCloseable
 				Connection conn = JdbcConnection.getConnection();) {
-				PreparedStatement ps = conn.prepareStatement(DELETE);
+				PreparedStatement ps = conn.prepareStatement(DELETE_NAME);
 				
 				ps.setString(1, sceneName);
 									
@@ -194,8 +202,57 @@ public class SceneDAOjdbc implements SceneDAO {
 			}
 		return false;
 	}
+
 	
-	
+	@Override
+	public  SceneBean select(int sceneId) {
+		SceneBean sbean =null;
+		try (
+				Connection conn = JdbcConnection.getConnection();
+			 ){
+			PreparedStatement ps = conn.prepareStatement(SELECT_BY_ID);
+			ps.setInt(1, sceneId);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				sbean = new SceneBean();				
+				sbean.setSceneId(rs.getInt(1));
+				sbean.setLocation(rs.getString(2));
+				sbean.setCity(rs.getString(3));
+				sbean.setSceneName(rs.getString(4));
+				sbean.setScenePhoto(rs.getBytes(5));
+				sbean.setSceneContent(rs.getString(6));
+				sbean.setTimeStart(rs.getString(7));
+				sbean.setTimeEnd(rs.getString(8));
+				sbean.setMemberId(rs.getInt(9));	
+			}		
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}
+		return sbean;
+	}	
+
+		
+	@Override
+	public boolean delete(int sceneId) {
+		try (// AutoCloseable
+				Connection conn = JdbcConnection.getConnection();) {
+				PreparedStatement ps = conn.prepareStatement(DELETE_ID);
+				
+				ps.setInt(1, sceneId);
+									
+				int rs = ps.executeUpdate();
+				if (rs == 1){
+					return true;
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		return false;
+		
+	}
+
+
 	public static void main(String[] args){
 		SceneDAO test = new SceneDAOjdbc();
 //----------------------------------------------------------
@@ -208,20 +265,21 @@ public class SceneDAOjdbc implements SceneDAO {
 //----------------------------------------------------------
 		SceneBean sbean = new SceneBean();
 		sbean.setLocation("南區");
-		sbean.setCity("台南市xxx");
+		sbean.setCity("台北市市市市11111111111");
 		sbean.setSceneName("安平古堡");
 		sbean.setSceneContent("安平古堡XXXXXXX");
 		sbean.setTimeStart("09:00");
 		sbean.setTimeEnd("21:00");
-    	sbean.setMemberId(1);
-//		
+    	sbean.setMemberId(5);
+    	sbean.setSceneId(6);
+		
 //		System.out.println(test.insert(sbean)); // 新增資料
 //----------------------------------------------------------
 //		System.out.println(test.select("text123")); //單筆select （帳號）
 //----------------------------------------------------------
 //		System.out.println(test.update(sbean)); //修改
 //----------------------------------------------------------
-		System.out.println(test.delete("安平古堡"));//刪除
+		System.out.println(test.delete(5));//刪除
 //----------------------------------------------------------
 //		FileOutputStream fo = new FileOutputStream("/Users/mouse/Desktop/4.jpg");   //把圖片取出來放桌面 
 //		fo.write(m.select(2).getPhoto(), 0, t);
@@ -229,4 +287,6 @@ public class SceneDAOjdbc implements SceneDAO {
 //----------------------------------------------------------
 		
 	}
+
+
 }//class
