@@ -40,9 +40,11 @@ public class AddScheduleServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 
 			if(session.getAttribute("scheduleList") == null){
+				System.out.println("first create attribute scheduleList");
 				li.add(sceneId);
 				session.setAttribute("scheduleList",li);
 			}else{
+				System.out.println("all ready set attribute scheduleList");
 				li = (List<Integer>)session.getAttribute("scheduleList");
 				for(int key: li){
 					if(key == sceneId){

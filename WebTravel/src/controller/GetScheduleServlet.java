@@ -39,8 +39,11 @@ public class GetScheduleServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 	
 		List<Integer> li =  (List<Integer>)session.getAttribute("scheduleList");
+		System.out.println("liGetScheduleServlet");
+		System.out.println("li= "+li);
 		PlanService ps = new PlanService(); 
 		List<FavoriteBean> fav = ps.getSchedule(li);
+		System.out.println("li= "+fav);
 		PrintWriter out = response.getWriter();
 		out.print(TypeConveter.parseJSONArray(fav));		
 	}
