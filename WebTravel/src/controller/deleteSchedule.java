@@ -42,6 +42,10 @@ public class deleteSchedule extends HttpServlet {
 			int delete= Integer.parseInt(request.getParameter("deleteId"));
 			System.out.println("delete "+delete);
 			HttpSession session = request.getSession();
+			if(delete == -1){
+				session.removeAttribute("scheduleList");
+				session.removeAttribute("scheduleListFB");
+			}
 			List<SceneBean> scheduleList =  (List<SceneBean>)session.getAttribute("scheduleList");
 			List<FavoriteBean> li =  (List<FavoriteBean>)session.getAttribute("scheduleListFB");
 			if(scheduleList != null){

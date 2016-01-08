@@ -38,7 +38,7 @@ public class InsertScheduleServlet extends HttpServlet {
 		ps.insertSchedule(jsonArr);
 		HttpSession session = request.getSession();
 		session.removeAttribute("scheduleList");
-		session.removeAttribute("schedule");
+		session.removeAttribute("scheduleListFB");
 
 	}
 
