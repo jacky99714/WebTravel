@@ -47,15 +47,15 @@
         <p>${sceneli.sceneContent}</p>
         
         <p><!-- 介紹 button -->
-           <button type="button" class="btn btn-primary btn-sm" value="${sceneli.sceneName}" onclick="location.href='<%=request.getContextPath()%>/SelectSceneContextServlet?sceneName=${sceneli.sceneName}'">
+           <button  class="btn btn-primary btn-sm" value="${sceneli.sceneName}" onclick="location.href='<%=request.getContextPath()%>/SelectSceneContextServlet?sceneName=${sceneli.sceneName}'">
 		   <span class="glyphicon glyphicon-align-left" aria-hidden="true" ></span> 介紹
 		   </button>
 		   <!-- 收藏 button -->
-           <button type="button" value="${sceneli.sceneId}" class="btn btn-success btn-sm">
+           <button  value="${sceneli.sceneId}" class="btn btn-success btn-sm">
 		   <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> 收藏
 		   </button>
            <!-- 行程  button-->
-           <button class="btn btn-warning btn joinSchedule btn-sm">
+           <button class="btn btn-warning btn joinSchedule btn-sm" value="${sceneli.sceneId}">
            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  行程
            </button>
          
@@ -90,8 +90,23 @@
 			} else{
 				alert("請登入會員");
 			}//if
-		})//btn btn-success btn-sm
+		})//btn-success
 			
+		
+		//加入行程
+		$(".btn-warning").on("click",function(){				
+			
+				$.ajax({
+					  "type":"get",
+					  "url":"<%=request.getContextPath()%>/plan/AddScheduleServlet",
+					  "data":{"sceneId": $(this).val()},
+					  "datatype":"text",
+					})
+				alert("加入成功");
+		
+				
+			
+		})//btn-warning 
 		//轉至景點介紹
 // 			$(".btn-primary").on("click",function(){
 // 				$.ajax({
