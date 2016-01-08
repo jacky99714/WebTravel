@@ -40,7 +40,7 @@ public class PlanService {
 	 }
 
 	 public FavoriteBean getScene(int id){
-		 SceneBean bean ;
+		 SceneBean bean;
 		 bean = sceneDao.select(id);
 		 return TypeConveter.parseFavoriteBean(bean);
 	 }

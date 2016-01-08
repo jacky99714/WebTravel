@@ -39,7 +39,7 @@ public class GetScheduleServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
-		List<Integer> li =  (List<Integer>)session.getAttribute("scheduleList");
+		List<Integer> li =  (List<Integer>)session.getAttribute("schedule");
 		if(li != null){
 			System.out.println("liGetScheduleServlet");
 			System.out.println("li= "+li);
