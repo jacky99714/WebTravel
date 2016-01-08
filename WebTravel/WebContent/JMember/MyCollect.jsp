@@ -57,12 +57,12 @@
    			<tr>
 	  			<td>${scene.sceneId}</td>
 	  			<td><a href="data:image/png;base64,<%=TypeConveter.EncodeBase64(list.get(a).getScenePhoto())%>" class="image-popup-no-margins"><img class="imglist" src="data:image/png;base64,<%=TypeConveter.EncodeBase64(list.get(a).getScenePhoto())%>"/></a></td>
-	  			<td>${scene.location}</td>
+<%-- 	  			<td>${scene.location}</td> --%>
 	  			<td>${scene.city}</td>
 	  			<td>${scene.sceneName}</td>
-	  			<td>${scene.sceneContent}</td>
-	  			<td>${scene.timeStart}</td>
-	  			<td>${scene.timeEnd}</td>
+<%-- 	  			<td>${scene.sceneContent}</td> --%>
+<%-- 	  			<td>${scene.timeStart}</td> --%>
+<%-- 	  			<td>${scene.timeEnd}</td> --%>
 	  			<td><button id="s${scene.sceneId}" value="${scene.sceneId}" class="btn btn-warning btn joinSchedule" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  加入行程</button>  <button value="${scene.sceneId}" class="btn btn-danger btn delete" data-toggle="modal" data-target=".bs-example-modal-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  刪除</button></td>
 <%-- 	  			<td>${scene.memberId}</td> --%>
   			</tr>
