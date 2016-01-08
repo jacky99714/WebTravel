@@ -35,15 +35,35 @@ public class deleteSchedule extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
-	
-		int delete= Integer.parseInt(request.getParameter("deleteId"));
-		HttpSession session = request.getSession();
-		List<SceneBean> scheduleList =  (List<SceneBean>)session.getAttribute("scheduleList");
-		for(SceneBean bean:scheduleList){
-			if(bean.getSceneId() == delete){
-				scheduleList.remove(bean); 
+		
+		try{
+			int delete= Integer.parseInt(request.getParameter("deleteId"));
+			System.out.println("delete "+delete);
+			HttpSession session = request.getSession();
+			List<SceneBean> scheduleList =  (List<SceneBean>)session.getAttribute("scheduleList");
+			List<Integer> li =  (List<Integer>)session.getAttribute("schedule");
+			if(scheduleList != null){
+				for(SceneBean bean:scheduleList){
+					if(bean.getSceneId() == delete){
+						scheduleList.remove(bean); 
+					}
+				}				
 			}
+
+			if(li != null){
+				for(int i=0; i< li.size();i++){
+					if(li.get(i) == delete){
+						li.remove(i);
+						break;
+					}
+				}				
+			}
+
+			
+		}catch(NumberFormatException e){
+			System.out.println("it is not a number");
 		}
+
 		
 
 	}

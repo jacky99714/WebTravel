@@ -7,6 +7,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.json.JSONArray;
 import model.service.PlanService;
 
@@ -30,10 +32,13 @@ public class InsertScheduleServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-
+		
 		JSONArray jsonArr = new JSONArray(request.getParameter("json")); 
 		PlanService ps = new PlanService();
 		ps.insertSchedule(jsonArr);
+		HttpSession session = request.getSession();
+		session.removeAttribute("scheduleList");
+		session.removeAttribute("schedule");
 
 	}
 
