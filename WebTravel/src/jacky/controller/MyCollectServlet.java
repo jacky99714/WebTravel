@@ -33,6 +33,7 @@ public class MyCollectServlet extends HttpServlet {
 //		System.out.println("MyCollectServlet:"+mb);
 		if(mb!=null){
 			List<SceneBean> sceneList = memberService.getMemberCollectScene(mb.getMemberId());
+			sceneList=memberService.SubStirngCount(sceneList);
 //			System.out.println("MyCollectServlet:"+sceneList);
 			session.removeAttribute("sceneList");
 			session.setAttribute("sceneList", sceneList);
