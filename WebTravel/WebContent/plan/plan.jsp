@@ -92,107 +92,119 @@
              var img = ev.currentTarget;
              var sceneId = img.id.substring(3);
              if(!document.getElementById("img"+sceneId)){
+            	 addImg(sceneId);
             	 appendImg(img.src,sceneId,img.title);    
              }    	                    
          }
 ////////////////////////////////////////////////////////////////
   		function getFavorite(){
-	    	xhr = new XMLHttpRequest();
-	    	if(xhr !== null){	
-	    		xhr.addEventListener("readystatechange",callbackFavorite);
-	    		xhr.open("get","GetFavoriteServlet",true); 
-		    	xhr.send();	
+	    	xhrFavorite = new XMLHttpRequest();
+	    	if(xhrFavorite !== null){	
+	    		xhrFavorite.addEventListener("readystatechange",callbackFavorite);
+	    		xhrFavorite.open("get","GetFavoriteServlet",true); 
+		    	xhrFavorite.send();	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
 	    	}	
 		}
 		
 	    function callbackFavorite(){
-	    	if(xhr.readyState === 4){ 	
-	    		if(xhr.status === 200){
-			    	var data = JSON.parse(xhr.responseText);
+	    	if(xhrFavorite.readyState === 4){ 	
+	    		if(xhrFavorite.status === 200){
+			    	var data = JSON.parse(xhrFavorite.responseText);
 			    	createImgContent(data);
 	    		}else{
-	    			alert(xhr.status + ":" + xhr.statusText);
+	    			alert(xhrFavorite.status + ":" + xhrFavorite.statusText);
 	    		}    		
 	    	}  	
 	    }
 	    
   		function getSchedule(){
-	    	xhr = new XMLHttpRequest();
-	    	if(xhr !== null){	
-	    		xhr.addEventListener("readystatechange",callbackSchedule);
-	    		xhr.open("get","GetScheduleServlet",true); 
-		    	xhr.send();	
+	    	xhrSchedule = new XMLHttpRequest();
+	    	if(xhrSchedule !== null){	
+	    		xhrSchedule.addEventListener("readystatechange",callbackSchedule);
+	    		xhrSchedule.open("get","GetScheduleServlet",true); 
+		    	xhrSchedule.send();	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
 	    	}	
 		}
 
 	    function callbackSchedule(){
-	    	if(xhr.readyState === 4){ 	
-	    		if(xhr.status === 200){
-	    			alert("callbackSchedule");
-			    	var data = JSON.parse(xhr.responseText);
+	    	if(xhrSchedule.readyState === 4){ 	
+	    		if(xhrSchedule.status === 200){
+			    	var data = JSON.parse(xhrSchedule.responseText);
 			    	appendScheduleContent(data);
 	    		}else{
-	    			alert(xhr.status + ":" + xhr.statusText);
+	    			alert(xhrSchedule.status + ":" + xhrSchedule.statusText);
 	    		}    		
 	    	}  	
 	    }	
 	    
   
   		function getSearch(select){ 	
-	    	xhr = new XMLHttpRequest();
-	    	if(xhr !== null){ 	
-	    		xhr.addEventListener("readystatechange",callbackSearch);	  
-	    		xhr.open("get","GetSceneLocationServlet?location="+select,true); 	
-		    	xhr.send();	
+	    	xhrSearch = new XMLHttpRequest();
+	    	if(xhrSearch !== null){ 	
+	    		xhrSearch.addEventListener("readystatechange",callbackSearch);	  
+	    		xhrSearch.open("get","GetSceneLocationServlet?location="+select,true); 	
+		    	xhrSearch.send();	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
 	    	}
  		}
 
 	    function callbackSearch(){
-	    	if(xhr.readyState === 4){ 	
-	    		if(xhr.status === 200){
-			    	var data = JSON.parse(xhr.responseText);
+	    	if(xhrSearch.readyState === 4){ 	
+	    		if(xhrSearch.status === 200){
+			    	var data = JSON.parse(xhrSearch.responseText);
 			    	createImgContent(data);
 	    		}else{
-	    			alert(xhr.status + ":" + xhr.statusText);
+	    			alert(xhrSearch.status + ":" + xhrSearch.statusText);
 	    		}    		
 	    	}  	
 	    }
 	    
     
 	    function createSchedule(arrayObject){
-	    	xhr = new XMLHttpRequest();
-	    	if(xhr !== null){	    
-		    	xhr.addEventListener("readystatechange",callbackCreateSchedule);
-		    	xhr.open("post","InsertScheduleServlet",true); 
-		    	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		    	xhr.send("json="+arrayObject);		      	
+	    	xhrcreate = new XMLHttpRequest();
+	    	if(xhrcreate !== null){	    
+		    	xhrcreate.addEventListener("readystatechange",callbackCreateSchedule);
+		    	xhrcreate.open("post","InsertScheduleServlet",true); 
+		    	xhrcreate.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		    	xhrcreate.send("json="+arrayObject);		      	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
 	    	}	    	
 	    }
 	    
 	    function callbackCreateSchedule(){
-	    	if(xhr.readyState === 4){ 	
-	    		if(xhr.status === 200){
+	    	if(xhrcreate.readyState === 4){ 	
+	    		if(xhrcreate.status === 200){
 	    			alert("success insert");   
 	    		}else{
-	    			alert(xhr.status + ":" + xhr.statusText);
+	    			alert(xhrcreate.status + ":" + xhrcreate.statusText);
 	    		}    		
 	    	}  	
 	    }	    
+
+	    
+	    function addImg(sceneid){
+	    	xhradd = new XMLHttpRequest();
+	    	if(xhradd !== null){	    
+	    		xhradd.addEventListener("readystatechange",null);	  
+	    		xhradd.open("get","AddScheduleServlet?sceneId="+sceneid,true); 	
+		    	xhradd.send();		      	
+	    	}else{
+	    		alert("您的瀏覽器不支援Ajax功能!!");
+	    	}		    	
+	    }
 	    
 	    function deleteImg(sceneid){
-	    	xhr = new XMLHttpRequest();
-	    	if(xhr !== null){	    
-	    		xhr.addEventListener("readystatechange",null);	  
-	    		xhr.open("get","${pageContext.request.contextPath}/deleteSchedule?deleteId="+sceneid,true); 	
-		    	xhr.send();		      	
+	    	xhrdelete = new XMLHttpRequest();
+	    	if(xhrdelete !== null){	    
+	    		xhrdelete.addEventListener("readystatechange",null);	  
+	    		xhrdelete.open("get","deleteSchedule?deleteId="+sceneid,true); 	
+		    	xhrdelete.send();		      	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
 	    	}		    	
@@ -217,13 +229,14 @@
 		 } 
 		 
 		 function appendScheduleContent(data){  
-			 	table.innerHTML = "";
-			 	totalImage = 0;
-			 	alert("data.length: "+data.length);
-		    	for(var i=0; i < data.length;i++){     
-		    		var img = createImg('data:image/png;base64,'+data[i].scenePhoto,data[i].sceneId,data[i].sceneName);
-		    		appendImg(img.src,img.id,img.title);
-		    	}	
+		 	table.innerHTML = "";
+		 	totalImage = 0;
+		 	for(var i=0; i < data.length;i++){     
+	    		imgid =  data[i].sceneId;
+	    		imgsrc = 'data:image/png;base64,'+data[i].scenePhoto;
+	    		imgtitle = data[i].sceneName;
+	    		appendImg(imgsrc,imgid,imgtitle);
+	    	}	
 		 } 		 
          function createImg(imgsrc,sceneId,title){
              var img = new Image();
@@ -264,7 +277,6 @@
          }
                
          function appendImg(imgsrc,sceneId,title){
-      //  	 alert("total"+totalImage);
              if((maxLine * maxImg) === totalImage){
                  return;
              }

@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -37,12 +38,19 @@ public class GetScheduleServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		HttpSession session = request.getSession();
-	
-		List<Integer> li =  (List<Integer>)session.getAttribute("scheduleList");
-		PlanService ps = new PlanService(); 
-		List<FavoriteBean> fav = ps.getSchedule(li);
 		PrintWriter out = response.getWriter();
-		out.print(TypeConveter.parseJSONArray(fav));		
+		List<Integer> li =  (List<Integer>)session.getAttribute("scheduleList");
+		if(li != null){
+			System.out.println("liGetScheduleServlet");
+			System.out.println("li= "+li);
+			PlanService ps = new PlanService(); 
+			List<FavoriteBean> fav = ps.getSchedule(li);
+			System.out.println("li= "+fav);	
+			out.print(TypeConveter.parseJSONArray(fav));
+		}else{
+			li = new ArrayList<Integer>();
+			out.print(TypeConveter.parseJSONArray(li));
+		}
 	}
 
 	/**
