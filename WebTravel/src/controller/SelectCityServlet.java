@@ -24,7 +24,7 @@ public class SelectCityServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json; charset=UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
 		
 		//接收資料
 		String city = request.getParameter("city");
@@ -45,10 +45,10 @@ public class SelectCityServlet extends HttpServlet {
 		
 		//model
 		HttpSession session = request.getSession();
-		session.setAttribute("li", listcity);
+		session.setAttribute("listcity", listcity);
 		
 		//view
-		response.sendRedirect(request.getContextPath()+"/scene/scene_location.jsp");
+		response.sendRedirect(request.getContextPath()+"/scene/scene_city.jsp");
 	}
 
 	
