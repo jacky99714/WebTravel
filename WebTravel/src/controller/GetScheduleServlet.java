@@ -39,17 +39,11 @@ public class GetScheduleServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
-		List<Integer> li =  (List<Integer>)session.getAttribute("schedule");
+		List<FavoriteBean> li =  (List<FavoriteBean>)session.getAttribute("scheduleListFB");
 		if(li != null){
-			System.out.println("liGetScheduleServlet");
-			System.out.println("li= "+li);
-			PlanService ps = new PlanService(); 
-			List<FavoriteBean> fav = ps.getSchedule(li);
-			System.out.println("li= "+fav);	
-			out.print(TypeConveter.parseJSONArray(fav));
-		}else{
-			li = new ArrayList<Integer>();
 			out.print(TypeConveter.parseJSONArray(li));
+		}else{
+
 		}
 	}
 
