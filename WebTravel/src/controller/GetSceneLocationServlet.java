@@ -19,7 +19,7 @@ import other.bean.FavoriteBean;
 /**
  * Servlet implementation class GetSceneLocationServlet
  */
-@WebServlet("/GetSceneLocationServlet")
+@WebServlet("/plan/GetSceneLocationServlet")
 public class GetSceneLocationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

@@ -17,7 +17,7 @@ import model.util.TypeConveter;
 /**
  * Servlet implementation class deleteSchedule
  */
-@WebServlet("/deleteSchedule")
+@WebServlet("/plan/deleteSchedule")
 public class deleteSchedule extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
