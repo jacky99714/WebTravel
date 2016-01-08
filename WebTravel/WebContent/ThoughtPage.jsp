@@ -25,45 +25,34 @@
 <!--     我是內容---------------------------- -->
 	<div class="container">
 		
-			<div>
-				<label>類型:</label> 
-				<select name="add1" id="select">
-					<option value="餐廳">餐廳</option>
-					<option value="景點">景點</option>
-					<option value="綜合">綜合</option>
-				</select>
-				<button id="button1" class="btn btn-primary">Search</button>
-			</div>
+<!-- 			<div> -->
+<!-- 				<label>類型:</label>  -->
+<!-- 				<select name="add1" id="select"> -->
+<!-- 					<option value="餐廳">餐廳</option> -->
+<!-- 					<option value="景點">景點</option> -->
+<!-- 					<option value="綜合">綜合</option> -->
+<!-- 				</select> -->
+<!-- 				<button id="button1" class="btn btn-primary">Search</button> -->
+<!-- 			</div> -->
 		<div id="div1" class="row">
-<!-- 		<div class="row"> -->
-<%-- 			<c:forEach var="thoughtli" items="${li}"> --%>
-<!-- 				<div class="col-xs-6 col-md-3"> -->
-<!-- 					<div class="thumbnail"> -->
-					
-<!-- 					<a href="https://www.google.com.tw" class="thumbnail"><img src="img/Carousel01.jpg" -->
-<!-- 						alt="a"></a> -->
-<!-- 						<div class="caption"> -->
-<!-- 						<div> -->
-<%-- 							<h3>${thoughtli.thoughtName}</h3> --%>
-<!-- 						</div> -->
-<%-- 						<div >${thoughtli.thoughtContent}</div> --%>
-<!-- 					</div> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<%-- 			</c:forEach> --%>
-<!-- 		</div> -->
-<!-- 		</div> -->
-<c:forEach var="thoughtlist" items="${list}">
-		<div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <img src="img/Carousel01.jpg" alt="a">
-      <div class="caption">
-        <h3>${thoughtlist.thoughtName}</h3>
-        <p>${thoughtlist.thoughtContent}</p>
-      </div>
-    </div>
-  </div>
-  </c:forEach>
+			<div class="row">
+				<c:forEach var="thoughtlist" items="${list}">
+					<div class="col-xs-6 col-md-3">
+						<div class="thumbnail">
+
+							<a href="https://www.google.com.tw" class="thumbnail"><img
+								src="img/Carousel01.jpg" alt="a"></a>
+							<div class="caption">
+								<div>
+									<h3>${thoughtlist.thoughtName}</h3>
+								</div>
+								<div>${thoughtlist.thoughtSubtitle}</div>
+							</div>
+						</div>
+					</div>
+				</c:forEach>
+			</div>
+		</div>
 	</div>
 	<!--  -->
 
@@ -82,61 +71,63 @@
 <!--     <script type="text/javascript" src="http://masonry.desandro.com/jquery.masonry.min.js"></script> -->
     
     <script type="text/javascript">
-	    var btn = document.getElementById("button1");
-		btn.addEventListener("click",getType);
-    	function getType() {
-			var select = document.getElementById("select").value;
-			xhr = new XMLHttpRequest();
-			if (xhr !== null) {
-				xhr.addEventListener("readystatechange",callbackType);
-				xhr.open("get", "DisplayThoughtServlet?thoughtType="+ select, true);
-				xhr.send();
-			} else {
-				alert("您的瀏覽器不支援Ajax功能!!");
-			}
-		}
+// 	    var btn = document.getElementById("button1");
+// 		btn.addEventListener("click",getType);
+//     	function getThought(select) {
+// // 			var select = document.getElementById("select").value;
+// 			xhr = new XMLHttpRequest();
+// 			if (xhr !== null) {
+// 				xhr.addEventListener("readystatechange",callbackType);
+// 				xhr.open("get", "DisplayThoughtServlet?thought="+ select, true);
+// 				xhr.send();
+// 			} else {
+// 				alert("您的瀏覽器不支援Ajax功能!!");
+// 			}
+// 		}
 	
-		function callbackType() {
-			if (xhr.readyState === 4) {
-				if (xhr.status === 200) {
-					var data = JSON.parse(xhr.responseText);
-					var myDiv = document.getElementById("div1");
-					while(myDiv.hasChildNodes()){
-						myDiv.removeChild(myDiv.lastChild);
-					}
-					for (var i=0;i<data.length;i++){
-						console.log(data[i].thoughtId);
-						console.log(data[i].thoughtName);
-						console.log(data[i].thoughtContent);
-						console.log(data[i].memberId);
-	// 					alert(data[0]);
-	// 					console.log(data);
+// 		function callbackType() {
+// 			if (xhr.readyState === 4) {
+// 				if (xhr.status === 200) {
+// 					var data = JSON.parse(xhr.responseText);
+// 					var myDiv = document.getElementById("div1");
+// 					while(myDiv.hasChildNodes()){
+// 						myDiv.removeChild(myDiv.lastChild);
+// 					}
+// 					for (var i=0;i<data.length;i++){
+// 						console.log(data[i].thoughtId);
+// 						console.log(data[i].thoughtName);
+// 						console.log(data[i].thoughtSubtitle);
+// 						console.log(data[i].thoughtContent);
+// 						console.log(data[i].thoughtTime);
+// 						console.log(data[i].memberId);
+// 	// 					alert(data[0]);
+// 	// 					console.log(data);
 						
-						var name = data[i].thoughtName;
-						var content = data[i].thoughtContent;
+// 						var name = data[i].thoughtName;
+// 						var content = data[i].thoughtSubtitle;
 						
-						//抓出心得名稱
-						var div2 = document.createElement("div");
-						div2.className="col-md-4";
-						var title = document.createElement("h3");
-						var txtH3 = document.createTextNode(name);
-						title.appendChild(txtH3);
-						div2.appendChild(title);
-						myDiv.appendChild(div2);
+// 						//抓出心得名稱
+// 						var div2 = document.createElement("div");
+// 						div2.className="col-md-4";
+// 						var title = document.createElement("h3");
+// 						var txtH3 = document.createTextNode(name);
+// 						title.appendChild(txtH3);
+// 						div2.appendChild(title);
+// 						myDiv.appendChild(div2);
 						
-						//抓出心得內容
-						var contents = document.createElement("p");
-						contents.className="col-md-8";
-						contents.innerHTML = content;
-						div2.appendChild(contents);
-	// 					myDiv.innerHTML=data[i].thoughtContent;
-					}
-// 			    		myDiv.innerHTML = "<h3>" + data + "</h3>";
-				}else {
-					alert(xhr.status + ":" + xhr.statusText);
-				}
-			}
-		}
+// 						//抓出心得內容
+// 						var contents = document.createElement("p");
+// 						contents.className="col-md-8";
+// 						contents.innerHTML = content;
+// 						div2.appendChild(contents);
+// 	// 					myDiv.innerHTML=data[i].thoughtContent;
+// 					}
+// // 			    		myDiv.innerHTML = "<h3>" + data + "</h3>";
+// 				}else {
+// 					alert(xhr.status + ":" + xhr.statusText);
+// 				}
+// 			}
+// 		}
 // 		$(function(){
 // 			$('#div1').imagesLoaded(function () {
 // 		        $('#div1').masonry({        

@@ -42,27 +42,33 @@ public class deleteSchedule extends HttpServlet {
 			int delete= Integer.parseInt(request.getParameter("deleteId"));
 			System.out.println("delete "+delete);
 			HttpSession session = request.getSession();
-			List<SceneBean> scheduleList =  (List<SceneBean>)session.getAttribute("scheduleList");
-			List<FavoriteBean> li =  (List<FavoriteBean>)session.getAttribute("scheduleListFB");
-			if(scheduleList != null){
-			     for (Iterator it = scheduleList.iterator();it.hasNext();){    //reparations为Collection  
-			    	 SceneBean bean = (SceneBean)it.next();  
-			         if (bean.getSceneId() == delete){  
-			        	 it.remove();
-			        	 break;
-			         }  
-			     }  				
+			if(delete == -1){
+				session.removeAttribute("scheduleList");
+				session.removeAttribute("scheduleListFB");
+			}else{
+				List<SceneBean> scheduleList =  (List<SceneBean>)session.getAttribute("scheduleList");
+				List<FavoriteBean> li =  (List<FavoriteBean>)session.getAttribute("scheduleListFB");
+				if(scheduleList != null){
+				     for (Iterator it = scheduleList.iterator();it.hasNext();){    //reparations为Collection  
+				    	 SceneBean bean = (SceneBean)it.next();  
+				         if (bean.getSceneId() == delete){  
+				        	 it.remove();
+				        	 break;
+				         }  
+				     }  				
+				}
+
+				if(li != null){
+				     for (Iterator it = li.iterator();it.hasNext();){    //reparations为Collection  
+				    	 FavoriteBean bean = (FavoriteBean)it.next();  
+				         if (bean.getSceneId() == delete){  
+				        	 it.remove();
+				        	 break;
+				         }  
+				     }  				
+				}				
 			}
 
-			if(li != null){
-			     for (Iterator it = li.iterator();it.hasNext();){    //reparations为Collection  
-			    	 FavoriteBean bean = (FavoriteBean)it.next();  
-			         if (bean.getSceneId() == delete){  
-			        	 it.remove();
-			        	 break;
-			         }  
-			     }  				
-			}
 
 			
 		}catch(NumberFormatException e){

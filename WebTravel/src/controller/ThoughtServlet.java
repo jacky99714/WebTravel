@@ -15,6 +15,7 @@ import model.bean.MemberBean;
 import model.bean.ThoughtBean;
 import model.dao.ThoughtDAO;
 import model.dao.jndi.ThoughtDAOjndi;
+import model.service.ThoughtService;
 import model.util.TypeConveter;
 
 @WebServlet("/ThoughtServlet")
@@ -28,7 +29,7 @@ public class ThoughtServlet extends HttpServlet {
 		// 接收資料
 //		String temp1 = request.getParameter("thoughtID");
 		String temp2 = request.getParameter("thoughtName");
-		String temp3 = request.getParameter("thoughtType");
+		String temp3 = request.getParameter("thoughtSubtitle");
 		String temp4 = request.getParameter("thoughtContent");
 //		MemberBean mb = (MemberBean)session.getAttribute("loginOk");
 //		int temp5 = mb.getMemberId();
@@ -44,7 +45,7 @@ public class ThoughtServlet extends HttpServlet {
 			errors.put("thoughtName", "請輸入心得名稱");
 		}
 		if(temp3 == null || temp3.trim().length()==0){
-			errors.put("thoughtType", "請選擇種類");
+			errors.put("thoughtSubtitle", "請輸入標題");
 		}
 		if(temp4 == null || temp4.trim().length()==0){
 			errors.put("thoughtContent", "請輸入內容");
@@ -60,31 +61,31 @@ public class ThoughtServlet extends HttpServlet {
 		//轉換資料
 		
 		//model
-		ThoughtDAO thoughtDao = new ThoughtDAOjndi();
+//		ThoughtDAO thoughtDao = new ThoughtDAOjndi();
 		ThoughtBean bean = new ThoughtBean();
-		
+		ThoughtService ts = new ThoughtService();
 //		int temp5 = mb.getMemberId();
 //		String content = ("<span>"+temp4+"</span>");
 		bean.setThoughtId(1);
 		bean.setThoughtName(temp2);
-		bean.setThoughtType(temp3);
+		bean.setThoughtSubtitle(temp3);
 		//bean.setThoughtContent(TypeConveter.EncodeStringBase64(temp4));
 		bean.setThoughtContent(temp4);
 		bean.setMemberId(1);
 //		bean.setMemberId(temp5);
-		ThoughtBean inbean = thoughtDao.insert(bean);
-		ThoughtBean b=thoughtDao.select(inbean.getThoughtId());
+		ThoughtBean inbean = ts.insert(bean);
+//		ThoughtBean b=thoughtDao.select(inbean.getThoughtId());
 		System.out.println("insert"+inbean);
-		System.out.println("select"+b);
+//		System.out.println("select"+b);
 		
 		//model執行結果，View
 		if(inbean != null){
-			//System.out.println("AAABBB");
 			session.setAttribute("thought",inbean );
 			String path = request.getContextPath();
 			response.sendRedirect(path+"/index.jsp");
 //			response.sendRedirect("index.jsp");
 //			request.getRequestDispatcher("game.jsp").forward(request, response);
+			System.out.println("AAABBB");
 		}else{
 			request.getRequestDispatcher("/Thought.jsp").forward(request, response);
 		}

@@ -8,7 +8,7 @@ public interface ThoughtDAO {
 
 	List<ThoughtBean> select();
 
-	List<ThoughtBean> select(String thoughtType);
+	List<ThoughtBean> select(String thoughtName);
 	
 	ThoughtBean select(int thoughtId);
 

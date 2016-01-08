@@ -64,6 +64,7 @@ public class PlanService {
 		 for(int i = 0; i < jsonArr.length();i++){
 			contentBean[i] = new ScheduleContentBean();
 			JSONObject jsonObj =  jsonArr.getJSONObject(i);
+			//System.out.println("jsonObj.getString" +jsonObj.getString("sceneId"));
 			contentBean[i].setSceneId(jsonObj.getInt("sceneId"));
 			contentBean[i].setScheduleId(scheduleId);
 			contentBean[i].setScheduleOrder(jsonObj.getInt("scheduleOrder"));

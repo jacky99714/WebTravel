@@ -1,6 +1,8 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -171,6 +173,7 @@
 		    	xhrcreate.addEventListener("readystatechange",callbackCreateSchedule);
 		    	xhrcreate.open("post","InsertScheduleServlet",true); 
 		    	xhrcreate.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		    		
 		    	xhrcreate.send("json="+arrayObject);		      	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
@@ -180,11 +183,17 @@
 	    function callbackCreateSchedule(){
 	    	if(xhrcreate.readyState === 4){ 	
 	    		if(xhrcreate.status === 200){
-	    			alert("success insert");   
+	    			document.getElementById("insert").innerHTML = "資料新增成功";
+	    		 	table.innerHTML = "";
+	    		 	totalImage = 0;
+	    		 	setTimeout(function (){
+	    		 		document.getElementById("insert").innerHTML = "";
+	    		 	}, 2000);
+	    		
 	    		}else{
 	    			alert(xhrcreate.status + ":" + xhrcreate.statusText);
 	    		}    		
-	    	}  	
+	    	}  
 	    }	    
 
 	    
@@ -192,7 +201,7 @@
 	    	xhradd = new XMLHttpRequest();
 	    	if(xhradd !== null){	    
 	    		xhradd.addEventListener("readystatechange",null);	  
-	    		xhradd.open("get","AddScheduleServlet?sceneId="+sceneid,true); 	
+	    		xhradd.open("get","${pageContext.servletContext.contextPath}/AddScheduleServlet?scene="+sceneid,true); 	
 		    	xhradd.send();		      	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
@@ -254,6 +263,7 @@
 
          function createLine(){
         	 var img = new Image();
+ 			 img.value = "line";
         	 img.src = "img/forward.png";
         	 img.className = "img";
              return img;
@@ -315,9 +325,9 @@
             	var td = document.getElementsByTagName("td");
             	var num = 0;
             	for (var i = 0; i < td.length;i++){
-            		if(i % 2 == 0){
-            			var img = td[i].firstElementChild;
-            			scheduleArray[num] = new schedule(${loginOk.memberId},text,num+1,img.id.substring(3));
+            		var img = td[i].firstElementChild;
+            		if(img.value !== "line"){           
+            			scheduleArray[num] = new schedule(${loginOk.memberId},text,num+1,img.id.substring(3));        
             			num++;
             			//${loginOk.memberId}
             		}
@@ -344,6 +354,12 @@
             });
             document.getElementById("東區").addEventListener("click", function(){
             	getSearch("東區");
+            });       
+            
+            document.getElementById("reset").addEventListener("click", function(){
+            	table.innerHTML = "";
+            	totalImage = 0;
+            	deleteImg(-1);        	
             });            
 
    
@@ -355,15 +371,16 @@
 <body style="padding:71px;">
 	<jsp:include page="/WEB-INF/top/top.jsp"></jsp:include>
     <div class="container-fluid">
-   		<div class="row">
-	  		
+   		<div class="row">	
 			<input id="scheduleName" type="text" placeholder="行程名稱"/>
-			<button id="sure">行程確認</button>    		
+			<button id="sure">行程確認</button>  
+			<span id="insert"></span>  		
    		</div>
    		<hr/>
 	    <div class="row">	
 	  		<div class="col-md-8">
 				<img id="garbage" class ="imgicon" src="img/garbage.png"  ondrop="drop(event)" ondragover="allowDrop(event)"/>	
+				<img id="reset" class ="imgicon" src="img/reset.png" />	
 				<table id="tab">
 				</table>   		
 	  		</div>

@@ -32,13 +32,16 @@ public class InsertScheduleServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		
+		System.out.println("FFFFFFFFinsert----");
+	
 		JSONArray jsonArr = new JSONArray(request.getParameter("json")); 
+		
+		System.out.println("insert----");
 		PlanService ps = new PlanService();
 		ps.insertSchedule(jsonArr);
 		HttpSession session = request.getSession();
 		session.removeAttribute("scheduleList");
-		session.removeAttribute("schedule");
+		session.removeAttribute("scheduleListFB");
 
 	}
 
