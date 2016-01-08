@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import model.bean.SceneBean;
 import model.util.TypeConveter;
+import other.bean.FavoriteBean;
 
 /**
  * Servlet implementation class deleteSchedule
@@ -41,22 +43,25 @@ public class deleteSchedule extends HttpServlet {
 			System.out.println("delete "+delete);
 			HttpSession session = request.getSession();
 			List<SceneBean> scheduleList =  (List<SceneBean>)session.getAttribute("scheduleList");
-			List<Integer> li =  (List<Integer>)session.getAttribute("schedule");
+			List<FavoriteBean> li =  (List<FavoriteBean>)session.getAttribute("scheduleListFB");
 			if(scheduleList != null){
-				for(SceneBean bean:scheduleList){
-					if(bean.getSceneId() == delete){
-						scheduleList.remove(bean); 
-					}
-				}				
+			     for (Iterator it = scheduleList.iterator();it.hasNext();){    //reparations为Collection  
+			    	 SceneBean bean = (SceneBean)it.next();  
+			         if (bean.getSceneId() == delete){  
+			        	 it.remove();
+			        	 break;
+			         }  
+			     }  				
 			}
 
 			if(li != null){
-				for(int i=0; i< li.size();i++){
-					if(li.get(i) == delete){
-						li.remove(i);
-						break;
-					}
-				}				
+			     for (Iterator it = li.iterator();it.hasNext();){    //reparations为Collection  
+			    	 FavoriteBean bean = (FavoriteBean)it.next();  
+			         if (bean.getSceneId() == delete){  
+			        	 it.remove();
+			        	 break;
+			         }  
+			     }  				
 			}
 
 			
