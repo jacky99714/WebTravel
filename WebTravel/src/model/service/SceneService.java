@@ -14,6 +14,10 @@ public class SceneService {
 	//搜尋區域
 	public List<FavoriteBean> getLocation(String location) {
 		if (location != null) {
+			
+			List<FavoriteBean> lilo = sceneDao.select(location);
+			FavoriteBean fbean = new FavoriteBean();
+			
 			return sceneDao.select(location);
 		}
 		return null;

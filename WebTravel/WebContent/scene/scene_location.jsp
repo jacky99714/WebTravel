@@ -104,7 +104,12 @@
 					})
 				alert("加入成功");
 		
-				
+				$.ajax({
+					  "type":"get",
+					  "url":"<%=request.getContextPath()%>/AddScheduleServlet",
+					  "data":{"scene": $(this).val()},
+					 
+					})
 			
 		})//btn-warning 
 		//轉至景點介紹
