@@ -18,6 +18,7 @@ public class SceneService {
 			List<FavoriteBean> lilo = sceneDao.select(location);
 			FavoriteBean fbean = new FavoriteBean();
 			
+			
 			return sceneDao.select(location);
 		}
 		return null;
