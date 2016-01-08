@@ -173,6 +173,7 @@
 		    	xhrcreate.addEventListener("readystatechange",callbackCreateSchedule);
 		    	xhrcreate.open("post","InsertScheduleServlet",true); 
 		    	xhrcreate.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		    		
 		    	xhrcreate.send("json="+arrayObject);		      	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
@@ -262,6 +263,7 @@
 
          function createLine(){
         	 var img = new Image();
+ 			 img.value = "line";
         	 img.src = "img/forward.png";
         	 img.className = "img";
              return img;
@@ -323,9 +325,9 @@
             	var td = document.getElementsByTagName("td");
             	var num = 0;
             	for (var i = 0; i < td.length;i++){
-            		if(i % 2 == 0){
-            			var img = td[i].firstElementChild;
-            			scheduleArray[num] = new schedule(${loginOk.memberId},text,num+1,img.id.substring(3));
+            		var img = td[i].firstElementChild;
+            		if(img.value !== "line"){           
+            			scheduleArray[num] = new schedule(${loginOk.memberId},text,num+1,img.id.substring(3));        
             			num++;
             			//${loginOk.memberId}
             		}

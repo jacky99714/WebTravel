@@ -43,7 +43,7 @@ public class GetScheduleServlet extends HttpServlet {
 		if(li != null){
 			out.print(TypeConveter.parseJSONArray(li));
 		}else{
-
+			System.out.println("no favorite");
 		}
 	}
 
