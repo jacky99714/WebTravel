@@ -100,7 +100,7 @@
 	    	xhr = new XMLHttpRequest();
 	    	if(xhr !== null){	
 	    		xhr.addEventListener("readystatechange",callbackFavorite);
-	    		xhr.open("get","${pageContext.request.contextPath}/GetFavoriteServlet",true); 
+	    		xhr.open("get","GetFavoriteServlet",true); 
 		    	xhr.send();	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
@@ -121,9 +121,8 @@
   		function getSchedule(){
 	    	xhr = new XMLHttpRequest();
 	    	if(xhr !== null){	
-	    		alert("getSchedule()");
 	    		xhr.addEventListener("readystatechange",callbackSchedule);
-	    		xhr.open("get","${pageContext.request.contextPath}/GetScheduleServlet",true); 
+	    		xhr.open("get","GetScheduleServlet",true); 
 		    	xhr.send();	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
@@ -147,7 +146,7 @@
 	    	xhr = new XMLHttpRequest();
 	    	if(xhr !== null){ 	
 	    		xhr.addEventListener("readystatechange",callbackSearch);	  
-	    		xhr.open("get","${pageContext.request.contextPath}/GetSceneLocationServlet?location="+select,true); 	
+	    		xhr.open("get","GetSceneLocationServlet?location="+select,true); 	
 		    	xhr.send();	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
@@ -170,7 +169,7 @@
 	    	xhr = new XMLHttpRequest();
 	    	if(xhr !== null){	    
 		    	xhr.addEventListener("readystatechange",callbackCreateSchedule);
-		    	xhr.open("post","${pageContext.request.contextPath}/InsertScheduleServlet",true); 
+		    	xhr.open("post","InsertScheduleServlet",true); 
 		    	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		    	xhr.send("json="+arrayObject);		      	
 	    	}else{

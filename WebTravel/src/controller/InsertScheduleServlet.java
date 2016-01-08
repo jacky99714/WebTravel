@@ -13,7 +13,7 @@ import model.service.PlanService;
 /**
  * Servlet implementation class TestServlet
  */
-@WebServlet("/InsertScheduleServlet")
+@WebServlet("/plan/InsertScheduleServlet")
 public class InsertScheduleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

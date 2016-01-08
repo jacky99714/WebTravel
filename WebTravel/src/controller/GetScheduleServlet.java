@@ -18,7 +18,7 @@ import other.bean.FavoriteBean;
 /**
  * Servlet implementation class PlanServlet
  */
-@WebServlet("/GetScheduleServlet")
+@WebServlet("/plan/GetScheduleServlet")
 public class GetScheduleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
