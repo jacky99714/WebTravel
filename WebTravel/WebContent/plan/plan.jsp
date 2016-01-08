@@ -317,7 +317,7 @@
             	for (var i = 0; i < td.length;i++){
             		if(i % 2 == 0){
             			var img = td[i].firstElementChild;
-            			scheduleArray[num] = new schedule(${loginOk.memberId},text,num+1,img.id.substring(2));
+            			scheduleArray[num] = new schedule(${loginOk.memberId},text,num+1,img.id.substring(3));
             			num++;
             			//${loginOk.memberId}
             		}
