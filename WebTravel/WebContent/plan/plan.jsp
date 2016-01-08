@@ -204,6 +204,7 @@
 	    	if(xhrdelete !== null){	    
 	    		xhrdelete.addEventListener("readystatechange",null);	  
 	    		xhrdelete.open("get","deleteSchedule?deleteId="+sceneid,true); 	
+	    		alert("deleteImg "+sceneid);
 		    	xhrdelete.send();		      	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
