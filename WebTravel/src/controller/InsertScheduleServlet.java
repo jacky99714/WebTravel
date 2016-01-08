@@ -7,13 +7,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.json.JSONArray;
 import model.service.PlanService;
 
 /**
  * Servlet implementation class TestServlet
  */
-@WebServlet("/InsertScheduleServlet")
+@WebServlet("/plan/InsertScheduleServlet")
 public class InsertScheduleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -30,10 +32,16 @@ public class InsertScheduleServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-
+		System.out.println("FFFFFFFFinsert----");
+	
 		JSONArray jsonArr = new JSONArray(request.getParameter("json")); 
+		
+		System.out.println("insert----");
 		PlanService ps = new PlanService();
 		ps.insertSchedule(jsonArr);
+		HttpSession session = request.getSession();
+		session.removeAttribute("scheduleList");
+		session.removeAttribute("scheduleListFB");
 
 	}
 

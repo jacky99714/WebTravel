@@ -22,7 +22,7 @@ import other.bean.FavoriteBean;
 /**
  * Servlet implementation class PlanServlet
  */
-@WebServlet("/GetFavoriteServlet")
+@WebServlet("/plan/GetFavoriteServlet")
 public class GetFavoriteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

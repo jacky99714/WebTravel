@@ -171,6 +171,7 @@ public class SceneDAOjndi implements SceneDAO {
 		/* (non-Javadoc)
 		 * @see model.dao.jdbc.SceneDAO#select(java.lang.String)
 		 */
+	@Override
 	public  SceneBean select(int sceneId) {
 		SceneBean sbean =null;
 		try (
@@ -194,7 +195,6 @@ public class SceneDAOjndi implements SceneDAO {
 		} catch (SQLException e) {			
 			e.printStackTrace();
 		}
-	
 		return sbean;
 	}
 	

@@ -1,6 +1,8 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -92,108 +94,127 @@
              var img = ev.currentTarget;
              var sceneId = img.id.substring(3);
              if(!document.getElementById("img"+sceneId)){
+            	 addImg(sceneId);
             	 appendImg(img.src,sceneId,img.title);    
              }    	                    
          }
 ////////////////////////////////////////////////////////////////
   		function getFavorite(){
-	    	xhr = new XMLHttpRequest();
-	    	if(xhr !== null){	
-	    		xhr.addEventListener("readystatechange",callbackFavorite);
-	    		xhr.open("get","${pageContext.request.contextPath}/GetFavoriteServlet",true); 
-		    	xhr.send();	
+	    	xhrFavorite = new XMLHttpRequest();
+	    	if(xhrFavorite !== null){	
+	    		xhrFavorite.addEventListener("readystatechange",callbackFavorite);
+	    		xhrFavorite.open("get","GetFavoriteServlet",true); 
+		    	xhrFavorite.send();	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
 	    	}	
 		}
 		
 	    function callbackFavorite(){
-	    	if(xhr.readyState === 4){ 	
-	    		if(xhr.status === 200){
-			    	var data = JSON.parse(xhr.responseText);
+	    	if(xhrFavorite.readyState === 4){ 	
+	    		if(xhrFavorite.status === 200){
+			    	var data = JSON.parse(xhrFavorite.responseText);
 			    	createImgContent(data);
 	    		}else{
-	    			alert(xhr.status + ":" + xhr.statusText);
+	    			alert(xhrFavorite.status + ":" + xhrFavorite.statusText);
 	    		}    		
 	    	}  	
 	    }
 	    
   		function getSchedule(){
-	    	xhr = new XMLHttpRequest();
-	    	if(xhr !== null){	
-	    		alert("getSchedule()");
-	    		xhr.addEventListener("readystatechange",callbackSchedule);
-	    		xhr.open("get","${pageContext.request.contextPath}/GetScheduleServlet",true); 
-		    	xhr.send();	
+	    	xhrSchedule = new XMLHttpRequest();
+	    	if(xhrSchedule !== null){	
+	    		xhrSchedule.addEventListener("readystatechange",callbackSchedule);
+	    		xhrSchedule.open("get","GetScheduleServlet",true); 
+		    	xhrSchedule.send();	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
 	    	}	
 		}
 
 	    function callbackSchedule(){
-	    	if(xhr.readyState === 4){ 	
-	    		if(xhr.status === 200){
-	    			alert("callbackSchedule");
-			    	var data = JSON.parse(xhr.responseText);
+	    	if(xhrSchedule.readyState === 4){ 	
+	    		if(xhrSchedule.status === 200){
+			    	var data = JSON.parse(xhrSchedule.responseText);
 			    	appendScheduleContent(data);
 	    		}else{
-	    			alert(xhr.status + ":" + xhr.statusText);
+	    			alert(xhrSchedule.status + ":" + xhrSchedule.statusText);
 	    		}    		
 	    	}  	
 	    }	
 	    
   
   		function getSearch(select){ 	
-	    	xhr = new XMLHttpRequest();
-	    	if(xhr !== null){ 	
-	    		xhr.addEventListener("readystatechange",callbackSearch);	  
-	    		xhr.open("get","${pageContext.request.contextPath}/GetSceneLocationServlet?location="+select,true); 	
-		    	xhr.send();	
+	    	xhrSearch = new XMLHttpRequest();
+	    	if(xhrSearch !== null){ 	
+	    		xhrSearch.addEventListener("readystatechange",callbackSearch);	  
+	    		xhrSearch.open("get","GetSceneLocationServlet?location="+select,true); 	
+		    	xhrSearch.send();	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
 	    	}
  		}
 
 	    function callbackSearch(){
-	    	if(xhr.readyState === 4){ 	
-	    		if(xhr.status === 200){
-			    	var data = JSON.parse(xhr.responseText);
+	    	if(xhrSearch.readyState === 4){ 	
+	    		if(xhrSearch.status === 200){
+			    	var data = JSON.parse(xhrSearch.responseText);
 			    	createImgContent(data);
 	    		}else{
-	    			alert(xhr.status + ":" + xhr.statusText);
+	    			alert(xhrSearch.status + ":" + xhrSearch.statusText);
 	    		}    		
 	    	}  	
 	    }
 	    
     
 	    function createSchedule(arrayObject){
-	    	xhr = new XMLHttpRequest();
-	    	if(xhr !== null){	    
-		    	xhr.addEventListener("readystatechange",callbackCreateSchedule);
-		    	xhr.open("post","${pageContext.request.contextPath}/InsertScheduleServlet",true); 
-		    	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		    	xhr.send("json="+arrayObject);		      	
+	    	xhrcreate = new XMLHttpRequest();
+	    	if(xhrcreate !== null){	    
+		    	xhrcreate.addEventListener("readystatechange",callbackCreateSchedule);
+		    	xhrcreate.open("post","InsertScheduleServlet",true); 
+		    	xhrcreate.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		    		
+		    	xhrcreate.send("json="+arrayObject);		      	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
 	    	}	    	
 	    }
 	    
 	    function callbackCreateSchedule(){
-	    	if(xhr.readyState === 4){ 	
-	    		if(xhr.status === 200){
-	    			alert("success insert");   
+	    	if(xhrcreate.readyState === 4){ 	
+	    		if(xhrcreate.status === 200){
+	    			document.getElementById("insert").innerHTML = "資料新增成功";
+	    		 	table.innerHTML = "";
+	    		 	totalImage = 0;
+	    		 	setTimeout(function (){
+	    		 		document.getElementById("insert").innerHTML = "";
+	    		 	}, 2000);
+	    		
 	    		}else{
-	    			alert(xhr.status + ":" + xhr.statusText);
+	    			alert(xhrcreate.status + ":" + xhrcreate.statusText);
 	    		}    		
-	    	}  	
+	    	}  
 	    }	    
+
+	    
+	    function addImg(sceneid){
+	    	xhradd = new XMLHttpRequest();
+	    	if(xhradd !== null){	    
+	    		xhradd.addEventListener("readystatechange",null);	  
+	    		xhradd.open("get","${pageContext.servletContext.contextPath}/AddScheduleServlet?scene="+sceneid,true); 	
+		    	xhradd.send();		      	
+	    	}else{
+	    		alert("您的瀏覽器不支援Ajax功能!!");
+	    	}		    	
+	    }
 	    
 	    function deleteImg(sceneid){
-	    	xhr = new XMLHttpRequest();
-	    	if(xhr !== null){	    
-	    		xhr.addEventListener("readystatechange",null);	  
-	    		xhr.open("get","${pageContext.request.contextPath}/deleteSchedule?deleteId="+sceneid,true); 	
-		    	xhr.send();		      	
+	    	xhrdelete = new XMLHttpRequest();
+	    	if(xhrdelete !== null){	    
+	    		xhrdelete.addEventListener("readystatechange",null);	  
+	    		xhrdelete.open("get","deleteSchedule?deleteId="+sceneid,true); 	
+	    		alert("deleteImg "+sceneid);
+		    	xhrdelete.send();		      	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
 	    	}		    	
@@ -218,13 +239,14 @@
 		 } 
 		 
 		 function appendScheduleContent(data){  
-			 	table.innerHTML = "";
-			 	totalImage = 0;
-			 	alert("data.length: "+data.length);
-		    	for(var i=0; i < data.length;i++){     
-		    		var img = createImg('data:image/png;base64,'+data[i].scenePhoto,data[i].sceneId,data[i].sceneName);
-		    		appendImg(img.src,img.id,img.title);
-		    	}	
+		 	table.innerHTML = "";
+		 	totalImage = 0;
+		 	for(var i=0; i < data.length;i++){     
+	    		imgid =  data[i].sceneId;
+	    		imgsrc = 'data:image/png;base64,'+data[i].scenePhoto;
+	    		imgtitle = data[i].sceneName;
+	    		appendImg(imgsrc,imgid,imgtitle);
+	    	}	
 		 } 		 
          function createImg(imgsrc,sceneId,title){
              var img = new Image();
@@ -241,6 +263,7 @@
 
          function createLine(){
         	 var img = new Image();
+ 			 img.value = "line";
         	 img.src = "img/forward.png";
         	 img.className = "img";
              return img;
@@ -265,7 +288,6 @@
          }
                
          function appendImg(imgsrc,sceneId,title){
-      //  	 alert("total"+totalImage);
              if((maxLine * maxImg) === totalImage){
                  return;
              }
@@ -303,9 +325,9 @@
             	var td = document.getElementsByTagName("td");
             	var num = 0;
             	for (var i = 0; i < td.length;i++){
-            		if(i % 2 == 0){
-            			var img = td[i].firstElementChild;
-            			scheduleArray[num] = new schedule(${loginOk.memberId},text,num+1,img.id.substring(2));
+            		var img = td[i].firstElementChild;
+            		if(img.value !== "line"){           
+            			scheduleArray[num] = new schedule(${loginOk.memberId},text,num+1,img.id.substring(3));        
             			num++;
             			//${loginOk.memberId}
             		}
@@ -332,6 +354,12 @@
             });
             document.getElementById("東區").addEventListener("click", function(){
             	getSearch("東區");
+            });       
+            
+            document.getElementById("reset").addEventListener("click", function(){
+            	table.innerHTML = "";
+            	totalImage = 0;
+            	deleteImg(-1);        	
             });            
 
    
@@ -343,15 +371,16 @@
 <body style="padding:71px;">
 	<jsp:include page="/WEB-INF/top/top.jsp"></jsp:include>
     <div class="container-fluid">
-   		<div class="row">
-	  		
+   		<div class="row">	
 			<input id="scheduleName" type="text" placeholder="行程名稱"/>
-			<button id="sure">行程確認</button>    		
+			<button id="sure">行程確認</button>  
+			<span id="insert"></span>  		
    		</div>
    		<hr/>
 	    <div class="row">	
 	  		<div class="col-md-8">
 				<img id="garbage" class ="imgicon" src="img/garbage.png"  ondrop="drop(event)" ondragover="allowDrop(event)"/>	
+				<img id="reset" class ="imgicon" src="img/reset.png" />	
 				<table id="tab">
 				</table>   		
 	  		</div>

@@ -31,4 +31,6 @@ public interface SceneDAO {
 	//刪除DELETE(景點流水號)
 	boolean delete(int sceneId);
 
+	SceneBean select(int sceneId);
+
 }

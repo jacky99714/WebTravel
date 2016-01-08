@@ -14,14 +14,34 @@ public class SceneService {
 	//搜尋區域
 	public List<FavoriteBean> getLocation(String location) {
 		if (location != null) {
-			return sceneDao.select(location);
+			
+			List<FavoriteBean> lilo = sceneDao.select(location);
+			 
+			for(FavoriteBean fbean:lilo){
+				if(fbean.getSceneContent().length()>=70L){
+					String str= fbean.getSceneContent().substring(0,70);
+					fbean.setSceneContent(str+"...");
+				}
+			}
+			
+			return lilo;
 		}
 		return null;
 	}
 	//搜尋城市
 	public List<FavoriteBean> getCity(String city) {
 		if (city != null) {
-			return sceneDao.selectCity(city);
+
+			List<FavoriteBean> lilo = sceneDao.selectCity(city);
+
+			for (FavoriteBean fbean : lilo) {
+				if (fbean.getSceneContent().length() >= 70L) {
+					String str = fbean.getSceneContent().substring(0, 70);
+					fbean.setSceneContent(str + "...");
+				}
+			}
+
+			return lilo;
 		}
 		return null;
 	}

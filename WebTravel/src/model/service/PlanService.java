@@ -17,6 +17,7 @@ import model.dao.jndi.CollectDAOjndi;
 import model.dao.jndi.SceneDAOjndi;
 import model.dao.jndi.ScheduleContentDAOjndi;
 import model.dao.jndi.ScheduleDAOjndi;
+import model.util.TypeConveter;
 import other.bean.FavoriteBean;
 
 public class PlanService {
@@ -37,7 +38,20 @@ public class PlanService {
 			 return null;
 		 }	 
 	 }
+
+	 public FavoriteBean getScene(int id){
+		 SceneBean bean;
+		 bean = sceneDao.select(id);
+		 return TypeConveter.parseFavoriteBean(bean);
+	 }
 	 
+	 public List<FavoriteBean> getSchedule(List<Integer> li){
+		 List<FavoriteBean> fav = new ArrayList<>();
+		 for(int key:li){
+			 fav.add(getScene(key));
+		 }
+		 return fav;
+	 }
 	 public void insertSchedule(JSONArray jsonArr){
 
     	 if(jsonArr.length() < 1){
@@ -50,6 +64,7 @@ public class PlanService {
 		 for(int i = 0; i < jsonArr.length();i++){
 			contentBean[i] = new ScheduleContentBean();
 			JSONObject jsonObj =  jsonArr.getJSONObject(i);
+			//System.out.println("jsonObj.getString" +jsonObj.getString("sceneId"));
 			contentBean[i].setSceneId(jsonObj.getInt("sceneId"));
 			contentBean[i].setScheduleId(scheduleId);
 			contentBean[i].setScheduleOrder(jsonObj.getInt("scheduleOrder"));

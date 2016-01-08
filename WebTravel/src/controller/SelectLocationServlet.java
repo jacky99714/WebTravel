@@ -33,7 +33,7 @@ public class SelectLocationServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json; charset=UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
 
 		// 接收資料
 		SceneService sceneservice = new SceneService();
@@ -45,6 +45,8 @@ public class SelectLocationServlet extends HttpServlet {
 			li = sceneservice.getLocation(lo);
 			
 		}
+		
+		
 		// 轉換資料
 		//JSONArray scenelist = TypeConveter.parseJSONArray(li); 
 		// model
