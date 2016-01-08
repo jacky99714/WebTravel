@@ -92,6 +92,7 @@
              var img = ev.currentTarget;
              var sceneId = img.id.substring(3);
              if(!document.getElementById("img"+sceneId)){
+            	 addImg(sceneId);
             	 appendImg(img.src,sceneId,img.title);    
              }    	                    
          }
@@ -166,7 +167,7 @@
     
 	    function createSchedule(arrayObject){
 	    	xhrcreate = new XMLHttpRequest();
-	    	if(xhr !== null){	    
+	    	if(xhrcreate !== null){	    
 		    	xhrcreate.addEventListener("readystatechange",callbackCreateSchedule);
 		    	xhrcreate.open("post","InsertScheduleServlet",true); 
 		    	xhrcreate.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -185,12 +186,24 @@
 	    		}    		
 	    	}  	
 	    }	    
+
+	    
+	    function addImg(sceneid){
+	    	xhradd = new XMLHttpRequest();
+	    	if(xhradd !== null){	    
+	    		xhradd.addEventListener("readystatechange",null);	  
+	    		xhradd.open("get","AddScheduleServlet?sceneId="+sceneid,true); 	
+		    	xhradd.send();		      	
+	    	}else{
+	    		alert("您的瀏覽器不支援Ajax功能!!");
+	    	}		    	
+	    }
 	    
 	    function deleteImg(sceneid){
 	    	xhrdelete = new XMLHttpRequest();
-	    	if(xhr !== null){	    
+	    	if(xhrdelete !== null){	    
 	    		xhrdelete.addEventListener("readystatechange",null);	  
-	    		xhrdelete.open("get","${pageContext.request.contextPath}/deleteSchedule?deleteId="+sceneid,true); 	
+	    		xhrdelete.open("get","deleteSchedule?deleteId="+sceneid,true); 	
 		    	xhrdelete.send();		      	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
@@ -219,8 +232,10 @@
 		 	table.innerHTML = "";
 		 	totalImage = 0;
 		 	for(var i=0; i < data.length;i++){     
-	    		var img = createImg('data:image/png;base64,'+data[i].scenePhoto,data[i].sceneId,data[i].sceneName);
-	    		appendImg(img.src,img.id,img.title);
+	    		imgid =  data[i].sceneId;
+	    		imgsrc = 'data:image/png;base64,'+data[i].scenePhoto;
+	    		imgtitle = data[i].sceneName;
+	    		appendImg(imgsrc,imgid,imgtitle);
 	    	}	
 		 } 		 
          function createImg(imgsrc,sceneId,title){
