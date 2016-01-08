@@ -79,7 +79,7 @@
                 <!-- 留言 Form -->
                 <div class="well">
                     <h4>留言:</h4>
-                    <form role="form" action="" >
+                    <form role="form" action="" method="post">
                         <div class="form-group">
                             <textarea class="form-control" rows="3"></textarea>
                         </div>
