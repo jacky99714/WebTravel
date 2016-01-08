@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,26 +16,23 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class setScheduleServlet
  */
-@WebServlet("/SetScheduleServlet")
-public class SetScheduleServlet extends HttpServlet {
+@WebServlet("/AddScheduleServlet")
+public class AddScheduleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SetScheduleServlet() {
+    public AddScheduleServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");		
-		
+		PrintWriter out = response.getWriter();
 		try{
 			int sceneId = Integer.parseInt(request.getParameter("sceneId"));
 			boolean insert = false;
@@ -55,7 +53,8 @@ public class SetScheduleServlet extends HttpServlet {
 				if(!insert){
 					li.add(sceneId);
 				}			
-			}			
+			}
+			out.print(insert);
 		}catch(NumberFormatException e){
 			System.out.println(request.getParameter("sceneId"));
 			System.out.println("it is not a number");
