@@ -43,7 +43,6 @@ public class AddScheduleServlet extends HttpServlet {
 				li.add(sceneId);
 				session.setAttribute("schedule",li);
 			}else{
-	
 				li = (List<Integer>)session.getAttribute("schedule");
 				for(int key: li){
 					if(key == sceneId){
