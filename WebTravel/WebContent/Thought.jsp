@@ -40,16 +40,16 @@
 					<span>心得名稱</span>
 				</div>
 				<div>
-					<input type="text" sixe="70" placeholder="請勿超過40個字" name="thoughtName"><p color='red'  size="-3">${errors.thoughtName}</p>
+					<input type="text" size="70" placeholder="台北一日遊" name="thoughtName"><p color='red'  size="-3">${errors.thoughtName}</p>
 				</div>
 			</div>
 			<div>
-				<label>種類</label><p color='red'  size="-3">${errors.thoughtType}</p> 
-				<select name="thoughtType">
-					<option value="餐廳">餐廳</option>
-					<option value="景點">景點</option>
-					<option value="綜合">綜合</option>
-				</select>
+				<div>
+					<label>標題</label>
+				</div>
+				<div>
+					<input type="text" size="70" placeholder="一座繁華的城市" name="thoughtSubtitle">
+				</div> 
 			</div>
 <!-- 			<div> -->
 <!-- 				<div> -->

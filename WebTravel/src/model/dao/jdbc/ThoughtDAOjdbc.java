@@ -11,20 +11,22 @@ import java.util.List;
 import model.bean.ThoughtBean;
 import model.dao.ThoughtDAO;
 import model.util.JdbcConnection;
+import model.util.TypeConveter;
 
 public class ThoughtDAOjdbc implements ThoughtDAO {
 	
 	private static final String SELECT_ID = "SELECT * FROM Thought WHERE ThoughtID=?";
-	private static final String SELECT_TYPE = "SELECT * FROM Thought WHERE thoughtType=?";
+	private static final String SELECT_NAME = "SELECT * FROM Thought WHERE thoughtName=?";
 	private static final String SELECT = "SELECT * FROM Thought";
-	private static final String INSERT = "insert into Thought(thoughtName,thoughtContent,thoughtType,memberId) values(?,?,?,?)";
-	private static final String UPDATE = "update Thought set thoughtName=?,thoughtContent=?,thoughtType=?,memberId=? where ThoughtID=?";
+	private static final String INSERT = "insert into Thought(thoughtName,thoughtContent,thoughtSubtitle,thoughtTime,memberId) values(?,?,?,?,?)";
+	private static final String UPDATE = "update Thought set thoughtName=?,thoughtContent=?,thoughtSubtitle=?,thoughtTime=?,memberId=? where ThoughtID=?";
 	private static final String DELETE = "delete FROM Thought where ThoughtID=?";
 	private Connection conn= null;
 	
 	/* (non-Javadoc)
 	 * @see model.dao.jdbc.ThoughtDAO#select()
 	 */
+	TypeConveter tc = new TypeConveter();
 	@Override
 	public List<ThoughtBean> select(){
 		try {
@@ -37,8 +39,9 @@ public class ThoughtDAOjdbc implements ThoughtDAO {
 				tBean.setThoughtId(rs.getInt(1));
 				tBean.setThoughtName(rs.getString(2));
 				tBean.setThoughtContent(rs.getString(3));
-				tBean.setThoughtType(rs.getString(4));
-				tBean.setMemberId(rs.getInt(5));
+				tBean.setThoughtSubtitle(rs.getString(4));
+				tBean.setThoughtTime(tc.parseTimestamp(rs.getString(5)));				
+				tBean.setMemberId(rs.getInt(6));
 				list.add(tBean);
 			}
 		return list;
@@ -56,7 +59,7 @@ public class ThoughtDAOjdbc implements ThoughtDAO {
 	public List<ThoughtBean> select(String thoughtType){
 		try {
 			conn = JdbcConnection.getConnection();
-			PreparedStatement ps = conn.prepareStatement(SELECT_TYPE);
+			PreparedStatement ps = conn.prepareStatement(SELECT_NAME);
 			ps.setString(1, thoughtType);
 			ResultSet rs = ps.executeQuery();
 			ThoughtBean tBean =new ThoughtBean();
@@ -65,8 +68,9 @@ public class ThoughtDAOjdbc implements ThoughtDAO {
 				tBean.setThoughtId(rs.getInt(1));
 				tBean.setThoughtName(rs.getString(2));
 				tBean.setThoughtContent(rs.getString(3));
-				tBean.setThoughtType(rs.getString(4));
-				tBean.setMemberId(rs.getInt(5));
+				tBean.setThoughtSubtitle(rs.getString(4));
+				tBean.setThoughtTime(tc.parseTimestamp(rs.getString(5)));
+				tBean.setMemberId(rs.getInt(6));
 				list.add(tBean);
 			}
 			return list;
@@ -92,8 +96,9 @@ public class ThoughtDAOjdbc implements ThoughtDAO {
 				tBean.setThoughtId(rs.getInt(1));
 				tBean.setThoughtName(rs.getString(2));
 				tBean.setThoughtContent(rs.getString(3));
-				tBean.setThoughtType(rs.getString(4));
-				tBean.setMemberId(rs.getInt(5));
+				tBean.setThoughtSubtitle(rs.getString(4));
+				tBean.setThoughtTime(tc.parseTimestamp(rs.getString(5)));
+				tBean.setMemberId(rs.getInt(6));
 			}
 			return tBean;
 		} catch (SQLException e) {
@@ -111,11 +116,12 @@ public class ThoughtDAOjdbc implements ThoughtDAO {
 		try {
 			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
-			ps.setInt(5, thoughtBean.getThoughtId());
+			ps.setInt(6, thoughtBean.getThoughtId());
 			ps.setString(1, thoughtBean.getThoughtName());
 			ps.setString(2, thoughtBean.getThoughtContent());
-			ps.setString(3, thoughtBean.getThoughtType());
-			ps.setInt(4, thoughtBean.getMemberId());
+			ps.setString(3, thoughtBean.getThoughtSubtitle());
+			ps.setDate(4, new java.sql.Date(tc.parseTimestamp(thoughtBean.getThoughtTime()).getTime())) ;
+			ps.setInt(5, thoughtBean.getMemberId());
 			if(ps.executeUpdate()==1){
 				return this.select(thoughtBean.getThoughtId());
 			}
@@ -136,8 +142,9 @@ public class ThoughtDAOjdbc implements ThoughtDAO {
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setString(1, thoughtBean.getThoughtName());
 			ps.setString(2, thoughtBean.getThoughtContent());
-			ps.setString(3, thoughtBean.getThoughtType());
-			ps.setInt(4, thoughtBean.getMemberId());
+			ps.setString(3, thoughtBean.getThoughtSubtitle());
+			ps.setDate(4, new java.sql.Date(tc.parseTimestamp(thoughtBean.getThoughtTime()).getTime())) ;
+			ps.setInt(5, thoughtBean.getMemberId());
 			if(ps.executeUpdate()==1){
 				return this.select(thoughtBean.getThoughtId());
 			}
@@ -173,7 +180,7 @@ public class ThoughtDAOjdbc implements ThoughtDAO {
 		ThoughtBean tb = new ThoughtBean();
 		tb.setThoughtId(1);
 		tb.setThoughtName("台中花海節");
-		tb.setThoughtType("景點");
+		tb.setThoughtSubtitle("景點");
 		tb.setThoughtContent("去台中玩還可以吃東東芋圓 非常不錯得景點");
 		tb.setMemberId(1);
 		

@@ -31,6 +31,7 @@ public class DisplayThoughtServlet extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
         HttpSession session = request.getSession();
         
+        System.out.println("AAAA");
 //        String temp = request.getParameter("thoughtType");
 //        System.out.println("temp"+temp);
         
@@ -38,15 +39,17 @@ public class DisplayThoughtServlet extends HttpServlet {
 //        ThoughtBean bean = new ThoughtBean();
         ThoughtService ts = new ThoughtService();
         List<ThoughtBean> li = new ArrayList<>();
-        li = ts.getThoughttype(request.getParameter("thoughtType"));
+        li = ts.getAllThought();
+        System.out.println(li);
 
-        PrintWriter out = response.getWriter();
-        out.print(TypeConveter.parseJSONArray(li));
+//        PrintWriter out = response.getWriter();
+//        out.print(TypeConveter.parseJSONArray(li));
         session.setAttribute("list", li);
         
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		this.doGet(request, response);
 	}
 
 }
