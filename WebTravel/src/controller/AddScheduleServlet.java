@@ -2,7 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -36,15 +36,15 @@ public class AddScheduleServlet extends HttpServlet {
 		try{
 			int sceneId = Integer.parseInt(request.getParameter("sceneId"));
 			boolean insert = false;
-			List<Integer> li = new ArrayList<>();
+			List<Integer> li = new LinkedList<>();
 			HttpSession session = request.getSession();
 
 			if(session.getAttribute("scheduleList") == null){
-				System.out.println("first create attribute scheduleList");
+		
 				li.add(sceneId);
 				session.setAttribute("scheduleList",li);
 			}else{
-				System.out.println("all ready set attribute scheduleList");
+	
 				li = (List<Integer>)session.getAttribute("scheduleList");
 				for(int key: li){
 					if(key == sceneId){
