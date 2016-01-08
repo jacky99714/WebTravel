@@ -34,6 +34,11 @@ $(function(){
 			  'dataType':'json',  //json、script、html
 			  'data':{"scene":$(this).val()},
 			  'success':function(data){
+					$.ajax({
+						  'type':'get', //post、delete、put
+						  'url':'../plan/AddScheduleServlet',
+						  'data':{"sceneId":joinSchedule.val()}
+					 })
 				  if(data=="deletesuccess"){
 					  joinSchedule.removeClass("btn-info")
 					  .removeClass("active")
@@ -54,6 +59,7 @@ $(function(){
 //				  joinSchedule.text("以加入行程");
 			  }
 		 })
+		 
 	})
 	$('.delete').on("click",function(){//刪除行程
 		ob= $(this)
