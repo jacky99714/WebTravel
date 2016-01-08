@@ -39,13 +39,12 @@ public class AddScheduleServlet extends HttpServlet {
 			List<Integer> li = new LinkedList<>();
 			HttpSession session = request.getSession();
 
-			if(session.getAttribute("scheduleList") == null){
-		
+			if(session.getAttribute("schedule") == null){	
 				li.add(sceneId);
-				session.setAttribute("scheduleList",li);
+				session.setAttribute("schedule",li);
 			}else{
 	
-				li = (List<Integer>)session.getAttribute("scheduleList");
+				li = (List<Integer>)session.getAttribute("schedule");
 				for(int key: li){
 					if(key == sceneId){
 						insert = true;   //session 有相同景點
