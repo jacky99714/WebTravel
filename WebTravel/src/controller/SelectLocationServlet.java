@@ -45,6 +45,8 @@ public class SelectLocationServlet extends HttpServlet {
 			li = sceneservice.getLocation(lo);
 			
 		}
+		
+		
 		// 轉換資料
 		//JSONArray scenelist = TypeConveter.parseJSONArray(li); 
 		// model

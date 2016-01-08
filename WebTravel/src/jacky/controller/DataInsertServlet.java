@@ -62,11 +62,11 @@ public class DataInsertServlet extends HttpServlet {
 			}
 			fi.close();
 		}else{
-			File f = new File("/Users/mouse/Desktop/wt.jpg");
-			FileInputStream fi = new FileInputStream(f);
-			bb = new byte[(int)f.length()];
-			fi.read(bb);
-			fi.close();
+//			File f = new File("/Users/mouse/Desktop/wt.jpg");
+//			FileInputStream fi = new FileInputStream(f);
+//			bb = new byte[(int)f.length()];
+//			fi.read(bb);
+//			fi.close();
 		}
 		//
 		SceneBean bean = new SceneBean();
@@ -80,7 +80,7 @@ public class DataInsertServlet extends HttpServlet {
 			bean.setScenePhoto(bb);
 		}
 		bean.setMemberId(1);
-		if(baos!=null){
+		if(baos!=null&&city!=""&&city!=null){
 			SceneDAOjndi sDAO = new SceneDAOjndi();
 			sDAO.insert(bean);
 			

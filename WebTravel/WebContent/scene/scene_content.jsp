@@ -47,13 +47,13 @@
                             </ol>
                             <div class="carousel-inner">
                                 <div class="item active">
-                                    <img class="slide-image" src="img/101_1.jpg" alt="">
+                                    <img class="slide-image" w  src="img/1011.jpg" >
                                 </div>
                                 <div class="item">
-                                    <img class="slide-image" src="img/101_600.jpg" alt="">
+                                    <img class="slide-image"  src="img/1012.jpg" >
                                 </div>
                                 <div class="item">
-                                    <img class="slide-image" src="img/101_800300.jpg" alt="">
+                                    <img class="slide-image"  src="img/1013.jpg" >
                                 </div>
                             </div>
                             <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
@@ -67,18 +67,21 @@
  <!-- 圖片輪播end -->
                 <hr>
 
-                <!-- Post Content -->
+                <!-- 景點內容 -->
                 <p class="lead">${namebean.sceneName}</p>
+                <p><font color="#AA0000">開放時間：</font>${namebean.timeStart} ~ ${namebean.timeEnd}</p>
+                
+                <p><font color="#AA0000">景點介紹：</font></p>
                 <p>${namebean.sceneContent}</p>
                 
                 <hr>
 
-                <!-- Comments Form -->
+                <!-- 留言 Form -->
                 <div class="well">
                     <h4>留言:</h4>
-                    <form role="form">
+                    <form role="form" action="<%=request.getContextPath()%>/SceneMessage?secneId=${namebean.sceneId}" method="post">
                         <div class="form-group">
-                            <textarea class="form-control" rows="3"></textarea>
+                            <textarea class="form-control" rows="3" name="message"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
@@ -86,12 +89,12 @@
 
                 <hr>
                 
-                 <!-- Comment -->
-                <div class="media">
+                 <!-- Comment 回覆-->
+                <div class="media"><!-- 會員頭像-->
                     <a class="pull-left" href="#">
                         <img class="media-object" src="http://placehold.it/64x64" alt="">
                     </a>
-                    <div class="media-body">
+                    <div class="media-body"><!-- 回覆內容 -->
                         <h4 class="media-heading">Start Bootstrap
                             <small>August 25, 2014 at 9:30 PM</small>
                         </h4>
@@ -99,18 +102,7 @@
                     </div>
                 </div>
                 
-                <!-- Comment -->
-                <div class="media">
-                    <a class="pull-left" href="#">
-                        <img class="media-object" src="http://placehold.it/64x64" alt="">
-                    </a>
-                    <div class="media-body">
-                        <h4 class="media-heading">Start Bootstrap
-                            <small>August 25, 2014 at 9:30 PM</small>
-                        </h4>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                    </div>
-                </div>
+                
 
      <hr><br>
   </div>
