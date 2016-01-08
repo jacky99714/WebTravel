@@ -37,14 +37,17 @@
 <%@ page import="model.util.*"%>
 <%ArrayList<SceneBean> list =(ArrayList<SceneBean>)session.getAttribute("sceneList"); 
 	int a = 0;
+	
 %>
+
+
 <!--     我是內容---------------------------- -->
     <div class="container-fluid">
     <table id="simpleTable" class="table table-hover">
   		<thead>
   			<th>景點編號</th>
   			<th>圖片</th>
-  			<th>區域</th>
+<!--   			<th>區域</th> -->
   			<th>縣市</th>
   			<th>景點名稱</th>
   			<th>內容</th>
@@ -60,9 +63,9 @@
 <%-- 	  			<td>${scene.location}</td> --%>
 	  			<td>${scene.city}</td>
 	  			<td>${scene.sceneName}</td>
-<%-- 	  			<td>${scene.sceneContent}</td> --%>
-<%-- 	  			<td>${scene.timeStart}</td> --%>
-<%-- 	  			<td>${scene.timeEnd}</td> --%>
+	  			<td></td>${scene.sceneContent}
+	  			<td>${scene.timeStart}</td>
+	  			<td>${scene.timeEnd}</td>
 	  			<td><button id="s${scene.sceneId}" value="${scene.sceneId}" class="btn btn-warning btn joinSchedule" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  加入行程</button>  <button value="${scene.sceneId}" class="btn btn-danger btn delete" data-toggle="modal" data-target=".bs-example-modal-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  刪除</button></td>
 <%-- 	  			<td>${scene.memberId}</td> --%>
   			</tr>
