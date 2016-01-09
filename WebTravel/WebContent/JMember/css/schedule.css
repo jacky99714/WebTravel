@@ -14,10 +14,10 @@
  position: absolute;
  top: -90px; /* .abgne_tip_gallery_block 的高 - 想顯示 title 的高(這邊是設 55) */
  width: 109.656px; /* .abgne_tip_gallery_block 的寬 - .caption_grall 的左右 padding */
- padding: 15px 10px 20px;
+ padding: 15px 10px 5px;
  cursor: pointer;
  color: #fff;
- background: url(http://goo.gl/8nT7pc) repeat;opacity:0.7;
+ background: url(http://goo.gl/8nT7pc) repeat;opacity:0.5;
  }
  .abgne_tip_gallery_block .caption_grall h2 {
   margin: 0;
