@@ -119,4 +119,16 @@ public class MemberService {
 	public boolean insertScheduleContent(ScheduleContentBean bean){
 		return scheduleContentDAO.insert(bean);
 	}
+	
+	//將景點內容顯示字數少一點
+	public List<SceneBean> SubStirngCount(List<SceneBean> list){
+		for(SceneBean s :list){
+			if(s.getSceneContent().length()>70){
+				s.setSceneContent(s.getSceneContent().substring(0,70)+"...");
+			}
+		}
+		return list;
+	}
+	
+	
 }
