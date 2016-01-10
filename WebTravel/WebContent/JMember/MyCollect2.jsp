@@ -35,12 +35,20 @@
   <body class="ss">
   <jsp:include page="/WEB-INF/top/top.jsp"/>
 <%@ page import="model.util.*"%>
-<%ArrayList<SceneBean> list =(ArrayList<SceneBean>)session.getAttribute("sceneList"); 
+<%
 	int a = 0;
+	int rowCount = (int)session.getAttribute("rowCount");
+	int pageSize = (int)session.getAttribute("pageSize");
+	int pageq = (int)session.getAttribute("pageq");
+	int start = (int)session.getAttribute("start");
+	int end = (int)session.getAttribute("end");
+	
+// 	int startR = Integer.parseInt(request.getParameter("start"));
+// 	int endR = Integer.parseInt(request.getParameter("end"));
+// 	System.out.print(startR);
+	
 	
 %>
-
-
 <!--     我是內容---------------------------- -->
     <div class="container-fluid">
     <table id="simpleTable" class="table table-hover">
@@ -56,10 +64,10 @@
   			<th></th>
   		</thead>
   		<tbody>
-   		 <c:forEach var="scene" items="${sceneList}">
+   		 <c:forEach var="scene" begin="${start}" end="${end-1}" items="${sceneList}" varStatus="s">
    			<tr>
 <%-- 	  			<td>${scene.sceneId}</td> --%>
-	  			<td><a href="data:image/png;base64,<%=TypeConveter.EncodeBase64(list.get(a).getScenePhoto())%>" class="image-popup-no-margins"><img class="imglist" src="data:image/png;base64,<%=TypeConveter.EncodeBase64(list.get(a).getScenePhoto())%>"/></a></td>
+	  			<td><a href="data:image/png;base64,${scene.scenePhoto}" class="image-popup-no-margins"><img class="imglist" src="data:image/png;base64,${scene.scenePhoto}"/></a></td>
 <%-- 	  			<td>${scene.location}</td> --%>
 	  			<td>${scene.city}</td>
 	  			<td>${scene.sceneName}</td>
@@ -75,6 +83,19 @@
 	 </table>
     
 </div>
+<%
+for(int i= 0; i< pageq;i++){
+  start = pageSize *i;
+  end = start+pageSize;
+  if(end>rowCount){end = rowCount;}
+        //組你showdata.jsp的路徑從webapp開始
+  //如果你是放在webapp/test/showdata.jsp
+  
+  String str ="/MyCollectServlet?start="+start+"&end="+end;
+%>
+<a href=<%=request.getContextPath()%><%=str %>><font color= red>第<%=i+1%>頁　</font></b></a>
+<% }%>  
+
 
 <!-- Modal -->
 <div id="myModal001" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">

@@ -11,10 +11,12 @@
     <!-- Bootstrap -->
      
     <link href="<c:url value="/css/bootstrap.min.css"/>" rel="stylesheet">
-    
+    <link href="<c:url value="/JMember/css/schedule.css"/>" rel="stylesheet">
     <link href="<c:url value="/JMember/css/jquery-ui.css"/>" rel="stylesheet">
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	    <script src="js/jquery-ui.js"></script>
+	    <script src="<c:url value="/JMember/js/jquery-ui.js"/>"></script>
+	    
+	    
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -26,7 +28,7 @@
    .scheduleSelect{}
    .table>tbody>tr>td{
  	border-top:0px !important;
- }
+ 	}
    .strong1{
      font-size:larger;
    }
@@ -56,21 +58,30 @@
     	</div>
     </dir><!-- row END -->
 
- 
-
-<!-- <table> -->
-<!-- 	<tbody> -->
-<!-- <!-- 		<tr id="sortable"> -->
-<!-- 			<td class="ui-state-default">1111111111111111111</td> -->
-<!-- 			<td class="ui-state-default">2222222222222222222</td> -->
-<!-- 			<td class="ui-state-default">3333333333333333333</td> -->
-<!-- 			<td class="ui-state-default">4444444444444444444</td> -->
-<!-- 			<td class="ui-state-default">5555555555555555555</td> -->
-<!-- 		</tr> -->
-	
-<!-- 	</tbody> -->
-
-<!-- </table> -->
+<!-- <div class="abgne_tip_gallery_block"> -->
+<!-- 	<a href="#"><img src="http://goo.gl/C4psy7"  width="450px" title="" alt="" /></a>  -->
+<!-- 	<div class="caption_grall"> -->
+<!-- 		<h2><a href="#" title="猛甲茶道">猛甲茶道</a></h2> -->
+<!-- 		<div class="desc" style="padding-right:10px;">sssss</div> -->
+<!-- 	</div> -->
+<!-- </div> -->
+   
+   
+<!-- <div class="col-md-2" id="1" value="53">    -->
+<!-- 	<div class="thumbnail"> -->
+<!-- 	    <div class="abgne_tip_gallery_block"> -->
+<!-- 			<img src="http://goo.gl/C4psy7" style="width: 144.656px;height: 120px;"title="" alt="" /> -->
+<!-- 			<div class="caption_grall"> -->
+<!-- 				<h7>猛甲茶道</h7> -->
+<!-- 				<div class="desc" style="padding-right:10px;">sssss</div> -->
+<!-- 			</div> -->
+<!-- 	</div> -->
+<!-- 		    <div class="caption"> -->
+<!-- 			    <h5>文化會館</h5> -->
+<!-- 			    <p>第1景點</p> -->
+<!-- 		    </div> -->
+<!-- 	</div> -->
+<!-- </div> -->
     
     
     
