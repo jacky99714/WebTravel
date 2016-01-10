@@ -40,7 +40,7 @@ public class DisplayThoughtServlet extends HttpServlet {
         ThoughtService ts = new ThoughtService();
         List<ThoughtBean> li = new ArrayList<>();
         li = ts.getAllThought();
-        System.out.println(li);
+//        System.out.println(li);
 
 //        PrintWriter out = response.getWriter();
 //        out.print(TypeConveter.parseJSONArray(li));

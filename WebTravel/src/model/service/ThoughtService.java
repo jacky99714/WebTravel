@@ -19,6 +19,10 @@ public class ThoughtService {
 			return null;
 		}
 	}
+	public ThoughtBean getThoughtId(int thoughtId){
+			return thoughtDao.select(thoughtId);
+	}
+	
 	public List<ThoughtBean> getAllThought(){
 		return (List<ThoughtBean>)thoughtDao.select();
 	}

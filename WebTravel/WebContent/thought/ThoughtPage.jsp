@@ -41,7 +41,7 @@
 						<div class="thumbnail">
 
 							<a href="https://www.google.com.tw" class="thumbnail"><img
-								src="img/Carousel01.jpg" alt="a"></a>
+								src="/img/Carousel01.jpg" alt="a"></a>
 							<div class="caption">
 								<div>
 									<h3>${thoughtlist.thoughtName}</h3>
@@ -71,72 +71,73 @@
 <!--     <script type="text/javascript" src="http://masonry.desandro.com/jquery.masonry.min.js"></script> -->
     
     <script type="text/javascript">
-// 	    var btn = document.getElementById("button1");
-// 		btn.addEventListener("click",getType);
-//     	function getThought(select) {
+// // 	    var btn = document.getElementById("button1");
+// // 		btn.addEventListener("click",getType);
+//     	function getThought() {
 // // 			var select = document.getElementById("select").value;
 // 			xhr = new XMLHttpRequest();
 // 			if (xhr !== null) {
 // 				xhr.addEventListener("readystatechange",callbackType);
-// 				xhr.open("get", "DisplayThoughtServlet?thought="+ select, true);
+// 				xhr.open("get", "DisplayThoughtServlet", true);
 // 				xhr.send();
 // 			} else {
 // 				alert("您的瀏覽器不支援Ajax功能!!");
 // 			}
 // 		}
 	
-// 		function callbackType() {
+// 		function callbackThought() {
 // 			if (xhr.readyState === 4) {
 // 				if (xhr.status === 200) {
 // 					var data = JSON.parse(xhr.responseText);
-// 					var myDiv = document.getElementById("div1");
-// 					while(myDiv.hasChildNodes()){
-// 						myDiv.removeChild(myDiv.lastChild);
-// 					}
-// 					for (var i=0;i<data.length;i++){
-// 						console.log(data[i].thoughtId);
-// 						console.log(data[i].thoughtName);
-// 						console.log(data[i].thoughtSubtitle);
-// 						console.log(data[i].thoughtContent);
-// 						console.log(data[i].thoughtTime);
-// 						console.log(data[i].memberId);
-// 	// 					alert(data[0]);
-// 	// 					console.log(data);
+// // 					var myDiv = document.getElementById("div1");
+// 					appendScheduleContent(data);
+// // 					while(myDiv.hasChildNodes()){
+// // 						myDiv.removeChild(myDiv.lastChild);
+// // 					}
+// // 					for (var i=0;i<data.length;i++){
+// // 						console.log(data[i].thoughtId);
+// // 						console.log(data[i].thoughtName);
+// // 						console.log(data[i].thoughtSubtitle);
+// // 						console.log(data[i].thoughtContent);
+// // 						console.log(data[i].thoughtTime);
+// // 						console.log(data[i].memberId);
+// // 	// 					alert(data[0]);
+// // 	// 					console.log(data);
 						
-// 						var name = data[i].thoughtName;
-// 						var content = data[i].thoughtSubtitle;
+// // 						var name = data[i].thoughtName;
+// // 						var content = data[i].thoughtSubtitle;
 						
-// 						//抓出心得名稱
-// 						var div2 = document.createElement("div");
-// 						div2.className="col-md-4";
-// 						var title = document.createElement("h3");
-// 						var txtH3 = document.createTextNode(name);
-// 						title.appendChild(txtH3);
-// 						div2.appendChild(title);
-// 						myDiv.appendChild(div2);
+// // 						//抓出心得名稱
+// // 						var div2 = document.createElement("div");
+// // 						div2.className="col-md-4";
+// // 						var title = document.createElement("h3");
+// // 						var txtH3 = document.createTextNode(name);
+// // 						title.appendChild(txtH3);
+// // 						div2.appendChild(title);
+// // 						myDiv.appendChild(div2);
 						
-// 						//抓出心得內容
-// 						var contents = document.createElement("p");
-// 						contents.className="col-md-8";
-// 						contents.innerHTML = content;
-// 						div2.appendChild(contents);
-// 	// 					myDiv.innerHTML=data[i].thoughtContent;
-// 					}
-// // 			    		myDiv.innerHTML = "<h3>" + data + "</h3>";
-// 				}else {
-// 					alert(xhr.status + ":" + xhr.statusText);
-// 				}
-// 			}
-// 		}
-// 		$(function(){
-// 			$('#div1').imagesLoaded(function () {
-// 		        $('#div1').masonry({        
-// 		            itemSelector: '.div2',
-// 		            columnWidth: 364,
-// 		            animate:true
-// 		        });
-// 			});
-// 		});
+// // 						//抓出心得內容
+// // 						var contents = document.createElement("p");
+// // 						contents.className="col-md-8";
+// // 						contents.innerHTML = content;
+// // 						div2.appendChild(contents);
+// // 	// 					myDiv.innerHTML=data[i].thoughtContent;
+// // 					}
+// // // 			    		myDiv.innerHTML = "<h3>" + data + "</h3>";
+// // 				}else {
+// // 					alert(xhr.status + ":" + xhr.statusText);
+// // 				}
+// // 			}
+// // 		}
+// // 		$(function(){
+// // 			$('#div1').imagesLoaded(function () {
+// // 		        $('#div1').masonry({        
+// // 		            itemSelector: '.div2',
+// // 		            columnWidth: 364,
+// // 		            animate:true
+// // 		        });
+// // 			});
+// // 		});
 		
 </script>
     
