@@ -60,8 +60,8 @@
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">旅遊日記 <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="#">日記</a></li>
-                    <li><a href="<c:url value="/Thought.jsp" />">日記分享</a></li>
+                    <li><a href="<c:url value="/thought/ThoughtPage.jsp" />">日記</a></li>
+                    <li><a href="<c:url value="/thought/Thought.jsp" />">日記分享</a></li>
                   </ul>
                 </li>
 <!-- 	------------------------行程------------------------ -->
