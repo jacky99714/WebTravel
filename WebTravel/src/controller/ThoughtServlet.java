@@ -54,7 +54,7 @@ public class ThoughtServlet extends HttpServlet {
 //			request.getRequestDispatcher("index.jsp").forward(request, response);
 //		}
 		if(errors != null && !errors.isEmpty()){
-			request.getRequestDispatcher("/Thought.jsp").forward(request, response);
+			request.getRequestDispatcher("/thought/Thought.jsp").forward(request, response);
 			return;
 		}
 			
@@ -87,7 +87,7 @@ public class ThoughtServlet extends HttpServlet {
 //			request.getRequestDispatcher("game.jsp").forward(request, response);
 			System.out.println("AAABBB");
 		}else{
-			request.getRequestDispatcher("/Thought.jsp").forward(request, response);
+			request.getRequestDispatcher("/thought/Thought.jsp").forward(request, response);
 		}
 	}
 
