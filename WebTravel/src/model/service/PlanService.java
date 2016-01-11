@@ -3,6 +3,7 @@ package model.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Session;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -13,19 +14,28 @@ import model.dao.CollectDAO;
 import model.dao.SceneDAO;
 import model.dao.ScheduleContentDAO;
 import model.dao.ScheduleDAO;
+import model.dao.hibernate.ScheduleContentDAOHibernate;
+import model.dao.hibernate.ScheduleDAOHibernate;
 import model.dao.jndi.CollectDAOjndi;
 import model.dao.jndi.SceneDAOjndi;
 import model.dao.jndi.ScheduleContentDAOjndi;
 import model.dao.jndi.ScheduleDAOjndi;
+import model.hibernate.HibernateUtil;
 import model.util.TypeConveter;
 import other.bean.FavoriteBean;
 
 public class PlanService {
 //	 private static final String sql =
 //	"select top 1 s.SceneName from Collect as c, Scene as s where c.MemberID=? and c.SceneID = s.SceneID";  
+	
 
-	 private CollectDAO collectDao = new CollectDAOjndi();
-	 private SceneDAO sceneDao = new SceneDAOjndi();
+	 private CollectDAO collectDao;
+	 private SceneDAO sceneDao;
+	 private Session session;
+	 
+	 public PlanService(Session session){
+		 this.session = session;
+	 }
 	 
 	 public List<FavoriteBean> getFavorite(int memberId){
 		 return collectDao.selectScene(memberId);		 
@@ -59,7 +69,7 @@ public class PlanService {
 		 }
 		 ScheduleBean scheduleBean = getScheduleBean(jsonArr);
 		 ScheduleContentBean []contentBean = new ScheduleContentBean[jsonArr.length()];
-		 ScheduleContentDAO dao = new ScheduleContentDAOjndi(); 	
+		 ScheduleContentDAO dao = new ScheduleContentDAOHibernate(session); 	
 		 int scheduleId = scheduleBean.getScheduleId();
 		 for(int i = 0; i < jsonArr.length();i++){
 			contentBean[i] = new ScheduleContentBean();
@@ -73,12 +83,11 @@ public class PlanService {
 	 }
 	 
 	 private ScheduleBean getScheduleBean(JSONArray jsonArr){
-
 		 JSONObject jsonObj =  jsonArr.getJSONObject(0);
 		 ScheduleBean bean = new ScheduleBean();
 		 bean.setMemberId(jsonObj.getInt("memberId"));
 		 bean.setScheduleName(jsonObj.getString("scheduleName"));
-		 ScheduleDAO dao = new ScheduleDAOjndi();
+		 ScheduleDAO dao = new ScheduleDAOHibernate(session);
 		 int id = dao.getInsertId(bean);
 		 bean.setScheduleId(id);
 		 return bean;

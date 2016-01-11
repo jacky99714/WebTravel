@@ -10,13 +10,14 @@ import model.bean.QBean;
 import model.dao.QDAO;
 
 
-public class QDAOHibernate implements QDAO{
-	
+public class QDAOHibernate implements QDAO{	
 	private Session session;
+	
 	public QDAOHibernate(Session session) {
 		super();
 		this.session = session;
 	}
+	
 	public Session getSession() {
 		return session;
 	}

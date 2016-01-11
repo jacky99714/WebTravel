@@ -1,10 +1,30 @@
 package model.bean;
-public class ScheduleContentBean {
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="ScheduleContent")
+public class ScheduleContentBean {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int scheduleContentId;
 	private int scheduleOrder;
 	private int sceneId;
 	private int scheduleId;
+	
+//	@ManyToOne
+//	@JoinColumn(name="scheduleId",
+//				referencedColumnName="scheduleId",
+//				insertable=false,updatable=false
+//	)	
+//	private ScheduleBean schedule;
 	
 	
 	@Override

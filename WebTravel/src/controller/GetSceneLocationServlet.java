@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.hibernate.HibernateUtil;
 import model.service.PlanService;
 import model.util.TypeConveter;
 import other.bean.FavoriteBean;
@@ -38,7 +39,7 @@ public class GetSceneLocationServlet extends HttpServlet {
 	    request.setCharacterEncoding("UTF-8");
 	    response.setContentType("text/html; charset=UTF-8");
 	    
-		PlanService ps = new PlanService();
+		PlanService ps = new PlanService(HibernateUtil.getSessionFactory().getCurrentSession());
 		List<FavoriteBean> li = new ArrayList<>();
 	
 		li = ps.getScene(request.getParameter("location"));

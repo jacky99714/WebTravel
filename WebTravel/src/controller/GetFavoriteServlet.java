@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.bean.MemberBean;
+import model.hibernate.HibernateUtil;
 import model.service.PlanService;
 import model.util.TypeConveter;
 import other.bean.FavoriteBean;
@@ -41,7 +42,7 @@ public class GetFavoriteServlet extends HttpServlet {
 	    request.setCharacterEncoding("UTF-8");
 	    response.setContentType("text/html; charset=UTF-8");
 	    
-	    PlanService ps = new PlanService();
+	    PlanService ps = new PlanService(HibernateUtil.getSessionFactory().getCurrentSession());
 		List<FavoriteBean> li = new ArrayList<>();
 
 		

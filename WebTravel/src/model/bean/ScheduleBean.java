@@ -1,8 +1,28 @@
 package model.bean;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="Schedule")
 public class ScheduleBean {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int scheduleId;
 	private String scheduleName;
 	private int memberId;
+//	@ManyToOne
+//	@JoinColumn(name="memberId",
+//				referencedColumnName="memberId",
+//				insertable=false,updatable=false
+//	)
+//	private MemberBean member;
 	
 	
 	@Override
