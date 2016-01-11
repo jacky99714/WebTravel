@@ -23,8 +23,7 @@ public class QDAOHibernate implements QDAO{
 
 	@Override
 	public List<QBean> select() {
-		
-		return null;
+		return (List<QBean>) getSession().createQuery("from QBean").list();
 	}
 
 	@Override
@@ -58,6 +57,7 @@ public class QDAOHibernate implements QDAO{
 
 	@Override
 	public int getCount() {
-		return 0;
+		Long count = ((Long) session.createQuery("select count(*) from QBean").uniqueResult());
+		return count.intValue();
 	}
 }

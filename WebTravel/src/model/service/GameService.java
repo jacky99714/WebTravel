@@ -15,9 +15,11 @@ public class GameService {
 		qDao = new QDAOHibernate(session);
 	}	
 	public QBean getQuestion(){
+			
 		QBean bean =new QBean();
-	//	int index = (int)(Math.random()*q.getCount()+1);
-		bean = qDao.select(1);
+		int index = (int) (Math.random()*qDao.getCount());
+		bean = qDao.select(index);
+
 		return bean;
 	}
 
