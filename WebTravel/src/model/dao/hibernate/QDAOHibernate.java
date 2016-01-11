@@ -1,4 +1,4 @@
-package model.hibernate;
+package model.dao.hibernate;
 
 
 
