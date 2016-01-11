@@ -1,7 +1,3 @@
-<%@page import="model.bean.SceneBean"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
-<%@page import="com.sun.corba.se.impl.javax.rmi.CORBA.Util"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -37,17 +33,11 @@
 <%@ page import="model.util.*"%>
 <%
 	int a = 0;
-	int rowCount = (int)session.getAttribute("rowCount");
-	int pageSize = (int)session.getAttribute("pageSize");
-	int pageq = (int)session.getAttribute("pageq");
-	int start = (int)session.getAttribute("start");
-	int end = (int)session.getAttribute("end");
-	
-// 	int startR = Integer.parseInt(request.getParameter("start"));
-// 	int endR = Integer.parseInt(request.getParameter("end"));
-// 	System.out.print(startR);
-	
-	
+	int rowCount = (Integer)session.getAttribute("rowCount");
+	int pageSize = (Integer)session.getAttribute("pageSize");
+	int pageq = (Integer)session.getAttribute("pageq");
+	int start = (Integer)session.getAttribute("start");
+	int end = (Integer)session.getAttribute("end");
 %>
 <!--     我是內容---------------------------- -->
     <div class="container-fluid">
@@ -90,7 +80,6 @@ for(int i= 0; i< pageq;i++){
   if(end>rowCount){end = rowCount;}
         //組你showdata.jsp的路徑從webapp開始
   //如果你是放在webapp/test/showdata.jsp
-  
   String str ="/MyCollectServlet?start="+start+"&end="+end;
 %>
 <a href=<%=request.getContextPath()%><%=str %>><font color= red>第<%=i+1%>頁　</font></b></a>

@@ -50,7 +50,17 @@
 		<audio  id="backAudio">
 			<source src="audio/bgsound.mp3" type="audio/mp3"/>	
 		</audio>		
-	</div>
+		</div>
+	    <hr class="featurette-divider">
+	    <footer>
+	    <p class="pull-right"><a href="#">Back to top</a></p>
+	    <p> 2015 Travel, Inc. &middot; <a href="#">聯絡我們</a>
+	    </footer>
 	
+	    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	    <!-- Include all compiled plugins (below), or include individual files as needed -->
+	   
+	    <script src=" <c:url value="/js/bootstrap.min.js"/>"></script>	
 </body><script type="text/javascript" src="game.js"></script>
 </html>
