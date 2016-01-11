@@ -72,8 +72,9 @@ window.onload = function(){
 }; 
 
 window.onkeydown = function (e) {
+	
     var code = e.keyCode ? e.keyCode : e.which;
-    if (code === 88){                                    //x
+    if (code === 39){                                    //->
         if(document.getElementById("userWalkBtn")){
             walk();	
         }   	
@@ -149,6 +150,7 @@ function getQuestion(){
 	if(xhr !== null){
 
     	xhr.addEventListener("readystatechange",callback);
+    
     	xhr.open("get","GetQuestionServlet",true); 
     	xhr.send();		      	
 	}else{
@@ -159,6 +161,7 @@ function getQuestion(){
 function callback(){
 	if(xhr.readyState === 4){ 	
 		if(xhr.status === 200){
+			
 			//步驟三接收Server端回應的結果
 	    	var data = JSON.parse(xhr.responseText);
 	    	questions = new question(data.QName,[data.a,data.b,data.c,data.d],data.ans);
@@ -656,7 +659,7 @@ function reStart(){
     operation = operation + "遊戲操作說明:<br/>";
     operation = operation + "可以使用鍵盤或滑鼠操作，在魔王攻擊時，可耗損魔力使用金鍾罩抵擋。<br/>";
     operation = operation + "鍵盤:<br/>";
-    operation = operation + "R是重新開始，S是遊戲開始  X是尋找敵人，Z是金鐘罩，C是選擇角色。<br/>";
+    operation = operation + "R是重新開始，S是遊戲開始  ->是尋找敵人，Z是金鐘罩，C是選擇角色。<br/>";
     operation = operation + "可使用數字1、2、3、4、enter鍵回答魔王所問的問題。";
     content.innerHTML = operation;	
     box.appendChild(content);
