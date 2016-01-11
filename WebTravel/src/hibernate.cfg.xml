@@ -15,6 +15,13 @@
 			<mapping class="model.bean.MemberBean" />
 			<mapping class="model.bean.MemberMessageBean" />
 			<mapping class="model.bean.QBean" />
+			<mapping class="model.bean.Collect" />
+			<mapping class="model.bean.CollectId" />
+			<mapping class="model.bean.Member" />
+			<mapping class="model.bean.Scene" />
+			
+			
+			
 <!-- 		<mapping resource="model/CustomerBean.hbm.xml" /> -->
 <!-- 		<mapping resource="model/ProductBean.hbm.xml" /> -->
 

@@ -13,7 +13,9 @@ import model.bean.MemberBean;
 import model.bean.SceneBean;
 import model.bean.ScheduleBean;
 import model.bean.ScheduleContentBean;
+import model.dao.CollectDAO;
 import model.dao.MemberDAO;
+import model.dao.Hibernate.CollectDAOHibernate;
 import model.dao.Hibernate.MemberDAOHibernate;
 import model.dao.jndi.CollectDAOjndi;
 import model.dao.jndi.SceneDAOjndi;
@@ -25,13 +27,13 @@ import other.bean.FavoriteBean;
 
 public class MemberService {
 	private MemberDAO mDAO;
-	
+	private CollectDAO cDAO ;
 	public MemberService(){
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		mDAO =  new MemberDAOHibernate(session);
+		cDAO = new CollectDAOHibernate(session);
 	}
 	
-	CollectDAOjndi cDAO = new CollectDAOjndi();
 	SceneDAOjndi sDAO = new SceneDAOjndi();
 	ScheduleDAOjndi scheduleDAO = new ScheduleDAOjndi();
 	ScheduleContentDAOjndi scheduleContentDAO = new ScheduleContentDAOjndi();
