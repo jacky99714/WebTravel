@@ -10,14 +10,13 @@ import model.bean.QBean;
 import model.dao.QDAO;
 
 
-public class QDAOHibernate implements QDAO{	
-	private Session session;
+public class QDAOHibernate implements QDAO{
 	
+	private Session session;
 	public QDAOHibernate(Session session) {
 		super();
 		this.session = session;
 	}
-	
 	public Session getSession() {
 		return session;
 	}
@@ -40,19 +39,33 @@ public class QDAOHibernate implements QDAO{
 
 	@Override
 	public boolean delete(int qId) {
-		// TODO Auto-generated method stub
+		QBean result = (QBean)getSession().get(QBean.class, qId);
+		if(result != null){
+			getSession().delete(result);
+		}
 		return false;
 	}
 
 	@Override
 	public QBean insert(QBean qBean) {
-		// TODO Auto-generated method stub
+		QBean result = (QBean)getSession().get(QBean.class, qBean.getqId());
+		if(result == null){
+			getSession().save(qBean);
+		}
 		return null;
 	}
 
 	@Override
 	public QBean update(QBean qBean) {
-		// TODO Auto-generated method stub
+		QBean result = (QBean)getSession().get(QBean.class, qBean.getqId());
+		if(result != null){
+			qBean.setqId(result.getqId());
+			qBean.setQName(result.getQName());
+			qBean.setA(result.getA());
+			qBean.setB(result.getB());
+			qBean.setC(result.getC());
+			qBean.setD(result.getD());
+		}
 		return null;
 	}
 

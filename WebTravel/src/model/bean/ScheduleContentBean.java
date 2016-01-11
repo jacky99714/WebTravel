@@ -1,11 +1,15 @@
 package model.bean;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -19,12 +23,9 @@ public class ScheduleContentBean {
 	private int sceneId;
 	private int scheduleId;
 	
-//	@ManyToOne
-//	@JoinColumn(name="scheduleId",
-//				referencedColumnName="scheduleId",
-//				insertable=false,updatable=false
-//	)	
+//	@JoinColumn(name="scheduleId")
 //	private ScheduleBean schedule;
+	
 	
 	
 	@Override

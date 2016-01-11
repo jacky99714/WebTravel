@@ -5,7 +5,6 @@ import org.hibernate.Session;
 import model.bean.QBean;
 import model.dao.QDAO;
 import model.dao.hibernate.QDAOHibernate;
-import model.dao.jndi.QDAOjndi;
 import model.hibernate.HibernateUtil;
 
 public class GameService {

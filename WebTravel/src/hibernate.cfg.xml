@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-configuration PUBLIC
-		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-    <session-factory>
-        <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
-        <property name="hibernate.connection.password">sa123456</property>
-        <property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;database=travel</property>
-        <property name="hibernate.connection.username">sa</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
-       	
-       	<property name="hibernate.current_session_context_class">thread</property>
-		<property name="hibernate.show_sql">true</property>
+
+	<session-factory>
+<!-- 		<property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property> -->
+<!-- 		<property name="hibernate.connection.password">sa123456</property> -->
+<!-- 		<property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;database=Travel</property> -->
+<!-- 		<property name="hibernate.connection.username">sa</property> -->
+			<property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
+			<property name="connection.datasource">java:comp/env/jdbc/xxx</property>
+			<property name="hibernate.current_session_context_class">thread</property>
+			<property name="hibernate.show_sql">true</property>
 		
-		<mapping class="model.bean.QBean" />
-		<mapping class= "model.bean.ScheduleBean"/>
-		<mapping class="model.bean.ScheduleContentBean"/>
-    
-    </session-factory>
-    
+			<mapping class="model.bean.MemberBean" />
+			<mapping class="model.bean.MemberMessageBean" />
+			<mapping class="model.bean.QBean" />
+			<mapping class="model.bean.ScheduleBean" />
+			<mapping class="model.bean.ScheduleContentBean" />
+<!-- 		<mapping resource="model/CustomerBean.hbm.xml" /> -->
+<!-- 		<mapping resource="model/ProductBean.hbm.xml" /> -->
+
+
+	</session-factory>
 
 </hibernate-configuration>

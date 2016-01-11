@@ -42,7 +42,7 @@ public class GetFavoriteServlet extends HttpServlet {
 	    request.setCharacterEncoding("UTF-8");
 	    response.setContentType("text/html; charset=UTF-8");
 	    
-	    PlanService ps = new PlanService(HibernateUtil.getSessionFactory().getCurrentSession());
+	    PlanService ps = new PlanService();
 		List<FavoriteBean> li = new ArrayList<>();
 
 		

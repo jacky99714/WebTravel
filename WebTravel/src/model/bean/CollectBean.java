@@ -1,5 +1,8 @@
 package model.bean;
-public class CollectBean {
+
+import java.io.Serializable;
+
+public class CollectBean implements Serializable{
 
 	private int memberId;
 	private int sceneId;

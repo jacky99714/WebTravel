@@ -1,11 +1,15 @@
 package model.bean;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -17,12 +21,13 @@ public class ScheduleBean {
 	private int scheduleId;
 	private String scheduleName;
 	private int memberId;
-//	@ManyToOne
-//	@JoinColumn(name="memberId",
-//				referencedColumnName="memberId",
-//				insertable=false,updatable=false
+//	@OneToMany(
+//			mappedBy="schedule",
+//			cascade={
+//				CascadeType.REMOVE
+//			}
 //	)
-//	private MemberBean member;
+//	private Set<ScheduleContentBean> scheduleContents; 
 	
 	
 	@Override

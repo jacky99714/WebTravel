@@ -38,7 +38,7 @@ public class InsertScheduleServlet extends HttpServlet {
 	
 		JSONArray jsonArr = new JSONArray(request.getParameter("json")); 
 
-		PlanService ps = new PlanService(HibernateUtil.getSessionFactory().getCurrentSession());
+		PlanService ps = new PlanService();
 		ps.insertSchedule(jsonArr);
 		HttpSession session = request.getSession();
 		session.removeAttribute("scheduleList");
