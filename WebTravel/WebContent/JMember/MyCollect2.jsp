@@ -42,12 +42,6 @@
 	int pageq = (int)session.getAttribute("pageq");
 	int start = (int)session.getAttribute("start");
 	int end = (int)session.getAttribute("end");
-	
-// 	int startR = Integer.parseInt(request.getParameter("start"));
-// 	int endR = Integer.parseInt(request.getParameter("end"));
-// 	System.out.print(startR);
-	
-	
 %>
 <!--     我是內容---------------------------- -->
     <div class="container-fluid">
@@ -90,7 +84,6 @@ for(int i= 0; i< pageq;i++){
   if(end>rowCount){end = rowCount;}
         //組你showdata.jsp的路徑從webapp開始
   //如果你是放在webapp/test/showdata.jsp
-  
   String str ="/MyCollectServlet?start="+start+"&end="+end;
 %>
 <a href=<%=request.getContextPath()%><%=str %>><font color= red>第<%=i+1%>頁　</font></b></a>
