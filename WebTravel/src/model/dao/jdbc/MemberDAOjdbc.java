@@ -77,7 +77,7 @@ public class MemberDAOjdbc implements MemberDAO {
 				MemberBean mBean =new MemberBean();
 				mBean.setMemberId(rs.getInt(1));
 				mBean.setUserName(rs.getString(2));
-				mBean.setPassword(new String(rs.getBytes(3)));
+				mBean.setPassword(rs.getBytes(3));
 				mBean.setFirstName(rs.getString(4));
 				mBean.setLastName(rs.getString(5));
 				mBean.setNickName(rs.getString(6));
@@ -113,7 +113,7 @@ public class MemberDAOjdbc implements MemberDAO {
 				MemberBean mBean =new MemberBean();
 				mBean.setMemberId(rs.getInt(1));
 				mBean.setUserName(rs.getString(2));
-				mBean.setPassword(new String(rs.getBytes(3)));
+				mBean.setPassword(rs.getBytes(3));
 				mBean.setFirstName(rs.getString(4));
 				mBean.setLastName(rs.getString(5));
 				mBean.setNickName(rs.getString(6));
@@ -147,7 +147,7 @@ public class MemberDAOjdbc implements MemberDAO {
 				MemberBean mBean =new MemberBean();
 				mBean.setMemberId(rs.getInt(1));
 				mBean.setUserName(rs.getString(2));
-				mBean.setPassword(new String(rs.getBytes(3)));
+				mBean.setPassword(rs.getBytes(3));
 				mBean.setFirstName(rs.getString(4));
 				mBean.setLastName(rs.getString(5));
 				mBean.setNickName(rs.getString(6));
@@ -178,7 +178,7 @@ public class MemberDAOjdbc implements MemberDAO {
 			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(INSERT);
 			ps.setString(1, memberBean.getUserName());
-			ps.setBytes(2, memberBean.getPassword().getBytes());
+			ps.setBytes(2, memberBean.getPassword());
 			ps.setString(3, memberBean.getFirstName());
 			ps.setString(4, memberBean.getLastName());
 			ps.setString(5, memberBean.getNickName());
@@ -210,7 +210,7 @@ public class MemberDAOjdbc implements MemberDAO {
 			conn = JdbcConnection.getConnection();
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
 			ps.setString(10, memberBean.getUserName());
-			ps.setBytes(1, memberBean.getPassword().getBytes());
+			ps.setBytes(1, memberBean.getPassword());
 			ps.setString(2, memberBean.getFirstName());
 			ps.setString(3, memberBean.getLastName());
 			ps.setString(4, memberBean.getNickName());
@@ -284,7 +284,7 @@ public class MemberDAOjdbc implements MemberDAO {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		MemberBean mb = new MemberBean();
 		mb.setUserName("jack1");
-		mb.setPassword("B");
+		mb.setPassword("B".getBytes());
 		mb.setFirstName("王");
 		mb.setLastName("翔");
 		mb.setNickName("moujjjjjjjsssse");

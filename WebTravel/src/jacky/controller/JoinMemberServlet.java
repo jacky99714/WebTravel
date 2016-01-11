@@ -99,7 +99,7 @@ public class JoinMemberServlet extends HttpServlet {
 		MemberBean mb = new MemberBean();
 		
 		mb.setUserName(temp1);
-		mb.setPassword(temp2);
+		mb.setPassword(temp2.getBytes());
 		mb.setLastName(temp3);
 		mb.setFirstName(temp4);
 		mb.setNickName(temp5);

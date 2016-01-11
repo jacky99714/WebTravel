@@ -1,5 +1,8 @@
 package model.bean;
-public class ImpeachBean {
+
+import java.io.Serializable;
+
+public class ImpeachBean implements Serializable{
 
 	private int impeachId;
 	private Integer restaurantId;

@@ -1,24 +1,36 @@
 package model.service;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.hibernate.Session;
 
 import model.bean.CollectBean;
 import model.bean.MemberBean;
 import model.bean.SceneBean;
 import model.bean.ScheduleBean;
 import model.bean.ScheduleContentBean;
+import model.dao.MemberDAO;
+import model.dao.Hibernate.MemberDAOHibernate;
 import model.dao.jndi.CollectDAOjndi;
-import model.dao.jndi.MemberDAOjndi;
 import model.dao.jndi.SceneDAOjndi;
 import model.dao.jndi.ScheduleContentDAOjndi;
 import model.dao.jndi.ScheduleDAOjndi;
+import model.hibernate.HibernateUtil;
 import model.util.TypeConveter;
 import other.bean.FavoriteBean;
 
 public class MemberService {
-	MemberDAOjndi mDAO= new MemberDAOjndi();
+	private MemberDAO mDAO;
+	
+	public MemberService(){
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		mDAO =  new MemberDAOHibernate(session);
+	}
+	
 	CollectDAOjndi cDAO = new CollectDAOjndi();
 	SceneDAOjndi sDAO = new SceneDAOjndi();
 	ScheduleDAOjndi scheduleDAO = new ScheduleDAOjndi();
@@ -29,7 +41,7 @@ public class MemberService {
 		MemberBean mb=  mDAO.select(useid);
 		if (mb!=null) {
 			if (password != null && password.length() != 0) {
-				if(mb.getPassword().equals(password)){
+				if(new String(mb.getPassword()).equals(password)){
 					return mb;
 				}
 			} 
@@ -37,7 +49,7 @@ public class MemberService {
 		return null;
 	}
 	//增加會員
-	public MemberBean insert(MemberBean memberBean){
+	public MemberBean insert(MemberBean memberBean) throws FileNotFoundException{
 		if(memberBean!=null){
 //				String p= TypeConveter.EncodeBase64(memberBean.getPassword().getBytes());
 //				memberBean.setPassword(p);
@@ -71,7 +83,7 @@ public class MemberService {
 		return null;
 	}
 	//修改資料
-	public MemberBean updata(MemberBean memberBean){
+	public MemberBean updata(MemberBean memberBean) throws IOException{
 		if(memberBean!=null){
 			return mDAO.update(memberBean);
 		}
