@@ -1,6 +1,17 @@
 package model.bean;
 
-public class QBean {
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.Session;
+
+import model.hibernate.HibernateUtil;
+
+@Entity
+@Table(name="Q")
+public class QBean {	
+	@Id
 	private int qId;
 	private String QName;
 	private String ans;

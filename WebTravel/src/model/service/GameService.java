@@ -1,16 +1,23 @@
 package model.service;
 
+import org.hibernate.Session;
+
 import model.bean.QBean;
 import model.dao.QDAO;
+import model.dao.Hibernate.QDAOHibernate;
 import model.dao.jndi.QDAOjndi;
+import model.hibernate.HibernateUtil;
 
 public class GameService {
-	
-	public QBean getQuestion(){
-		QDAO q = new QDAOjndi();
+	private QDAO qDao;
+	public GameService() {
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		qDao = new QDAOHibernate(session);
+	}	
+	public QBean getQuestion(){	
 		QBean bean =new QBean();
-		int index = (int)(Math.random()*q.getCount()+1);
-		bean = q.select(index);
+		int index = (int) (Math.random()*qDao.getCount());
+		bean = qDao.select(index);
 		return bean;
 	}
 
