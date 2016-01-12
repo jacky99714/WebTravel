@@ -22,7 +22,7 @@ public class OpenSessionInViewFilter implements Filter {
 	private FilterConfig config = null;
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		this.config = config;
+		this.config = filterConfig;
 	}
 
 	@Override

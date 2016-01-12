@@ -29,7 +29,7 @@ public class UpdataScheduleContentServlet extends HttpServlet {
 		response.setContentType("application/json");
 //		JSONObject jsonObject = new JSONObject(request.getParameter("a"));
 		JSONArray jsonArray = new JSONArray(request.getParameter("a"));
-//		System.out.println("UpdataScheduleContentServlet:"+jsonArray);
+		System.out.println("UpdataScheduleContentServlet:"+jsonArray);
 		HttpSession session = request.getSession();
 		MemberBean mb = (MemberBean)session.getAttribute("loginOk");
 		String scheduleId = (String)session.getAttribute("ScheduleId");
