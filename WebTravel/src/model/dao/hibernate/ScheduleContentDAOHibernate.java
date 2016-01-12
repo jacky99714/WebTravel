@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 
+import model.bean.ScheduleBean;
 import model.bean.ScheduleContentBean;
 import model.dao.ScheduleContentDAO;
 
@@ -39,10 +40,11 @@ public class ScheduleContentDAOHibernate implements ScheduleContentDAO{
 	}
 
 	@Override
-	public boolean delete(int scheduleContentId) {
-		ScheduleContentBean result = (ScheduleContentBean)getSession().get(ScheduleContentBean.class,scheduleContentId);
-		if(result != null){
-			getSession().delete(result);
+	public boolean delete(int scheduleId) {
+		ScheduleBean bean = (ScheduleBean) getSession().get(ScheduleBean.class,scheduleId);
+		if(bean != null){
+			getSession().delete(bean);
+			return true;
 		}
 		return false;
 	}
