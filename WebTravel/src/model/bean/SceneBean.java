@@ -1,9 +1,28 @@
 package model.bean;
 
 import java.util.Arrays;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.Session;
+import org.hibernate.annotations.Cascade;
+
+import model.hibernate.HibernateUtil;
+
+
+@Entity
+@Table(name="Scene")
 public class SceneBean implements java.io.Serializable{
-
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int sceneId;
 
 	private String location;
@@ -29,7 +48,15 @@ public class SceneBean implements java.io.Serializable{
 	private String timeEnd;
 	
 	private int memberId;
-
+	//對應sceneImg
+	@OneToMany(
+			mappedBy="scene",
+			cascade={CascadeType.REMOVE}
+			)
+    private Set<SceneImgBean> sceneimg;
+	
+	//對應sceneMessage
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -164,7 +191,50 @@ public class SceneBean implements java.io.Serializable{
 	public void setMemberId(int memberId) {
 		this.memberId = memberId;
 	}
-
 	
+	public Set<SceneImgBean> getSceneimg() {
+		return sceneimg;
+	}
+
+	public void setSceneimg(Set<SceneImgBean> sceneimg) {
+		this.sceneimg = sceneimg;
+	}
+
+	public static void main(String[] args) {
+		try {
+			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+			session.beginTransaction();
+
+//			Criteria criteria = session.createCriteria(DeptBean.class);
+//			criteria.add(Restrictions.like("deptname", "%b%"));
+//			List<DeptBean> depts = criteria.list();
+//			System.out.println(depts);
+			
+			
+			SceneBean select1 = (SceneBean) session.load(SceneBean.class, 1);
+			System.out.println(select1);
+//			Set<EmpBean> emps = select1.getEmps();
+//			System.out.println(emps);
+//			session.delete(select1);
+			
+//			DeptBean select2 = (DeptBean) session.get(DeptBean.class, 20);
+//			System.out.println(select2);
+
+//			List<DeptBean> beans = session.createQuery("from DeptBean").list();
+//			System.out.println(beans);
+		
+//			DeptBean bean = new DeptBean();
+//			bean.setDeptid(90);
+//			bean.setDeptname("hohoho");
+//			session.save(bean);
+
+			
+			session.getTransaction().commit();
+		} finally {
+			HibernateUtil.closeSessionFactory();
+		}
+	}
 
 }
+
+
