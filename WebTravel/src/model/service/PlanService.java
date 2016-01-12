@@ -50,7 +50,7 @@ public class PlanService {
 	 
 	 public List<FavoriteBean> getScene(String location){
 		 if("北區".equals(location) || "中區".equals(location) || "南區".equals(location) || "東區".equals(location)){
-			 return sceneDao.select(location);
+			 return sceneDao.selectf(location);
 		 }else{
 			 return null;
 		 }	 

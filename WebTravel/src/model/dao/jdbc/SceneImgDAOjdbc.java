@@ -59,23 +59,26 @@ public class SceneImgDAOjdbc implements SceneImgDAO {
 	 * @see model.dao.jdbc.SceneImgDAO#select(int)
 	 */
 	@Override
-	public SceneImgBean select(int sceneId) {
+	public List<SceneImgBean> select(int sceneId) {
+		List<SceneImgBean> list = null;
 		SceneImgBean rmbean = null;
 		try (Connection conn = JdbcConnection.getConnection();) {
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_SCENEID);
 			ps.setInt(1, sceneId);
 			ResultSet rs = ps.executeQuery();
+			list = new ArrayList<SceneImgBean>();
 			while (rs.next()) {
 				rmbean = new SceneImgBean();
 				rmbean.setSceneImgId(rs.getInt(1));
 				rmbean.setImg(rs.getBytes(2));
 				rmbean.setSceneId(rs.getInt(3));
+				
+				list.add(rmbean);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		return rmbean;
+		return list;
 	}
 
 	// 新增INSERT
