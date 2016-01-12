@@ -23,6 +23,9 @@
 			<mapping class="model.bean.ScheduleBean" />
 			<mapping class="model.bean.ScheduleContentBean" />
 			<mapping class="model.bean.ThoughtBean" />
+			<mapping class="model.bean.SceneBean"/>
+            <mapping class="model.bean.SceneImgBean"/>
+            <mapping class="model.bean.SceneMessageBean"/>
 	</session-factory>
 
 

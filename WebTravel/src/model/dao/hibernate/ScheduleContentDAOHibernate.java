@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import model.bean.ScheduleBean;
 import model.bean.ScheduleContentBean;
 import model.dao.ScheduleContentDAO;
+import model.hibernate.HibernateUtil;
 
 public class ScheduleContentDAOHibernate implements ScheduleContentDAO{
 
@@ -18,6 +19,21 @@ public class ScheduleContentDAOHibernate implements ScheduleContentDAO{
 	public Session getSession(){
 		return session;
 	}
+	public static void main(String[] args){
+		try {
+//			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+//			session.beginTransaction();
+//			ScheduleContentDAOHibernate sDAO = new ScheduleContentDAOHibernate(session);
+////			System.out.println(sDAO.select());
+//			sDAO.delete(1);
+//			
+//			session.getTransaction().commit();
+		} finally {
+			HibernateUtil.closeSessionFactory();
+		}
+	}
+	
+	
 	
 	@Override
 	public List<ScheduleContentBean> select() {
@@ -41,11 +57,7 @@ public class ScheduleContentDAOHibernate implements ScheduleContentDAO{
 
 	@Override
 	public boolean delete(int scheduleId) {
-		ScheduleBean bean = (ScheduleBean) getSession().get(ScheduleBean.class,scheduleId);
-		if(bean != null){
-			getSession().delete(bean);
-			return true;
-		}
+		getSession().createQuery("delete ScheduleContentBean where scheduleId = :sss").setParameter("sss", scheduleId).executeUpdate();
 		return false;
 	}
 

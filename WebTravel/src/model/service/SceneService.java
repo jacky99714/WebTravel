@@ -15,7 +15,7 @@ public class SceneService {
 	public List<FavoriteBean> getLocation(String location) {
 		if (location != null) {
 			
-			List<FavoriteBean> lilo = sceneDao.select(location);
+			List<FavoriteBean> lilo = sceneDao.selectf(location);
 			 
 			for(FavoriteBean fbean:lilo){
 				if(fbean.getSceneContent().length()>=70L){
@@ -32,7 +32,7 @@ public class SceneService {
 	public List<FavoriteBean> getCity(String city) {
 		if (city != null) {
 
-			List<FavoriteBean> lilo = sceneDao.selectCity(city);
+			List<FavoriteBean> lilo = sceneDao.selectCityf(city);
 
 			for (FavoriteBean fbean : lilo) {
 				if (fbean.getSceneContent().length() >= 70L) {
@@ -48,7 +48,7 @@ public class SceneService {
 	//搜尋景點
 	public FavoriteBean getName(String sceneName) {
 		if (sceneName != null) {
-			return sceneDao.selectName(sceneName);
+			return sceneDao.selectNamef(sceneName);
 		}
 		return null;
 	}

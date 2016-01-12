@@ -42,7 +42,6 @@ public class MemberService {
 		scheduleDAO =new ScheduleDAOHibernate(session);
 		scheduleContentDAO = new ScheduleContentDAOHibernate(session);
 	}
-	
 	SceneDAOjndi sDAO = new SceneDAOjndi();
 	
 	HashMap<String, String> error = new HashMap<String,String>();
@@ -86,9 +85,10 @@ public class MemberService {
 		return sDAO.select(sceneId);
 	}
 	//修改會員資料
-	public MemberBean updateContext(MemberBean memberBean){
+	public MemberBean updateContext(MemberBean memberBean) throws IOException{
 		if(memberBean!=null){
-			return mDAO.updateContext(memberBean);
+			System.out.println("MemberSevice:updata");
+			return mDAO.update(memberBean);
 		}
 		return null;
 	}

@@ -15,8 +15,6 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.sun.swing.internal.plaf.metal.resources.metal_zh_TW;
-
 import model.bean.SceneBean;
 import model.service.MemberService;
 import other.bean.FavoriteBean;

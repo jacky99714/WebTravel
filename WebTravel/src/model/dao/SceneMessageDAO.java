@@ -10,7 +10,7 @@ public interface SceneMessageDAO {
 	List<SceneMessageBean> select();
 
 	//查詢SELECT_BY_SCENEID
-	SceneMessageBean select(int sceneId);
+	List<SceneMessageBean> select(int sceneId);
 
 	//新增INSERT
 	SceneMessageBean insert(SceneMessageBean bean);
