@@ -18,6 +18,11 @@
          var maxImg = 4;  // max image in tr tag
          var maxLine = 5;   
          var scheduleArray = [];
+         var showImg = 20;
+         var imgFavData;
+         var imgFavPage = 0;
+         var imgSearchData;
+         var imgSearchPage = 0;
 ///////////////////////////////////////////////////////////
 		function schedule(memberId,scheduleName,scheduleOrder,sceneId){
 			this.memberId = memberId;
@@ -113,8 +118,10 @@
 	    function callbackFavorite(){
 	    	if(xhrFavorite.readyState === 4){ 	
 	    		if(xhrFavorite.status === 200){
-			    	var data = JSON.parse(xhrFavorite.responseText);
-			    	createImgContent(data);
+	    			alert("callbackFavorite()");
+	    			imgFavPage = 1;
+	    			imgFavData = JSON.parse(xhrFavorite.responseText);
+			    	createImgContent(imgFavData,imgFavPage,1,"imgFav");
 	    		}else{
 	    			alert(xhrFavorite.status + ":" + xhrFavorite.statusText);
 	    		}    		
@@ -158,8 +165,9 @@
 	    function callbackSearch(){
 	    	if(xhrSearch.readyState === 4){ 	
 	    		if(xhrSearch.status === 200){
-			    	var data = JSON.parse(xhrSearch.responseText);
-			    	createImgContent(data);
+	    			imgSearchPage = 1;
+	    			imgSearchData = JSON.parse(xhrSearch.responseText);
+			   // 	createImgContent(imgSearchData,imgSearchPage,1,"imgSearch");
 	    		}else{
 	    			alert(xhrSearch.status + ":" + xhrSearch.statusText);
 	    		}    		
@@ -220,10 +228,29 @@
 	    	}		    	
 	    }
 /////////////////////////////////////////////
-		 function createImgContent(data){
+
+		 function createImgContent(data,page,direction,type){
+				var begin = (page-1)*showImg;
+				var end;
+				if(direction == 1){    //next page
+					if(data.length > (begin + showImg)){
+						end = begin + showImg;
+					}else{
+						end = data.length;
+					}
+				}else if(direction == 2){  //previous page	
+					if(data.length > (begin + showImg)){
+						end = begin + showImg;
+					}else{
+						end = data.length;
+					}
+				}else{
+					return;
+				} 
+				
 		    	var content = document.getElementById("content");  //顯示資料
 		    	content.innerHTML="";
-		    	for(var i=0; i < data.length;i++){
+		    	for(var i=begin; i < end;i++){
 		            var div = document.createElement("div");
 		            div.className = "imgContent";        
 		    		var img = createImg('data:image/png;base64,'+data[i].scenePhoto,data[i].sceneId,data[i].sceneName);
@@ -234,8 +261,48 @@
 		    		divName.appendChild(text);
 		    		div.appendChild(img);
 		    		div.appendChild(divName);
-		    		content.appendChild(div);
-		    	}	
+		    		content.appendChild(div);    	
+		    	}
+		    	
+		
+		    	if(begin !== 0){
+		        	var prevDiv = document.createElement("a");
+			    	var prevPage = document.createTextNode("上一頁");
+			    	prevDiv.style.paddingLeft = "50px";
+			    	prevDiv.style.paddingTop = "10px";
+			    	prevDiv.style.display = "inline-block";
+			    	prevDiv.appendChild(prevPage);
+			    	prevDiv.addEventListener("click", function f(){
+			   
+		    			if(type == "imgFav"){
+		    				imgFavPage--;
+		    				createImgContent(imgFavData,imgFavPage,2,"imgFav");
+		    			}else if(type == "imgSearch"){
+		    				imgSearchPage--;
+		    				createImgContent(imgSearchData,imgSearchPage,2,"imgSearch");
+		    			}
+		    		});
+		    		content.appendChild(prevDiv);   	
+		    	}
+		    	
+		    	if(end !== data.length){
+			    	var nextDiv = document.createElement("a");
+			    	nextDiv.style.paddingLeft = "50px";
+			    	nextDiv.style.paddingTop = "10px";
+			    	nextDiv.style.display = "inline-block";
+			    	var nextPage = document.createTextNode("下一頁");
+			    	nextDiv.appendChild(nextPage);
+			    	nextDiv.addEventListener("click", function f(){
+		    			if(type == "imgFav"){
+		    				imgFavPage++;
+		    				createImgContent(imgFavData,imgFavPage,2,"imgFav");
+		    			}else if(type == "imgSearch"){
+		    				imgSearchPage++;
+		    				createImgContent(imgSearchData,imgSearchPage,2,"imgSearch");
+		    			}
+		    		});
+		    		content.appendChild(nextDiv);   
+		    	}
 		 } 
 		 
 		 function appendScheduleContent(data){  
@@ -332,14 +399,17 @@
             			//${loginOk.memberId}
             		}
             	}
-            	// schedule(memberId,scheduleName,scheduleOrder,sceneID)
            
               	createSchedule(JSON.stringify(scheduleArray));    	
             	
             });
             
+            
+            document.getElementById("insert").innerHTML = "<br>對我的收藏或是搜尋景點裡的圖片按左鍵可以加入行程，<br>使用拖曳圖片的方式刪除行程或是行程排序。";
+            
             getSchedule();
             getFavorite();
+            
             document.getElementById("fav").addEventListener("click", function(){
             	getFavorite();
             });       
