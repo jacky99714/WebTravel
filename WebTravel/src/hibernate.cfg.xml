@@ -18,8 +18,8 @@
 			<mapping class="model.bean.QBean" />
 			<mapping class="model.bean.ScheduleBean" />
 			<mapping class="model.bean.ScheduleContentBean" />
-<!-- 		<mapping resource="model/CustomerBean.hbm.xml" /> -->
-<!-- 		<mapping resource="model/ProductBean.hbm.xml" /> -->
+			<mapping class="model.bean.ThoughtBean" />
+
 
 
 	</session-factory>

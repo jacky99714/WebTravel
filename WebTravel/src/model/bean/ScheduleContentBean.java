@@ -23,11 +23,7 @@ public class ScheduleContentBean {
 	private int sceneId;
 	private int scheduleId;
 	
-//	@JoinColumn(name="scheduleId")
-//	private ScheduleBean schedule;
-	
-	
-	
+
 	@Override
 	public String toString() {
 		return "[行程內容id："+ scheduleContentId + ",行程順序：" + scheduleOrder

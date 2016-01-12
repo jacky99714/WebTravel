@@ -21,15 +21,22 @@ public class ScheduleBean {
 	private int scheduleId;
 	private String scheduleName;
 	private int memberId;
-//	@OneToMany(
-//			mappedBy="schedule",
-//			cascade={
-//				CascadeType.REMOVE
-//			}
-//	)
-//	private Set<ScheduleContentBean> scheduleContents; 
+	
+	@OneToMany(
+			cascade={
+				CascadeType.REMOVE
+			}
+	)
+	@JoinColumn(name="scheduleId")
+	private Set<ScheduleContentBean> scheduleContentBeans; 
 	
 	
+	public Set<ScheduleContentBean> getScheduleContentBeans() {
+		return scheduleContentBeans;
+	}
+	public void setScheduleContentBeans(Set<ScheduleContentBean> scheduleContentBeans) {
+		this.scheduleContentBeans = scheduleContentBeans;
+	}
 	@Override
 	public String toString() {
 		return "[" + scheduleId + "," + scheduleName +","+ memberId + "]";
