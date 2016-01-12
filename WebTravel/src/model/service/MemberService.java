@@ -15,10 +15,12 @@ import model.bean.ScheduleBean;
 import model.bean.ScheduleContentBean;
 import model.dao.CollectDAO;
 import model.dao.MemberDAO;
+import model.dao.SceneDAO;
 import model.dao.ScheduleContentDAO;
 import model.dao.ScheduleDAO;
 import model.dao.hibernate.CollectDAOHibernate;
 import model.dao.hibernate.MemberDAOHibernate;
+import model.dao.hibernate.SceneDAOHibernate;
 import model.dao.hibernate.ScheduleContentDAOHibernate;
 import model.dao.hibernate.ScheduleDAOHibernate;
 import model.dao.jndi.CollectDAOjndi;
@@ -34,15 +36,16 @@ public class MemberService {
 	private CollectDAO cDAO ;
 	private ScheduleDAO scheduleDAO ;
 	private ScheduleContentDAO scheduleContentDAO ;
-	
+	private SceneDAO sDAO;
 	public MemberService(){
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		mDAO =  new MemberDAOHibernate(session);
 		cDAO = new CollectDAOHibernate(session);
 		scheduleDAO =new ScheduleDAOHibernate(session);
 		scheduleContentDAO = new ScheduleContentDAOHibernate(session);
+		sDAO = new SceneDAOHibernate(session);
 	}
-	SceneDAOjndi sDAO = new SceneDAOjndi();
+	
 	
 	HashMap<String, String> error = new HashMap<String,String>();
 	//登入使用
