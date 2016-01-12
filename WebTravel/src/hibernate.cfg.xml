@@ -3,16 +3,26 @@
 		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
 		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-    <session-factory>
-<!--         <property name="hibernate.connection.driver_class">com.microsoft.jdbc.sqlserver.SQLServerDriver</property> -->
-<!--         <property name="hibernate.connection.password">sa123456</property> -->
-<!--         <property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;database=Travel</property> -->
-<!--         <property name="hibernate.connection.username">sa</property> -->
-        <property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
-        <property name="connection.datasource">java:comp/env/jdbc/xxx</property>
-        <property name="hibernate.current_session_context_class">thread</property>
-        <property name="hibernate.show_sql">true</property>
-        
-        <mapping class="model.bean.ThoughtBean" />
-    </session-factory>
+	<session-factory>
+<!-- 		<property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property> -->
+<!-- 		<property name="hibernate.connection.password">sa123456</property> -->
+<!-- 		<property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;database=Travel</property> -->
+<!-- 		<property name="hibernate.connection.username">sa</property> -->
+			<property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
+			<property name="connection.datasource">java:comp/env/jdbc/xxx</property>
+			<property name="hibernate.current_session_context_class">thread</property>
+			<property name="hibernate.show_sql">true</property>
+		
+			<mapping class="model.bean.MemberBean" />
+			<mapping class="model.bean.MemberMessageBean" />
+			<mapping class="model.bean.QBean" />
+			<mapping class="model.bean.ScheduleBean" />
+			<mapping class="model.bean.ScheduleContentBean" />
+			<mapping class="model.bean.ThoughtBean" />
+
+
+
+	</session-factory>
+
+
 </hibernate-configuration>

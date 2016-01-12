@@ -1,4 +1,4 @@
-package model.dao.Hibernate;
+package model.dao.hibernate;
 
 import java.io.File;
 import java.io.FileInputStream;

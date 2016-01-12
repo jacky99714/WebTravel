@@ -338,8 +338,8 @@
             	
             });
             
-            getSchedule();
-            getFavorite();
+         //   getSchedule();
+         //   getFavorite();
             document.getElementById("fav").addEventListener("click", function(){
             	getFavorite();
             });       

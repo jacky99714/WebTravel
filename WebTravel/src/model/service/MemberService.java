@@ -14,7 +14,7 @@ import model.bean.SceneBean;
 import model.bean.ScheduleBean;
 import model.bean.ScheduleContentBean;
 import model.dao.MemberDAO;
-import model.dao.Hibernate.MemberDAOHibernate;
+import model.dao.hibernate.MemberDAOHibernate;
 import model.dao.jndi.CollectDAOjndi;
 import model.dao.jndi.SceneDAOjndi;
 import model.dao.jndi.ScheduleContentDAOjndi;
