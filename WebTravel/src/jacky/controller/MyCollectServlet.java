@@ -19,7 +19,7 @@ import other.bean.FavoriteBean;
 @WebServlet("/MyCollectServlet")
 public class MyCollectServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    MemberService memberService = new MemberService();
+    
     
     public MyCollectServlet() {
         super();
@@ -36,6 +36,7 @@ public class MyCollectServlet extends HttpServlet {
 		SceneBean sb = new SceneBean();
 //		System.out.println("MyCollectServlet:"+mb);
 		if(mb!=null){
+			MemberService memberService = new MemberService();
 			List<SceneBean> sceneList = memberService.getMemberCollectScene(mb.getMemberId());
 			sceneList=memberService.SubStirngCount(sceneList);
 			List<FavoriteBean> sceneListF=memberService.selectFavoriteBean(sceneList);

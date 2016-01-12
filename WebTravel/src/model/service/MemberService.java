@@ -1,35 +1,56 @@
 package model.service;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.hibernate.Session;
 
 import model.bean.CollectBean;
 import model.bean.MemberBean;
 import model.bean.SceneBean;
 import model.bean.ScheduleBean;
 import model.bean.ScheduleContentBean;
+import model.dao.CollectDAO;
+import model.dao.MemberDAO;
+import model.dao.ScheduleContentDAO;
+import model.dao.ScheduleDAO;
+import model.dao.hibernate.CollectDAOHibernate;
+import model.dao.hibernate.MemberDAOHibernate;
+import model.dao.hibernate.ScheduleContentDAOHibernate;
+import model.dao.hibernate.ScheduleDAOHibernate;
 import model.dao.jndi.CollectDAOjndi;
-import model.dao.jndi.MemberDAOjndi;
 import model.dao.jndi.SceneDAOjndi;
 import model.dao.jndi.ScheduleContentDAOjndi;
 import model.dao.jndi.ScheduleDAOjndi;
+import model.hibernate.HibernateUtil;
 import model.util.TypeConveter;
 import other.bean.FavoriteBean;
 
 public class MemberService {
-	MemberDAOjndi mDAO= new MemberDAOjndi();
-	CollectDAOjndi cDAO = new CollectDAOjndi();
+	private MemberDAO mDAO;
+	private CollectDAO cDAO ;
+	private ScheduleDAO scheduleDAO ;
+	private ScheduleContentDAO scheduleContentDAO ;
+	
+	public MemberService(){
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		mDAO =  new MemberDAOHibernate(session);
+		cDAO = new CollectDAOHibernate(session);
+		scheduleDAO =new ScheduleDAOHibernate(session);
+		scheduleContentDAO = new ScheduleContentDAOHibernate(session);
+	}
 	SceneDAOjndi sDAO = new SceneDAOjndi();
-	ScheduleDAOjndi scheduleDAO = new ScheduleDAOjndi();
-	ScheduleContentDAOjndi scheduleContentDAO = new ScheduleContentDAOjndi();
+	
 	HashMap<String, String> error = new HashMap<String,String>();
 	//登入使用
 	public MemberBean login(String useid,String password){
 		MemberBean mb=  mDAO.select(useid);
 		if (mb!=null) {
 			if (password != null && password.length() != 0) {
-				if(mb.getPassword().equals(password)){
+				if(new String(mb.getPassword()).equals(password)){
 					return mb;
 				}
 			} 
@@ -37,7 +58,7 @@ public class MemberService {
 		return null;
 	}
 	//增加會員
-	public MemberBean insert(MemberBean memberBean){
+	public MemberBean insert(MemberBean memberBean) throws FileNotFoundException{
 		if(memberBean!=null){
 //				String p= TypeConveter.EncodeBase64(memberBean.getPassword().getBytes());
 //				memberBean.setPassword(p);
@@ -64,14 +85,15 @@ public class MemberService {
 		return sDAO.select(sceneId);
 	}
 	//修改會員資料
-	public MemberBean updateContext(MemberBean memberBean){
+	public MemberBean updateContext(MemberBean memberBean) throws IOException{
 		if(memberBean!=null){
-			return mDAO.updateContext(memberBean);
+			System.out.println("MemberSevice:updata");
+			return mDAO.update(memberBean);
 		}
 		return null;
 	}
 	//修改資料
-	public MemberBean updata(MemberBean memberBean){
+	public MemberBean updata(MemberBean memberBean) throws IOException{
 		if(memberBean!=null){
 			return mDAO.update(memberBean);
 		}

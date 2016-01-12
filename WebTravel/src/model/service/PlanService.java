@@ -3,6 +3,7 @@ package model.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Session;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -13,19 +14,35 @@ import model.dao.CollectDAO;
 import model.dao.SceneDAO;
 import model.dao.ScheduleContentDAO;
 import model.dao.ScheduleDAO;
+import model.dao.hibernate.CollectDAOHibernate;
+import model.dao.hibernate.QDAOHibernate;
+import model.dao.hibernate.ScheduleContentDAOHibernate;
+import model.dao.hibernate.ScheduleDAOHibernate;
 import model.dao.jndi.CollectDAOjndi;
 import model.dao.jndi.SceneDAOjndi;
 import model.dao.jndi.ScheduleContentDAOjndi;
 import model.dao.jndi.ScheduleDAOjndi;
+import model.hibernate.HibernateUtil;
 import model.util.TypeConveter;
 import other.bean.FavoriteBean;
 
 public class PlanService {
 //	 private static final String sql =
 //	"select top 1 s.SceneName from Collect as c, Scene as s where c.MemberID=? and c.SceneID = s.SceneID";  
+	
 
-	 private CollectDAO collectDao = new CollectDAOjndi();
-	 private SceneDAO sceneDao = new SceneDAOjndi();
+	 private CollectDAO collectDao;
+	 private SceneDAO sceneDao;
+	 private ScheduleContentDAO scheduleContentDao;
+	 private ScheduleDAO scheduleDao;
+	 
+	 public PlanService(){
+			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+			//sceneDao = new QDAOHibernate(session);
+			collectDao = new CollectDAOHibernate(session);
+			scheduleDao = new ScheduleDAOHibernate(session);
+			scheduleContentDao = new ScheduleContentDAOHibernate(session);
+	 }
 	 
 	 public List<FavoriteBean> getFavorite(int memberId){
 		 return collectDao.selectScene(memberId);		 
@@ -59,7 +76,7 @@ public class PlanService {
 		 }
 		 ScheduleBean scheduleBean = getScheduleBean(jsonArr);
 		 ScheduleContentBean []contentBean = new ScheduleContentBean[jsonArr.length()];
-		 ScheduleContentDAO dao = new ScheduleContentDAOjndi(); 	
+		
 		 int scheduleId = scheduleBean.getScheduleId();
 		 for(int i = 0; i < jsonArr.length();i++){
 			contentBean[i] = new ScheduleContentBean();
@@ -68,18 +85,16 @@ public class PlanService {
 			contentBean[i].setSceneId(jsonObj.getInt("sceneId"));
 			contentBean[i].setScheduleId(scheduleId);
 			contentBean[i].setScheduleOrder(jsonObj.getInt("scheduleOrder"));
-			dao.insert(contentBean[i]);
+			scheduleContentDao.insert(contentBean[i]);
 		 }	
 	 }
 	 
 	 private ScheduleBean getScheduleBean(JSONArray jsonArr){
-
 		 JSONObject jsonObj =  jsonArr.getJSONObject(0);
 		 ScheduleBean bean = new ScheduleBean();
 		 bean.setMemberId(jsonObj.getInt("memberId"));
-		 bean.setScheduleName(jsonObj.getString("scheduleName"));
-		 ScheduleDAO dao = new ScheduleDAOjndi();
-		 int id = dao.getInsertId(bean);
+		 bean.setScheduleName(jsonObj.getString("scheduleName")); 
+		 int id = scheduleDao.getInsertId(bean);
 		 bean.setScheduleId(id);
 		 return bean;
 	 }

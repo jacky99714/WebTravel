@@ -26,6 +26,9 @@ $(function(){
 				  var sceneName = data.Name;
 				  var sceneContent = data.Toldescribe;
 				  var photo = data.Picture1;
+				  var Px=data.Px;
+				  var Py=data.Py;
+				  
 				  $.ajax({
 					  'type':'get', //post、delete、put
 					  'url':'../DataInsertServlet',
@@ -33,7 +36,9 @@ $(function(){
 			 		  'data':{"city":city,
 			 				  "sceneName":sceneName,
 			 				  "sceneContent":sceneContent,
-			 				  "photo":photo
+			 				  "photo":photo,
+			 				  "Px":Px,
+			 				  "Py":Py 
 			 		  },
 // 					  'success':function(data){
 // 					  }

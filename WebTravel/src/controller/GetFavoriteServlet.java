@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.bean.MemberBean;
+import model.hibernate.HibernateUtil;
 import model.service.PlanService;
 import model.util.TypeConveter;
 import other.bean.FavoriteBean;
@@ -43,15 +44,15 @@ public class GetFavoriteServlet extends HttpServlet {
 	    
 	    PlanService ps = new PlanService();
 		List<FavoriteBean> li = new ArrayList<>();
-
 		
 		HttpSession session = request.getSession();
 		MemberBean bean = (MemberBean) session.getAttribute("loginOk");
-		if(bean != null){
-			li = ps.getFavorite(bean.getMemberId());
-		}
 		PrintWriter out = response.getWriter();
-		out.print(TypeConveter.parseJSONArray(li));		
+		if(bean != null){
+			li = ps.getFavorite(bean.getMemberId());			
+		}
+		out.print(TypeConveter.parseJSONArray(li));	
+		
 	}
 
 	/**
