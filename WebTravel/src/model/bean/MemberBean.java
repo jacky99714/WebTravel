@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -19,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.annotations.Cascade;
 
@@ -103,11 +105,15 @@ public class MemberBean implements Serializable{
 			session.beginTransaction();
 			
 			//select 
-			MemberBean mb =(MemberBean)session.load(MemberBean.class,1);
-			System.out.println(mb);
-			Set<MemberMessageBean> mmb = mb.getMemberMessageBeans();
-			System.out.println(mmb);
+//			MemberBean mb =(MemberBean)session.get(MemberBean.class,1);
+//			System.out.println(mb);
+//			Set<MemberMessageBean> mmb = mb.getMemberMessageBeans();
+//			System.out.println(mmb);
 			
+			Query query=session.createQuery("from MemberBean where nickName = :fdjkifjos");
+			query.setParameter("fdjkifjos","X老鼠");
+			List<MemberBean> mm = (List<MemberBean>)query.list();
+			System.out.println(mm);
 			//insert
 //			session.save(mbean);
 			
