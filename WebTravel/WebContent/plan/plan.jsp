@@ -18,7 +18,7 @@
          var maxImg = 4;  // max image in tr tag
          var maxLine = 5;   
          var scheduleArray = [];
-         var showImg = 20;
+         var showImg = 10;
          var imgFavData;
          var imgFavPage = 0;
          var imgSearchData;
@@ -118,7 +118,6 @@
 	    function callbackFavorite(){
 	    	if(xhrFavorite.readyState === 4){ 	
 	    		if(xhrFavorite.status === 200){
-	    			alert("callbackFavorite()");
 	    			imgFavPage = 1;
 	    			imgFavData = JSON.parse(xhrFavorite.responseText);
 			    	createImgContent(imgFavData,imgFavPage,1,"imgFav");
@@ -165,9 +164,10 @@
 	    function callbackSearch(){
 	    	if(xhrSearch.readyState === 4){ 	
 	    		if(xhrSearch.status === 200){
+	    			document.getElementById("insert").inerHTML="請輸入行程名稱";
 	    			imgSearchPage = 1;
 	    			imgSearchData = JSON.parse(xhrSearch.responseText);
-			   // 	createImgContent(imgSearchData,imgSearchPage,1,"imgSearch");
+	    			createImgContent(imgSearchData,imgSearchPage,1,"imgSearch");
 	    		}else{
 	    			alert(xhrSearch.status + ":" + xhrSearch.statusText);
 	    		}    		
@@ -180,8 +180,7 @@
 	    	if(xhrcreate !== null){	    
 		    	xhrcreate.addEventListener("readystatechange",callbackCreateSchedule);
 		    	xhrcreate.open("post","InsertScheduleServlet",true); 
-		    	xhrcreate.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		    		
+		    	xhrcreate.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");	
 		    	xhrcreate.send("json="+arrayObject);		      	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
@@ -221,7 +220,6 @@
 	    	if(xhrdelete !== null){	    
 	    		xhrdelete.addEventListener("readystatechange",null);	  
 	    		xhrdelete.open("get","deleteSchedule?deleteId="+sceneid,true); 	
-	    		alert("deleteImg "+sceneid);
 		    	xhrdelete.send();		      	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
@@ -295,10 +293,10 @@
 			    	nextDiv.addEventListener("click", function f(){
 		    			if(type == "imgFav"){
 		    				imgFavPage++;
-		    				createImgContent(imgFavData,imgFavPage,2,"imgFav");
+		    				createImgContent(imgFavData,imgFavPage,1,"imgFav");
 		    			}else if(type == "imgSearch"){
 		    				imgSearchPage++;
-		    				createImgContent(imgSearchData,imgSearchPage,2,"imgSearch");
+		    				createImgContent(imgSearchData,imgSearchPage,1,"imgSearch");
 		    			}
 		    		});
 		    		content.appendChild(nextDiv);   
@@ -384,6 +382,7 @@
             	var text =  document.getElementById('scheduleName').value;
             	if(text === ""){
             		alert("schedule name");
+            		
             		return;
             	}
             	scheduleArray = null;
