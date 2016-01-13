@@ -34,10 +34,10 @@
 <!--     我是內容---------------------------- -->
     <div class="container-fluid">
     <div class="float">
-    <form action="<c:url value="/ThoughtServlet" />" method="post" accept-charset="UTF-8">
+    <form action="<c:url value="/ThoughtServlet" />" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 			<div>
 				<div>
-					<span>心得名稱</span>
+					<label>心得名稱</label>
 				</div>
 				<div>
 					<input type="text" size="50" placeholder="台北一日遊" name="thoughtName"><p color='red'  size="-3">${errors.thoughtName}</p>
@@ -48,8 +48,13 @@
 					<label>標題</label>
 				</div>
 				<div>
-					<input type="text" size="70" placeholder="一座繁華的城市" name="thoughtSubtitle">
+					<input type="text" size="70" placeholder="一座繁華的城市" name="thoughtSubtitle"><p color='red'  size="-3">${errors.thoughtSubtitle}</p>
 				</div> 
+			</div>
+			<div>
+				<div>
+		    		<label>照片</label><span>-選一張到表此篇新的的美照吧</span><p color='red'  size="-3">${errors.thoughtPhoto}</p><input type="file" name="thoughtPhoto" multiple>
+		    	</div>
 			</div>
 <!-- 			<div> -->
 <!-- 				<div> -->
@@ -58,7 +63,7 @@
 <!-- 				<input type="text" placeholder="請選擇日期"> -->
 <!-- 			</div> -->
 			<div>
-				<span>心得內容</span><span> - 內容需100字以上</span><p color='red'  size="-3">${errors.thoughtContent}</p>
+				<label>心得內容</label><span> - 內容需100字以上</span><p color='red'  size="-3">${errors.thoughtContent}</p>
 			</div>
 			<div >
 				 <textarea id="textarea" style="width: 50%; height: 452px" ></textarea>

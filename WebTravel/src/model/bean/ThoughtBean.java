@@ -42,6 +42,9 @@ public class ThoughtBean {
 	@Column(name="memberId")
 	private int memberId;
 	
+	@Column(name="thoughtPhoto")
+	private byte[] thoughtPhoto;
+	
 	@ManyToOne
 	@JoinColumn(
 			name="ThoughtId",
@@ -52,8 +55,8 @@ public class ThoughtBean {
 	
 	@Override
 	public String toString() {
-		return "[" + thoughtId + "," + thoughtName + "," + thoughtContent + "," 
-				+ thoughtSubtitle + "," + thoughtTime + "," + memberId + "]";
+		return "[" + thoughtId + "," + thoughtName + "," + thoughtSubtitle + "," + thoughtContent + "," 
+				+thoughtPhoto+","+ thoughtTime + "," + memberId + "]";
 	}
 	public int getThoughtId() {
 		return thoughtId;
@@ -90,6 +93,12 @@ public class ThoughtBean {
 	}
 	public void setMemberId(int memberId) {
 		this.memberId = memberId;
+	}
+	public byte[] getThoughtPhoto() {
+		return thoughtPhoto;
+	}
+	public void setThoughtPhoto(byte[] thoughtPhoto) {
+		this.thoughtPhoto = thoughtPhoto;
 	}
 	public static void main(String[] args) {
 		try {
