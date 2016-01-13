@@ -132,6 +132,25 @@
   </div>
 </div>
 
+
+<!-- 你確定要刪除 -->
+<div id="myModal001" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">你確定?</h4>
+      </div>
+      <div class="modal-body">
+        		你確定要刪除嗎?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" id="Closebtn" class="btn btn-danger">確定刪除</button>
+      </div>
+    </div>
+  </div>
+</div>
     
     
     

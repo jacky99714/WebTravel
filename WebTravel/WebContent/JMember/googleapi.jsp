@@ -40,17 +40,45 @@ $(function(){
 	
 	$('.map').tinyMap({
 	    'zoom'  : 14,
-	    'direction': [
-	              	{
-	              	    'from':['22.849440','121.067470'],
-	              	    'to': ['22.889340','121.064470'],
-                        'travel': 'driving',
-            	        'waypoint': [
-            	                     ['22.889340','121.061410'],
-            	                     ['22.889340','121.067479']
-            	                 ]
-	              	},
-	        ]
+// 	    'direction': [
+// 	              	{
+// 	              	    'from':['22.849440','121.067470'],
+// 	              	    'to': ['22.889340','121.064470'],
+//                         'travel': 'driving',
+//             	        'waypoint': [
+//             	                     {
+//             	                         'location': '台北市信義區仁愛路4段505號',
+//             	                         'text': '仁愛路中繼點',
+//             	                         'icon': 'https://code.essoduke.org/images/2.png'
+//             	                     },
+//             	                     {
+//             	                         'location': '台北市信義區仁愛路4段100號',
+//             	                         'text': '仁愛路中繼點',
+//             	                         'icon': 'https://code.essoduke.org/images/2.png'
+//             	                     }
+//             	                 ],
+// 	              		 'renderAll': true
+// 	              	}
+// 	        ]
+	    direction : [
+	                 {
+	                     'from': '臺北市大安區羅斯福路四段一號',
+	                     'fromText': '起點: 羅斯福路四段',
+	                     'waypoint': [
+	                         {'location': '台北市信義區仁愛路4段505號', 'text': '仁愛路中繼點','icon': 'https://code.essoduke.org/images/2.png'},
+	                         {'location': '臺北市松山區南京東路4段2號', 'text': '南京東路中繼點','icon': 'https://code.essoduke.org/images/2.png'}
+	                     ],
+	                     'to': '臺北市北平西路三號',
+	                     'toText': '終點: 北平西路',
+	                     'travel': 'driving',
+	                     'icon': {
+	                         'from': 'https://code.essoduke.org/images/2.png',
+	                         'to': 'https://code.essoduke.org/images/2.png',
+	                     }
+	                     
+	                 }
+	             ]
+
 	});
 	
 });
