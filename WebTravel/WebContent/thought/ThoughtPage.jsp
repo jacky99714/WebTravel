@@ -107,7 +107,7 @@
 						
 						var name = data[i].thoughtName;
 						var subtitle = data[i].thoughtSubtitle;
-						var photo = data[i].thoughtPhoto;
+						var photo = 'data:image/png;base64,'+data[i].thoughtPhoto;
 						var id = data[i].thoughtId;
 						
 						var div2 = document.createElement("div");
@@ -120,11 +120,12 @@
 						
 						var a1 = document.createElement("a");
 						var img = document.createElement("img");
+						img.src=photo;
 						var div4 = document.createElement("div");
 						
+						a1.appendChild(img);
 						div3.appendChild(a1);
 						div3.appendChild(div4);
-						a1.appendChild(img);
 						
 						var title = document.createElement("h3");
 						var txtH3 = document.createTextNode(name);

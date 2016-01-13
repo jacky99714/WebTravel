@@ -1,5 +1,6 @@
 package model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -9,6 +10,8 @@ import model.dao.ThoughtDAO;
 import model.dao.hibernate.ThoughtDAOHibernate;
 import model.dao.jndi.ThoughtDAOjndi;
 import model.hibernate.HibernateUtil;
+import model.util.TypeConveter;
+import other.bean.MythoughtBean;
 
 public class ThoughtService {
 //	ThoughtDAO thoughtDao = new ThoughtDAOjndi();
@@ -30,8 +33,13 @@ public class ThoughtService {
 			return thoughtDao.select(thoughtId);
 	}
 	
-	public List<ThoughtBean> getAllThought(){
-		return (List<ThoughtBean>)thoughtDao.select();
+	public List<MythoughtBean> getAllThought(){
+		List<ThoughtBean> listTB = thoughtDao.select();
+		List<MythoughtBean> listMB = new ArrayList<>();
+		for(ThoughtBean bean :listTB){
+			listMB.add(TypeConveter.pareseMythoughtBean(bean));
+		}
+		return listMB;
 	}
 	public ThoughtBean insert(ThoughtBean thoughtBean){
 		if(thoughtBean!=null){
