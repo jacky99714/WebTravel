@@ -306,5 +306,11 @@ public class SceneDAOjdbc implements SceneDAO {
 		
 	}
 
+	@Override
+	public List<SceneBean> select(String location, int begin, int number) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }//class
