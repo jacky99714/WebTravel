@@ -59,7 +59,7 @@ public class SceneDAOHibernate implements SceneDAO{
 
 	@Override
 	public SceneBean update(SceneBean bean) {
-		SceneBean rs = (SceneBean)getSession().load(SceneBean.class,bean.getSceneId());
+		SceneBean rs = (SceneBean)getSession().get(SceneBean.class,bean.getSceneId());
 		if(rs!=null){
 			rs.setLocation(bean.getLocation());
 			rs.setCity(bean.getCity());
