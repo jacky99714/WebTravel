@@ -13,8 +13,16 @@ import model.bean.MemberBean;
 import model.bean.SceneBean;
 import model.bean.ScheduleBean;
 import model.bean.ScheduleContentBean;
+import model.dao.CollectDAO;
 import model.dao.MemberDAO;
+import model.dao.SceneDAO;
+import model.dao.ScheduleContentDAO;
+import model.dao.ScheduleDAO;
+import model.dao.hibernate.CollectDAOHibernate;
 import model.dao.hibernate.MemberDAOHibernate;
+import model.dao.hibernate.SceneDAOHibernate;
+import model.dao.hibernate.ScheduleContentDAOHibernate;
+import model.dao.hibernate.ScheduleDAOHibernate;
 import model.dao.jndi.CollectDAOjndi;
 import model.dao.jndi.SceneDAOjndi;
 import model.dao.jndi.ScheduleContentDAOjndi;
@@ -25,16 +33,20 @@ import other.bean.FavoriteBean;
 
 public class MemberService {
 	private MemberDAO mDAO;
-	
+	private CollectDAO cDAO ;
+	private ScheduleDAO scheduleDAO ;
+	private ScheduleContentDAO scheduleContentDAO ;
+	private SceneDAO sDAO;
 	public MemberService(){
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		mDAO =  new MemberDAOHibernate(session);
+		cDAO = new CollectDAOHibernate(session);
+		scheduleDAO =new ScheduleDAOHibernate(session);
+		scheduleContentDAO = new ScheduleContentDAOHibernate(session);
+		sDAO = new SceneDAOHibernate(session);
 	}
 	
-	CollectDAOjndi cDAO = new CollectDAOjndi();
-	SceneDAOjndi sDAO = new SceneDAOjndi();
-	ScheduleDAOjndi scheduleDAO = new ScheduleDAOjndi();
-	ScheduleContentDAOjndi scheduleContentDAO = new ScheduleContentDAOjndi();
+	
 	HashMap<String, String> error = new HashMap<String,String>();
 	//登入使用
 	public MemberBean login(String useid,String password){
@@ -76,9 +88,10 @@ public class MemberService {
 		return sDAO.select(sceneId);
 	}
 	//修改會員資料
-	public MemberBean updateContext(MemberBean memberBean){
+	public MemberBean updateContext(MemberBean memberBean) throws IOException{
 		if(memberBean!=null){
-			return mDAO.updateContext(memberBean);
+			System.out.println("MemberSevice:updata");
+			return mDAO.update(memberBean);
 		}
 		return null;
 	}

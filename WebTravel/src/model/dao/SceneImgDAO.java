@@ -10,7 +10,7 @@ public interface SceneImgDAO {
 	List<SceneImgBean> select();
 
 	// 查詢SELECT_BY_SCENEID
-	SceneImgBean select(int sceneId);
+	List<SceneImgBean> select(int sceneId);
 
 	// 新增INSERT
 	SceneImgBean insert(SceneImgBean bean);

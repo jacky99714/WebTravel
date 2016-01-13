@@ -2,11 +2,20 @@ package model.bean;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 public class CollectBean implements Serializable{
+	
 
 	private int memberId;
 	private int sceneId;
 	private Integer collectId;
+	
+	
 	
 	
 	@Override

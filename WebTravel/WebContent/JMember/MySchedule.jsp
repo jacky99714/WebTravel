@@ -33,6 +33,10 @@
      font-size:larger;
    }
    .di{}
+   .map {
+    width: 870px;
+    height: 300px;
+}
    </style> 
     
     
@@ -93,6 +97,8 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" style="text-align:center;font-weight:900;" id="myModalLabel">拖曳照片修改行程順序</h4>
+        <div class="map"></div>
+
       </div>
       <div class="modal-body">
 <!-- 		<table class="table"> -->
@@ -141,7 +147,7 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
    
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-   
+    <script src=" <c:url value="/JMember/js/jquery.tinyMap.min.js"/>"></script>
     <script src=" <c:url value="/js/bootstrap.min.js"/>"></script>
     <script src="<c:url value="/JMember/js/MySchedule.js"/>"></script>
 

@@ -101,7 +101,7 @@ public class MemberDAOHibernate implements MemberDAO{
 
 	@Override
 	public MemberBean update(MemberBean memberBean) throws IOException {
-		MemberBean mb =select(memberBean.getMemberId());
+		MemberBean mb =select(memberBean.getUserName());
 		if (memberBean.getAddress()!=null) {
 			mb.setAddress(memberBean.getAddress());
 		}

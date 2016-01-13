@@ -37,7 +37,7 @@ public class SelectLocationServlet extends HttpServlet {
 
 		// 接收資料
 		SceneService sceneservice = new SceneService();
-		List<FavoriteBean> li = new ArrayList<>();
+		List<SceneBean> li = new ArrayList<>();
 		String lo = request.getParameter("location");
 					
 		// 驗證資料

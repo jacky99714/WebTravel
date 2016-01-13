@@ -14,6 +14,7 @@ import model.dao.CollectDAO;
 import model.dao.SceneDAO;
 import model.dao.ScheduleContentDAO;
 import model.dao.ScheduleDAO;
+import model.dao.hibernate.CollectDAOHibernate;
 import model.dao.hibernate.QDAOHibernate;
 import model.dao.hibernate.ScheduleContentDAOHibernate;
 import model.dao.hibernate.ScheduleDAOHibernate;
@@ -38,8 +39,7 @@ public class PlanService {
 	 public PlanService(){
 			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 			//sceneDao = new QDAOHibernate(session);
-			//collectDao
-
+			collectDao = new CollectDAOHibernate(session);
 			scheduleDao = new ScheduleDAOHibernate(session);
 			scheduleContentDao = new ScheduleContentDAOHibernate(session);
 	 }
@@ -50,7 +50,7 @@ public class PlanService {
 	 
 	 public List<FavoriteBean> getScene(String location){
 		 if("北區".equals(location) || "中區".equals(location) || "南區".equals(location) || "東區".equals(location)){
-			 return sceneDao.select(location);
+			 return sceneDao.selectf(location);
 		 }else{
 			 return null;
 		 }	 
