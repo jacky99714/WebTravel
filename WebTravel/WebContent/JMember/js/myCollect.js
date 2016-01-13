@@ -2,7 +2,7 @@
 
 $(function(){	
 	
-	$.ajax({
+	$.ajax({//載入的初始化
 		  'type':'get', //post、delete、put
 		  'url':'../GetJoinScheduleServlet',
 		  'dataType':'json',  //json、script、html

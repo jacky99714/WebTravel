@@ -11,24 +11,27 @@ import org.omg.CORBA.BooleanSeqHelper;
 public class vv {
 
 	public static void main(String[] args) throws IOException {
-//		File file = new File("http://tour.kinmen.gov.tw/upload/spot/634813401321919450.jpg");
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		URL url = new URL("http://tour.kinmen.gov.tw/upload/spot/634813401321919450.jpg");
-		byte[] f = new byte[1024];
-		InputStream fi = url.openStream();
-		int n ;
-		while((n=fi.read(f))>0){
-			baos.write(f, 0, n);
-		}
+////		File file = new File("http://tour.kinmen.gov.tw/upload/spot/634813401321919450.jpg");
+//		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//		URL url = new URL("http://tour.kinmen.gov.tw/upload/spot/634813401321919450.jpg");
+//		byte[] f = new byte[1024];
+//		InputStream fi = url.openStream();
+//		int n ;
+//		while((n=fi.read(f))>0){
+//			baos.write(f, 0, n);
+//		}
+//		
+//
+//		fi.close();
+//		
+//		System.out.println(baos.toByteArray());
+//		FileOutputStream fo = new FileOutputStream("/Users/mouse/Desktop/ss.jpg");
+//		fo.write(baos.toByteArray());
+//		fo.close();
+//	
 		
-
-		fi.close();
 		
-		System.out.println(baos.toByteArray());
-		FileOutputStream fo = new FileOutputStream("/Users/mouse/Desktop/ss.jpg");
-		fo.write(baos.toByteArray());
-		fo.close();
-		
+		System.out.println(new java.sql.Timestamp(new java.util.Date().getTime()));
 	}
-
+	
 }

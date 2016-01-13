@@ -33,6 +33,10 @@
      font-size:larger;
    }
    .di{}
+   .map {
+    width: 870px;
+    height: 300px;
+}
    </style> 
     
     
@@ -93,6 +97,8 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" style="text-align:center;font-weight:900;" id="myModalLabel">拖曳照片修改行程順序</h4>
+        <div class="map"></div>
+
       </div>
       <div class="modal-body">
 <!-- 		<table class="table"> -->
@@ -126,6 +132,25 @@
   </div>
 </div>
 
+
+<!-- 你確定要刪除 -->
+<div id="myModal001" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">你確定?</h4>
+      </div>
+      <div class="modal-body">
+        		你確定要刪除嗎?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" id="Closebtn" class="btn btn-danger">確定刪除</button>
+      </div>
+    </div>
+  </div>
+</div>
     
     
     
@@ -141,7 +166,7 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
    
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-   
+    <script src=" <c:url value="/JMember/js/jquery.tinyMap.min.js"/>"></script>
     <script src=" <c:url value="/js/bootstrap.min.js"/>"></script>
     <script src="<c:url value="/JMember/js/MySchedule.js"/>"></script>
 
