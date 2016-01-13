@@ -52,7 +52,9 @@ function map(){
 			                             'func': function(){
 			                            	 alert("ss")
 			                            	 var info = this.getDirections();
-			                            	 console.log("info:"+info)
+//			                            	 console.log("info:"+info)
+			                            	 console.log(info)
+
 			                             }
 			                         }
 			                     }
@@ -65,13 +67,6 @@ function map(){
 
 
 $(function(){
-	
-	
-	
-	
-	
-	
-	
     $( "#sortable" ).sortable({
       revert: true
     });
