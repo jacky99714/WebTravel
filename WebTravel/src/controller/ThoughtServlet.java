@@ -1,6 +1,10 @@
 package controller;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,9 +15,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import model.bean.ThoughtBean;
 import model.service.ThoughtService;
+import model.util.TypeConveter;
 
 @WebServlet("/ThoughtServlet")
 public class ThoughtServlet extends HttpServlet {
@@ -31,6 +37,24 @@ public class ThoughtServlet extends HttpServlet {
 //		MemberBean mb = (MemberBean)session.getAttribute("loginOk");
 //		int temp5 = mb.getMemberId();
 		
+		Collection<Part> parts = request.getParts();
+		Part pho = request.getPart("thoughtPhoto");
+		byte[] photo = null;
+		if(pho!=null){
+			InputStream is = pho.getInputStream();
+			photo = new byte[(int)pho.getSize()];
+			is.read(photo);
+//			OutputStream os = new FileOutputStream("C:/Users/Student/Desktop/A01.jpg");
+//			os.write(photo);
+//			os.close();
+			
+			
+			is.close();
+		}
+		
+		
+		
+		
 		//驗證資料
 		Map<String, String> errors = new HashMap<String,String>();
 		request.setAttribute("errors", errors);
@@ -46,9 +70,6 @@ public class ThoughtServlet extends HttpServlet {
 		if(temp4 == null || temp4.trim().length()==0){
 			errors.put("thoughtContent", "請輸入內容");
 		}
-//		if(temp5 === null){
-//			request.getRequestDispatcher("index.jsp").forward(request, response);
-//		}
 		if(errors != null && !errors.isEmpty()){
 			request.getRequestDispatcher("/thought/Thought.jsp").forward(request, response);
 			return;
@@ -65,7 +86,8 @@ public class ThoughtServlet extends HttpServlet {
 		bean.setThoughtId(1);
 		bean.setThoughtName(temp2);
 		bean.setThoughtSubtitle(temp3);
-		//bean.setThoughtContent(TypeConveter.EncodeStringBase64(temp4));
+//		bean.setThoughtContent(TypeConveter.EncodeStringBase64(temp4));
+		bean.setThoughtPhoto(photo);
 		bean.setThoughtContent(temp4);
 		bean.setMemberId(1);
 //		bean.setMemberId(temp5);

@@ -39,4 +39,6 @@ public interface SceneDAO {
 
 	SceneBean select(int sceneId);
 
+	List<SceneBean> select(String location, int begin, int number);
+
 }

@@ -43,10 +43,10 @@ public class PlanService {
 	 public List<FavoriteBean> getFavorite(int memberId){
 		 return collectDao.selectScene(memberId);		 
 	 }
-	 
-	 public List<FavoriteBean> getScene(String location){
+	       //begin 第幾筆   number多少筆
+	 public List<FavoriteBean> getScene(String location,int begin,int number){
 		 if("北區".equals(location) || "中區".equals(location) || "南區".equals(location) || "東區".equals(location)){
-			 List<SceneBean> li = sceneDao.select(location);
+			 List<SceneBean> li = sceneDao.select(location, begin, number);
 			 List<FavoriteBean> fav = new ArrayList<>();
 			 for(SceneBean bean:li){
 				 fav.add(TypeConveter.parseFavoriteBean(bean));
@@ -63,6 +63,7 @@ public class PlanService {
 		 return TypeConveter.parseFavoriteBean(bean);
 	 }
 	 
+
 	 public List<FavoriteBean> getSchedule(List<Integer> li){
 		 List<FavoriteBean> fav = new ArrayList<>();
 		 for(int key:li){

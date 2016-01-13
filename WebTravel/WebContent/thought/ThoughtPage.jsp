@@ -24,7 +24,7 @@
 
 <!--     我是內容---------------------------- -->
 	<div class="container">
-		<div class="row">
+		<div class="row" id="div1">
 <!-- 			<div  class="row"> -->
 <%-- 				<c:forEach var="thoughtlist" items="${list}"> --%>
 <!-- 					<div class="col-xs-6 col-md-3"> -->
@@ -42,15 +42,15 @@
 <!-- 					</div> -->
 <%-- 				</c:forEach> --%>
 <!-- 			</div> -->
-			<div class="col-xs-6 col-md-3">
-				<div class="thumbnail">
-					<a href="https://www.google.com.tw" class="thumbnail">
-						<img alt="a" src="../img/Carousel01.jpg"></a>
-					<div id="div1" class="caption">
+<!-- 			<div class="col-xs-6 col-md-3"> -->
+<!-- 				<div class="thumbnail"> -->
+<!-- 					<a href="https://www.google.com.tw" class="thumbnail"> -->
+<!-- 						<img alt="a" src="../img/Carousel01.jpg"></a> -->
+<!-- 					<div id="div1" class="caption"> -->
 						
-					</div>
-				</div>
-			</div>
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
 		</div>
 	</div>
 	<!--  -->
@@ -98,6 +98,7 @@
 						console.log(data[i].thoughtId);
 						console.log(data[i].thoughtName);
 						console.log(data[i].thoughtSubtitle);
+						console.log(data[i].thoughtPhoto);
 						console.log(data[i].thoughtContent);
 						console.log(data[i].thoughtTime);
 						console.log(data[i].memberId);
@@ -105,23 +106,38 @@
 	// 					console.log(data);
 						
 						var name = data[i].thoughtName;
-						var content = data[i].thoughtSubtitle;
+						var subtitle = data[i].thoughtSubtitle;
+						var photo = 'data:image/png;base64,'+data[i].thoughtPhoto;
+						var id = data[i].thoughtId;
 						
-						
-						//抓出心得名稱
 						var div2 = document.createElement("div");
-						div2.className="col-md-4";
+						div2.className="col-xs-6 col-md-3";
+						var div3 = document.createElement("div");
+						div3.className="thumbnail";
+						
+						div2.appendChild(div3);
+						div1.appendChild(div2);
+						
+						var a1 = document.createElement("a");
+						var img = document.createElement("img");
+						img.src=photo;
+						var div4 = document.createElement("div");
+						
+						a1.appendChild(img);
+						div3.appendChild(a1);
+						div3.appendChild(div4);
+						
 						var title = document.createElement("h3");
 						var txtH3 = document.createTextNode(name);
 						title.appendChild(txtH3);
-						div2.appendChild(title);
-						myDiv.appendChild(div2);
+						div4.appendChild(title);
+						
 						
 						//抓出心得內容
 						var contents = document.createElement("p");
-						contents.className="col-md-8";
-						contents.innerHTML = content;
-						div2.appendChild(contents);
+// 						contents.className="col-md-8";
+						contents.innerHTML = subtitle;
+						div4.appendChild(contents);
 // 						myDiv.innerHTML=data[i].thoughtSubtitle;
 					}
 // 			    		myDiv.innerHTML = "<h3>" + data + "</h3>";

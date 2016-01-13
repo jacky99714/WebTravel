@@ -1,5 +1,7 @@
 package model.dao.hibernate;
 
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -8,6 +10,8 @@ import model.bean.ThoughtBean;
 import model.dao.ThoughtDAO;
 import model.hibernate.HibernateUtil;
 import model.util.TypeConveter;
+import other.bean.FavoriteBean;
+import other.bean.MythoughtBean;
 
 public class ThoughtDAOHibernate implements ThoughtDAO {
 	private Session session;

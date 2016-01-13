@@ -41,8 +41,11 @@ public class GetSceneLocationServlet extends HttpServlet {
 	    
 		PlanService ps = new PlanService();
 		List<FavoriteBean> li = new ArrayList<>();
+
 	
-		li = ps.getScene(request.getParameter("location"));
+		int begin = Integer.parseInt(request.getParameter("begin"));
+		int number = Integer.parseInt(request.getParameter("number"));
+		li = ps.getScene(request.getParameter("location"),begin,number);
 		PrintWriter out = response.getWriter();
 		out.print(TypeConveter.parseJSONArray(li));
 	

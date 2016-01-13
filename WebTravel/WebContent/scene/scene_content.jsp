@@ -85,21 +85,23 @@
                     </form>
                 </div>
 
-                <hr>
                 
-                 <!-- Comment 回覆-->
+                
+             
+                <c:forEach var="lm" items="${listmessage}"> 
+                <hr>               
                 <div class="media"><!-- 會員頭像-->
                     <a class="pull-left" href="#">
                         <img class="media-object" src="http://placehold.it/64x64" alt="">
                     </a>
                     <div class="media-body"><!-- 回覆內容 -->
-                        <h4 class="media-heading">Start Bootstrap
-                            <small>${listmessage.memberMessageContent}</small>
+                        <h4 class="media-heading">暱稱
+                            <small></small>
                         </h4>
-                        ${listmessage}
+                        ${lm.messageContent}
                     </div>
-                </div>
-                
+                </div>                                    
+                </c:forEach>
                 
 
      <hr><br>
@@ -122,27 +124,40 @@
 	
 	
 	$(function(){	
+		
+		//取回景點留言
+        $.ajax({
+		  "type":"get",
+		  "url":"<%=request.getContextPath()%>/SceneGetMessageServlet",
+		  "data":{"sceneId": $(".lead").attr("id")},
+		  "datatype":"text",
+		})
+		
 		//送出景點留言
 		$(".btn-primary").on("click",function(event){
 			event.preventDefault();
 			var mid = $(".form-control").attr("name");
-			alert(mid)
+			alert(mid);
 			if(mid != null && mid.length > 0 && mid !=''){
 				$.ajax({
 					  "type":"post",
 					  "url":"<%=request.getContextPath()%>/SceneMessage",
 					  "data":{"sceneId": $(".lead").attr("id"), "message":$(".form-control").val()},
 					  "datatype":"text",
-					})
-					alert("留言新增成功")
+					  "complete":function(){
+						  $(".form-control").val('').empty();
+						  location.reload(true)					  
+					  }
+					});
+					alert("留言新增成功");
+					
 			} else {
 				alert("error")
-				location.href = "../secure/login.jsp";
-
-				
+				location.href = "../secure/login.jsp";				
 			}//if
 		})//btn-primary
 				
+		
 	});//jquery
 
 	
