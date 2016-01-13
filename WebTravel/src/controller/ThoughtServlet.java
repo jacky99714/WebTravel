@@ -5,18 +5,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.bean.MemberBean;
 import model.bean.ThoughtBean;
-import model.dao.ThoughtDAO;
-import model.dao.jndi.ThoughtDAOjndi;
 import model.service.ThoughtService;
-import model.util.TypeConveter;
 
 @WebServlet("/ThoughtServlet")
 public class ThoughtServlet extends HttpServlet {
@@ -33,7 +30,6 @@ public class ThoughtServlet extends HttpServlet {
 		String temp4 = request.getParameter("thoughtContent");
 //		MemberBean mb = (MemberBean)session.getAttribute("loginOk");
 //		int temp5 = mb.getMemberId();
-		
 		
 		//驗證資料
 		Map<String, String> errors = new HashMap<String,String>();
