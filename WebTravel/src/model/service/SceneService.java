@@ -1,6 +1,7 @@
 package model.service;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -25,29 +26,11 @@ public class SceneService {
 	//private SceneDAO sceneDao = new SceneDAOjndi();
 	
 	//搜尋區域
-//	public List<FavoriteBean> getLocation(String location) {
-//		if (location != null) {
-//			
-//			List<FavoriteBean> lilo = sceneDao.selectf(location);
-//			 
-//			for(FavoriteBean fbean:lilo){
-//				if(fbean.getSceneContent().length()>=70L){
-//					String str= fbean.getSceneContent().substring(0,70);
-//					fbean.setSceneContent(str+"...");
-//				}
-//			}
-//			
-//			return lilo;
-//		}
-//		return null;
-//	}
-	public List<SceneBean> getLocation(String location) throws UnsupportedEncodingException {
+	public List<SceneBean> getLocation(String location) {
 		if (location != null) {
 			
 			List<SceneBean> lilo = sceneDao.select(location);
-			
-			
-			//取出景點說明前70字
+			 
 			for(SceneBean fbean:lilo){
 				if(fbean.getSceneContent().length()>=70L){
 					String str= fbean.getSceneContent().substring(0,70);
@@ -59,6 +42,7 @@ public class SceneService {
 		}
 		return null;
 	}
+	
 	//搜尋城市
 	public List<FavoriteBean> getCity(String city) {
 		if (city != null) {
@@ -104,7 +88,26 @@ public class SceneService {
 		return false;
 	}  
 
+	//SeneBean轉FavoriteBean
 	
+	public List<FavoriteBean> changeBean(List<SceneBean> list){
+		
+		List<FavoriteBean> listFB = new ArrayList<FavoriteBean>();
+		for(SceneBean s : list){
+			FavoriteBean fb = new FavoriteBean();
+			fb.setCity(s.getCity());
+			fb.setLocation(s.getLocation());
+			fb.setMemberId(s.getMemberId());
+			fb.setSceneContent(s.getSceneContent());
+			fb.setSceneId(s.getSceneId());
+			fb.setSceneName(s.getSceneName());
+			fb.setScenePhoto(TypeConveter.EncodeBase64(s.getScenePhoto()));
+			fb.setTimeEnd(s.getTimeEnd());
+			fb.setTimeStart(s.getTimeStart());
+			listFB.add(fb);
+		}
+		return listFB;
+	}
 	
 	
 	
