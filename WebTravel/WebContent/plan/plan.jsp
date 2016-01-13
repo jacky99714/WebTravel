@@ -19,10 +19,9 @@
          var maxLine = 5;   
          var scheduleArray = [];
          var showImg = 10;
-         var imgFavData;
-         var imgFavPage = 0;
          var imgSearchData;
          var imgSearchPage = 0;
+         var selectLocation;
 ///////////////////////////////////////////////////////////
 		function schedule(memberId,scheduleName,scheduleOrder,sceneId){
 			this.memberId = memberId;
@@ -118,9 +117,8 @@
 	    function callbackFavorite(){
 	    	if(xhrFavorite.readyState === 4){ 	
 	    		if(xhrFavorite.status === 200){
-	    			imgFavPage = 1;
 	    			imgFavData = JSON.parse(xhrFavorite.responseText);
-			    	createImgContent(imgFavData,imgFavPage,1,"imgFav");
+			    	createImgContent(imgFavData,1,"imgFav");
 	    		}else{
 	    			alert(xhrFavorite.status + ":" + xhrFavorite.statusText);
 	    		}    		
@@ -149,12 +147,13 @@
 	    	}  	
 	    }	
 	    
-  
-  		function getSearch(select){ 	
+	    
+  		function getSearch(begin){ 	
 	    	xhrSearch = new XMLHttpRequest();
 	    	if(xhrSearch !== null){ 	
 	    		xhrSearch.addEventListener("readystatechange",callbackSearch);	  
-	    		xhrSearch.open("get","GetSceneLocationServlet?location="+select,true); 	
+
+	    		xhrSearch.open("get","GetSceneLocationServlet?location="+selectLocation+"&begin="+begin+"&number="+showImg,true); 	
 		    	xhrSearch.send();	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
@@ -165,9 +164,8 @@
 	    	if(xhrSearch.readyState === 4){ 	
 	    		if(xhrSearch.status === 200){
 	    			document.getElementById("insert").inerHTML="請輸入行程名稱";
-	    			imgSearchPage = 1;
 	    			imgSearchData = JSON.parse(xhrSearch.responseText);
-	    			createImgContent(imgSearchData,imgSearchPage,1,"imgSearch");
+	    			createImgContent(imgSearchData,1,"imgSearch");
 	    		}else{
 	    			alert(xhrSearch.status + ":" + xhrSearch.statusText);
 	    		}    		
@@ -227,28 +225,11 @@
 	    }
 /////////////////////////////////////////////
 
-		 function createImgContent(data,page,direction,type){
-				var begin = (page-1)*showImg;
-				var end;
-				if(direction == 1){    //next page
-					if(data.length > (begin + showImg)){
-						end = begin + showImg;
-					}else{
-						end = data.length;
-					}
-				}else if(direction == 2){  //previous page	
-					if(data.length > (begin + showImg)){
-						end = begin + showImg;
-					}else{
-						end = data.length;
-					}
-				}else{
-					return;
-				} 
+ 		 function createImgContent(data,direction,type){			
 				
 		    	var content = document.getElementById("content");  //顯示資料
 		    	content.innerHTML="";
-		    	for(var i=begin; i < end;i++){
+		    	for(var i=0; i < data.length;i++){
 		            var div = document.createElement("div");
 		            div.className = "imgContent";        
 		    		var img = createImg('data:image/png;base64,'+data[i].scenePhoto,data[i].sceneId,data[i].sceneName);
@@ -263,45 +244,37 @@
 		    	}
 		    	
 		
-		    	if(begin !== 0){
+
+		  		if(type == "imgSearch" && imgSearchPage > 0){
 		        	var prevDiv = document.createElement("a");
 			    	var prevPage = document.createTextNode("上一頁");
-			    	prevDiv.style.paddingLeft = "50px";
+			    	prevDiv.style.paddingLeft = "70px";
 			    	prevDiv.style.paddingTop = "10px";
 			    	prevDiv.style.display = "inline-block";
 			    	prevDiv.appendChild(prevPage);
-			    	prevDiv.addEventListener("click", function f(){
-			   
-		    			if(type == "imgFav"){
-		    				imgFavPage--;
-		    				createImgContent(imgFavData,imgFavPage,2,"imgFav");
-		    			}else if(type == "imgSearch"){
-		    				imgSearchPage--;
-		    				createImgContent(imgSearchData,imgSearchPage,2,"imgSearch");
-		    			}
+    				content.appendChild(prevDiv); 
+    				prevDiv.addEventListener("click", function f(){	
+        				imgSearchPage--;
+        				getSearch(imgSearchPage*showImg);	 
 		    		});
-		    		content.appendChild(prevDiv);   	
-		    	}
+    			}
+	
 		    	
-		    	if(end !== data.length){
+
+		    	if(type == "imgSearch" && data.length == showImg){   		
 			    	var nextDiv = document.createElement("a");
-			    	nextDiv.style.paddingLeft = "50px";
+			    	nextDiv.style.paddingLeft = "70px";
 			    	nextDiv.style.paddingTop = "10px";
 			    	nextDiv.style.display = "inline-block";
 			    	var nextPage = document.createTextNode("下一頁");
 			    	nextDiv.appendChild(nextPage);
+    				content.appendChild(nextDiv);
 			    	nextDiv.addEventListener("click", function f(){
-		    			if(type == "imgFav"){
-		    				imgFavPage++;
-		    				createImgContent(imgFavData,imgFavPage,1,"imgFav");
-		    			}else if(type == "imgSearch"){
-		    				imgSearchPage++;
-		    				createImgContent(imgSearchData,imgSearchPage,1,"imgSearch");
-		    			}
+	    				imgSearchPage++;
+	    				getSearch(imgSearchPage*showImg);		   
 		    		});
-		    		content.appendChild(nextDiv);   
-		    	}
-		 } 
+    			}
+ 		 } 
 		 
 		 function appendScheduleContent(data){  
 		 	table.innerHTML = "";
@@ -380,11 +353,7 @@
         	table = document.getElementById("tab");
             document.getElementById("sure").addEventListener("click",function(){
             	var text =  document.getElementById('scheduleName').value;
-            	if(text === ""){
-            		alert("schedule name");
-            		
-            		return;
-            	}
+
             	scheduleArray = null;
             	scheduleArray = [];
             	//schedule(memberId,scheduleName,scheduleOrder,sceneID)
@@ -413,16 +382,20 @@
             	getFavorite();
             });       
             document.getElementById("北區").addEventListener("click", function(){
-            	getSearch("北區");
+            	selectLocation = "北區";
+            	getSearch(0);
             });            
             document.getElementById("中區").addEventListener("click", function(){
-            	getSearch("中區");
+            	selectLocation = "中區";
+            	getSearch(0);
             });
             document.getElementById("南區").addEventListener("click", function(){
-            	getSearch("南區");
+            	selectLocation = "南區";
+            	getSearch(0);
             });
             document.getElementById("東區").addEventListener("click", function(){
-            	getSearch("東區");
+            	selectLocation = "東區";
+            	getSearch(0);
             });       
             
             document.getElementById("reset").addEventListener("click", function(){

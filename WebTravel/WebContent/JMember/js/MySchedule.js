@@ -2,11 +2,8 @@ function map(){
 		  var arrayFrom =[];
 		  var arrayTo = [];
 		  var arrayWaypoint = [];
-		  var objectWaypoint = {};
-		  var arraylocal=[];
 		  var fromText;
 		  var toText;
-		  
 		  var count =$(".ScheduleContent").size()-1;//總數
 //		  	alert(count)
 		  $(".ScheduleContent").each(function(i,data){
@@ -20,6 +17,8 @@ function map(){
 				  toText=$(data).attr("sceneName");
 			  }else{
 				  a=i+1;
+				  var arraylocal=[];
+				  var objectWaypoint=new Object();
 				  arraylocal[0]=$(data).attr("lat");
 				  arraylocal[1]=$(data).attr("lng");
 				  objectWaypoint['location']=arraylocal;
@@ -27,11 +26,11 @@ function map(){
 				  objectWaypoint['icon']="images/"+a+".png";
 				  arrayWaypoint.push(objectWaypoint);
 			  }
-			  console.log(i,objectWaypoint.text,objectWaypoint.location)
+//			  console.log(i,objectWaypoint.text,objectWaypoint.location)
 		  })
-//		  console.log("arrayFrom:"+arrayFrom);
-//		  console.log("arrayTo:"+arrayTo);
-//		  console.dir(arrayWaypoint);
+//		  console.log("arrayFrom:"+arrayFrom+fromText);
+//		  console.log("arrayTo:"+arrayTo+toText);
+//		  console.log(arrayWaypoint);
 		  $('.map').tinyMap('destroy');
 
 		  $('.map').tinyMap({
@@ -47,7 +46,19 @@ function map(){
 			                     'icon': {
 			                         'from': 'images/1.png',
 			                         'to': 'images/'+$(".ScheduleContent").size()+'.png'
+			                     },
+			                     'event': {
+			                         directions_changed: {
+			                             'func': function(){
+			                            	 alert("ss")
+			                            	 var info = this.getDirections();
+//			                            	 console.log("info:"+info)
+			                            	 console.log(info)
+
+			                             }
+			                         }
 			                     }
+
 			              	}
 			        ]
 			});
@@ -66,6 +77,8 @@ $(function(){
 	})
 	$('#myModal').on('shown.bs.modal',function(){
 		map();
+		
+		
 	})
 	$('#myModal').on('show.bs.modal',function(){
 		$.ajax({
@@ -181,6 +194,7 @@ $(function(){
 	    	});
 	  
 	  //-----------------------------------猛甲茶到-------------------------------------------------
+	  
 	  
 	  
 	  

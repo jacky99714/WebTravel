@@ -59,7 +59,7 @@ public class SceneDAOHibernate implements SceneDAO{
 
 	@Override
 	public SceneBean update(SceneBean bean) {
-		SceneBean rs = (SceneBean)getSession().load(SceneBean.class,bean.getSceneId());
+		SceneBean rs = (SceneBean)getSession().get(SceneBean.class,bean.getSceneId());
 		if(rs!=null){
 			rs.setLocation(bean.getLocation());
 			rs.setCity(bean.getCity());
@@ -119,6 +119,14 @@ public class SceneDAOHibernate implements SceneDAO{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public List<SceneBean> select(String location,int begin,int number) {
+		Query query = getSession().createQuery("from SceneBean where location='"+location+"'");
+		query.setFirstResult(begin);
+		query.setMaxResults(number);
+		
+		return (List<SceneBean>)query.list();
+	}
     //===================================================
 	public static void main(String[] args) {
 		try {
@@ -126,9 +134,9 @@ public class SceneDAOHibernate implements SceneDAO{
 			session.beginTransaction();
 
 			SceneDAO dao = new SceneDAOHibernate(session);
-			
+		
 			//select All
-			String s = "台北101";
+//			String s = "台北101";
 //			SceneBean beans = dao.selectName(s);
 //			System.out.println(beans);
 			//select One

@@ -62,14 +62,15 @@ $(function(){
 // 	        ]
 	    direction : [
 	                 {
-	                     'from': '臺北市大安區羅斯福路四段一號',
-	                     'fromText': '起點: 羅斯福路四段',
+	                     'from': ["23.942930","120.931320921"],
+	                     'fromText': '起點:紀念館',
 	                     'waypoint': [
-	                         {'location': '台北市信義區仁愛路4段505號', 'text': '仁愛路中繼點','icon': 'https://code.essoduke.org/images/2.png'},
-	                         {'location': '臺北市松山區南京東路4段2號', 'text': '南京東路中繼點','icon': 'https://code.essoduke.org/images/2.png'}
+	                         {'location': ["23.795380", "120.945740"], 'text': '達瑪巒旅遊服務中心2','icon': 'https://code.essoduke.org/images/2.png'},
+	                         {'location': ["23.850950", "120.922380"], 'text': '土亭仔步道3','icon': 'https://code.essoduke.org/images/2.png'},
+	                         {'location': ["23.785740", "120.945770"], 'text': '快樂樂團4','icon': 'https://code.essoduke.org/images/2.png'}
 	                     ],
-	                     'to': '臺北市北平西路三號',
-	                     'toText': '終點: 北平西路',
+	                     'to':  ["23.872350","120.920580"],
+	                     'toText': '終點:內湖山步道',
 	                     'travel': 'driving',
 	                     'icon': {
 	                         'from': 'https://code.essoduke.org/images/2.png',

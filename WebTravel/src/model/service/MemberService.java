@@ -147,13 +147,28 @@ public class MemberService {
 	
 	//將景點內容顯示字數少一點
 	public List<SceneBean> SubStirngCount(List<SceneBean> list){
+		List<SceneBean> newlist = new ArrayList<SceneBean>();
 		for(SceneBean s :list){
+			SceneBean sb = new SceneBean(); 
+			sb.setCity(s.getCity());
+			sb.setLocation(s.getLocation());
+			sb.setMemberId(s.getMemberId());
 			if(s.getSceneContent().length()>70){
 				s.setSceneContent(s.getSceneContent().substring(0,70)+"...");
+			}else{
+				sb.setSceneContent(s.getSceneContent());
 			}
+			sb.setSceneId(s.getSceneId());
+			sb.setSceneName(s.getSceneName());
+			sb.setScenePhoto(s.getScenePhoto());
+			sb.setTimeEnd(s.getTimeEnd());
+			sb.setTimeStart(s.getTimeStart());
+			newlist.add(sb);			
 		}
-		return list;
+		return newlist;
 	}
-	
-	
+	//會員刪除行程
+	public boolean deleteSchedule(int scheduleId){
+		return scheduleDAO.delete(scheduleId);
+	}
 }

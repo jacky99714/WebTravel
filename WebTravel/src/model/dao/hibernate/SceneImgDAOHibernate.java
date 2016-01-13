@@ -47,7 +47,7 @@ private Session session = null;
 
 	@Override
 	public SceneImgBean update(SceneImgBean bean) {
-		SceneImgBean sib = (SceneImgBean)getSession().load(SceneImgBean.class,bean.getSceneImgId());
+		SceneImgBean sib = (SceneImgBean)getSession().get(SceneImgBean.class,bean.getSceneImgId());
 		if(sib!=null){
 			sib.setSceneImgId(bean.getSceneImgId());
 			sib.setImg(bean.getImg());

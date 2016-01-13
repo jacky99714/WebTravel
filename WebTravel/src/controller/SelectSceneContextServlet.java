@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.bean.SceneBean;
 import model.service.SceneService;
 import other.bean.FavoriteBean;
 
@@ -28,12 +29,13 @@ public class SelectSceneContextServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		//接收資料
 		String sname = request.getParameter("sceneName");
+		
 		//驗證資料
 		
 		//轉換資料
 		
 		//model
-		FavoriteBean nbean = new FavoriteBean();
+		SceneBean nbean = new SceneBean();
 		SceneService sceneservice = new SceneService();
 		nbean = sceneservice.getName(sname);
 		//view
