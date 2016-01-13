@@ -2,26 +2,36 @@ function map(){
 		  var arrayFrom =[];
 		  var arrayTo = [];
 		  var arrayWaypoint = [];
+		  var objectWaypoint = {};
 		  var arraylocal=[];
+		  var fromText;
+		  var toText;
+		  
 		  var count =$(".ScheduleContent").size()-1;//總數
 //		  	alert(count)
 		  $(".ScheduleContent").each(function(i,data){
 			  if(i==0){
 				  arrayFrom[0]=$(data).attr("lat");
 				  arrayFrom[1]=$(data).attr("lng");
+				  fromText=$(data).attr("sceneName");
 			  }else if(i==count){
 				  arrayTo[0]=$(data).attr("lat");
 				  arrayTo[1]=$(data).attr("lng");
+				  toText=$(data).attr("sceneName");
 			  }else{
+				  a=i+1;
 				  arraylocal[0]=$(data).attr("lat");
 				  arraylocal[1]=$(data).attr("lng");
-				  arrayWaypoint.push(arraylocal);
+				  objectWaypoint['location']=arraylocal;
+				  objectWaypoint['text']=$(data).attr("sceneName");
+				  objectWaypoint['icon']="images/"+a+".png";
+				  arrayWaypoint.push(objectWaypoint);
 			  }
-			  console.log(i,$(data).attr("lng"),$(data).attr("lat"))
+			  console.log(i,objectWaypoint.text,objectWaypoint.location)
 		  })
-		  console.log("arrayFrom:"+arrayFrom);
-		  console.log("arrayTo:"+arrayTo);
-		  console.dir(arrayWaypoint);
+//		  console.log("arrayFrom:"+arrayFrom);
+//		  console.log("arrayTo:"+arrayTo);
+//		  console.dir(arrayWaypoint);
 		  $('.map').tinyMap('destroy');
 
 		  $('.map').tinyMap({
@@ -29,10 +39,16 @@ function map(){
 			    'direction': [
 			              	{
 			              	    'from':arrayFrom,
-			              	    'to':arrayTo,
+			              	    'fromText':fromText,
 		                        'travel': 'driving',
-		            	        'waypoint': arrayWaypoint
-			              	},
+		            	        'waypoint': arrayWaypoint,
+		            	        'to':arrayTo,
+		            	        'toText':toText,
+			                     'icon': {
+			                         'from': 'images/1.png',
+			                         'to': 'images/'+$(".ScheduleContent").size()+'.png'
+			                     }
+			              	}
 			        ]
 			});
 
@@ -63,6 +79,7 @@ $(function(){
 					  var col = $("<div></div>").addClass("col-md-2").addClass("ScheduleContent");
 					  col.attr("id",i+1);
 					  col.attr("value",value.sceneId);
+					  col.attr("sceneName",value.sceneName);
 					  col.attr("lng",value.timeStart);
 					  col.attr("lat",value.timeEnd);
 					  var thumbnail = $("<div></div>").addClass("thumbnail");
@@ -138,4 +155,35 @@ $(function(){
 	   });
 	  });
 	//-----------------------------------猛甲茶到-------------------------------------------------
+	  //-----------------------------------刪除行程-------------------------------------------------
+	  var ob;
+	  $('.delete').on("click",function(){//刪除行程
+			ob= $(this)
+		})
+	    	$('#Closebtn').on("click",function(){
+	    		 $.ajax({
+					  'type':'get', //post、delete、put
+					  'url':'../DeleteScheduleServlet',
+					  'dataType':'xml',  //json、script、html
+					  'data':{"schedule":ob.val()}
+//					  'success':function(data){
+						//data 就是一個XML DOM 
+//						  alert(data);
+//						$(data).find("Category").each(function(){
+							//$(this) -> 表示Category物件
+//							console.log($(this).children("CategoryID").text());
+//							console.log($(this).children("CategoryName").text());
+//						})
+//					  }
+				  });
+	    		 ob.parents("tr").remove();
+	    		 $('#myModal001').modal('hide')
+	    	});
+	  
+	  //-----------------------------------猛甲茶到-------------------------------------------------
+	  
+	  
+	  
+	  
+	  
 });//$end

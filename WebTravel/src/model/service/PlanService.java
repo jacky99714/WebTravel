@@ -15,13 +15,9 @@ import model.dao.SceneDAO;
 import model.dao.ScheduleContentDAO;
 import model.dao.ScheduleDAO;
 import model.dao.hibernate.CollectDAOHibernate;
-import model.dao.hibernate.QDAOHibernate;
+import model.dao.hibernate.SceneDAOHibernate;
 import model.dao.hibernate.ScheduleContentDAOHibernate;
 import model.dao.hibernate.ScheduleDAOHibernate;
-import model.dao.jndi.CollectDAOjndi;
-import model.dao.jndi.SceneDAOjndi;
-import model.dao.jndi.ScheduleContentDAOjndi;
-import model.dao.jndi.ScheduleDAOjndi;
 import model.hibernate.HibernateUtil;
 import model.util.TypeConveter;
 import other.bean.FavoriteBean;
@@ -38,7 +34,7 @@ public class PlanService {
 	 
 	 public PlanService(){
 			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-			//sceneDao = new QDAOHibernate(session);
+			sceneDao = new SceneDAOHibernate(session);
 			collectDao = new CollectDAOHibernate(session);
 			scheduleDao = new ScheduleDAOHibernate(session);
 			scheduleContentDao = new ScheduleContentDAOHibernate(session);
@@ -50,7 +46,12 @@ public class PlanService {
 	 
 	 public List<FavoriteBean> getScene(String location){
 		 if("北區".equals(location) || "中區".equals(location) || "南區".equals(location) || "東區".equals(location)){
-			 return sceneDao.selectf(location);
+			 List<SceneBean> li = sceneDao.select(location);
+			 List<FavoriteBean> fav = new ArrayList<>();
+			 for(SceneBean bean:li){
+				 fav.add(TypeConveter.parseFavoriteBean(bean));
+			 }
+			 return fav;
 		 }else{
 			 return null;
 		 }	 

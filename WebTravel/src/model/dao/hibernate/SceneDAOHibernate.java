@@ -104,7 +104,7 @@ public class SceneDAOHibernate implements SceneDAO{
     //以下3個無使用==============================================
 	@Override
 	public List<FavoriteBean> selectf(String location) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
