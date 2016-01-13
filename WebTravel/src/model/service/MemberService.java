@@ -154,6 +154,8 @@ public class MemberService {
 		}
 		return list;
 	}
-	
-	
+	//會員刪除行程
+	public boolean deleteSchedule(int scheduleId){
+		return scheduleDAO.delete(scheduleId);
+	}
 }
