@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import model.bean.MemberBean;
 import model.bean.SceneMessageBean;
+import model.service.SceneMessageService;
 
 /**
  * Servlet implementation class SceneMessage
@@ -34,25 +35,26 @@ public class SceneMessageServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		MemberBean mb = (MemberBean)session.getAttribute("loginOk");
 		int mid = mb.getMemberId();
+		System.out.println(smes);
 		//驗證
-		
+		SceneMessageService sms = new SceneMessageService();
 		if(smes != null ){
 			SceneMessageBean smb = new SceneMessageBean();
 			smb.setMemberId(mid);
 			smb.setSceneId(Integer.valueOf(sid));
 			smb.setMessageContent(smes);
-			
+			//insert
+			smb = sms.insertmessage(smb);
+			request.setAttribute("listmessage", smb);
 		}
-		
-	
-		
-		
+			
 		//轉換
 		
-		//model
+		//model		
 		
 		
 		//view
+		
 	}
 
 	

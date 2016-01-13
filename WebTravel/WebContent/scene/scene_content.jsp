@@ -68,9 +68,7 @@
                 <hr>
 
                 <!-- 景點內容 -->
-                <p class="lead">${namebean.sceneName}</p>
-                <p><font color="#AA0000">開放時間：</font>${namebean.timeStart} ~ ${namebean.timeEnd}</p>
-                
+                <p class="lead" id="${namebean.sceneId}">${namebean.sceneName}</p>                             
                 <p><font color="#AA0000">景點介紹：</font></p>
                 <p>${namebean.sceneContent}</p>
                 
@@ -79,9 +77,9 @@
                 <!-- 留言 Form -->
                 <div class="well">
                     <h4>留言:</h4>
-                    <form role="form" action="<%=request.getContextPath()%>/SceneMessage?secneId=${namebean.sceneId}" method="post">
+                    <form role="form">
                         <div class="form-group">
-                            <textarea class="form-control" rows="3" name="message"></textarea>
+                            <textarea class="form-control" rows="3" name="${loginOk.memberId}"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
@@ -96,9 +94,9 @@
                     </a>
                     <div class="media-body"><!-- 回覆內容 -->
                         <h4 class="media-heading">Start Bootstrap
-                            <small>August 25, 2014 at 9:30 PM</small>
+                            <small>${listmessage.memberMessageContent}</small>
                         </h4>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                        ${listmessage}
                     </div>
                 </div>
                 
@@ -120,7 +118,37 @@
 
 
 
+<script type="text/javascript">
+	
+	
+	$(function(){	
+		//送出景點留言
+		$(".btn-primary").on("click",function(event){
+			event.preventDefault();
+			var mid = $(".form-control").attr("name");
+			alert(mid)
+			if(mid != null && mid.length > 0 && mid !=''){
+				$.ajax({
+					  "type":"post",
+					  "url":"<%=request.getContextPath()%>/SceneMessage",
+					  "data":{"sceneId": $(".lead").attr("id"), "message":$(".form-control").val()},
+					  "datatype":"text",
+					})
+					alert("留言新增成功")
+			} else {
+				alert("error")
+				location.href = "../secure/login.jsp";
 
+				
+			}//if
+		})//btn-primary
+				
+	});//jquery
+
+	
+	
+	
+</script>
 
 <!--  -->
 

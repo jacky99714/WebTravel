@@ -58,14 +58,14 @@
 			<td><a href="<%=request.getContextPath()%>/SelectCityServlet?city=台南市"><img src="img/scene03.jpg" alt="台南市" class="img-rounded"></a></td>
 			<td><a href="<%=request.getContextPath()%>/SelectCityServlet?city=高雄市"><img src="img/scene03.jpg" alt="高雄市" class="img-rounded"></a></td>
 			<td><a href="<%=request.getContextPath()%>/SelectCityServlet?city=屏東縣"><img src="img/scene03.jpg" alt="屏東縣" class="img-rounded"></a></td>
-			<td><a href="<%=request.getContextPath()%>/SelectCityServlet?city=澎湖縣"><img src="img/scene03.jpg" alt="澎湖縣" class="img-rounded"></a></td>		
-			<td><a href="<%=request.getContextPath()%>/SelectCityServlet?city=金門縣"><img src="img/scene03.jpg" alt="金門縣" class="img-rounded"></a></td>		
+				
 		</tr>
 		<!--  ===============東部===============  -->
 		<tr>
 			<td><a href="<%=request.getContextPath()%>/SelectLocationServlet?location=東區"><img src="img/scene04.jpg" alt="東區" class="img-rounded"></a></td>
 			<td><a href="<%=request.getContextPath()%>/SelectCityServlet?city=花蓮縣"><img src="img/scene04.jpg" alt="花蓮縣" class="img-rounded"></a></td>
 			<td><a href="<%=request.getContextPath()%>/SelectCityServlet?city=台東縣"><img src="img/scene04.jpg" alt="台東縣" class="img-rounded"></a></td>				
+							
 		</tr>
 	</table>		
   </div>

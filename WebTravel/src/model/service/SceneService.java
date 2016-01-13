@@ -1,6 +1,6 @@
 package model.service;
 
-import java.io.UnsupportedEncodingException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,43 +27,72 @@ public class SceneService {
 	
 	//搜尋區域
 	public List<SceneBean> getLocation(String location) {
-		if (location != null) {
-			
+		if (location != null) {		
 			List<SceneBean> lilo = sceneDao.select(location);
-			 
-			for(SceneBean fbean:lilo){
-				if(fbean.getSceneContent().length()>=70L){
-					String str= fbean.getSceneContent().substring(0,70);
-					fbean.setSceneContent(str+"...");
-				}
-			}
+
+			List<SceneBean> newlilo = new ArrayList<>();
 			
-			return lilo;
+			for (SceneBean s :lilo){
+				SceneBean newsb = new SceneBean();
+				
+				if (s.getSceneContent().length() >= 70L) {
+					String str = s.getSceneContent().substring(0, 70);
+					newsb.setSceneContent(str + "...");
+				} else {
+					newsb.setSceneContent(s.getSceneContent());
+				}				
+				newsb.setCity(s.getCity());
+				newsb.setLocation(s.getLocation());
+				newsb.setMemberId(s.getMemberId());
+				
+				newsb.setSceneId(s.getSceneId());
+				newsb.setSceneName(s.getSceneName());				
+				newsb.setScenePhoto(s.getScenePhoto());
+				newsb.setTimeEnd(s.getTimeEnd());
+				newsb.setTimeStart(s.getTimeStart());
+				newlilo.add(newsb);
+			}
+			return newlilo;
 		}
 		return null;
 	}
 	
 	//搜尋城市
-	public List<FavoriteBean> getCity(String city) {
+	public List<SceneBean> getCity(String city) {
 		if (city != null) {
 
-			List<FavoriteBean> lilo = sceneDao.selectCityf(city);
+			List<SceneBean> lilo = sceneDao.selectCity(city);
 
-			for (FavoriteBean fbean : lilo) {
-				if (fbean.getSceneContent().length() >= 70L) {
-					String str = fbean.getSceneContent().substring(0, 70);
-					fbean.setSceneContent(str + "...");
-				}
+List<SceneBean> newlilo = new ArrayList<>();
+			
+			for (SceneBean s :lilo){
+				SceneBean newsb = new SceneBean();
+				
+				if (s.getSceneContent().length() >= 70L) {
+					String str = s.getSceneContent().substring(0, 70);
+					newsb.setSceneContent(str + "...");
+				} else {
+					newsb.setSceneContent(s.getSceneContent());
+				}				
+				newsb.setCity(s.getCity());
+				newsb.setLocation(s.getLocation());
+				newsb.setMemberId(s.getMemberId());
+				
+				newsb.setSceneId(s.getSceneId());
+				newsb.setSceneName(s.getSceneName());				
+				newsb.setScenePhoto(s.getScenePhoto());
+				newsb.setTimeEnd(s.getTimeEnd());
+				newsb.setTimeStart(s.getTimeStart());
+				newlilo.add(newsb);
 			}
-
-			return lilo;
+			return newlilo;
 		}
 		return null;
 	}
 	//搜尋景點
-	public FavoriteBean getName(String sceneName) {
+	public SceneBean getName(String sceneName) {
 		if (sceneName != null) {
-			return sceneDao.selectNamef(sceneName);
+			return sceneDao.selectName(sceneName);
 		}
 		return null;
 	}
@@ -109,7 +138,7 @@ public class SceneService {
 		return listFB;
 	}
 	
-	
+	//抓取景點內容前70字
 	
 	
 }
