@@ -35,7 +35,6 @@ public class MyScheduleContentServlet extends HttpServlet {
 			List<String> list = new ArrayList<String>();
 			list.clear();
 			JSONArray jsonArray;
-			JSONObject jsonObject =new JSONObject();
 			HttpSession session = request.getSession();
 			response.setContentType("application/json; charset=UTF-8");
 			MemberService ms = new MemberService();
