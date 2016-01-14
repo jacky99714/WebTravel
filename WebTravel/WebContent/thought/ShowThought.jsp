@@ -24,7 +24,11 @@
 
 <!--     我是內容---------------------------- -->
     <div class="container-fluid">
-    
+    	<div>
+    		<h3 style="text-align: center">${thoughtBean.thoughtName}</h3>
+    	</div>
+    	<div><h4>${thoughtBean.thoughtSubtitle}</h4></div>
+    	<div>${thoughtBean.thoughtContent}</div>
     
     
     </div>

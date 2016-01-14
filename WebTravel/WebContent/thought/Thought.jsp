@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>旅行微革命-心得</title>
+<h3 style="text-align: center">日記分享</h3>
 <link rel="shortcut icon" href="<c:url value="/img/icon.ico"/>">  
 
     <!-- Bootstrap -->
@@ -37,7 +38,7 @@
     <form action="<c:url value="/ThoughtServlet" />" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
 			<div>
 				<div>
-					<label>心得名稱</label>
+					<label>日記名稱</label>
 				</div>
 				<div>
 					<input type="text" size="50" placeholder="台北一日遊" name="thoughtName"><p color='red'  size="-3">${errors.thoughtName}</p>
@@ -63,7 +64,7 @@
 <!-- 				<input type="text" placeholder="請選擇日期"> -->
 <!-- 			</div> -->
 			<div>
-				<label>心得內容</label><span> - 內容需100字以上</span><p color='red'  size="-3">${errors.thoughtContent}</p>
+				<label>日記內容</label><span> - 內容需100字以上</span><p color='red'  size="-3">${errors.thoughtContent}</p>
 			</div>
 			<div >
 				 <textarea id="textarea" style="width: 50%; height: 452px" ></textarea>

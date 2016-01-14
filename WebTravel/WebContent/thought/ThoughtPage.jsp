@@ -23,34 +23,9 @@
   <jsp:include page="/WEB-INF/top/top.jsp"></jsp:include>
 
 <!--     我是內容---------------------------- -->
-	<div class="container">
+	<div id="holder">
 		<div class="row" id="div1">
-<!-- 			<div  class="row"> -->
-<%-- 				<c:forEach var="thoughtlist" items="${list}"> --%>
-<!-- 					<div class="col-xs-6 col-md-3"> -->
-<!-- 						<div class="thumbnail"> -->
-
-<!-- 							<a href="https://www.google.com.tw" class="thumbnail"><img -->
-<!-- 								src="/img/Carousel01.jpg" alt="a"></a> -->
-<!-- 							<div class="caption"> -->
-<!-- 								<div> -->
-<%-- 									<h3>${thoughtlist.thoughtName}</h3> --%>
-<!-- 								</div> -->
-<%-- 								<div>${thoughtlist.thoughtSubtitle}</div> --%>
-<!-- 							</div> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<%-- 				</c:forEach> --%>
-<!-- 			</div> -->
-<!-- 			<div class="col-xs-6 col-md-3"> -->
-<!-- 				<div class="thumbnail"> -->
-<!-- 					<a href="https://www.google.com.tw" class="thumbnail"> -->
-<!-- 						<img alt="a" src="../img/Carousel01.jpg"></a> -->
-<!-- 					<div id="div1" class="caption"> -->
-						
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
+			
 		</div>
 	</div>
 	<!--  -->
@@ -65,8 +40,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
    
-<%--     <script src=" <c:url value="/js/bootstrap.min.js"/>"></script> --%>
-<!--     <script src="js/jquery-2.1.4.min.js"></script> -->
+    <script src=" <c:url value="/js/bootstrap.min.js"/>"></script>
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/jPages.min.js"></script>
 <!--     <script type="text/javascript" src="http://masonry.desandro.com/jquery.masonry.min.js"></script> -->
     
     <script type="text/javascript">
@@ -98,7 +74,7 @@
 						console.log(data[i].thoughtId);
 						console.log(data[i].thoughtName);
 						console.log(data[i].thoughtSubtitle);
-						console.log(data[i].thoughtPhoto);
+// 						console.log(data[i].thoughtPhoto);
 						console.log(data[i].thoughtContent);
 						console.log(data[i].thoughtTime);
 						console.log(data[i].memberId);
@@ -108,10 +84,11 @@
 						var name = data[i].thoughtName;
 						var subtitle = data[i].thoughtSubtitle;
 						var photo = 'data:image/png;base64,'+data[i].thoughtPhoto;
-						var id = data[i].thoughtId;
+						var thoughtid = data[i].thoughtId;
 						
 						var div2 = document.createElement("div");
 						div2.className="col-xs-6 col-md-3";
+						div2.id="Div2";
 						var div3 = document.createElement("div");
 						div3.className="thumbnail";
 						
@@ -119,8 +96,11 @@
 						div1.appendChild(div2);
 						
 						var a1 = document.createElement("a");
+			
+						a1.href="ShowThoughtServlet?id="+thoughtid;
 						var img = document.createElement("img");
 						img.src=photo;
+						img.id=thoughtid;
 						var div4 = document.createElement("div");
 						
 						a1.appendChild(img);
@@ -138,14 +118,26 @@
 // 						contents.className="col-md-8";
 						contents.innerHTML = subtitle;
 						div4.appendChild(contents);
+						
 // 						myDiv.innerHTML=data[i].thoughtSubtitle;
 					}
+					
 // 			    		myDiv.innerHTML = "<h3>" + data + "</h3>";
 				}else {
 					alert(xhr.status + ":" + xhr.statusText);
 				}
 			}
 		}
+		$(function(){
+			$("div.div1").jPages({
+				containerID : "holder",
+				 previous : "←",
+				 next : "→",
+				 perPage : 4,
+				 delay : 100
+			});
+		});
+		
 		 window.onload = function(){
 			 getThought();
 		 }
