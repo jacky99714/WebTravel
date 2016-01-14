@@ -24,12 +24,13 @@ public class SceneGetMessageServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String sid = request.getParameter("sceneId");
-		
+		int isid = Integer.valueOf(sid);
 		SceneMessageService scenemessage = new SceneMessageService();
-		List<SceneMessageBean> listmessage = scenemessage.selectmessage(Integer.valueOf(sid));
+		List<SceneMessageBean> listmessage = scenemessage.selectmessage(isid);
 		HttpSession session = request.getSession();
+		session.removeAttribute("listmessage");
+		System.out.println("SceneGetMessageServlet:"+listmessage);
 		session.setAttribute("listmessage", listmessage);
-		System.out.println(listmessage);
 	}
 
 	

@@ -73,6 +73,8 @@ public class MemberBean implements Serializable{
 			cascade={CascadeType.REMOVE},
 			mappedBy="memberBean"
 			)
+	
+	
 	private Set<MemberMessageBean> MemberMessageBeans;
 	
 	
