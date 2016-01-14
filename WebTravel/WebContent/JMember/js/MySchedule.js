@@ -89,9 +89,6 @@ $(function(){
 	$('.scheduleSelect').on("click",function(){//刪除行程
 		ob= $(this)
 	})
-	$('#myModal').on('shown.bs.modal',function(){
-		map();
-	})
 	$('#myModal').on('show.bs.modal',function(){
 		$.ajax({
 			  'type':'get', //post、delete、put
@@ -138,6 +135,9 @@ $(function(){
 					  $( "#sortable" ).sortable({update: map});
 				  });
 
+			  },
+			  'complete':function(){
+				  map();
 			  }
 
 		});//ajax
@@ -219,6 +219,8 @@ $(function(){
 //	  var div2 = $("<div></div>").addClass("map-marker-01");
 //	  div2.attr("style","height:300px");
 		$(".scheduleId").on("click",function(){
+			$(".loadingimg").remove();
+			$(this).next(".td2").children(".delete").after('<img style="width:20px;height:20px;display:inline;" class="loadingimg" alt="" src="images/loader_gif.jpg">');
 			$.ajax({
 				  'type':'get', //post、delete、put
 				  'url':'../MyScheduleContentServlet',
@@ -301,8 +303,10 @@ $(function(){
 					  }
 					  
 					  });
+				  },
+				  'complete':function(){
+					  $(".loadingimg").remove();
 				  }
-
 			});//ajax
 		});
 	  

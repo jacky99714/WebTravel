@@ -58,7 +58,11 @@
     	<c:forEach items="${listSchedule}" var="Schedule">
     		<tr value="dddd">
     			<td value="${Schedule.scheduleId}" id="${Schedule.scheduleId}" class="scheduleId"><strong class="strong1">${Schedule.scheduleName}</strong></td>
-    			<td style="width:200px;"><button value="${Schedule.scheduleId}" class="btn btn-warning btn scheduleSelect" data-toggle="modal" data-target=".bs-example-modal-lg">編輯行程</button>  <button value="${Schedule.scheduleId}" class="btn btn-danger btn delete" data-toggle="modal" data-target=".bs-example-modal-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  刪除</button></td>
+    			<td class="td2" style="width:200px;"><button value="${Schedule.scheduleId}" class="btn btn-warning btn scheduleSelect" data-toggle="modal" data-target=".bs-example-modal-lg">編輯行程</button> 
+    			 <button value="${Schedule.scheduleId}" class="btn btn-danger btn delete" data-toggle="modal" data-target=".bs-example-modal-sm">
+    			 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  刪除
+    			 </button>
+    			 </td>
     		</tr>
     	</c:forEach>
     	</table>

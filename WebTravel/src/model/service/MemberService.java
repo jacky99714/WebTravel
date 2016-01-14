@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
 
@@ -118,6 +119,19 @@ public class MemberService {
 		}
 		return list;	
 	}
+	//hibernate行程內容
+	public List<SceneBean> selectSceneBean(int scheduleId){
+		ScheduleBean  scheduleBean= scheduleDAO.select(scheduleId);
+		Set<ScheduleContentBean> lset = scheduleBean.getScheduleContentBeans();
+		List<ScheduleContentBean> listSCB = new ArrayList<ScheduleContentBean>(lset);
+		List<SceneBean> list = new ArrayList<SceneBean>();
+		for(ScheduleContentBean s :listSCB){
+			list.add(sDAO.select(s.getSceneId()));
+		}
+		return list;
+	}
+	
+	
 	//轉成另一個景點BEAN 圖片是String格式
 	public List<FavoriteBean> selectFavoriteBean(List<SceneBean> list){
 		List<FavoriteBean> listFB = new ArrayList<FavoriteBean>();
