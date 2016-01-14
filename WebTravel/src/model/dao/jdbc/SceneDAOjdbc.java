@@ -71,7 +71,7 @@ public class SceneDAOjdbc implements SceneDAO {
 	 * @see model.dao.jdbc.SceneDAO#select(java.lang.String)
 	 */
 	@Override
-	public  List<FavoriteBean> select(String location) {
+	public  List<FavoriteBean> selectf(String location) {
 		try (
 				Connection conn = DataSourceConnection.getConnection();
 			 ){
@@ -104,14 +104,14 @@ public class SceneDAOjdbc implements SceneDAO {
 	
 	
 	@Override
-	public List<FavoriteBean> selectCity(String city) {
+	public List<FavoriteBean> selectCityf(String city) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	
 	@Override
-	public FavoriteBean selectName(String scenename) {
+	public FavoriteBean selectNamef(String scenename) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -253,6 +253,24 @@ public class SceneDAOjdbc implements SceneDAO {
 	}
 
 
+	@Override
+	public List<SceneBean> select(String location) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<SceneBean> selectCity(String city) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public SceneBean selectName(String scenename) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	public static void main(String[] args){
 		SceneDAO test = new SceneDAOjdbc();
 //----------------------------------------------------------
@@ -286,6 +304,12 @@ public class SceneDAOjdbc implements SceneDAO {
 //		fo.close();
 //----------------------------------------------------------
 		
+	}
+
+	@Override
+	public List<SceneBean> select(String location, int begin, int number) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

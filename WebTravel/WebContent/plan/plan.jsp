@@ -18,6 +18,10 @@
          var maxImg = 4;  // max image in tr tag
          var maxLine = 5;   
          var scheduleArray = [];
+         var showImg = 8;
+         var imgSearchData;
+         var imgSearchPage = 0;
+         var selectLocation;
 ///////////////////////////////////////////////////////////
 		function schedule(memberId,scheduleName,scheduleOrder,sceneId){
 			this.memberId = memberId;
@@ -113,8 +117,8 @@
 	    function callbackFavorite(){
 	    	if(xhrFavorite.readyState === 4){ 	
 	    		if(xhrFavorite.status === 200){
-			    	var data = JSON.parse(xhrFavorite.responseText);
-			    	createImgContent(data);
+	    			imgFavData = JSON.parse(xhrFavorite.responseText);
+			    	createImgContent(imgFavData,1,"imgFav");
 	    		}else{
 	    			alert(xhrFavorite.status + ":" + xhrFavorite.statusText);
 	    		}    		
@@ -143,12 +147,13 @@
 	    	}  	
 	    }	
 	    
-  
-  		function getSearch(select){ 	
+	    
+  		function getSearch(begin){ 	
 	    	xhrSearch = new XMLHttpRequest();
 	    	if(xhrSearch !== null){ 	
 	    		xhrSearch.addEventListener("readystatechange",callbackSearch);	  
-	    		xhrSearch.open("get","GetSceneLocationServlet?location="+select,true); 	
+
+	    		xhrSearch.open("get","GetSceneLocationServlet?location="+selectLocation+"&begin="+begin+"&number="+showImg,true); 	
 		    	xhrSearch.send();	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
@@ -158,8 +163,9 @@
 	    function callbackSearch(){
 	    	if(xhrSearch.readyState === 4){ 	
 	    		if(xhrSearch.status === 200){
-			    	var data = JSON.parse(xhrSearch.responseText);
-			    	createImgContent(data);
+	    			document.getElementById("insert").inerHTML="請輸入行程名稱";
+	    			imgSearchData = JSON.parse(xhrSearch.responseText);
+	    			createImgContent(imgSearchData,1,"imgSearch");
 	    		}else{
 	    			alert(xhrSearch.status + ":" + xhrSearch.statusText);
 	    		}    		
@@ -172,8 +178,7 @@
 	    	if(xhrcreate !== null){	    
 		    	xhrcreate.addEventListener("readystatechange",callbackCreateSchedule);
 		    	xhrcreate.open("post","InsertScheduleServlet",true); 
-		    	xhrcreate.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		    		
+		    	xhrcreate.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");	
 		    	xhrcreate.send("json="+arrayObject);		      	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
@@ -213,14 +218,15 @@
 	    	if(xhrdelete !== null){	    
 	    		xhrdelete.addEventListener("readystatechange",null);	  
 	    		xhrdelete.open("get","deleteSchedule?deleteId="+sceneid,true); 	
-	    		alert("deleteImg "+sceneid);
 		    	xhrdelete.send();		      	
 	    	}else{
 	    		alert("您的瀏覽器不支援Ajax功能!!");
 	    	}		    	
 	    }
 /////////////////////////////////////////////
-		 function createImgContent(data){
+
+ 		 function createImgContent(data,direction,type){			
+				
 		    	var content = document.getElementById("content");  //顯示資料
 		    	content.innerHTML="";
 		    	for(var i=0; i < data.length;i++){
@@ -230,13 +236,52 @@
 		    		img.id = "fav"+data[i].sceneId;
 		    		img.addEventListener("click", click);
 		    		var divName = document.createElement("div");
+		    		divName.className = "divName";
 		    		var text = document.createTextNode(data[i].sceneName);
 		    		divName.appendChild(text);
 		    		div.appendChild(img);
 		    		div.appendChild(divName);
-		    		content.appendChild(div);
-		    	}	
-		 } 
+		    		content.appendChild(div);    	
+		    	}
+		    	
+		
+
+		  		
+		        	var prevDiv = document.createElement("a");
+			    	var prevPage = document.createTextNode("上一頁");
+			    	prevDiv.style.paddingLeft = "70px";
+			    	prevDiv.style.paddingTop = "10px";
+			    	prevDiv.style.display = "inline-block";
+			    	prevDiv.style.visibility = "hidden";
+			    	prevDiv.appendChild(prevPage);
+    				content.appendChild(prevDiv);
+    			if(type == "imgSearch" && imgSearchPage > 0){
+    				prevDiv.style.visibility = "visible";
+    				prevDiv.addEventListener("click", function f(){	
+        				imgSearchPage--;
+        				getSearch(imgSearchPage*showImg);	 
+		    		});
+    			}
+	
+		    	
+
+		    			
+			    	var nextDiv = document.createElement("a");
+			    	nextDiv.style.paddingLeft = "70px";
+			    	nextDiv.style.paddingTop = "10px";
+			    	nextDiv.style.display = "inline-block";
+			    	nextDiv.style.visibility = "hidden";
+			    	var nextPage = document.createTextNode("下一頁");
+			    	nextDiv.appendChild(nextPage);
+    				content.appendChild(nextDiv);
+    			if(type == "imgSearch" && data.length == showImg){   
+    				nextDiv.style.visibility = "visible";
+			    	nextDiv.addEventListener("click", function f(){
+	    				imgSearchPage++;
+	    				getSearch(imgSearchPage*showImg);		   
+		    		});
+    			}
+ 		 } 
 		 
 		 function appendScheduleContent(data){  
 		 	table.innerHTML = "";
@@ -274,6 +319,7 @@
              if(input === "line"){
                 td.appendChild(createLine());
              }else if(input === "image"){
+            	td.className = "imgTd";
                 td.appendChild(createImg(imgsrc,sceneId,title));
                 td.appendChild(createImgTitle(title));
              }
@@ -282,6 +328,7 @@
          
          function createImgTitle(imgtitle){
     		var divName = document.createElement("div");
+    		divName.className = "divName";
     		var text = document.createTextNode(imgtitle);
     		divName.appendChild(text);
     		return divName;
@@ -315,10 +362,7 @@
         	table = document.getElementById("tab");
             document.getElementById("sure").addEventListener("click",function(){
             	var text =  document.getElementById('scheduleName').value;
-            	if(text === ""){
-            		alert("schedule name");
-            		return;
-            	}
+
             	scheduleArray = null;
             	scheduleArray = [];
             	//schedule(memberId,scheduleName,scheduleOrder,sceneID)
@@ -332,28 +376,42 @@
             			//${loginOk.memberId}
             		}
             	}
-            	// schedule(memberId,scheduleName,scheduleOrder,sceneID)
            
               	createSchedule(JSON.stringify(scheduleArray));    	
             	
             });
             
+            
+            
+            
             getSchedule();
             getFavorite();
+            
+            document.getElementById("faq").addEventListener("click", function(){
+            	document.getElementById("insert").innerHTML = "<br>對我的收藏或是搜尋景點裡的圖片按左鍵可以加入行程，使用拖曳圖片的方式刪除行程或是行程排序，reset會刪掉排序中的行程。";
+            	setTimeout(function (){
+            		document.getElementById("insert").innerHTML = "";
+    		 	}, 2000);       	
+            });       
+            
             document.getElementById("fav").addEventListener("click", function(){
             	getFavorite();
             });       
             document.getElementById("北區").addEventListener("click", function(){
-            	getSearch("北區");
+            	selectLocation = "北區";
+            	getSearch(0);
             });            
             document.getElementById("中區").addEventListener("click", function(){
-            	getSearch("中區");
+            	selectLocation = "中區";
+            	getSearch(0);
             });
             document.getElementById("南區").addEventListener("click", function(){
-            	getSearch("南區");
+            	selectLocation = "南區";
+            	getSearch(0);
             });
             document.getElementById("東區").addEventListener("click", function(){
-            	getSearch("東區");
+            	selectLocation = "東區";
+            	getSearch(0);
             });       
             
             document.getElementById("reset").addEventListener("click", function(){
@@ -372,15 +430,19 @@
 	<jsp:include page="/WEB-INF/top/top.jsp"></jsp:include>
     <div class="container-fluid">
    		<div class="row">	
-			<input id="scheduleName" type="text" placeholder="行程名稱"/>
-			<button id="sure">行程確認</button>  
-			<span id="insert"></span>  		
+   			<div>
+				<input id="scheduleName" type="text" placeholder="行程名稱"/>
+				<button id="sure">行程確認</button>  
+				<img id="faq" class="faq" title="操作說明" src="img/FAQ.png" />
+			</div>		
+			<div id="insert"></div>
    		</div>
    		<hr/>
 	    <div class="row">	
 	  		<div class="col-md-8">
 				<img id="garbage" class ="imgicon" src="img/garbage.png"  ondrop="drop(event)" ondragover="allowDrop(event)"/>	
 				<img id="reset" class ="imgicon" src="img/reset.png" />	
+				<hr>
 				<table id="tab">
 				</table>   		
 	  		</div>

@@ -15,7 +15,7 @@ public class GameService {
 	}	
 	public QBean getQuestion(){	
 		QBean bean =new QBean();
-		int index = (int) (Math.random()*qDao.getCount());
+		int index = (int) (Math.random()*qDao.getCount())+1;
 		bean = qDao.select(index);
 		return bean;
 	}

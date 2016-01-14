@@ -41,7 +41,7 @@
   <c:forEach var="sceneli" items="${li}">
    <div class="col-sm-6 col-md-3">
     <div class="thumbnail">
-      <img style="width:300px;height:200px;" src="data:image/jpg;base64,${sceneli.scenePhoto}"/>
+      <img style="width:300px;height:200px;" src="data:image/png;base64,${sceneli.scenePhoto}"/>
       <div class="caption">
         <h3>${sceneli.sceneName}</h3>
         <p>${sceneli.sceneContent}</p>

@@ -79,7 +79,7 @@
         <p>${sceneli.sceneContent}</p>
         
         <p>
-           <button type="button" class="btn btn-primary btn-sm" value="${sceneli.sceneName}" onclick="self.location.href='<%=request.getContextPath()%>/SelectSceneContextServlet'">
+           <button type="button" class="btn btn-primary btn-sm" value="${sceneli.sceneName}" onclick="location.href='<%=request.getContextPath()%>/SelectSceneContextServlet?sceneName=${sceneli.sceneName}'">
 		   <span class="glyphicon glyphicon-align-left" aria-hidden="true" ></span> 介紹
 		   </button>
 		   
@@ -102,14 +102,13 @@
 <!-- JavaScript Jquery Ajax非同步 addFavorite -->
 <script type="text/javascript">
 	$(function(){
-		//加入收藏
+		//選當前button
 		var btn;
 		$(":button").on("click",function(){
 			btn = $(this)
 		})//butten
-		
-		$(".btn-success").on("click",function(){	
-			
+		//加入收藏
+		$(".btn-success").on("click",function(){				
 			var mb = $(".s").attr("id");
 			alert(mb);
 			if (mb != null){
@@ -123,9 +122,31 @@
 			} else{
 				alert("請登入會員");
 			}//if
-		})//btn btn-success btn-sm
+		})//btn-success
+			
 		
-				
+		//加入行程
+		$(".btn-warning").on("click",function(){				
+			
+		
+				$.ajax({
+					  "type":"get",
+					  "url":"<%=request.getContextPath()%>/AddScheduleServlet",
+					  "data":{"scene": $(this).val()},
+					 
+					})
+			
+		})//btn-warning 
+		//轉至景點介紹
+// 			$(".btn-primary").on("click",function(){
+// 				$.ajax({
+// 				"type":"get",
+<%-- 				"url":"<%=request.getContextPath()%>/SelectSceneContextServlet", --%>
+// 				"data":{"sceneName": $(this).val()},
+// 				"datatype":"text",
+// 				});
+
+// 			})	
 		
 	});//jquery
 

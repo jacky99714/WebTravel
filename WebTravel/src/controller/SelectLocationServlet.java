@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.Console;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 
 import model.bean.SceneBean;
+import model.service.MemberService;
 import model.service.SceneService;
 import model.util.TypeConveter;
 import other.bean.FavoriteBean;
@@ -37,13 +39,17 @@ public class SelectLocationServlet extends HttpServlet {
 
 		// 接收資料
 		SceneService sceneservice = new SceneService();
-		List<FavoriteBean> li = new ArrayList<>();
+		MemberService ms = new MemberService();
+		List<SceneBean> li = new ArrayList<SceneBean>();
+		List<FavoriteBean> fb = new ArrayList<FavoriteBean>();
 		String lo = request.getParameter("location");
 					
 		// 驗證資料
 		if ( "北區".equals(lo) || "中區".equals(lo) ||"南區".equals(lo) ||"東區".equals(lo)) {
 			li = sceneservice.getLocation(lo);
-			
+			//轉換圖片格式為base64
+			fb = ms.selectFavoriteBean(li);
+//			System.out.println(fb.get(0).getScenePhoto());
 		}
 		
 		
@@ -51,7 +57,8 @@ public class SelectLocationServlet extends HttpServlet {
 		//JSONArray scenelist = TypeConveter.parseJSONArray(li); 
 		// model
 		HttpSession session = request.getSession();
-		session.setAttribute("li", li);
+		session.removeAttribute("li");
+		session.setAttribute("li", fb);
 		
 //		PrintWriter out = response.getWriter();
 //		out.print(scenelist);

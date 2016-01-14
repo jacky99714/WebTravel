@@ -12,6 +12,7 @@
 			<property name="connection.datasource">java:comp/env/jdbc/xxx</property>
 			<property name="hibernate.current_session_context_class">thread</property>
 			<property name="hibernate.show_sql">true</property>
+			
 			<mapping class="model.bean.MemberBean" />
 			<mapping class="model.bean.MemberMessageBean" />
 			<mapping class="model.bean.QBean" />
@@ -23,6 +24,9 @@
 			<mapping class="model.bean.ScheduleBean" />
 			<mapping class="model.bean.ScheduleContentBean" />
 			<mapping class="model.bean.ThoughtBean" />
+			<mapping class="model.bean.SceneBean"/>
+            <mapping class="model.bean.SceneImgBean"/>
+            <mapping class="model.bean.SceneMessageBean"/>
 	</session-factory>
 
 

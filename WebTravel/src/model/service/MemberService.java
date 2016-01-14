@@ -15,10 +15,12 @@ import model.bean.ScheduleBean;
 import model.bean.ScheduleContentBean;
 import model.dao.CollectDAO;
 import model.dao.MemberDAO;
+import model.dao.SceneDAO;
 import model.dao.ScheduleContentDAO;
 import model.dao.ScheduleDAO;
 import model.dao.hibernate.CollectDAOHibernate;
 import model.dao.hibernate.MemberDAOHibernate;
+import model.dao.hibernate.SceneDAOHibernate;
 import model.dao.hibernate.ScheduleContentDAOHibernate;
 import model.dao.hibernate.ScheduleDAOHibernate;
 import model.dao.jndi.CollectDAOjndi;
@@ -34,15 +36,16 @@ public class MemberService {
 	private CollectDAO cDAO ;
 	private ScheduleDAO scheduleDAO ;
 	private ScheduleContentDAO scheduleContentDAO ;
-	
+	private SceneDAO sDAO;
 	public MemberService(){
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		mDAO =  new MemberDAOHibernate(session);
 		cDAO = new CollectDAOHibernate(session);
 		scheduleDAO =new ScheduleDAOHibernate(session);
 		scheduleContentDAO = new ScheduleContentDAOHibernate(session);
+		sDAO = new SceneDAOHibernate(session);
 	}
-	SceneDAOjndi sDAO = new SceneDAOjndi();
+	
 	
 	HashMap<String, String> error = new HashMap<String,String>();
 	//登入使用
@@ -144,13 +147,29 @@ public class MemberService {
 	
 	//將景點內容顯示字數少一點
 	public List<SceneBean> SubStirngCount(List<SceneBean> list){
+		List<SceneBean> newlist = new ArrayList<SceneBean>();
 		for(SceneBean s :list){
+			SceneBean sb = new SceneBean(); 
+			sb.setCity(s.getCity());
+			sb.setLocation(s.getLocation());
+			sb.setMemberId(s.getMemberId());
 			if(s.getSceneContent().length()>70){
-				s.setSceneContent(s.getSceneContent().substring(0,70)+"...");
+				String ss =s.getSceneContent();
+				sb.setSceneContent(ss.substring(0,70)+"...");
+			}else{
+				sb.setSceneContent(s.getSceneContent());
 			}
+			sb.setSceneId(s.getSceneId());
+			sb.setSceneName(s.getSceneName());
+			sb.setScenePhoto(s.getScenePhoto());
+			sb.setTimeEnd(s.getTimeEnd());
+			sb.setTimeStart(s.getTimeStart());
+			newlist.add(sb);			
 		}
-		return list;
+		return newlist;
 	}
-	
-	
+	//會員刪除行程
+	public boolean deleteSchedule(int scheduleId){
+		return scheduleDAO.delete(scheduleId);
+	}
 }

@@ -18,6 +18,10 @@ $(function(){
 			$("#exampleInputFile").change(previewImage);
 			$('#img001').attr('src',$('#saImg').attr('src'));
 //
+			$("#exampleInputFile1").on("click",function(w){
+				w.preventDefault();
+				$("#exampleInputFile").click();
+			})
 //			$('#formIMG').on("submit",function(event){
 //				event.preventDefault();
 //

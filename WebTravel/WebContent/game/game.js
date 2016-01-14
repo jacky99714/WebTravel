@@ -231,6 +231,7 @@ function changeState(nextState){
     //resetPosition(who,type,sx,sy,dx,dy)
     if(state === "initial"){
         resetPosition(user.imgPerson,0,0,30,200);
+        resetPosition(back.img,0,0,0,0);
     }else if(state === "userWalk"){
         bgSpeed = 50; 	
         resetPosition(user.imgPerson,0,0,30,200);
@@ -278,7 +279,7 @@ function changeState(nextState){
         resetPosition(user.imgPerson,0,0,30,200);
         resetPosition(trea,0,trea.sHeight,350,200);
     }else if( state === "win" || state === "lose"){	
-        drawImg();
+        
         if(document.getElementById("form")){
                 box.innerHTML ="";
         }
@@ -290,12 +291,20 @@ function changeState(nextState){
         if(document.getElementById("userDefenseBtn")){
             allbtn.removeChild(document.getElementById("userDefenseBtn"));
         }
-
+        
         if(state === "win"){
             content.innerHTML = "恭喜您打倒了魔王，獲得優惠卷一張。";
+            back = new imgToCanvas("background","img/winner.png",0,0,460,300,0,0,460,300);
         }else{
             content.innerHTML = "勝敗乃兵家常事，請大俠重新來過。";
+            back = new imgToCanvas("background","img/loser.png",0,0,460,300,0,0,460,300);
+ 
         }
+       
+        back.img.onload = function(){
+        	drawImg();
+        };
+        
     }			
 
     if(start === null){			
@@ -321,11 +330,11 @@ function pictureAppear(which){
     }
 
     if(which === "user"){
-        if(state !== "lose" && state !== "reStart"){
+        if(state !== "win" && state !== "lose" && state !== "reStart"){
             return true;
         }
     }else if(which === "enemy"){
-        if(state !== "win" && state !== "userWalk" && state !== "initial"){				
+        if(state !== "win" && state !== "lose" && state !== "userWalk" && state !== "initial"){				
             return true;	   	
         }
     }else if(which === "treasure"){
@@ -679,6 +688,7 @@ function reStart(){
     display(0,"userhp");
     display(0,"usermp");
     display(0,"enemyhp");
+    back = new imgToCanvas("background","img/bg.png",0,0,460,300,0,0,460,300);
     ctx.clearRect(0, 0, back.dWidth, back.dHeight);	
 
     if(document.getElementById("play")){			

@@ -18,8 +18,8 @@
 }
 
 .imgContent{
-	width:100px;
-	height:100px;
+	width:120px;
+	height:120px;
 	margin:15px;
 	text-align:center;
 	display:inline-block;
@@ -31,7 +31,7 @@
 }
 
 #content{
-	width:280px;
+	width:350px;
     height: 600px;
     overflow: auto;
   	border-width:5px;	
@@ -44,7 +44,22 @@ table{
 	border-collapse: collapse;
 }
 
-td{
+.imgTd{
+	width:100px;
 	border:2px inset; 
+}
 
+.divName{
+	word-break: break-all;
+	text-align: center;
+}
+
+#insert{
+	width:300px;
+	word-break: break-all;
+	display:inline-block;
+}
+
+.faq{
+	width:20px;
 }

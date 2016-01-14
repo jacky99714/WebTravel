@@ -17,8 +17,9 @@ import model.dao.ThoughtDAO;
 import model.dao.jndi.ThoughtDAOjndi;
 import model.service.ThoughtService;
 import model.util.TypeConveter;
+import other.bean.MythoughtBean;
 
-@WebServlet("/DisplayThoughtServlet")
+@WebServlet("/thought/DisplayThoughtServlet")
 public class DisplayThoughtServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -38,13 +39,13 @@ public class DisplayThoughtServlet extends HttpServlet {
 //        ThoughtDAO thoughtDao = new ThoughtDAOjndi();
 //        ThoughtBean bean = new ThoughtBean();
         ThoughtService ts = new ThoughtService();
-        List<ThoughtBean> li = new ArrayList<>();
+        List<MythoughtBean> li = new ArrayList<>();
         li = ts.getAllThought();
 //        System.out.println(li);
 
-//        PrintWriter out = response.getWriter();
-//        out.print(TypeConveter.parseJSONArray(li));
-        session.setAttribute("list", li);
+        PrintWriter out = response.getWriter();
+        out.print(TypeConveter.parseJSONArray(li));
+//        session.setAttribute("list", li);
         
 	}
 

@@ -11,13 +11,19 @@ public interface SceneDAO {
 	List<SceneBean> select();  
 
 	//查詢SELECT_BY_LOCATION
-	List<FavoriteBean> select(String location);
+	List<SceneBean> select(String location);
+	
+	List<FavoriteBean> selectf(String location);
 	
 	//查詢SELECT_BY_CITY
-	List<FavoriteBean> selectCity(String city);
+	List<SceneBean> selectCity(String city);
+	
+	List<FavoriteBean> selectCityf(String city);
 	
 	//查詢SELECT_BY_NAME
-	FavoriteBean selectName(String scenename);
+	SceneBean selectName(String scenename);
+	
+	FavoriteBean selectNamef(String scenename);
 
 	//新增INSERT
 	SceneBean insert(SceneBean bean);
@@ -32,5 +38,7 @@ public interface SceneDAO {
 	boolean delete(int sceneId);
 
 	SceneBean select(int sceneId);
+
+	List<SceneBean> select(String location, int begin, int number);
 
 }
