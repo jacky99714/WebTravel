@@ -49,6 +49,7 @@ public class SelectCityServlet extends HttpServlet {
 		
 		//model
 		HttpSession session = request.getSession();
+		session.removeAttribute("listcity");
 		session.setAttribute("listcity", listcity);
 		
 		//view

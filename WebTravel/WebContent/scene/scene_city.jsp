@@ -79,7 +79,7 @@
         <p>${sceneli.sceneContent}</p>
         
         <p>
-           <button type="button" class="btn btn-primary btn-sm" value="${sceneli.sceneName}" onclick="self.location.href='<%=request.getContextPath()%>/SelectSceneContextServlet'">
+           <button type="button" class="btn btn-primary btn-sm" value="${sceneli.sceneName}" onclick="location.href='<%=request.getContextPath()%>/SelectSceneContextServlet?sceneName=${sceneli.sceneName}'">
 		   <span class="glyphicon glyphicon-align-left" aria-hidden="true" ></span> 介紹
 		   </button>
 		   
