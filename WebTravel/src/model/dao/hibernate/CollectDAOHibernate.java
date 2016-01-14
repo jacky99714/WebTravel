@@ -117,7 +117,7 @@ public class CollectDAOHibernate implements CollectDAO{
 		List<FavoriteBean> favoriteBeans = new ArrayList<FavoriteBean>();
 		for(CollectBean collectBean:listC){
 			FavoriteBean bean = new FavoriteBean();
-			Scene scene =(Scene)getSession().load(Scene.class, collectBean.getSceneId());
+			Scene scene =(Scene)getSession().get(Scene.class, collectBean.getSceneId());
 			bean.setCity(scene.getCity());
 			bean.setLocation(scene.getLocation());
 			bean.setMemberId(scene.getMember().getMemberId());

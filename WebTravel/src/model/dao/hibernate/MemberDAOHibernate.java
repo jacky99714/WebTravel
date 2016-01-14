@@ -86,7 +86,7 @@ public class MemberDAOHibernate implements MemberDAO{
 
 	@Override
 	public MemberBean select(int memberId) {
-		return (MemberBean)getSession().load(MemberBean.class,memberId);
+		return (MemberBean)getSession().get(MemberBean.class,memberId);
 	}
 
 	@Override
