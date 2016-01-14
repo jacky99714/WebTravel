@@ -92,36 +92,38 @@ public class JoinMemberServlet extends HttpServlet {
 		}
 		if(error!=null && !error.isEmpty()){
 			request.getRequestDispatcher("/secure/joinMember.jsp").forward(request, response);
-		}
-		
-		//model
-		MemberService ms = new MemberService();
-		MemberBean mb = new MemberBean();
-		
-		mb.setUserName(temp1);
-		mb.setPassword(temp2.getBytes());
-		mb.setLastName(temp3);
-		mb.setFirstName(temp4);
-		mb.setNickName(temp5);
-		mb.setBirthDay(date);
-		mb.setCellphone(temp7);
-		mb.setTelephone(temp8);
-		mb.setEmail(temp9);
-		mb.setAddress(temp10);
-		mb.setPhoto(phto);
-		
-		MemberBean rsbean = ms.insert(mb);
-		//view
-		if(rsbean!=null){
-			if(rsbean.getPhoto()!=null){
-				String phtoB64 =model.util.TypeConveter.EncodeBase64(rsbean.getPhoto());
-				session.setAttribute("phtoB64", phtoB64);
-			}
-			session.setAttribute("member", rsbean);
-			response.sendRedirect(request.getContextPath()+"/secure/joinSuccess.jsp");
 		}else{
-			request.getRequestDispatcher("/secure/joinMember.jsp").forward(request, response);
+			//model
+			MemberService ms = new MemberService();
+			MemberBean mb = new MemberBean();
+			
+			mb.setUserName(temp1);
+			mb.setPassword(temp2.getBytes());
+			mb.setLastName(temp3);
+			mb.setFirstName(temp4);
+			mb.setNickName(temp5);
+			mb.setBirthDay(date);
+			mb.setCellphone(temp7);
+			mb.setTelephone(temp8);
+			mb.setEmail(temp9);
+			mb.setAddress(temp10);
+			mb.setPhoto(phto);
+			
+			MemberBean rsbean = ms.insert(mb);
+			//view
+			if(rsbean!=null){
+				if(rsbean.getPhoto()!=null){
+					String phtoB64 =model.util.TypeConveter.EncodeBase64(rsbean.getPhoto());
+					session.setAttribute("phtoB64", phtoB64);
+				}
+				session.setAttribute("member", rsbean);
+				response.sendRedirect(request.getContextPath()+"/secure/joinSuccess.jsp");
+			}else{
+				request.getRequestDispatcher("/secure/joinMember.jsp").forward(request, response);
+			}
 		}
+		
+		
 		
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

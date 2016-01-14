@@ -46,7 +46,7 @@ private Session session = null;
 
 	@Override
 	public SceneMessageBean update(SceneMessageBean bean) {
-		SceneMessageBean smb = (SceneMessageBean)getSession().load(SceneMessageBean.class,bean.getSceneMessageId());
+		SceneMessageBean smb = (SceneMessageBean)getSession().get(SceneMessageBean.class,bean.getSceneMessageId());
 		if(smb != null){
 			smb.setSceneMessageId(bean.getSceneMessageId());
 			smb.setMessageContent(bean.getMessageContent());

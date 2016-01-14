@@ -13,7 +13,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import model.bean.SceneBean;
+import model.bean.ThoughtBean;
 import other.bean.FavoriteBean;
+import other.bean.MythoughtBean;
 
 
 public class TypeConveter{
@@ -125,5 +127,19 @@ public class TypeConveter{
 			fb.setMemberId(bean.getMemberId());			
 		}
 		return fb;
-	}	
+	}
+	public static MythoughtBean pareseMythoughtBean(ThoughtBean bean){
+		MythoughtBean mb = null;
+		if(bean != null){
+			mb = new MythoughtBean();
+			mb.setThoughtId(bean.getThoughtId());
+			mb.setThoughtName(bean.getThoughtName());
+			mb.setThoughtSubtitle(bean.getThoughtSubtitle());
+			mb.setThoughtPhoto(Base64.getEncoder().encodeToString(bean.getThoughtPhoto()));
+			mb.setThoughtTime(bean.getThoughtTime());
+			mb.setThoughtContent(bean.getThoughtContent());
+			mb.setMemberId(bean.getMemberId());
+		}
+		return mb;
+	}
 }
