@@ -18,7 +18,7 @@
          var maxImg = 4;  // max image in tr tag
          var maxLine = 5;   
          var scheduleArray = [];
-         var showImg = 10;
+         var showImg = 8;
          var imgSearchData;
          var imgSearchPage = 0;
          var selectLocation;
@@ -236,6 +236,7 @@
 		    		img.id = "fav"+data[i].sceneId;
 		    		img.addEventListener("click", click);
 		    		var divName = document.createElement("div");
+		    		divName.className = "divName";
 		    		var text = document.createTextNode(data[i].sceneName);
 		    		divName.appendChild(text);
 		    		div.appendChild(img);
@@ -245,14 +246,17 @@
 		    	
 		
 
-		  		if(type == "imgSearch" && imgSearchPage > 0){
+		  		
 		        	var prevDiv = document.createElement("a");
 			    	var prevPage = document.createTextNode("上一頁");
 			    	prevDiv.style.paddingLeft = "70px";
 			    	prevDiv.style.paddingTop = "10px";
 			    	prevDiv.style.display = "inline-block";
+			    	prevDiv.style.visibility = "hidden";
 			    	prevDiv.appendChild(prevPage);
-    				content.appendChild(prevDiv); 
+    				content.appendChild(prevDiv);
+    			if(type == "imgSearch" && imgSearchPage > 0){
+    				prevDiv.style.visibility = "visible";
     				prevDiv.addEventListener("click", function f(){	
         				imgSearchPage--;
         				getSearch(imgSearchPage*showImg);	 
@@ -261,14 +265,17 @@
 	
 		    	
 
-		    	if(type == "imgSearch" && data.length == showImg){   		
+		    			
 			    	var nextDiv = document.createElement("a");
 			    	nextDiv.style.paddingLeft = "70px";
 			    	nextDiv.style.paddingTop = "10px";
 			    	nextDiv.style.display = "inline-block";
+			    	nextDiv.style.visibility = "hidden";
 			    	var nextPage = document.createTextNode("下一頁");
 			    	nextDiv.appendChild(nextPage);
     				content.appendChild(nextDiv);
+    			if(type == "imgSearch" && data.length == showImg){   
+    				nextDiv.style.visibility = "visible";
 			    	nextDiv.addEventListener("click", function f(){
 	    				imgSearchPage++;
 	    				getSearch(imgSearchPage*showImg);		   
@@ -312,6 +319,7 @@
              if(input === "line"){
                 td.appendChild(createLine());
              }else if(input === "image"){
+            	td.className = "imgTd";
                 td.appendChild(createImg(imgsrc,sceneId,title));
                 td.appendChild(createImgTitle(title));
              }
@@ -320,6 +328,7 @@
          
          function createImgTitle(imgtitle){
     		var divName = document.createElement("div");
+    		divName.className = "divName";
     		var text = document.createTextNode(imgtitle);
     		divName.appendChild(text);
     		return divName;
@@ -373,10 +382,17 @@
             });
             
             
-            document.getElementById("insert").innerHTML = "<br>對我的收藏或是搜尋景點裡的圖片按左鍵可以加入行程，<br>使用拖曳圖片的方式刪除行程或是行程排序。";
+            
             
             getSchedule();
             getFavorite();
+            
+            document.getElementById("faq").addEventListener("click", function(){
+            	document.getElementById("insert").innerHTML = "<br>對我的收藏或是搜尋景點裡的圖片按左鍵可以加入行程，使用拖曳圖片的方式刪除行程或是行程排序，reset會刪掉排序中的行程。";
+            	setTimeout(function (){
+            		document.getElementById("insert").innerHTML = "";
+    		 	}, 2000);       	
+            });       
             
             document.getElementById("fav").addEventListener("click", function(){
             	getFavorite();
@@ -414,15 +430,19 @@
 	<jsp:include page="/WEB-INF/top/top.jsp"></jsp:include>
     <div class="container-fluid">
    		<div class="row">	
-			<input id="scheduleName" type="text" placeholder="行程名稱"/>
-			<button id="sure">行程確認</button>  
-			<span id="insert"></span>  		
+   			<div>
+				<input id="scheduleName" type="text" placeholder="行程名稱"/>
+				<button id="sure">行程確認</button>  
+				<img id="faq" class="faq" title="操作說明" src="img/FAQ.png" />
+			</div>		
+			<div id="insert"></div>
    		</div>
    		<hr/>
 	    <div class="row">	
 	  		<div class="col-md-8">
 				<img id="garbage" class ="imgicon" src="img/garbage.png"  ondrop="drop(event)" ondragover="allowDrop(event)"/>	
 				<img id="reset" class ="imgicon" src="img/reset.png" />	
+				<hr>
 				<table id="tab">
 				</table>   		
 	  		</div>

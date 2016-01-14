@@ -17,6 +17,7 @@ import model.dao.ThoughtDAO;
 import model.dao.jndi.ThoughtDAOjndi;
 import model.service.ThoughtService;
 import model.util.TypeConveter;
+import other.bean.MythoughtBean;
 
 @WebServlet("/thought/DisplayThoughtServlet")
 public class DisplayThoughtServlet extends HttpServlet {
@@ -38,7 +39,7 @@ public class DisplayThoughtServlet extends HttpServlet {
 //        ThoughtDAO thoughtDao = new ThoughtDAOjndi();
 //        ThoughtBean bean = new ThoughtBean();
         ThoughtService ts = new ThoughtService();
-        List<ThoughtBean> li = new ArrayList<>();
+        List<MythoughtBean> li = new ArrayList<>();
         li = ts.getAllThought();
 //        System.out.println(li);
 

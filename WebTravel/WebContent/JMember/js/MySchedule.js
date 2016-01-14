@@ -50,11 +50,30 @@ function map(){
 			                     'event': {
 			                         directions_changed: {
 			                             'func': function(){
-			                            	 alert("ss")
 			                            	 var info = this.getDirections();
 //			                            	 console.log("info:"+info)
 			                            	 console.log(info)
+//			                            	 alert(info.routes[0].legs[0].distance.text)
+			                            	 $.each(info.routes[0].legs,function(i,datas){
+			                            		 console.log(i,datas.distance.text)
+			                            		 console.log(i,datas.duration.text)
 
+			                            		 e=i+1;
+			                            		 
+			                            		 $(".p_distance").each(function(k,datasd){
+			                            			 alert($(datasd).attr("idd","pp"+k))
+			                            		 })
+		
+//			                            		 $("#p"+i).text(datas.distance.text);
+			                            		 $("#p"+e).text("");
+			                            		 $("#pp"+i).text("到下一個時間"+datas.duration.text);
+			                            		 $("#pp"+e).text("結束");
+			                            		 
+			                            		 
+//			                            		 $.each(datas,function(j,jdatas){
+//			                            		 console.log(j,jdatas)
+//			                            		 })
+			                            	 })
 			                             }
 			                         }
 			                     }
@@ -112,8 +131,12 @@ $(function(){
 					  
 					  var caption = $("<div></div>").addClass("caption");
 					  var iii = i+1;
-					  var p = $("<p></p>").text("第"+iii+"景點");
-					  var p1 = $("<p></p>").text("下一個景點->");
+					  var p = $("<p></p>").text("");
+					  p.attr("idd","p"+i);
+					  p.addClass("p_distance");
+					  var p1 = $("<p></p>").text("");
+					  p1.attr("idd","pp"+i);
+					  p1.addClass("p_duration");
 					  caption.prepend([p,p1]);
 					  thumbnail.prepend([abgne,caption]);
 					  col.prepend(thumbnail);

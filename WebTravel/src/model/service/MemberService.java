@@ -154,7 +154,8 @@ public class MemberService {
 			sb.setLocation(s.getLocation());
 			sb.setMemberId(s.getMemberId());
 			if(s.getSceneContent().length()>70){
-				s.setSceneContent(s.getSceneContent().substring(0,70)+"...");
+				String ss =s.getSceneContent();
+				sb.setSceneContent(ss.substring(0,70)+"...");
 			}else{
 				sb.setSceneContent(s.getSceneContent());
 			}
