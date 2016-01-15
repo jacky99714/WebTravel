@@ -128,7 +128,8 @@
       	 
       	 
       	 <form id="formIMG" action="<c:url value="/UpdataMemberImgServlet"/>" method="post" enctype="multipart/form-data">
-		<input type="file" id="exampleInputFile" name="photo">
+      	  <button type="button" class="btn btn-default" id="exampleInputFile1" name="photo1">上傳大頭貼</button>
+		<input style="display:none" type="file" id="exampleInputFile" name="photo">
       </div>
        <div class="modal-footer">
         <button id="btn_imgUpdata" type="submit" class="btn btn-default">修改</button>

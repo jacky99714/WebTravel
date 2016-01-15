@@ -3,7 +3,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-    <link href="<c:url value="/css/bootstrap.css"/>" rel="stylesheet">
+    <link href="<c:url value="/css/bootstrap.min.css"/>" rel="stylesheet">
     
     
     
@@ -112,12 +112,7 @@
               <!-- 	------------------------行程------------------------ -->
               <ul class="nav navbar-nav navbar-right">
                 <li>
-                	<c:if test="${not empty scheduleListFB.size()}">
-                	  <a href="<c:url value="/plan/plan.jsp" />">已加入旅遊清單項目：<span id="scheduleSize"><img value="${scheduleListFB.size()}" id="scheduleSizeimg" style="width:20px;height:20px" src="/WebTravel/img/number/number${scheduleListFB.size()}.png"/></span></a>
-                	</c:if>
-                	<c:if test="${empty scheduleListFB.size()}">
-                	  <a href="<c:url value="/plan/plan.jsp" />">已加入旅遊清單項目：<span id="scheduleSize"><img value="0" id="scheduleSizeimg" style="width:20px;height:20px" src="/WebTravel/img/number/number0.png"/></span></a>
-                  </c:if>
+                  <a href="<c:url value="/plan/plan.jsp" />">已加入旅遊清單項目：${scheduleListFB.size()}</a>
 <!--                   <ul class="dropdown-menu"> -->
 <%--                     <li><a href="<c:url value="/plan/plan.jsp" />">已加入旅遊清單項目</a></li> --%>
 <!--                   </ul> -->
