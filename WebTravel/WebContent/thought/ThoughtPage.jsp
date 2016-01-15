@@ -23,11 +23,11 @@
   <jsp:include page="/WEB-INF/top/top.jsp"></jsp:include>
 
 <!--     我是內容---------------------------- -->
-	<div id="holder">
+	<div class="holder"></div>
 		<div class="row" id="div1">
 			
 		</div>
-	</div>
+	<div class="holder"></div>
 	<!--  -->
 
     <hr class="featurette-divider">
@@ -43,6 +43,7 @@
     <script src=" <c:url value="/js/bootstrap.min.js"/>"></script>
     <script src="js/jquery-2.1.4.min.js"></script>
     <script src="js/jPages.min.js"></script>
+    <link href="<c:url value="/css/jPages.css"/>" >
 <!--     <script type="text/javascript" src="http://masonry.desandro.com/jquery.masonry.min.js"></script> -->
     
     <script type="text/javascript">
@@ -129,12 +130,13 @@
 			}
 		}
 		$(function(){
-			$("div.div1").jPages({
-				containerID : "holder",
-				 previous : "←",
-				 next : "→",
+// 			var  a = document.getElementById("div1");
+			$("div.holder").jPages({
+				containerID : "div1",
+				 previous : "←previous",
+				 next : "next→",
 				 perPage : 4,
-				 delay : 100
+				 delay : 50
 			});
 		});
 		

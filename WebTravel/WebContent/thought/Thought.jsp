@@ -6,8 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>旅行微革命-心得</title>
-<h3 style="text-align: center">日記分享</h3>
 <link rel="shortcut icon" href="<c:url value="/img/icon.ico"/>">  
+<h3 style="text-align: center">日記分享</h3>
 
     <!-- Bootstrap -->
      

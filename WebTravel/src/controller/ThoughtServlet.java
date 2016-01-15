@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import model.bean.MemberBean;
 import model.bean.ThoughtBean;
 import model.service.ThoughtService;
 import model.util.TypeConveter;
@@ -34,23 +35,8 @@ public class ThoughtServlet extends HttpServlet {
 		String temp2 = request.getParameter("thoughtName");
 		String temp3 = request.getParameter("thoughtSubtitle");
 		String temp4 = request.getParameter("thoughtContent");
-//		MemberBean mb = (MemberBean)session.getAttribute("loginOk");
-//		int temp5 = mb.getMemberId();
-		
-		Collection<Part> parts = request.getParts();
-		Part pho = request.getPart("thoughtPhoto");
-		byte[] photo = null;
-		if(pho!=null){
-			InputStream is = pho.getInputStream();
-			photo = new byte[(int)pho.getSize()];
-			is.read(photo);
-//			OutputStream os = new FileOutputStream("C:/Users/Student/Desktop/A01.jpg");
-//			os.write(photo);
-//			os.close();
-			
-			
-			is.close();
-		}
+		MemberBean mb = (MemberBean)session.getAttribute("loginOk");
+		int temp5 = mb.getMemberId();
 		
 		
 		
@@ -70,6 +56,22 @@ public class ThoughtServlet extends HttpServlet {
 		if(temp4 == null || temp4.trim().length()==0){
 			errors.put("thoughtContent", "請輸入內容");
 		}
+		Collection<Part> parts = request.getParts();
+		Part pho = request.getPart("thoughtPhoto");
+		byte[] photo = null;
+		if(pho!=null){
+			InputStream is = pho.getInputStream();
+			photo = new byte[(int)pho.getSize()];
+			is.read(photo);
+//			OutputStream os = new FileOutputStream("C:/Users/Student/Desktop/A01.jpg");
+//			os.write(photo);
+//			os.close();
+			is.close();
+		}
+		if(pho == null){
+			errors.put("thoughtPhoto", "請選一張代表此心得的照片");
+		}
+		
 		if(errors != null && !errors.isEmpty()){
 			request.getRequestDispatcher("/thought/Thought.jsp").forward(request, response);
 			return;
@@ -89,8 +91,8 @@ public class ThoughtServlet extends HttpServlet {
 //		bean.setThoughtContent(TypeConveter.EncodeStringBase64(temp4));
 		bean.setThoughtPhoto(photo);
 		bean.setThoughtContent(temp4);
-		bean.setMemberId(1);
-//		bean.setMemberId(temp5);
+//		bean.setMemberId(1);
+		bean.setMemberId(temp5);
 		ThoughtBean inbean = ts.insert(bean);
 //		ThoughtBean b=thoughtDao.select(inbean.getThoughtId());
 		System.out.println("insert"+inbean);
