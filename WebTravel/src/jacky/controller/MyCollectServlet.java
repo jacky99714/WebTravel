@@ -36,16 +36,15 @@ public class MyCollectServlet extends HttpServlet {
 		SceneBean sb = new SceneBean();
 //		System.out.println("MyCollectServlet:"+mb);
 		if(mb!=null){
-			MemberService memberService = new MemberService();
-			List<SceneBean> sceneList = memberService.getMemberCollectScene(mb.getMemberId());
-			sceneList=memberService.SubStirngCount(sceneList);
-			List<FavoriteBean> sceneListF=memberService.selectFavoriteBean(sceneList);
-//			System.out.println("MyCollectServlet:"+sceneList);
-			session.removeAttribute("sceneList");
-			session.setAttribute("sceneList", sceneListF);
 			//分頁顯示
-			
 			if (e==null&&s==null) {
+				MemberService memberService = new MemberService();
+				List<SceneBean> sceneList = memberService.getMemberCollectScene(mb.getMemberId());
+				sceneList=memberService.SubStirngCount(sceneList);
+				List<FavoriteBean> sceneListF=memberService.selectFavoriteBean(sceneList);
+//				System.out.println("MyCollectServlet:"+sceneList);
+				session.removeAttribute("sceneList");
+				session.setAttribute("sceneList", sceneListF);
 				int rowCount = sceneListF.size(); //list count 
 				System.out.println(rowCount);
 				int pageSize = 4;//-1  一頁幾筆資料

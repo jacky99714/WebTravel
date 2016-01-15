@@ -29,7 +29,9 @@
  </style>
   </head>
   <body class="ss">
+  <div id="top"> 
   <jsp:include page="/WEB-INF/top/top.jsp"/>
+  </div>
 <%@ page import="model.util.*"%>
 <%
 	int a = 0;
@@ -78,8 +80,8 @@
     
 </div>
 
-
-
+<div class="row">
+<div class= "col-md-offset-4">
   <ul class="pagination">
     <li>
     <%
@@ -125,8 +127,8 @@ for(int i= 0; i< pageq;i++){
     </li>
   </ul>
 
-
-
+</div>
+</div>
 
 
 <!-- Modal -->
@@ -182,6 +184,14 @@ for(int i= 0; i< pageq;i++){
     <script src=" <c:url value="/js/bootstrap.min.js"/>"></script>
    
     <script type="text/javascript" src=" <c:url value="/JMember/js/myCollect.js"/>"></script>
+<script>
+jQuery().ready(function(){
+    setInterval("getResult()",1000);
+});
+function getResult(){   
+	
+}
+</script>
     </script>
   </body>
 </html>

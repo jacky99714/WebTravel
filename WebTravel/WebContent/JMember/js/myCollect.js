@@ -19,10 +19,6 @@ $(function(){
 		  }
 	  });
 	
-	
-	
-	
-	
 	var ob ;
 	var joinSchedule;
 	$('.joinSchedule').on("click",function(){//加入行程
@@ -34,11 +30,6 @@ $(function(){
 			  'dataType':'json',  //json、script、html
 			  'data':{"scene":$(this).val()},
 			  'success':function(data){
-					$.ajax({
-						  'type':'get', //post、delete、put
-						  'url':'../plan/AddScheduleServlet',
-						  'data':{"sceneId":joinSchedule.val()}
-					 })
 				  if(data=="deletesuccess"){
 					  joinSchedule.removeClass("btn-info")
 					  .removeClass("active")
@@ -47,6 +38,10 @@ $(function(){
 					  .addClass("joinSchedule")
 					  .text("   加入行程");
 					  $('<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>').prependTo(joinSchedule);
+					  var scheduleSize = $("#scheduleSizeimg").attr("value");
+//					  alert(scheduleSize)
+					  var scheduleSizeR =  parseInt(scheduleSize)-1;
+					  $("#scheduleSizeimg").attr("src","/WebTravel/img/number/number"+scheduleSizeR+".png").attr("value",scheduleSizeR);
 				  }else{
 					  joinSchedule.removeClass("btn-warning")
 					  .removeClass("joinSchedule")
@@ -55,6 +50,10 @@ $(function(){
 					  .addClass("removeSchedule")
 					  .text("   已經加入行程");
 					  $('<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>').prependTo(joinSchedule);
+					  var scheduleSize = $("#scheduleSizeimg").attr("value");
+//					  alert(scheduleSize)
+					  var scheduleSizeR =  parseInt(scheduleSize)+1;
+					  $("#scheduleSizeimg").attr("src","/WebTravel/img/number/number"+scheduleSizeR+".png").attr("value",scheduleSizeR);
 				  }
 //				  joinSchedule.text("以加入行程");
 			  }
