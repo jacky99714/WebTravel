@@ -91,12 +91,12 @@
                 <c:forEach var="lm" items="${listmessage}"> 
                 <hr>               
                 <div class="media"><!-- 會員頭像-->
-                    <a class="pull-left" href="#">
+                    <a class="pull-left" >
                         <img class="media-object" src="http://placehold.it/64x64" alt="">
                     </a>
                     <div class="media-body"><!-- 回覆內容 -->
-                        <h4 class="media-heading">暱稱
-                            <small></small>
+                        <h4 class="media-heading">${lm.menberBean.nickName}
+                            <small>${lm.menberBean.nickName}</small>
                         </h4>
                         ${lm.messageContent}
                     </div>
@@ -125,13 +125,7 @@
 	
 	$(function(){	
 		
-		//取回景點留言
-//         $.ajax({
-// 		  "type":"get",
-<%-- 		  "url":"<%=request.getContextPath()%>/SceneGetMessageServlet", --%>
-// 		  "data":{"sceneId": $(".lead").attr("id")},
-// 		  "datatype":"text",
-// 		})
+
 		
 		//送出景點留言
 		$(".btn-primary").on("click",function(event){
@@ -144,10 +138,38 @@
 					  "url":"<%=request.getContextPath()%>/SceneMessage",
 					  "data":{"sceneId": $(".lead").attr("id"), "message":$(".form-control").val()},
 					  "datatype":"text",
-					  "success":function(){
+					  "success":function(data){
 						  $(".form-control").val('').empty();
+						  //window.location.reload(true);
 						  alert("留言新增成功");
+						  console.log(data);
+						  var div1 = $("<div></div>").addClass("media");
 						  
+						  var a = $("<a></a>").addClass("pull-left");
+						  var img = $("<img></img>").addClass("media-object");
+						  img.attr("src",'http://placehold.it/64x64');
+						  var p1 = $(a).append(img);
+						  
+						  var div2 = $("<div></div>").addClass("media-body");			  
+						  var h4 = $("<h4></h4>").addClass("media-heading").text(data.menberBean.nickName);						    
+						  var con =data.messageContent 
+						  var p2 = $(div2).append([h4,con]);
+						  
+						  var mg = $(div1).append([p1,p2]);
+						  
+						  $(".media").insertBefore(mg);
+              
+// 			                <div class="media"><!-- 會員頭像-->
+// 			                    <a class="pull-left" >
+// 			                        <img class="media-object" src="http://placehold.it/64x64" >
+// 			                    </a>
+// 			                    <div class="media-body"><!-- 回覆內容 -->
+// 			                        <h4 class="media-heading">${lm.menberBean.nickName}
+// 			                            
+// 			                        </h4>
+// 			                        ${lm.messageContent}
+// 			                    </div>
+// 			                </div>             
 						 				  
 					  }
 					});
