@@ -61,7 +61,7 @@ public class Collect implements java.io.Serializable {
 		this.member = member;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "SceneID", nullable = false, insertable = false, updatable = false)
 	public Scene getScene() {
 		return this.scene;

@@ -76,8 +76,8 @@ public class ScheduleContentDAOHibernate implements ScheduleContentDAO{
 
 	@Override
 	public List<ScheduleContentBean> selectSchedule(int scheduleID) {
-		String query = "from ScheduleContentBean where scheduleId = ?";
-		return (List<ScheduleContentBean>)getSession().createQuery(query).setInteger(0, scheduleID).list();	
+		String query = "from ScheduleContentBean where scheduleId = :sss order by ScheduleOrder";
+		return (List<ScheduleContentBean>)getSession().createQuery(query).setParameter("sss", scheduleID).list();	
 	}
 
 }
