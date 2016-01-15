@@ -95,6 +95,8 @@ $(function(){
 	
 	$('#myModal').on('show.bs.modal',function(){
 		 $("#sortable").empty();
+		 $(".loadingimg").remove();
+		 $("#sortable").append('<img style="width:200px;height:200px;display:inline;" class="loadingimg col-md-offset-4" alt="" src="images/loader_gif.jpg">');
 		
 		$.ajax({
 			  'type':'get', //post、delete、put
@@ -102,7 +104,7 @@ $(function(){
 			  'dataType':'json',  //json、script、html
 			  'data':{"Schedule":ob.val()},
 			  'success':function(data){
-				 
+				  $(".loadingimg").remove();
 				  $.each(data,function(i,value){
 					  var col = $("<div></div>").addClass("col-md-2").addClass("ScheduleContent");
 					  col.attr("id",i+1);
