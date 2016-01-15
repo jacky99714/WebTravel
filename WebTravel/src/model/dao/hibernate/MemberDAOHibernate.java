@@ -86,7 +86,7 @@ public class MemberDAOHibernate implements MemberDAO{
 
 	@Override
 	public MemberBean select(int memberId) {
-		return (MemberBean)getSession().load(MemberBean.class,memberId);
+		return (MemberBean)getSession().get(MemberBean.class,memberId);
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class MemberDAOHibernate implements MemberDAO{
 
 	@Override
 	public MemberBean update(MemberBean memberBean) throws IOException {
-		MemberBean mb =select(memberBean.getMemberId());
+		MemberBean mb =select(memberBean.getUserName());
 		if (memberBean.getAddress()!=null) {
 			mb.setAddress(memberBean.getAddress());
 		}

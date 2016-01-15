@@ -14,13 +14,10 @@ import model.dao.CollectDAO;
 import model.dao.SceneDAO;
 import model.dao.ScheduleContentDAO;
 import model.dao.ScheduleDAO;
-import model.dao.hibernate.QDAOHibernate;
+import model.dao.hibernate.CollectDAOHibernate;
+import model.dao.hibernate.SceneDAOHibernate;
 import model.dao.hibernate.ScheduleContentDAOHibernate;
 import model.dao.hibernate.ScheduleDAOHibernate;
-import model.dao.jndi.CollectDAOjndi;
-import model.dao.jndi.SceneDAOjndi;
-import model.dao.jndi.ScheduleContentDAOjndi;
-import model.dao.jndi.ScheduleDAOjndi;
 import model.hibernate.HibernateUtil;
 import model.util.TypeConveter;
 import other.bean.FavoriteBean;
@@ -37,9 +34,8 @@ public class PlanService {
 	 
 	 public PlanService(){
 			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-			//sceneDao = new QDAOHibernate(session);
-			//collectDao
-
+			sceneDao = new SceneDAOHibernate(session);
+			collectDao = new CollectDAOHibernate(session);
 			scheduleDao = new ScheduleDAOHibernate(session);
 			scheduleContentDao = new ScheduleContentDAOHibernate(session);
 	 }
@@ -47,10 +43,15 @@ public class PlanService {
 	 public List<FavoriteBean> getFavorite(int memberId){
 		 return collectDao.selectScene(memberId);		 
 	 }
-	 
-	 public List<FavoriteBean> getScene(String location){
+	       //begin 第幾筆   number多少筆
+	 public List<FavoriteBean> getScene(String location,int begin,int number){
 		 if("北區".equals(location) || "中區".equals(location) || "南區".equals(location) || "東區".equals(location)){
-			 return sceneDao.select(location);
+			 List<SceneBean> li = sceneDao.select(location, begin, number);
+			 List<FavoriteBean> fav = new ArrayList<>();
+			 for(SceneBean bean:li){
+				 fav.add(TypeConveter.parseFavoriteBean(bean));
+			 }
+			 return fav;
 		 }else{
 			 return null;
 		 }	 
@@ -62,6 +63,7 @@ public class PlanService {
 		 return TypeConveter.parseFavoriteBean(bean);
 	 }
 	 
+
 	 public List<FavoriteBean> getSchedule(List<Integer> li){
 		 List<FavoriteBean> fav = new ArrayList<>();
 		 for(int key:li){

@@ -35,7 +35,6 @@ public class MyScheduleContentServlet extends HttpServlet {
 			List<String> list = new ArrayList<String>();
 			list.clear();
 			JSONArray jsonArray;
-			JSONObject jsonObject =new JSONObject();
 			HttpSession session = request.getSession();
 			response.setContentType("application/json; charset=UTF-8");
 			MemberService ms = new MemberService();
@@ -43,10 +42,11 @@ public class MyScheduleContentServlet extends HttpServlet {
 			String scheduleId = request.getParameter("Schedule");
 			session.setAttribute("ScheduleId", scheduleId);
 //			System.out.println("MyScheduleContentServlet:"+scheduleId);
-			List<ScheduleContentBean> listSCB = ms.selectScheduleContentBean(new Integer(scheduleId));
+//			List<ScheduleContentBean> listSCB = ms.selectScheduleContentBean(new Integer(scheduleId));
 //			System.out.println("MyScheduleContentServlet:"+listSCB);
-			List<SceneBean> listSB = ms.selectSceneBean(listSCB);
+//			List<SceneBean> listSB = ms.selectSceneBean(listSCB);
 //			System.out.println("MyScheduleContentServlet:"+listSB);
+			List<SceneBean> listSB  = ms.selectSceneBean(new Integer(scheduleId));//hibernate版本
 			List<FavoriteBean> listFB =ms.selectFavoriteBean(listSB);
 			jsonArray = new JSONArray(listFB);
 			out.println(jsonArray);

@@ -72,7 +72,7 @@ public class SceneDAOjndi implements SceneDAO {
 	 * @see model.dao.jdbc.SceneDAO#select(java.lang.String)
 	 */
 	@Override
-	public  List<FavoriteBean> select(String location) {
+	public  List<FavoriteBean> selectf(String location) {
 		try (
 				Connection conn = DataSourceConnection.getConnection();
 			 ){
@@ -106,7 +106,7 @@ public class SceneDAOjndi implements SceneDAO {
 	 * @see model.dao.jdbc.SceneDAO#select(java.lang.String)
 	 */
 	@Override
-	public  List<FavoriteBean> selectCity(String city) {
+	public  List<FavoriteBean> selectCityf(String city) {
 		try (
 				Connection conn = DataSourceConnection.getConnection();
 			 ){
@@ -141,7 +141,7 @@ public class SceneDAOjndi implements SceneDAO {
 	 * @see model.dao.jdbc.SceneDAO#select(java.lang.String)
 	 */
 	@Override
-	public  FavoriteBean selectName(String sceneName) {
+	public  FavoriteBean selectNamef(String sceneName) {
 		FavoriteBean sbean =null;
 		try (
 				Connection conn = DataSourceConnection.getConnection();
@@ -298,6 +298,28 @@ public class SceneDAOjndi implements SceneDAO {
 			}
 		return false;
 	}
+	
+	//無使用==============================================
+	
+	@Override
+	public List<SceneBean> select(String location) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<SceneBean> selectCity(String city) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public SceneBean selectName(String scenename) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	//=================================================
 	public static void main(String[] args){
 		SceneDAO test = new SceneDAOjndi();
 //----------------------------------------------------------
@@ -332,5 +354,11 @@ public class SceneDAOjndi implements SceneDAO {
 //		fo.close();
 //----------------------------------------------------------
 		
+	}
+
+	@Override
+	public List<SceneBean> select(String location, int begin, int number) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }//class

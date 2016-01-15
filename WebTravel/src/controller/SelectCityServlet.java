@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.bean.SceneBean;
 import model.service.SceneService;
 import other.bean.FavoriteBean;
 
@@ -29,6 +30,7 @@ public class SelectCityServlet extends HttpServlet {
 		//接收資料
 		String city = request.getParameter("city");
 		SceneService sceneservice = new SceneService();
+		List<SceneBean> listsb =  new ArrayList<>();
 		List<FavoriteBean> listcity = new ArrayList<>();
 		//驗證資料
 		if("台北市".equals(city) || "新北市".equals(city) || "基隆市".equals(city) ||
@@ -39,12 +41,15 @@ public class SelectCityServlet extends HttpServlet {
 		   "澎湖縣".equals(city) || "金門縣".equals(city) || "花蓮縣".equals(city) ||
 		   "台東縣".equals(city)	
 			){
-			listcity = sceneservice.getCity(city);
+			listsb = sceneservice.getCity(city);
+			listcity =sceneservice.changeBean(listsb);
 		}
 		//轉換資料
 		
+		
 		//model
 		HttpSession session = request.getSession();
+		session.removeAttribute("listcity");
 		session.setAttribute("listcity", listcity);
 		
 		//view

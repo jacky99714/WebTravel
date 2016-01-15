@@ -70,7 +70,7 @@ public class ScheduleDAOHibernate implements ScheduleDAO{
 		if(result == null){
 			getSession().save(scheduleBean);
 		}
-		return result.getScheduleId();
+		return scheduleBean.getScheduleId();
 	}
 
 	@Override

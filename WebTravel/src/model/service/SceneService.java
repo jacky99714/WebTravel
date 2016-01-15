@@ -1,52 +1,96 @@
 package model.service;
 
+
+import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.Session;
 
 import model.bean.SceneBean;
 import model.dao.SceneDAO;
-import model.dao.jndi.SceneDAOjndi;
+import model.dao.hibernate.SceneDAOHibernate;
+import model.hibernate.HibernateUtil;
+import model.util.TypeConveter;
 import other.bean.FavoriteBean;
 
 public class SceneService {
 
-	private SceneDAO sceneDao = new SceneDAOjndi();
+	
+	private SceneDAO sceneDao ;
+	
+	public SceneService(){
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		sceneDao =  new SceneDAOHibernate(session);
+		
+	}
+	//private SceneDAO sceneDao = new SceneDAOjndi();
 	
 	//搜尋區域
-	public List<FavoriteBean> getLocation(String location) {
-		if (location != null) {
+	public List<SceneBean> getLocation(String location) {
+		if (location != null) {		
+			List<SceneBean> lilo = sceneDao.select(location);
+
+			List<SceneBean> newlilo = new ArrayList<>();
 			
-			List<FavoriteBean> lilo = sceneDao.select(location);
-			 
-			for(FavoriteBean fbean:lilo){
-				if(fbean.getSceneContent().length()>=70L){
-					String str= fbean.getSceneContent().substring(0,70);
-					fbean.setSceneContent(str+"...");
-				}
+			for (SceneBean s :lilo){
+				SceneBean newsb = new SceneBean();
+				
+				if (s.getSceneContent().length() >= 70L) {
+					String str = s.getSceneContent().substring(0, 70);
+					newsb.setSceneContent(str + "...");
+				} else {
+					newsb.setSceneContent(s.getSceneContent());
+				}				
+				newsb.setCity(s.getCity());
+				newsb.setLocation(s.getLocation());
+				newsb.setMemberId(s.getMemberId());
+				
+				newsb.setSceneId(s.getSceneId());
+				newsb.setSceneName(s.getSceneName());				
+				newsb.setScenePhoto(s.getScenePhoto());
+				newsb.setTimeEnd(s.getTimeEnd());
+				newsb.setTimeStart(s.getTimeStart());
+				newlilo.add(newsb);
 			}
-			
-			return lilo;
+			return newlilo;
 		}
 		return null;
 	}
+	
 	//搜尋城市
-	public List<FavoriteBean> getCity(String city) {
+	public List<SceneBean> getCity(String city) {
 		if (city != null) {
 
-			List<FavoriteBean> lilo = sceneDao.selectCity(city);
+			List<SceneBean> lilo = sceneDao.selectCity(city);
 
-			for (FavoriteBean fbean : lilo) {
-				if (fbean.getSceneContent().length() >= 70L) {
-					String str = fbean.getSceneContent().substring(0, 70);
-					fbean.setSceneContent(str + "...");
-				}
+List<SceneBean> newlilo = new ArrayList<>();
+			
+			for (SceneBean s :lilo){
+				SceneBean newsb = new SceneBean();
+				
+				if (s.getSceneContent().length() >= 70L) {
+					String str = s.getSceneContent().substring(0, 70);
+					newsb.setSceneContent(str + "...");
+				} else {
+					newsb.setSceneContent(s.getSceneContent());
+				}				
+				newsb.setCity(s.getCity());
+				newsb.setLocation(s.getLocation());
+				newsb.setMemberId(s.getMemberId());
+				
+				newsb.setSceneId(s.getSceneId());
+				newsb.setSceneName(s.getSceneName());				
+				newsb.setScenePhoto(s.getScenePhoto());
+				newsb.setTimeEnd(s.getTimeEnd());
+				newsb.setTimeStart(s.getTimeStart());
+				newlilo.add(newsb);
 			}
-
-			return lilo;
+			return newlilo;
 		}
 		return null;
 	}
 	//搜尋景點
-	public FavoriteBean getName(String sceneName) {
+	public SceneBean getName(String sceneName) {
 		if (sceneName != null) {
 			return sceneDao.selectName(sceneName);
 		}
@@ -73,9 +117,28 @@ public class SceneService {
 		return false;
 	}  
 
+	//SeneBean轉FavoriteBean
 	
+	public List<FavoriteBean> changeBean(List<SceneBean> list){
+		
+		List<FavoriteBean> listFB = new ArrayList<FavoriteBean>();
+		for(SceneBean s : list){
+			FavoriteBean fb = new FavoriteBean();
+			fb.setCity(s.getCity());
+			fb.setLocation(s.getLocation());
+			fb.setMemberId(s.getMemberId());
+			fb.setSceneContent(s.getSceneContent());
+			fb.setSceneId(s.getSceneId());
+			fb.setSceneName(s.getSceneName());
+			fb.setScenePhoto(TypeConveter.EncodeBase64(s.getScenePhoto()));
+			fb.setTimeEnd(s.getTimeEnd());
+			fb.setTimeStart(s.getTimeStart());
+			listFB.add(fb);
+		}
+		return listFB;
+	}
 	
-	
+	//抓取景點內容前70字
 	
 	
 }

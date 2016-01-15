@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
 
@@ -13,8 +14,16 @@ import model.bean.MemberBean;
 import model.bean.SceneBean;
 import model.bean.ScheduleBean;
 import model.bean.ScheduleContentBean;
+import model.dao.CollectDAO;
 import model.dao.MemberDAO;
+import model.dao.SceneDAO;
+import model.dao.ScheduleContentDAO;
+import model.dao.ScheduleDAO;
+import model.dao.hibernate.CollectDAOHibernate;
 import model.dao.hibernate.MemberDAOHibernate;
+import model.dao.hibernate.SceneDAOHibernate;
+import model.dao.hibernate.ScheduleContentDAOHibernate;
+import model.dao.hibernate.ScheduleDAOHibernate;
 import model.dao.jndi.CollectDAOjndi;
 import model.dao.jndi.SceneDAOjndi;
 import model.dao.jndi.ScheduleContentDAOjndi;
@@ -25,16 +34,20 @@ import other.bean.FavoriteBean;
 
 public class MemberService {
 	private MemberDAO mDAO;
-	
+	private CollectDAO cDAO ;
+	private ScheduleDAO scheduleDAO ;
+	private ScheduleContentDAO scheduleContentDAO ;
+	private SceneDAO sDAO;
 	public MemberService(){
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		mDAO =  new MemberDAOHibernate(session);
+		cDAO = new CollectDAOHibernate(session);
+		scheduleDAO =new ScheduleDAOHibernate(session);
+		scheduleContentDAO = new ScheduleContentDAOHibernate(session);
+		sDAO = new SceneDAOHibernate(session);
 	}
 	
-	CollectDAOjndi cDAO = new CollectDAOjndi();
-	SceneDAOjndi sDAO = new SceneDAOjndi();
-	ScheduleDAOjndi scheduleDAO = new ScheduleDAOjndi();
-	ScheduleContentDAOjndi scheduleContentDAO = new ScheduleContentDAOjndi();
+	
 	HashMap<String, String> error = new HashMap<String,String>();
 	//登入使用
 	public MemberBean login(String useid,String password){
@@ -76,9 +89,10 @@ public class MemberService {
 		return sDAO.select(sceneId);
 	}
 	//修改會員資料
-	public MemberBean updateContext(MemberBean memberBean){
+	public MemberBean updateContext(MemberBean memberBean) throws IOException{
 		if(memberBean!=null){
-			return mDAO.updateContext(memberBean);
+			System.out.println("MemberSevice:updata");
+			return mDAO.update(memberBean);
 		}
 		return null;
 	}
@@ -105,6 +119,19 @@ public class MemberService {
 		}
 		return list;	
 	}
+	//hibernate行程內容
+	public List<SceneBean> selectSceneBean(int scheduleId){
+		ScheduleBean  scheduleBean= scheduleDAO.select(scheduleId);
+		Set<ScheduleContentBean> lset = scheduleBean.getScheduleContentBeans();
+		List<ScheduleContentBean> listSCB = new ArrayList<ScheduleContentBean>(lset);
+		List<SceneBean> list = new ArrayList<SceneBean>();
+		for(ScheduleContentBean s :listSCB){
+			list.add(sDAO.select(s.getSceneId()));
+		}
+		return list;
+	}
+	
+	
 	//轉成另一個景點BEAN 圖片是String格式
 	public List<FavoriteBean> selectFavoriteBean(List<SceneBean> list){
 		List<FavoriteBean> listFB = new ArrayList<FavoriteBean>();
@@ -134,13 +161,29 @@ public class MemberService {
 	
 	//將景點內容顯示字數少一點
 	public List<SceneBean> SubStirngCount(List<SceneBean> list){
+		List<SceneBean> newlist = new ArrayList<SceneBean>();
 		for(SceneBean s :list){
+			SceneBean sb = new SceneBean(); 
+			sb.setCity(s.getCity());
+			sb.setLocation(s.getLocation());
+			sb.setMemberId(s.getMemberId());
 			if(s.getSceneContent().length()>70){
-				s.setSceneContent(s.getSceneContent().substring(0,70)+"...");
+				String ss =s.getSceneContent();
+				sb.setSceneContent(ss.substring(0,70)+"...");
+			}else{
+				sb.setSceneContent(s.getSceneContent());
 			}
+			sb.setSceneId(s.getSceneId());
+			sb.setSceneName(s.getSceneName());
+			sb.setScenePhoto(s.getScenePhoto());
+			sb.setTimeEnd(s.getTimeEnd());
+			sb.setTimeStart(s.getTimeStart());
+			newlist.add(sb);			
 		}
-		return list;
+		return newlist;
 	}
-	
-	
+	//會員刪除行程
+	public boolean deleteSchedule(int scheduleId){
+		return scheduleDAO.delete(scheduleId);
+	}
 }

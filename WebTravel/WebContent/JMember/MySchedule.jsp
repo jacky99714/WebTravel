@@ -32,7 +32,14 @@
    .strong1{
      font-size:larger;
    }
+   .p_duration{
+   	color:red;
+   }
    .di{}
+   .map {
+    width: 870px;
+    height: 300px;
+}
    </style> 
     
     
@@ -46,16 +53,24 @@
     	
     <h1 style="text-align:center;">我的行程</h1>
     <dir class="row">
-    	<div class="col-md-8 col-md-offset-2">
+    	<div class="col-md-8">
     	<table class="table table-hover">
     	<c:forEach items="${listSchedule}" var="Schedule">
-    		<tr>
+    		<tr value="dddd">
     			<td value="${Schedule.scheduleId}" id="${Schedule.scheduleId}" class="scheduleId"><strong class="strong1">${Schedule.scheduleName}</strong></td>
-    			<td style="width:200px;"><button value="${Schedule.scheduleId}" class="btn btn-warning btn scheduleSelect" data-toggle="modal" data-target=".bs-example-modal-lg">編輯行程</button>  <button value="${Schedule.scheduleId}" class="btn btn-danger btn delete" data-toggle="modal" data-target=".bs-example-modal-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  刪除</button></td>
+    			<td class="td2" style="width:200px;"><button value="${Schedule.scheduleId}" class="btn btn-warning btn scheduleSelect" data-toggle="modal" data-target=".bs-example-modal-lg">編輯行程</button> 
+    			 <button value="${Schedule.scheduleId}" class="btn btn-danger btn delete" data-toggle="modal" data-target=".bs-example-modal-sm">
+    			 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  刪除
+    			 </button>
+    			 </td>
     		</tr>
     	</c:forEach>
     	</table>
     	</div>
+	    	<div class="col-md-4">
+	    		<div class="map-marker-01" style="height:300px;width:350px;">
+	    		</div>
+	    	</div>
     </dir><!-- row END -->
 
 <!-- <div class="abgne_tip_gallery_block"> -->
@@ -93,6 +108,8 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" style="text-align:center;font-weight:900;" id="myModalLabel">拖曳照片修改行程順序</h4>
+        <div class="map"></div>
+
       </div>
       <div class="modal-body">
 <!-- 		<table class="table"> -->
@@ -126,12 +143,33 @@
   </div>
 </div>
 
+
+<!-- 你確定要刪除 -->
+<div id="myModal001" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">你確定?</h4>
+      </div>
+      <div class="modal-body">
+        		你確定要刪除嗎?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" id="Closebtn" class="btn btn-danger">確定刪除</button>
+      </div>
+    </div>
+  </div>
+</div>
+    
+   
+    
     
     
     
     </div>
 <!--  -->
-
     <hr class="featurette-divider">
     <footer>
     <p class="pull-right"><a href="#">Back to top</a></p>
@@ -141,10 +179,9 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
    
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-   
+    <script src=" <c:url value="/JMember/js/jquery.tinyMap.min.js"/>"></script>
     <script src=" <c:url value="/js/bootstrap.min.js"/>"></script>
     <script src="<c:url value="/JMember/js/MySchedule.js"/>"></script>
-
     
   </body>
 </html>

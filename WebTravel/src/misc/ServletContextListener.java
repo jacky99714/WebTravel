@@ -1,19 +1,22 @@
 package misc;
 
 import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
 import model.hibernate.HibernateUtil;
-
 @WebListener
-public class SessionFactoryListener implements ServletContextListener {
+public class ServletContextListener implements javax.servlet.ServletContextListener {
+
 	@Override
-	public void contextInitialized(ServletContextEvent event) {
+	public void contextInitialized(ServletContextEvent sce) {
 		HibernateUtil.getSessionFactory();
+
 	}
+
 	@Override
-	public void contextDestroyed(ServletContextEvent event) {
+	public void contextDestroyed(ServletContextEvent sce) {
 		HibernateUtil.closeSessionFactory();
+
 	}
+
 }

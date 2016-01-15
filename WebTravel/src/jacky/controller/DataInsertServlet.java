@@ -37,7 +37,10 @@ public class DataInsertServlet extends HttpServlet {
 		String timeStart = request.getParameter("timeStart");
 		String timeEnd = request.getParameter("timeEnd");
 		String photo = request.getParameter("photo");
+		String px = request.getParameter("Px");
+		String py = request.getParameter("Py");
 		
+		System.out.println(px);
 		
 		if("新北市".equals(city)||"基隆市".equals(city)||"台北市".equals(city)||"桃園市".equals(city)||"新竹縣".equals(city)||"宜蘭縣".equals(city)){
 			location="北區";
@@ -74,6 +77,8 @@ public class DataInsertServlet extends HttpServlet {
 		bean.setLocation(location);
 		bean.setSceneContent(sceneContent);
 		bean.setSceneName(sceneName);
+		bean.setTimeStart(px);
+		bean.setTimeEnd(py);
 		if (baos!=null) {
 			bean.setScenePhoto(baos.toByteArray());
 		}else{

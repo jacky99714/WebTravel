@@ -38,16 +38,20 @@
 	int pageq = (Integer)session.getAttribute("pageq");
 	int start = (Integer)session.getAttribute("start");
 	int end = (Integer)session.getAttribute("end");
+	
+	int startN = start;
+	int endN = end;
+	
 %>
 <!--     我是內容---------------------------- -->
     <div class="container-fluid">
-    <table id="simpleTable" class="table table-hover">
+    <table id="simpleTable" class="table table-hover" style="background-color: 	#E8E8E8;border-radius:10px;">
   		<thead>
 <!--   			<th>景點編號</th> -->
   			<th>圖片</th>
 <!--   			<th>區域</th> -->
   			<th></th>
-  			<th>景點名稱</th>
+  			<th>景點</th>
   			<th>內容</th>
 <!--   			<th>開始時間</th> -->
 <!--   			<th>結束時間</th> -->
@@ -73,6 +77,23 @@
 	 </table>
     
 </div>
+
+
+
+  <ul class="pagination">
+    <li>
+    <%
+    int startn =start-pageSize;
+    int endn = end-pageSize;
+    if(startn<0){startn=0; endn=pageSize;}
+          //組你showdata.jsp的路徑從webapp開始
+    //如果你是放在webapp/test/showdata.jsp
+    String strPre ="/MyCollectServlet?start="+startn+"&end="+endn;
+    %>
+      <a href="<%=request.getContextPath()%><%=strPre %>" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
 <%
 for(int i= 0; i< pageq;i++){
   start = pageSize *i;
@@ -82,8 +103,30 @@ for(int i= 0; i< pageq;i++){
   //如果你是放在webapp/test/showdata.jsp
   String str ="/MyCollectServlet?start="+start+"&end="+end;
 %>
-<a href=<%=request.getContextPath()%><%=str %>><font color= red>第<%=i+1%>頁　</font></b></a>
+<li><a href=<%=request.getContextPath()%><%=str %>><font>第<%=i+1%>頁　</font></b></a></li>
 <% }%>  
+    <li>
+   	<%
+    int starte =startN+pageSize;
+    int ende = endN+pageSize;
+    if(ende>rowCount){
+    	ende = rowCount;
+    	if(starte>=rowCount){
+    		starte=starte-pageSize;
+    	}
+    }
+          //組你showdata.jsp的路徑從webapp開始
+    //如果你是放在webapp/test/showdata.jsp
+    String strNa ="/MyCollectServlet?start="+starte+"&end="+ende;
+    %>
+      <a href="<%=request.getContextPath()%><%=strNa %>" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+
+
+
 
 
 <!-- Modal -->

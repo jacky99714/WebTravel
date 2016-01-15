@@ -18,6 +18,10 @@ $(function(){
 			$("#exampleInputFile").change(previewImage);
 			$('#img001').attr('src',$('#saImg').attr('src'));
 //
+			$("#exampleInputFile1").on("click",function(w){
+				w.preventDefault();
+				$("#exampleInputFile").click();
+			})
 //			$('#formIMG').on("submit",function(event){
 //				event.preventDefault();
 //
@@ -48,12 +52,13 @@ $(function(){
 				  'url':'../UpdataMemberServlet?'+$('#formLogin').serialize(),
 				  'dataType':'json',  //json、script、html
 				  'success':function(data){
-//					  alert(data[0].firstName)
+//					  alert(data[0].telephone)
 					  $('#firstName').empty().append(data[0].firstName);
 					  $('#lastName').empty().append(data[0].lastName);
 					  $('#nickName').empty().append(data[0].nickName);
 					  $('#address').empty().append(data[0].address);
 					  $('#cellphone').empty().append(data[0].cellphone);
+					  $('#telephone').empty().append(data[0].telephone);
 					  $('#email').empty().append(data[0].email);
 					  
 					  

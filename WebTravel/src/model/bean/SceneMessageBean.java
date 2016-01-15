@@ -1,7 +1,22 @@
 package model.bean;
 
-public class SceneMessageBean implements java.io.Serializable{
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="SceneMessage")
+public class SceneMessageBean implements java.io.Serializable{
+	
+	private static final long serialVersionUID = 1L;
+
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int sceneMessageId;
 
 	private String messageContent;
@@ -9,6 +24,14 @@ public class SceneMessageBean implements java.io.Serializable{
 	private int memberId;
 	
 	private int sceneId;
+	@ManyToOne
+	@JoinColumn(
+			name="memberId",
+			referencedColumnName="memberId",
+			insertable=false,
+			updatable=false			
+			)
+	private MemberBean memberBean;
 	
 
 	@Override
@@ -48,6 +71,14 @@ public class SceneMessageBean implements java.io.Serializable{
 	public void setSceneId(int sceneId) {
 		this.sceneId = sceneId;
 
+	}
+
+	public MemberBean getMenberBean() {
+		return memberBean;
+	}
+
+	public void setMenberBean(MemberBean memberBean) {
+		this.memberBean = memberBean;
 	}
 
 	

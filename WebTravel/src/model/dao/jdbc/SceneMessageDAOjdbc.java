@@ -62,7 +62,8 @@ public class SceneMessageDAOjdbc implements SceneMessageDAO {
 	 * @see model.dao.jdbc.SceneMessageDAO#select(int)
 	 */
 	@Override
-	public  SceneMessageBean select(int sceneId) {
+	public  List<SceneMessageBean> select(int sceneId) {
+		List<SceneMessageBean> list = null;
 		SceneMessageBean smbean =null;
 		try (
 			 Connection conn = JdbcConnection.getConnection();
@@ -70,18 +71,20 @@ public class SceneMessageDAOjdbc implements SceneMessageDAO {
 			PreparedStatement ps = conn.prepareStatement(SELECT_BY_SCENEID);
 			ps.setInt(1, sceneId);
 			ResultSet rs = ps.executeQuery();
+			list = new ArrayList<SceneMessageBean>();
 			while(rs.next()){
-				smbean = new SceneMessageBean();				
+				smbean = new SceneMessageBean();
 				smbean.setSceneMessageId(rs.getInt(1));
 				smbean.setMessageContent(rs.getString(2));
 				smbean.setMemberId(rs.getInt(3));
-				smbean.setSceneId(rs.getInt(4));	
-			}		
-		} catch (SQLException e) {			
+				smbean.setSceneId(rs.getInt(4));
+				
+				list.add(smbean);
+			}	
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-	
-		return smbean;
+		} 
+		return list;
 	}
 	
 	//新增INSERT
