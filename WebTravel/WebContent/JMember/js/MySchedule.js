@@ -89,14 +89,20 @@ $(function(){
 	$('.scheduleSelect').on("click",function(){//刪除行程
 		ob= $(this)
 	})
+	$('#myModal').on('shown.bs.modal',function(){
+		 map();
+	})
+	
 	$('#myModal').on('show.bs.modal',function(){
+		 $("#sortable").empty();
+		
 		$.ajax({
 			  'type':'get', //post、delete、put
 			  'url':'../MyScheduleContentServlet',
 			  'dataType':'json',  //json、script、html
 			  'data':{"Schedule":ob.val()},
 			  'success':function(data){
-				  $("#sortable").empty();
+				 
 				  $.each(data,function(i,value){
 					  var col = $("<div></div>").addClass("col-md-2").addClass("ScheduleContent");
 					  col.attr("id",i+1);
