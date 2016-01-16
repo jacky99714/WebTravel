@@ -182,7 +182,7 @@
 // 	alert($(".lead").attr("lat"))
 	var dd = $(".lead").attr("long")
 	var dd2 = $(".lead").attr("lat")
-	var array = [dd2,dd];
+	var array = [dd,dd2];
 	//Map
 
 		$(".map").tinyMap({
