@@ -28,8 +28,18 @@
 
 <!-- JavaScript -->
 <script src="js/jquery.min.js"></script>
+<script src="js/jquery.tinyMap.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
+<!-- Map Start-->
+
+<style type="text/css">
+.map {
+    width: 450px;
+    height: 300px;
+}
+</style>
+<!-- Map End-->
 </head>
 <body style="padding:71px;">
 
@@ -47,7 +57,7 @@
                             </ol>
                             <div class="carousel-inner">
                                 <div class="item active">
-                                    <img class="slide-image" w  src="img/1011.jpg" >
+                                    <img class="slide-image"  src="img/1011.jpg" >
                                 </div>
                                 <div class="item">
                                     <img class="slide-image"  src="img/1012.jpg" >
@@ -67,8 +77,8 @@
  <!-- 圖片輪播end -->
                 <hr>
 
-                <!-- 景點內容 -->
-                <p class="lead" id="${namebean.sceneId}">${namebean.sceneName}</p>                             
+                <!-- 景點內容 -->                
+                <p class="lead" id="${namebean.sceneId}" lat="${namebean.timeStart}" long="${namebean.timeEnd}" >${namebean.sceneName}</p>                             
                 <p><font color="#AA0000">景點介紹：</font></p>
                 <p>${namebean.sceneContent}</p>
                 
@@ -108,25 +118,26 @@
   </div>
   
   
-  <!-- 版面左邊 --> 
-  <div class="col-md-5">.col-md-4
+  <!-- 版面右邊 --> 
+  <div class="col-md-5">
+  	<!-- 氣象 -->
+  	<div  class="weather">New York,NY
   	
+  	</div>
+  	<hr>
+   <!-- 地圖 -->
+  	<div class="map" >
+  	</div>
   
   
   
-  
-  </div>
-</div>
+  </div><!-- 版面右邊結束 --> 
+</div><!-- 版面左右分割結束--> 
 
 
 
-<script type="text/javascript">
-	
-	
-	$(function(){	
-		
-
-		
+<script type="text/javascript">		
+	$(function(){					
 		//送出景點留言
 		$(".btn-primary").on("click",function(event){
 			event.preventDefault();
@@ -157,37 +168,45 @@
 						  
 						  var mg = $(div1).append([p1,p2]);
 						  
-						  $(".media").insertBefore(mg);
-              
-// 			                <div class="media"><!-- 會員頭像-->
-// 			                    <a class="pull-left" >
-// 			                        <img class="media-object" src="http://placehold.it/64x64" >
-// 			                    </a>
-// 			                    <div class="media-body"><!-- 回覆內容 -->
-// 			                        <h4 class="media-heading">${lm.menberBean.nickName}
-// 			                            
-// 			                        </h4>
-// 			                        ${lm.messageContent}
-// 			                    </div>
-// 			                </div>             
-						 				  
+						  $(".well").after(mg);	  
 					  }
-					});
-					
-					
+					});										
 			} else {
 				alert("error")
 				location.href = "../secure/login.jsp";				
 			}//if
-		})//btn-primary
-				
+		})//btn-primary						
+	});//jquery	
+	
+// 	alert($(".lead").attr("long"))
+// 	alert($(".lead").attr("lat"))
+	var dd = $(".lead").attr("long")
+	var dd2 = $(".lead").attr("lat")
+	var array = [dd2,dd];
+	//Map
+
+		$(".map").tinyMap({
+		    'center': array,
+		    'zoom'  : 14,
+		    'marker': [
+		               {
+		                   'addr':array,
+		                   'newLabel': '文字標籤',
+		                   'newLabelCSS': 'labels',
+		                   // 自訂外部圖示
+		                   // 動畫效果
+		                   'animation': 'DROP'
+		               }
+		               ]
+		});
 		
-	});//jquery
 
 	
 	
 	
 </script>
+
+
 
 <!--  -->
 
@@ -198,6 +217,6 @@
     </footer>
 
    
-   
+
   </body>
 </html>
