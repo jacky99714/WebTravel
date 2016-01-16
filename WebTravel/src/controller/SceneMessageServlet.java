@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -17,6 +18,7 @@ import org.json.JSONObject;
 
 import model.bean.MemberBean;
 import model.bean.SceneMessageBean;
+import model.service.MemberService;
 import model.service.SceneMessageService;
 
 /**
@@ -48,11 +50,17 @@ public class SceneMessageServlet extends HttpServlet {
 			smb.setSceneId(Integer.valueOf(sid));
 			smb.setMessageContent(smes);
 			//insert
-			smb = sms.insertmessage(smb);
-//			request.setAttribute("insertmessage", smb);
+			SceneMessageBean smbnew = sms.insertmessage(smb);
+			//insert後再讀取一次message
+			SceneMessageService scenemessage = new SceneMessageService();
+			MemberService ms = new MemberService();
+			List<SceneMessageBean> listmessage = scenemessage.selectmessage(smbnew.getSceneId());
+			session.setAttribute("listmessage", listmessage);	
+			smbnew.setMenberBean(ms.logini(smbnew.getMemberId()));
+			System.out.println(smbnew);
 			PrintWriter out = response.getWriter();
-			JSONObject jsonObject = new JSONObject(smb);
-			System.out.println("join member:"+smb.getMenberBean());
+			JSONObject jsonObject = new JSONObject(smbnew);
+//			System.out.println("return message json:"+smb);
 			out.println(jsonObject);
 		}
 			

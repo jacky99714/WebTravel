@@ -31,7 +31,6 @@ public class SelectSceneContextServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		//接收資料
 		String sname = request.getParameter("sceneName");
-		
 		//驗證資料
 		
 		//轉換資料
@@ -40,16 +39,21 @@ public class SelectSceneContextServlet extends HttpServlet {
 		SceneBean nbean = new SceneBean();
 		SceneService sceneservice = new SceneService();
 		SceneMessageService scenemessage = new SceneMessageService();
-		nbean = sceneservice.getName(sname);
-		List<SceneMessageBean> listmessage = scenemessage.selectmessage(nbean.getSceneId());
-		System.out.println("jiontest:"+listmessage);
 		
+		nbean = sceneservice.getName(sname);//找出景點內容
+		List<SceneMessageBean> listmessage = scenemessage.selectmessage(nbean.getSceneId());//找出留言內容
+		
+		
+			//System.out.println("jiontest:"+listmessage.get(0).getMenberBean());
+		
+			HttpSession session = request.getSession();
+			session.removeAttribute("listmessage");
+			session.removeAttribute("namebean");
+			session.setAttribute("listmessage", listmessage);		
+			session.setAttribute("namebean", nbean);
+				
 		//view
-		HttpSession session = request.getSession();
-		session.removeAttribute("listmessage");
-		session.removeAttribute("namebean");
-		session.setAttribute("listmessage", listmessage);		
-		session.setAttribute("namebean", nbean);
+		
 		response.sendRedirect(request.getContextPath()+"/scene/scene_content.jsp");
 	}
 
