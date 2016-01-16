@@ -21,8 +21,6 @@
 
 <!--   將top.jsp（首頁）加進頁面 -->
 	<jsp:include page="/WEB-INF/top/top.jsp"></jsp:include>
-
-
 <!-- CSS -->
 
 <link rel="stylesheet" href="css/justified-nav.css">
@@ -55,7 +53,7 @@
 		   <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> 收藏
 		   </button>
            <!-- 行程  button-->
-           <button class="btn btn-warning btn joinSchedule btn-sm" value="${sceneli.sceneId}">
+           <button id="s${sceneli.sceneId}" class="btn btn-warning btn joinSchedule btn-sm" value="${sceneli.sceneId}">
            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  行程
            </button>
          
@@ -91,7 +89,22 @@
 				alert("請登入會員");
 			}//if
 		})//btn-success
-			
+		$.ajax({//載入的初始化
+			  'type':'get', //post、delete、put
+			  'url':'../GetJoinScheduleServlet',
+			  'dataType':'json',  //json、script、html
+			  'success':function(datas){
+				$.each(datas,function(index,data){
+						$("#s"+data.sceneId).removeClass("btn-warning")
+		  				.removeClass("joinSchedule")
+		  				.addClass("btn-info")
+		  				.addClass("active")
+		  				.addClass("removeSchedule")
+		  				.text("  行程");
+				$('<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>').prependTo($("#s"+data.sceneId));
+				})
+			  }
+		  });
 		
 		//加入行程
 		$(".btn-warning").on("click",function(){				
@@ -103,12 +116,38 @@
 // 					  "datatype":"text",
 // 					})
 // 				alert("加入成功");
-		
+				joinSchedule = $(this)
 				$.ajax({
 					  "type":"get",
 					  "url":"<%=request.getContextPath()%>/AddScheduleServlet",
 					  "data":{"scene": $(this).val()},
-					 
+					  'success':function(data){
+						  if(data=="deletesuccess"){
+							  joinSchedule.removeClass("btn-info")
+							  .removeClass("active")
+							  .removeClass("removeSchedule")
+							  .addClass("btn-warning")
+							  .addClass("joinSchedule")
+							  .text("  行程");
+							  $('<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>').prependTo(joinSchedule);
+							  var scheduleSize = $("#scheduleSizeimg").attr("value");
+//							  alert(scheduleSize)
+							  var scheduleSizeR =  parseInt(scheduleSize)-1;
+							  $("#scheduleSizeimg").attr("src","/WebTravel/img/number/number"+scheduleSizeR+".png").attr("value",scheduleSizeR);
+						  }else{
+							  joinSchedule.removeClass("btn-warning")
+							  .removeClass("joinSchedule")
+							  .addClass("btn-info")
+							  .addClass("active")
+							  .addClass("removeSchedule")
+							  .text("  行程");
+							  $('<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>').prependTo(joinSchedule);
+							  var scheduleSize = $("#scheduleSizeimg").attr("value");
+//							  alert(scheduleSize)
+							  var scheduleSizeR =  parseInt(scheduleSize)+1;
+							  $("#scheduleSizeimg").attr("src","/WebTravel/img/number/number"+scheduleSizeR+".png").attr("value",scheduleSizeR);
+						  }
+					  }
 					})
 			
 		})//btn-warning 
