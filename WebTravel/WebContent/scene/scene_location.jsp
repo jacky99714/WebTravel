@@ -21,17 +21,15 @@
 
 <!--   將top.jsp（首頁）加進頁面 -->
 	<jsp:include page="/WEB-INF/top/top.jsp"></jsp:include>
-
-
 <!-- CSS -->
 
 <link rel="stylesheet" href="css/justified-nav.css">
 <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-
 <!-- JavaScript -->
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/holder.js"></script>
+<script type="text/javascript" src=" <c:url value="/JMember/js/jquery.fly.min.js"/>"></script>
 
 </head>
   <body style="padding:71px;">
@@ -55,7 +53,7 @@
 		   <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> 收藏
 		   </button>
            <!-- 行程  button-->
-           <button class="btn btn-warning btn joinSchedule btn-sm" value="${sceneli.sceneId}">
+           <button id="s${sceneli.sceneId}" class="btn btn-warning btn joinSchedule btn-sm" value="${sceneli.sceneId}">
            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  行程
            </button>
          
@@ -91,11 +89,26 @@
 				alert("請登入會員");
 			}//if
 		})//btn-success
-			
+		$.ajax({//載入的初始化
+			  'type':'get', //post、delete、put
+			  'url':'../GetJoinScheduleServlet',
+			  'dataType':'json',  //json、script、html
+			  'success':function(datas){
+				$.each(datas,function(index,data){
+						$("#s"+data.sceneId).removeClass("btn-warning")
+		  				.removeClass("joinSchedule")
+		  				.addClass("btn-info")
+		  				.addClass("active")
+		  				.addClass("removeSchedule")
+		  				.text("  行程");
+				$('<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>').prependTo($("#s"+data.sceneId));
+				})
+			  }
+		  });
 		
+
 		//加入行程
-		$(".btn-warning").on("click",function(){				
-			
+		$(".btn-warning").on("click",function(w){				
 // 				$.ajax({
 // 					  "type":"get",
 <%-- 					  "url":"<%=request.getContextPath()%>/plan/AddScheduleServlet", --%>
@@ -103,12 +116,57 @@
 // 					  "datatype":"text",
 // 					})
 // 				alert("加入成功");
-		
+				var flyer = $('<img class="u-flyer" src="/WebTravel/img/instagram16.png">'); 
+				joinSchedule = $(this)
 				$.ajax({
 					  "type":"get",
 					  "url":"<%=request.getContextPath()%>/AddScheduleServlet",
 					  "data":{"scene": $(this).val()},
-					 
+					  'success':function(data){
+						  if(data=="deletesuccess"){
+							  joinSchedule.removeClass("btn-info")
+							  .removeClass("active")
+							  .removeClass("removeSchedule")
+							  .addClass("btn-warning")
+							  .addClass("joinSchedule")
+							  .text("  行程");
+							  $('<span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>').prependTo(joinSchedule);
+							  var scheduleSize = $("#scheduleSizeimg").attr("value");
+//							  alert(scheduleSize)
+							  var scheduleSizeR =  parseInt(scheduleSize)-1;
+							  $("#scheduleSizeimg").attr("src","/WebTravel/img/number/number"+scheduleSizeR+".png").attr("value",scheduleSizeR);
+						  }else{
+							  //---
+							  	  var offset = $("#scheduleSizeimg").offset(); 
+									  flyer.fly({ 
+								            start: { 
+								                left: w.pageX, //开始位置（必填）#fly元素会被设置成position: fixed 
+ 								                top: w.pageY //开始位置（必填） 
+								            }, 
+								            end: { 
+								                left: 900, //结束位置（必填） 
+								                top: 0, //结束位置（必填） 
+								                width: 0, //结束时宽度 
+								                height: 0 //结束时高度 
+								            }, 
+								            onEnd: function(){ //结束回调 
+								            } 
+								        }); 
+							  //---
+							  
+							  joinSchedule.removeClass("btn-warning")
+							  .removeClass("joinSchedule")
+							  .addClass("btn-info")
+							  .addClass("active")
+							  .addClass("removeSchedule")
+							  .text("  行程");
+							  $('<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>').prependTo(joinSchedule);
+							  var scheduleSize = $("#scheduleSizeimg").attr("value");
+//							  alert(scheduleSize)
+							  var scheduleSizeR =  parseInt(scheduleSize)+1;
+							  $("#scheduleSizeimg").attr("src","/WebTravel/img/number/number"+scheduleSizeR+".png").attr("value",scheduleSizeR);
+						  }
+					  }
 					})
 			
 		})//btn-warning 

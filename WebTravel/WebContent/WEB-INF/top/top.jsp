@@ -15,6 +15,7 @@
 <!-- 		      <div class="row"> -->
 <!-- 			<div class="col-md-8"> -->
             <div class="navbar-header">
+              <a class="navbar-brand"><img  style="width:40px;margin-top:-.7em" src="<c:url value="/img/logo3.png" />"></a>
               <a class="navbar-brand" href="<c:url value="/index.jsp" />">旅行微革命</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
@@ -82,6 +83,21 @@
 				<ul class="nav navbar-nav navbar-right ">
                 <li class="dropdown"><a href="<c:url value="/secure/login.jsp" />">登入</a></li>
               	</ul>
+              	              <!-- 	------------------------行程------------------------ -->
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                	<c:if test="${not empty scheduleListFB.size()}">
+                	  <a href="<c:url value="/plan/plan.jsp" />">已加入旅遊清單項目：<span id="scheduleSize"><img value="${scheduleListFB.size()}" id="scheduleSizeimg" style="width:20px;height:20px" src="/WebTravel/img/number/number${scheduleListFB.size()}.png"/></span></a>
+                	</c:if>
+                	<c:if test="${empty scheduleListFB.size()}">
+                	  <a href="<c:url value="/plan/plan.jsp" />">已加入旅遊清單項目：<span id="scheduleSize"><img value="0" id="scheduleSizeimg" style="width:20px;height:20px" src="/WebTravel/img/number/number0.png"/></span></a>
+                  </c:if>
+<!--                   <ul class="dropdown-menu"> -->
+<%--                     <li><a href="<c:url value="/plan/plan.jsp" />">已加入旅遊清單項目</a></li> --%>
+<!--                   </ul> -->
+                </li>
+                </ul>
+<!-- 	------------------------行程------------------------ -->
               </c:if>
               <c:if test="${not empty loginOk}">
               <ul class="nav navbar-nav navbar-right ">

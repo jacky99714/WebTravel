@@ -61,6 +61,10 @@ public class MemberService {
 		}
 		return null;
 	}
+	public MemberBean logini(int useid){
+		MemberBean mb=  mDAO.select(useid);
+		return mb;
+	}
 	//增加會員
 	public MemberBean insert(MemberBean memberBean) throws FileNotFoundException{
 		if(memberBean!=null){
