@@ -228,7 +228,7 @@ $(function(){
 //	  div2.attr("style","height:300px");
 		$(".scheduleId").on("click",function(){
 			$(".loadingimg").remove();
-			$(this).next(".td2").children(".delete").after('<img style="width:20px;height:20px;display:inline;" class="loadingimg" alt="" src="images/loader_gif.jpg">');
+			$(this).next(".td2").children(".delete").after('<img style="width:20px;height:20px;display:inline;" class="loadingimg" alt="" src="images/25.GIF">');
 			$.ajax({
 				  'type':'get', //post、delete、put
 				  'url':'../MyScheduleContentServlet',
