@@ -1,6 +1,7 @@
 package model.bean;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +25,7 @@ public class SceneMessageBean implements java.io.Serializable{
 	private int memberId;
 	
 	private int sceneId;
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(
 			name="memberId",
 			referencedColumnName="memberId",
@@ -33,11 +34,11 @@ public class SceneMessageBean implements java.io.Serializable{
 			)
 	private MemberBean memberBean;
 	
-
+	
 	@Override
 	public String toString() {
 		return "SceneMessageBean [sceneMessageId=" + sceneMessageId + ", messageContent=" + messageContent
-				+ ", memberId=" + memberId + ", sceneId=" + sceneId + "]";
+				+ ", memberId=" + memberId + ", sceneId=" + sceneId + ", MemberBean=" + memberBean +"]";
 	}
 
 	public int getSceneMessageId() {

@@ -39,8 +39,6 @@
 	int a = 0;
 	
 %>
-
-
 <!--     我是內容---------------------------- -->
     <div class="container-fluid">
     <table id="simpleTable" class="table table-hover">
@@ -129,6 +127,7 @@
     <script src=" <c:url value="/js/bootstrap.min.js"/>"></script>
    
     <script type="text/javascript" src=" <c:url value="/JMember/js/myCollect.js"/>"></script>
+    <script type="text/javascript" src=" <c:url value="/JMember/js/jquery.fly.min.js"/>"></script>
     </script>
   </body>
 </html>

@@ -15,6 +15,9 @@
 
 
 $(function(){	
+			var bd = $("#birthDay").text();
+			$("#birthDay").text(bd.substring(0, 10))
+	
 			$("#exampleInputFile").change(previewImage);
 			$('#img001').attr('src',$('#saImg').attr('src'));
 //

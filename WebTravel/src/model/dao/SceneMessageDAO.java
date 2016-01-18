@@ -11,6 +11,9 @@ public interface SceneMessageDAO {
 
 	//查詢SELECT_BY_SCENEID
 	List<SceneMessageBean> select(int sceneId);
+	
+	//查詢SELECT_BY_SCENEMESSAGEID
+	SceneMessageBean selectid(int sceneMessageId);
 
 	//新增INSERT
 	SceneMessageBean insert(SceneMessageBean bean);
