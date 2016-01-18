@@ -93,25 +93,9 @@ $(document).ready( function() {
 $(document).ready( function() {
 	addEventListener("submit", function(){
     var thoughtContent = $("#textarea").Editor("getText"); 
-     alert(thoughtContent);
-	$('#aaa').val(thoughtContent)
-	
-	
-// 	  $.ajax({
-// 		  'type':'get', //post、delete、put
-// 		  'url':'XMLServlet',
-// 		  'dataType':'xml',  //json、script、html
-// 		  'data':{"thoughtContent":thoughtContent},
-// 		  'success':function(data){
-// 			//data 就是一個XML DOM 
-// 			$(data).find("Category").each(function(){
-// 				//$(this) -> 表示Category物件
-// 				console.log($(this).children("CategoryID").text());
-// 				console.log($(this).children("CategoryName").text());
-// 			})
-// 		  }
-// 	  });
-	})
+//      alert(thoughtContent);
+	$('#aaa').val(thoughtContent);
+	});
   });
   
 </script>

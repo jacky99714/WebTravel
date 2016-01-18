@@ -102,7 +102,7 @@ public class ThoughtServlet extends HttpServlet {
 		if(inbean != null){
 			session.setAttribute("thought",inbean );
 			String path = request.getContextPath();
-			response.sendRedirect(path+"/index.jsp");
+			response.sendRedirect(path+"/thought/ThoughtPage.jsp");
 //			response.sendRedirect("index.jsp");
 //			request.getRequestDispatcher("game.jsp").forward(request, response);
 			System.out.println("AAABBB");
