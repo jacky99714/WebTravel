@@ -45,7 +45,7 @@ $(function(){
 				  }else{
 //------------------------------------------------------------------------------------
 					  var offset = $("#scheduleSizeimg").offset(); 
-					 
+					  flyer = $('<img class="u-flyer" src="/WebTravel/img/instagram16.png">'); 
 					  flyer.fly({ 
 				            start: { 
 				                left: w.pageX, //开始位置（必填）#fly元素会被设置成position: fixed 

@@ -15,6 +15,7 @@
 <!-- 		      <div class="row"> -->
 <!-- 			<div class="col-md-8"> -->
             <div class="navbar-header">
+              <a class="navbar-brand"><img  style="width:40px;margin-top:-.7em" src="<c:url value="/img/logo3.png" />"></a>
               <a class="navbar-brand" href="<c:url value="/index.jsp" />">旅行微革命</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
