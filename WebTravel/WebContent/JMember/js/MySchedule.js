@@ -218,8 +218,7 @@ $(function(){
 	  $('.map-marker-01').tinyMap({
 		    'center': ['25.039065815333753', '121.56097412109375'],
 		    zoom:15
-	  });
-	  
+	  });//$('.delete')"click"END
 	  
 //	  var div1 = $("<div></div>").addClass("col-md-4");
 //	  var div2 = $("<div></div>").addClass("map-marker-01");
