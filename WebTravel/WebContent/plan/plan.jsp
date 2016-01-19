@@ -446,7 +446,7 @@
 			</div>		
 			<div id="insert"></div>
    		</div>
-   		<hr/>
+
 	    <div class="row">	
 	  		<div class="col-md-8">
 				<img id="garbage" class ="imgicon" src="img/garbage.png"  ondrop="drop(event)" ondragover="allowDrop(event)"/>	
