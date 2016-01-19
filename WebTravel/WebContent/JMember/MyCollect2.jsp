@@ -70,7 +70,7 @@
 	  			<td>${scene.sceneContent}</td>
 <%-- 	  			<td>${scene.timeStart}</td> --%>
 <%-- 	  			<td>${scene.timeEnd}</td> --%>
-	  			<td><button id="s${scene.sceneId}" value="${scene.sceneId}" class="btn btn-warning btn joinSchedule" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  加入行程</button>  <button value="${scene.sceneId}" class="btn btn-danger btn delete" data-toggle="modal" data-target=".bs-example-modal-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  刪除</button></td>
+	  			<td><button id="s${scene.sceneId}" value="${scene.sceneId}" class="btn btn-warning btn joinSchedule" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> 行程</button>  <button value="${scene.sceneId}" class="btn btn-danger btn delete" data-toggle="modal" data-target=".bs-example-modal-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  刪除</button></td>
 <%-- 	  			<td>${scene.memberId}</td> --%>
   			</tr>
   			<%a++;%>
@@ -151,6 +151,9 @@ for(int i= 0; i< pageq;i++){
 </div>
 <!--  -->
 
+
+
+
 <!--  Modal -->
 <!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"> -->
 <!--   <div class="modal-dialog" role="document"> -->
@@ -182,6 +185,7 @@ for(int i= 0; i< pageq;i++){
     
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src=" <c:url value="/js/bootstrap.min.js"/>"></script>
+     <script type="text/javascript" src=" <c:url value="/JMember/js/jquery.fly.min.js"/>"></script>
    
     <script type="text/javascript" src=" <c:url value="/JMember/js/myCollect.js"/>"></script>
 <script>
@@ -192,6 +196,9 @@ function getResult(){
 	
 }
 </script>
-    </script>
+
+
+
+
   </body>
 </html>

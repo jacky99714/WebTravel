@@ -6,6 +6,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>日記</title>
+<style>
+	.thoughtName{
+		text-align: center;
+		color:#FF8888;
+		font-weight:bolder;
+		}
+	.thoughtSubtitle{
+		font-weight:bolder;
+		font-style: italic;
+	}
+</style>
 <link rel="shortcut icon" href="<c:url value="/img/icon.ico"/>">  
 
     <!-- Bootstrap -->
@@ -25,10 +36,11 @@
 <!--     我是內容---------------------------- -->
     <div class="container-fluid">
     	<div>
-    		<h3 style="text-align: center">${thoughtBean.thoughtName}</h3>
+    		<h3 class="thoughtName" style="text-align: center">${thoughtBean.thoughtName}</h3>
     	</div>
-    	<div><h4>${thoughtBean.thoughtSubtitle}</h4></div>
-    	<div>${thoughtBean.thoughtContent}</div>
+    	<div><label>標題:</label><span class="thoughtSubtitle">${thoughtBean.thoughtSubtitle}</span></div>
+    	<div><label>發文時間:</label><span>${thoughtBean.thoughtTime}</span></div>
+    	<div>&nbsp;&nbsp;&nbsp;&nbsp;${thoughtBean.thoughtContent}</div>
     
     
     </div>

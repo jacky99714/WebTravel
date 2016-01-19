@@ -13,6 +13,13 @@ import model.util.JdbcConnection;
 
 public class SceneMessageDAOjdbc implements SceneMessageDAO {
 
+	@Override
+	public SceneMessageBean selectid(int sceneMessageId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 	//select
 	private static final String SELECT_ALL = "select * from scenemessage";
 	private static final String SELECT_BY_SCENEID = "select * from scenemessage where sceneId = ?";	
