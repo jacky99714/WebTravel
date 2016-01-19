@@ -22,6 +22,7 @@
          var imgSearchData;
          var imgSearchPage = 0;
          var selectLocation;
+         var load;
 ///////////////////////////////////////////////////////////
 		function schedule(memberId,scheduleName,scheduleOrder,sceneId){
 			this.memberId = memberId;
@@ -106,6 +107,8 @@
   		function getFavorite(){
 	    	xhrFavorite = new XMLHttpRequest();
 	    	if(xhrFavorite !== null){	
+	    		load.style.display = "block";
+	    		document.getElementById("content").innerHTML = "";   
 	    		xhrFavorite.addEventListener("readystatechange",callbackFavorite);
 	    		xhrFavorite.open("get","GetFavoriteServlet",true); 
 		    	xhrFavorite.send();	
@@ -119,6 +122,7 @@
 	    		if(xhrFavorite.status === 200){
 	    			imgFavData = JSON.parse(xhrFavorite.responseText);
 			    	createImgContent(imgFavData,1,"imgFav");
+			    	load.style.display = "none";
 	    		}else{
 	    			alert(xhrFavorite.status + ":" + xhrFavorite.statusText);
 	    		}    		
@@ -151,6 +155,8 @@
   		function getSearch(begin){ 	
 	    	xhrSearch = new XMLHttpRequest();
 	    	if(xhrSearch !== null){ 	
+	    		load.style.display = "block";
+	    		document.getElementById("content").innerHTML = "";  
 	    		xhrSearch.addEventListener("readystatechange",callbackSearch);	  
 
 	    		xhrSearch.open("get","GetSceneLocationServlet?location="+selectLocation+"&begin="+begin+"&number="+showImg,true); 	
@@ -166,6 +172,7 @@
 	    			document.getElementById("insert").inerHTML="請輸入行程名稱";
 	    			imgSearchData = JSON.parse(xhrSearch.responseText);
 	    			createImgContent(imgSearchData,1,"imgSearch");
+	    			load.style.display = "none";
 	    		}else{
 	    			alert(xhrSearch.status + ":" + xhrSearch.statusText);
 	    		}    		
@@ -359,6 +366,7 @@
          } 
 
         window.onload = function(){
+        	load = document.getElementById("load");
         	table = document.getElementById("tab");
             document.getElementById("sure").addEventListener("click",function(){
             	var text =  document.getElementById('scheduleName').value;
@@ -387,13 +395,13 @@
             getSchedule();
             getFavorite();
             
-            document.getElementById("faq").addEventListener("click", function(){
-            	document.getElementById("insert").innerHTML = "<br>對我的收藏或是搜尋景點裡的圖片按左鍵可以加入行程，使用拖曳圖片的方式刪除行程或是行程排序，reset會刪掉排序中的行程。";
-            	setTimeout(function (){
-            		document.getElementById("insert").innerHTML = "";
-    		 	}, 2000);       	
-            });       
+            document.getElementById("faq").addEventListener("mouseover", function(){
+            	document.getElementById("insert").innerHTML = "<br>對我的收藏或是搜尋景點裡的圖片按左鍵可以加入行程，使用拖曳圖片的方式刪除行程或是行程排序，reset會刪掉排序中的行程。";   	
+            }); 
             
+            document.getElementById("faq").addEventListener("mouseout", function(){
+            	document.getElementById("insert").innerHTML = "";   	
+            });                
             document.getElementById("fav").addEventListener("click", function(){
             	getFavorite();
             });       
@@ -434,6 +442,7 @@
 				<input id="scheduleName" type="text" placeholder="行程名稱"/>
 				<button id="sure">行程確認</button>  
 				<img id="faq" class="faq" title="操作說明" src="img/FAQ.png" />
+				
 			</div>		
 			<div id="insert"></div>
    		</div>
@@ -464,6 +473,7 @@
 		            		<li id="東區"><a>東區</a></li>
 					    </ul>
 				  	</div>
+				  	<img id="load" class="load"  src="img/load.gif" />
 				</div>	 
 				<div id="content"></div>
 				
