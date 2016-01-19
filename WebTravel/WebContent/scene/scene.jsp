@@ -283,12 +283,13 @@
 			</td>			
 			<td>			    
 			    <div class="abgne_tip_gallery_block">
-				<a class="city" href="<%=request.getContextPath()%>/SelectCityServlet?city=台東縣">
-					<img src="img/scene17.jpg" alt="台東縣" class="img-rounded"></a>
-				<div class="caption">
-				<h2>台東縣</h2>
-					<div class="desc" style="padding-right: 10px;"><!--內容 --></div>
-				</div>
+					<a class="city" href="<%=request.getContextPath()%>/SelectCityServlet?city=台東縣">
+						<img src="img/scene17.jpg" alt="台東縣" class="img-rounded">
+					</a>
+					<div class="caption">
+						<h2>台東縣</h2>
+						<div class="desc" style="padding-right: 10px;"><!--內容 --></div>
+					</div>
 				</div>						
 			</td>						
 	    </tr>
@@ -311,11 +312,14 @@
    
    //連結
    $this.click(function(){
-	  var name = $(".city").attr("href");
-	   window.location.href =name;
+// 	  var name = $this.attr("href");
+// 	  alert("ss")
+
+	   window.location.href =$this.children("a").attr("href");
    })
-   
-   // 當滑鼠移動到區塊上時
+  
+		
+  
    $this.hover(function(){
     // 讓 $caption 往上移動
     $caption.stop().animate({
