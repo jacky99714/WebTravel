@@ -73,6 +73,7 @@
 		$(":button").on("click",function(){
 			btn = $(this)
 		})//butten
+		
 		//加入收藏
 		$(".btn-success").on("click",function(){				
 			var mb = $(".s").attr("id");
@@ -84,16 +85,9 @@
 					  "data":{"sceneId": $(this).val()},
 					  "datatype":"text",
 					  "success":function(){
-// 						  <button  value="${sceneli.sceneId}" class="btn btn-success btn-sm">
-// 						   <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> 收藏
-// 						   </button>
+ 						//收藏成功更換button顏色 
 						addfav.removeClass("btn-success").addClass("btn-danger").text("  收藏");
-						$('<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>').prependTo(addfav)	 
-							
-// 						  <button  value="${sceneli.sceneId}" class="btn btn-danger btn-sm">
-// 						   <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span> 收藏
-// 						   </button>
-
+						$('<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>').prependTo(addfav)	 							
 					  }
 					})
 				alert("收藏成功");
@@ -102,6 +96,22 @@
 				location.href = "../secure/login.jsp";
 			}//if
 		})//btn-success
+		
+		//景點收藏初始化
+		var mb = $(".s").attr("id");
+		if (mb != null && mb.length > 0 && mb !=''){
+			$.ajax({
+				  "type":"get",
+				  "url":"<%=request.getContextPath()%>/SceneAddFavoriteServlet",
+				  "data":{"sceneId": $(this).val()},
+				  "datatype":"text",
+				  "success":function(){
+						
+					
+				  }
+				})		
+		}//if
+		
 		$.ajax({//載入的初始化
 			  'type':'get', //post、delete、put
 			  'url':'../GetJoinScheduleServlet',
@@ -183,16 +193,7 @@
 					})
 			
 		})//btn-warning 
-		//轉至景點介紹
-// 			$(".btn-primary").on("click",function(){
-// 				$.ajax({
-// 				"type":"get",
-<%-- 				"url":"<%=request.getContextPath()%>/SelectSceneContextServlet", --%>
-// 				"data":{"sceneName": $(this).val()},
-// 				"datatype":"text",
-// 				});
 
-// 			})	
 		
 	});//jquery
 
