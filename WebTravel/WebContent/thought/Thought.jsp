@@ -6,8 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>旅行微革命-心得</title>
-<h3 style="text-align: center">日記分享</h3>
 <link rel="shortcut icon" href="<c:url value="/img/icon.ico"/>">  
+<h3 style="text-align: center">日記分享</h3>
 
     <!-- Bootstrap -->
      
@@ -93,25 +93,9 @@ $(document).ready( function() {
 $(document).ready( function() {
 	addEventListener("submit", function(){
     var thoughtContent = $("#textarea").Editor("getText"); 
-     alert(thoughtContent);
-	$('#aaa').val(thoughtContent)
-	
-	
-// 	  $.ajax({
-// 		  'type':'get', //post、delete、put
-// 		  'url':'XMLServlet',
-// 		  'dataType':'xml',  //json、script、html
-// 		  'data':{"thoughtContent":thoughtContent},
-// 		  'success':function(data){
-// 			//data 就是一個XML DOM 
-// 			$(data).find("Category").each(function(){
-// 				//$(this) -> 表示Category物件
-// 				console.log($(this).children("CategoryID").text());
-// 				console.log($(this).children("CategoryName").text());
-// 			})
-// 		  }
-// 	  });
-	})
+//      alert(thoughtContent);
+	$('#aaa').val(thoughtContent);
+	});
   });
   
 </script>

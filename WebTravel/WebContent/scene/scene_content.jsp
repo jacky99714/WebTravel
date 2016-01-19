@@ -172,7 +172,7 @@
 					  }
 					});										
 			} else {
-				alert("error")
+				alert("請登入會員")
 				location.href = "../secure/login.jsp";				
 			}//if
 		})//btn-primary						

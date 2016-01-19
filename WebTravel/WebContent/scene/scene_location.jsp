@@ -76,17 +76,30 @@
 		//加入收藏
 		$(".btn-success").on("click",function(){				
 			var mb = $(".s").attr("id");
-			alert(mb);
-			if (mb != null){
+			addfav = $(this)
+			if (mb != null && mb.length > 0 && mb !=''){
 				$.ajax({
 					  "type":"get",
 					  "url":"<%=request.getContextPath()%>/SceneAddFavoriteServlet",
 					  "data":{"sceneId": $(this).val()},
 					  "datatype":"text",
+					  "success":function(){
+// 						  <button  value="${sceneli.sceneId}" class="btn btn-success btn-sm">
+// 						   <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> 收藏
+// 						   </button>
+						addfav.removeClass("btn-success").addClass("btn-danger").text("  收藏");
+						$('<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>').prependTo(addfav)	 
+							
+// 						  <button  value="${sceneli.sceneId}" class="btn btn-danger btn-sm">
+// 						   <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span> 收藏
+// 						   </button>
+
+					  }
 					})
 				alert("收藏成功");
 			} else{
 				alert("請登入會員");
+				location.href = "../secure/login.jsp";
 			}//if
 		})//btn-success
 		$.ajax({//載入的初始化
