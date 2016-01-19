@@ -3,7 +3,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-    <link href="<c:url value="/css/bootstrap.min.css"/>" rel="stylesheet">
+    <link href="<c:url value="/css/bootstrap.css"/>" rel="stylesheet">
     
     
     
@@ -15,6 +15,7 @@
 <!-- 		      <div class="row"> -->
 <!-- 			<div class="col-md-8"> -->
             <div class="navbar-header">
+              <a class="navbar-brand"><img  style="width:40px;margin-top:-.7em" src="<c:url value="/img/logo3.png" />"></a>
               <a class="navbar-brand" href="<c:url value="/index.jsp" />">旅行微革命</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
@@ -35,28 +36,27 @@
                 
                 
 <!-- 	------------------------美食------------------------ -->
-                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">美食 <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">美食介紹</a></li>
-                    <li><a href="#">新增美食</a></li>
-                  </ul>
-                </li>
+<!--                  <li class="dropdown"> -->
+<!--                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">美食 <span class="caret"></span></a> -->
+<!--                   <ul class="dropdown-menu"> -->
+<!--                     <li><a href="#">美食介紹</a></li> -->
+<!--                     <li><a href="#">新增美食</a></li> -->
+<!--                   </ul> -->
+<!--                 </li> -->
 <!-- 	------------------------美食------------------------ -->
                 
 <!-- 	------------------------行程------------------------ -->
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">行程規劃 <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
+
+<!-- <!-- 	------------------------行程------------------------ -->
+<!--                 <li class="dropdown"> -->
+<!--                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">行程規劃 <span class="caret"></span></a> -->
+<!--                   <ul class="dropdown-menu"> -->
                   
-                    <li><a href="<c:url value="/plan/plan.jsp" />">新增行程</a></li>
-                    <li><a href="#">行程管理</a></li>
-                  </ul>
-                </li>
-<!-- 	------------------------行程------------------------ -->
-
-
-<!-- 	------------------------行程------------------------ -->
+<%--                     <li><a href="<c:url value="/plan/plan.jsp" />">新增行程</a></li> --%>
+<!--                     <li><a href="#">行程管理</a></li> -->
+<!--                   </ul> -->
+<!--                 </li> -->
+<!-- <!-- 	------------------------行程------------------------ --> 
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">旅遊日記 <span class="caret"></span></a>
                   <ul class="dropdown-menu">
@@ -83,6 +83,21 @@
 				<ul class="nav navbar-nav navbar-right ">
                 <li class="dropdown"><a href="<c:url value="/secure/login.jsp" />">登入</a></li>
               	</ul>
+              	              <!-- 	------------------------行程------------------------ -->
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                	<c:if test="${not empty scheduleListFB.size()}">
+                	  <a href="<c:url value="/plan/plan.jsp" />">已加入旅遊清單項目：<span id="scheduleSize"><img value="${scheduleListFB.size()}" id="scheduleSizeimg" style="width:20px;height:20px" src="/WebTravel/img/number/number${scheduleListFB.size()}.png"/></span></a>
+                	</c:if>
+                	<c:if test="${empty scheduleListFB.size()}">
+                	  <a href="<c:url value="/plan/plan.jsp" />">已加入旅遊清單項目：<span id="scheduleSize"><img value="0" id="scheduleSizeimg" style="width:20px;height:20px" src="/WebTravel/img/number/number0.png"/></span></a>
+                  </c:if>
+<!--                   <ul class="dropdown-menu"> -->
+<%--                     <li><a href="<c:url value="/plan/plan.jsp" />">已加入旅遊清單項目</a></li> --%>
+<!--                   </ul> -->
+                </li>
+                </ul>
+<!-- 	------------------------行程------------------------ -->
               </c:if>
               <c:if test="${not empty loginOk}">
               <ul class="nav navbar-nav navbar-right ">
@@ -109,6 +124,23 @@
                </c:if>
                </a></li>
               </ul>
+              
+              <!-- 	------------------------行程------------------------ -->
+              <ul class="nav navbar-nav navbar-right">
+                <li>
+                	<c:if test="${not empty scheduleListFB.size()}">
+                	  <a href="<c:url value="/plan/plan.jsp" />">已加入旅遊清單項目：<span id="scheduleSize"><img value="${scheduleListFB.size()}" id="scheduleSizeimg" style="width:20px;height:20px" src="/WebTravel/img/number/number${scheduleListFB.size()}.png"/></span></a>
+                	</c:if>
+                	<c:if test="${empty scheduleListFB.size()}">
+                	  <a href="<c:url value="/plan/plan.jsp" />">已加入旅遊清單項目：<span id="scheduleSize"><img value="0" id="scheduleSizeimg" style="width:20px;height:20px" src="/WebTravel/img/number/number0.png"/></span></a>
+                  </c:if>
+<!--                   <ul class="dropdown-menu"> -->
+<%--                     <li><a href="<c:url value="/plan/plan.jsp" />">已加入旅遊清單項目</a></li> --%>
+<!--                   </ul> -->
+                </li>
+                </ul>
+<!-- 	------------------------行程------------------------ -->
+              
               </c:if>
 <!-- 	------------------------景點------------------------ -->
 <!--               登入 -->

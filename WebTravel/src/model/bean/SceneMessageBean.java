@@ -1,21 +1,23 @@
 package model.bean;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="SceneMessage")
 public class SceneMessageBean implements java.io.Serializable{
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int sceneMessageId;
 
 	private String messageContent;
@@ -23,12 +25,20 @@ public class SceneMessageBean implements java.io.Serializable{
 	private int memberId;
 	
 	private int sceneId;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(
+			name="memberId",
+			referencedColumnName="memberId",
+			insertable=false,
+			updatable=false			
+			)
+	private MemberBean memberBean;
 	
-
+	
 	@Override
 	public String toString() {
 		return "SceneMessageBean [sceneMessageId=" + sceneMessageId + ", messageContent=" + messageContent
-				+ ", memberId=" + memberId + ", sceneId=" + sceneId + "]";
+				+ ", memberId=" + memberId + ", sceneId=" + sceneId + ", MemberBean=" + memberBean +"]";
 	}
 
 	public int getSceneMessageId() {
@@ -62,6 +72,14 @@ public class SceneMessageBean implements java.io.Serializable{
 	public void setSceneId(int sceneId) {
 		this.sceneId = sceneId;
 
+	}
+
+	public MemberBean getMenberBean() {
+		return memberBean;
+	}
+
+	public void setMenberBean(MemberBean memberBean) {
+		this.memberBean = memberBean;
 	}
 
 	

@@ -57,17 +57,14 @@ function map(){
 			                            	 $.each(info.routes[0].legs,function(i,datas){
 			                            		 console.log(i,datas.distance.text)
 			                            		 console.log(i,datas.duration.text)
-
 			                            		 e=i+1;
-			                            		 
-			                            		 $(".p_distance").each(function(k,datasd){
-			                            			 alert($(datasd).attr("idd","pp"+k))
-			                            		 })
-		
+			                            		 $(".p_duration:eq("+e+")").text("預計花費"+datas.duration.text).css("color","#8B864E");
+//			                            		 $(".p_distance:last").text("結束完美的旅程");
+			                            		 $(".p_duration:first").text("旅程開始").css("color","black");
 //			                            		 $("#p"+i).text(datas.distance.text);
-			                            		 $("#p"+e).text("");
-			                            		 $("#pp"+i).text("到下一個時間"+datas.duration.text);
-			                            		 $("#pp"+e).text("結束");
+			                            		 $("p_distance:first").text("");
+//			                            		 $("#pp"+i).text("到下一個時間"+datas.duration.text);
+//			                            		 $("#pp"+e).text("結束");
 			                            		 
 			                            		 
 //			                            		 $.each(datas,function(j,jdatas){
@@ -81,11 +78,9 @@ function map(){
 			              	}
 			        ]
 			});
-
 	}
-
-
 $(function(){
+	
     $( "#sortable" ).sortable({
       revert: true
     });
@@ -95,18 +90,21 @@ $(function(){
 		ob= $(this)
 	})
 	$('#myModal').on('shown.bs.modal',function(){
-		map();
-		
-		
+		 map();
 	})
+	
 	$('#myModal').on('show.bs.modal',function(){
+		 $("#sortable").empty();
+		 $(".loadingimg").remove();
+		 $("#sortable").append('<img style="width:200px;height:200px;display:inline;" class="loadingimg col-md-offset-4" alt="" src="images/loader_gif.jpg">');
+		
 		$.ajax({
 			  'type':'get', //post、delete、put
 			  'url':'../MyScheduleContentServlet',
 			  'dataType':'json',  //json、script、html
 			  'data':{"Schedule":ob.val()},
 			  'success':function(data){
-				  $("#sortable").empty();
+				  $(".loadingimg").remove();
 				  $.each(data,function(i,value){
 					  var col = $("<div></div>").addClass("col-md-2").addClass("ScheduleContent");
 					  col.attr("id",i+1);
@@ -145,10 +143,12 @@ $(function(){
 					  $( "#sortable" ).sortable({update: map});
 				  });
 
+			  },
+			  'complete':function(){
+				  map();
 			  }
 
 		});//ajax
-
 	})
 	$('#Upbtn').on('click',function(){
 		var a=new Array();
@@ -217,6 +217,106 @@ $(function(){
 	    	});
 	  
 	  //-----------------------------------猛甲茶到-------------------------------------------------
+	  $('.map-marker-01').tinyMap({
+		    'center': ['25.039065815333753', '121.56097412109375'],
+		    zoom:15
+	  });//$('.delete')"click"END
+	  
+//	  var div1 = $("<div></div>").addClass("col-md-4");
+//	  var div2 = $("<div></div>").addClass("map-marker-01");
+//	  div2.attr("style","height:300px");
+		$(".scheduleId").on("click",function(){
+			$(".loadingimg").remove();
+			$(this).next(".td2").children(".delete").after('<img style="width:20px;height:20px;display:inline;" class="loadingimg" alt="" src="images/25.GIF">');
+			$.ajax({
+				  'type':'get', //post、delete、put
+				  'url':'../MyScheduleContentServlet',
+				  'dataType':'json',  //json、script、html
+				  'data':{"Schedule":$(this).attr("value")},
+				  'success':function(data){
+//					  col.attr("lng",value.timeStart);
+//					  col.attr("lat",value.timeEnd);
+					  var arrayFrom =[];
+					  var arrayTo = [];
+					  var arrayWaypoint = [];
+					  var fromText;
+					  var toText;
+					  var count =$(data).size()-1;//總數
+//					  alert(count)
+					  $.each(data,function(i,value){
+
+							  if(i==0){
+								  arrayFrom[0]=value.timeEnd;
+								  arrayFrom[1]=value.timeStart;
+								  fromText=value.sceneName;
+							  }else if(i==count){
+								  arrayTo[0]=value.timeEnd;
+								  arrayTo[1]=value.timeStart;
+								  toText=value.sceneName;
+							  }else{
+								  a=i+1;
+								  var arraylocal=[];
+								  var objectWaypoint=new Object();
+								  arraylocal[0]=value.timeEnd;
+								  arraylocal[1]=value.timeStart;
+								  objectWaypoint['location']=arraylocal;
+								  objectWaypoint['text']=value.sceneName;
+								  objectWaypoint['icon']="images/"+a+".png";
+								  arrayWaypoint.push(objectWaypoint);
+//								  console.log(arrayWaypoint)
+							  }
+//							  alert(i)
+					  });
+					  console.log(fromText,arrayFrom,arrayWaypoint,arrayTo,toText)
+					  $('.map-marker-01').tinyMap('destroy');
+					  
+					  $('.map-marker-01').tinyMap({
+						  //--------------------direction
+						    'direction': [
+							              	{
+							              	    'from':arrayFrom,
+							              	    'fromText':fromText,
+						                        'travel': 'driving',
+						            	        'waypoint': arrayWaypoint,
+						            	        'to':arrayTo,
+						            	        'toText':toText,
+							                     'icon': {
+							                         'from': 'images/1.png',
+							                         'to': 'images/'+$(data).size()+'.png'
+							                     }
+							              	}
+							              ],
+					  //-------------------directionEnd
+					  event: {
+					        'click': function () {
+//					        	$('.map-marker-01').tinyMap('destroy');
+//					        	$('.map-marker-01').tinyMap({
+//					        	    'center': ['25.034516521123315','121.56496524810791'],
+//					        	    'zoom': 14,
+//					        	    // 啟用 MarkerWithLabel
+//					        	    'markerWithLabel': true,
+//					        	    'marker': [
+//					        	        {
+//					        	            'addr': ['25.034516521123315','121.56496524810791'],
+//					        	            'labelContent': '<strong>Hello World</strong><div><img src="data:image/png;base64,'+data[0].scenePhoto+'" style="height:80px;width:80px; alt=""  /></div>',
+//					        	            'labelClass'  : 'box',
+//					        	            'icon': {
+//					        	                'path': 'M 0 0'
+//					        	            }
+//					        	        }
+//					        	    ]
+//					        	});
+					        }
+					  }
+					  
+					  });
+				  },
+				  'complete':function(){
+					  $(".loadingimg").remove();
+				  }
+			});//ajax
+		});
+	  
 	  
 	  
 	  

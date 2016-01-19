@@ -39,8 +39,6 @@
 	int a = 0;
 	
 %>
-
-
 <!--     我是內容---------------------------- -->
     <div class="container-fluid">
     <table id="simpleTable" class="table table-hover">
@@ -49,7 +47,7 @@
   			<th>圖片</th>
 <!--   			<th>區域</th> -->
   			<th></th>
-  			<th>景點名稱</th>
+  			<th>景點</th>
   			<th>內容</th>
 <!--   			<th>開始時間</th> -->
 <!--   			<th>結束時間</th> -->
@@ -129,6 +127,7 @@
     <script src=" <c:url value="/js/bootstrap.min.js"/>"></script>
    
     <script type="text/javascript" src=" <c:url value="/JMember/js/myCollect.js"/>"></script>
+    <script type="text/javascript" src=" <c:url value="/JMember/js/jquery.fly.min.js"/>"></script>
     </script>
   </body>
 </html>

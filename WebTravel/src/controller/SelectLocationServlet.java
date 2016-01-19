@@ -57,6 +57,7 @@ public class SelectLocationServlet extends HttpServlet {
 		//JSONArray scenelist = TypeConveter.parseJSONArray(li); 
 		// model
 		HttpSession session = request.getSession();
+		session.removeAttribute("li");
 		session.setAttribute("li", fb);
 		
 //		PrintWriter out = response.getWriter();

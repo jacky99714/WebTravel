@@ -15,6 +15,13 @@ import model.util.DataSourceConnection;
 public class SceneMessageDAOjndi implements SceneMessageDAO {
 	//DB連線資訊
 
+	@Override
+	public SceneMessageBean selectid(int sceneMessageId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 	//select
 	private static final String SELECT_ALL = "select * from scenemessage";
 	private static final String SELECT_BY_SCENEID = "select * from scenemessage where sceneId = ?";	

@@ -30,16 +30,25 @@ private Session session = null;
 
 	@Override
 	public List<SceneMessageBean> select(int sceneId) {
-		
-		return (List<SceneMessageBean>)getSession().createQuery("from SceneMessageBean where sceneId='"+sceneId+"'").list();
+		List<SceneMessageBean> list = null;
+		list = (List<SceneMessageBean>)getSession().createQuery("from SceneMessageBean where sceneId='"+sceneId+"'" +"order by sceneMessageId desc").list();
+		return list;	
 	}
-
+	
+	@Override
+	public SceneMessageBean selectid(int sceneMessageId) {
+		SceneMessageBean Bean = null;
+		Bean = (SceneMessageBean)getSession().createQuery("from SceneMessageBean where sceneMessageId='"+sceneMessageId+"'").uniqueResult();
+		return Bean;	
+	}
+	
 	@Override
 	public SceneMessageBean insert(SceneMessageBean bean) {
 		SceneMessageBean smb = (SceneMessageBean)getSession().get(SceneMessageBean.class, bean.getSceneMessageId());
 		if(smb == null){
-			getSession().save(bean);
-			return smb;
+					
+			int i= (int)getSession().save(bean);		
+			return (SceneMessageBean)getSession().get(SceneMessageBean.class, i);
 		}
 		return null;
 	}
@@ -76,11 +85,11 @@ private Session session = null;
 //			List<SceneMessageBean> beans = dao.select();
 //			System.out.println(beans);
 			
-//			List<SceneMessageBean> bean = dao.select(1);
-//			System.out.println(bean);
+			List<SceneMessageBean> bean = dao.select(1);
+			System.out.println(bean);
 			
-			boolean delete = dao.delete(1);
-			System.out.println(delete);
+//			boolean delete = dao.delete(1);
+//			System.out.println(delete);
 //			
 //			SceneMessageBean insert = new SceneMessageBean();
 //			
