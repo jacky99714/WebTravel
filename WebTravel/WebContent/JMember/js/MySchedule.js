@@ -303,6 +303,7 @@ $(function(){
 //							                            		 console.log(i,datas.steps)
 							                            		 s=i+1;
 							                            		 e=i+2;
+							                            		 
 							                            		 nextTr.children(":eq(0)").append("<h3>『"+data[i].sceneName+"』到『"+data[i+1].sceneName+"』</h3>"+"<br>");
 							                            		 $.each(datas.steps,function(i,datass){
 							                            			 console.log(i,datass.instructions)
