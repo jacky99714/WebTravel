@@ -1,3 +1,5 @@
+var mapdata;
+
 function map(){
 		  var arrayFrom =[];
 		  var arrayTo = [];
@@ -51,6 +53,7 @@ function map(){
 			                         directions_changed: {
 			                             'func': function(){
 			                            	 var info = this.getDirections();
+			                            	 mapdata = info;
 //			                            	 console.log("info:"+info)
 			                            	 console.log(info)
 //			                            	 alert(info.routes[0].legs[0].distance.text)
@@ -80,7 +83,6 @@ function map(){
 			});
 	}
 $(function(){
-	
     $( "#sortable" ).sortable({
       revert: true
     });
@@ -225,7 +227,13 @@ $(function(){
 //	  var div1 = $("<div></div>").addClass("col-md-4");
 //	  var div2 = $("<div></div>").addClass("map-marker-01");
 //	  div2.attr("style","height:300px");
-		$(".scheduleId").on("click",function(){
+	  
+	  
+	  var mapdata1;
+	  var scheduleClick;
+		$(".scheduleId").on("click",function(w){
+			scheduleClick=$(this);
+			$(".conte").hide();
 			$(".loadingimg").remove();
 			$(this).next(".td2").children(".delete").after('<img style="width:20px;height:20px;display:inline;" class="loadingimg" alt="" src="images/25.GIF">');
 			$.ajax({
@@ -283,32 +291,37 @@ $(function(){
 							                     'icon': {
 							                         'from': 'images/1.png',
 							                         'to': 'images/'+$(data).size()+'.png'
-							                     }
+							                     },
+							                     'event': {
+							                         directions_changed: {
+							                             'func': function(){
+							                            	 mapdata1 = this.getDirections();
+							                            	 console.log(data)
+							                            	 var nextTr = scheduleClick.parent().next("tr")
+							                            	 nextTr.fadeToggle(500);
+							                            	 $.each(mapdata1.routes[0].legs,function(i,datas){
+//							                            		 console.log(i,datas.steps)
+							                            		 s=i+1;
+							                            		 e=i+2;
+							                            		 
+							                            		 nextTr.children(":eq(0)").append("<h3>『"+data[i].sceneName+"』到『"+data[i+1].sceneName+"』</h3>"+"<br>");
+							                            		 $.each(datas.steps,function(i,datass){
+							                            			 console.log(i,datass.instructions)
+							                            			 var instructions=datass.instructions;
+							                            			 var dis
+							                            			 nextTr.children(":eq(0)").append(instructions+"<br>");
+							                            		 })
+							                            		 
+							                            	 })
+							                            	 
+							                            	 }
+							                             }
+							                         }
 							              	}
-							              ],
+
+						                     
+							              ]
 					  //-------------------directionEnd
-					  event: {
-					        'click': function () {
-//					        	$('.map-marker-01').tinyMap('destroy');
-//					        	$('.map-marker-01').tinyMap({
-//					        	    'center': ['25.034516521123315','121.56496524810791'],
-//					        	    'zoom': 14,
-//					        	    // 啟用 MarkerWithLabel
-//					        	    'markerWithLabel': true,
-//					        	    'marker': [
-//					        	        {
-//					        	            'addr': ['25.034516521123315','121.56496524810791'],
-//					        	            'labelContent': '<strong>Hello World</strong><div><img src="data:image/png;base64,'+data[0].scenePhoto+'" style="height:80px;width:80px; alt=""  /></div>',
-//					        	            'labelClass'  : 'box',
-//					        	            'icon': {
-//					        	                'path': 'M 0 0'
-//					        	            }
-//					        	        }
-//					        	    ]
-//					        	});
-					        }
-					  }
-					  
 					  });
 				  },
 				  'complete':function(){
@@ -316,9 +329,11 @@ $(function(){
 				  }
 			});//ajax
 		});
-	  
-	  
-	  
+//		$(".trheader").on("click",function(){
+//			
+//			console.log(mapdata1)
+//		})	  
+		$(".conte").hide();
 	  
 	  
 	  

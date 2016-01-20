@@ -56,12 +56,21 @@
     	<div class="col-md-8">
     	<table class="table table-hover">
     	<c:forEach items="${listSchedule}" var="Schedule">
-    		<tr value="dddd">
-    			<td value="${Schedule.scheduleId}" id="${Schedule.scheduleId}" class="scheduleId"><strong class="strong1">${Schedule.scheduleName}</strong></td>
-    			<td class="td2" style="width:200px;"><button value="${Schedule.scheduleId}" class="btn btn-warning btn scheduleSelect" data-toggle="modal" data-target=".bs-example-modal-lg">編輯行程</button> 
-    			 <button value="${Schedule.scheduleId}" class="btn btn-danger btn delete" data-toggle="modal" data-target=".bs-example-modal-sm">
-    			 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  刪除
-    			 </button>
+    		<tr class="trheader" value="dddd">
+    			<td value="${Schedule.scheduleId}" id="${Schedule.scheduleId}" class="scheduleId">
+    				<strong class="strong1">${Schedule.scheduleName}</strong>
+    			</td>
+    			<td class="td2" style="width:200px;">
+	    			<button value="${Schedule.scheduleId}" class="btn btn-warning btn scheduleSelect" data-toggle="modal" data-target=".bs-example-modal-lg">編輯行程</button> 
+	    			 <button value="${Schedule.scheduleId}" class="btn btn-danger btn delete" data-toggle="modal" data-target=".bs-example-modal-sm">
+	    				 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>  刪除
+	    			 </button>
+    			 </td>
+    		</tr>
+    		<tr class="conte" value="ssss">
+    			<td>
+    			</td>
+    			<td>
     			 </td>
     		</tr>
     	</c:forEach>
@@ -104,7 +113,7 @@
     <!--  Modal -->
 <div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
+    <div class="modal-content" style="background-color:rgba(0,0,0,0.3);">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" style="text-align:center;font-weight:900;" id="myModalLabel">拖曳照片修改行程順序</h4>
@@ -112,21 +121,6 @@
 
       </div>
       <div class="modal-body">
-<!-- 		<table class="table"> -->
-<!-- 			<thead> -->
-<!-- 				<th></th> -->
-<!-- 				<th></th> -->
-<!-- 				<th></th> -->
-<!-- 				<th></th> -->
-<!-- 			</thead> -->
-<!-- 			<tbody> -->
-<!-- 				<tr id="sortable"> -->
-
-  
-
-<!-- 				</tr> -->
-<!-- 			</tbody> -->
-<!-- 		</table> -->
 
 		<div class="row" id="sortable">
 		
@@ -147,12 +141,12 @@
 <!-- 你確定要刪除 -->
 <div id="myModal001" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
   <div class="modal-dialog modal-sm">
-    <div class="modal-content">
+    <div class="modal-content" >
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">你確定?</h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" >
         		你確定要刪除嗎?
       </div>
       <div class="modal-footer">

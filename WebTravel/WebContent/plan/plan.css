@@ -46,7 +46,6 @@ table{
 
 .imgTd{
 	width:100px;
-	border:2px inset; 
 }
 
 .divName{
@@ -61,5 +60,12 @@ table{
 }
 
 .faq{
-	width:20px;
+	width:28px;
+	padding-left:5px;
+}
+
+.load{
+	width:35px;
+	padding-left:10px;
+	display:none;
 }
