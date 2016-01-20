@@ -1,0 +1,71 @@
+
+
+.box {		
+	border:3px ridge #DDDDDD;  
+	width:560px;
+	height:140px;	
+}
+
+.line{
+	width:100px;
+	height:0px;
+	border:2px solid red;
+}
+     
+.img{
+	width:100px;
+	height:100px;
+}
+
+.imgContent{
+	width:120px;
+	height:120px;
+	margin:15px;
+	text-align:center;
+	display:inline-block;
+}
+
+.imgicon{
+	width:100px;
+	margin-right:60px;
+}
+
+#content{
+	width:350px;
+    height: 600px;
+    overflow: auto;
+  	border-width:5px;	
+    border-style:groove;
+}
+
+
+table{
+	margin-top:10px;
+	border-collapse: collapse;
+}
+
+.imgTd{
+	width:100px;
+}
+
+.divName{
+	word-break: break-all;
+	text-align: center;
+}
+
+#insert{
+	width:300px;
+	word-break: break-all;
+	display:inline-block;
+}
+
+.faq{
+	width:28px;
+	padding-left:5px;
+}
+
+.load{
+	width:35px;
+	padding-left:10px;
+	display:none;
+}
