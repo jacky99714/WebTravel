@@ -7,21 +7,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>日記</title>
 <style>
-.s1 {
-	color: orange;
-	border: 1px solid red;
-	width: 400px;
-	text-align: center;
-	background-color: green;
-}
-
-.s2 {
-	color: green;
-	border: 3px double green;
-	width: 400px;
-	text-align: center;
-	background-color: orange;
-}
 
 .div4{
  	width : 240px;
@@ -30,6 +15,48 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+.holder {
+	margin: 15px 0;
+	text-align: center;
+}
+
+.holder a {
+	font-size: 12px;
+	cursor: pointer;
+	margin: 0 5px;
+	color: #333;
+}
+
+.holder a:hover {
+	background-color: #222;
+	color: #fff;
+}
+
+.holder a.jp-previous  { margin-right: 15px; }
+.holder a.jp-next { margin-left: 15px; }
+
+.holder a.jp-current, a.jp-current:hover { 
+	color: #FF4242;
+	font-weight: bold;
+}
+
+.holder a.jp-disabled, a.jp-disabled:hover {
+	color: #bbb;
+}
+
+.holder a.jp-current, a.jp-current:hover,
+.holder a.jp-disabled, a.jp-disabled:hover {
+	cursor: default; 
+	background: none;
+}
+
+.holder span { margin: 0 5px; }
+
+#Div2{
+	display: block;
+    opacity: 1;
+    }
+
 </style>
 <link rel="shortcut icon" href="<c:url value="/img/icon.ico"/>">  
 
@@ -67,8 +94,8 @@
    
     <script src=" <c:url value="/js/bootstrap.min.js"/>"></script>
     <script src="js/jquery-2.1.4.min.js"></script>
-    <script src="js/jPages.min.js"></script>
-    <link href="<c:url value="/css/jPages.css"/>" >
+    <script src="js/jPages.js"></script>
+<%--     <link href="<c:url value="/css/jPages.css"/>" > --%>
 <!--     <script type="text/javascript" src="http://masonry.desandro.com/jquery.masonry.min.js"></script> -->
     
     <script type="text/javascript">
@@ -118,7 +145,7 @@
 						
 						var div2 = document.createElement("div");
 						div2.className="col-xs-6 col-md-3";
-						div2.id="Div2";
+						div2.id="Div2"
 						var div3 = document.createElement("div");
 						div3.className="thumbnail";
 						div3.id="div3";
@@ -153,48 +180,30 @@
 						contents.innerHTML = subtitle;
 						div4.appendChild(contents);
 						
+//				 			var  a = document.getElementById("div1");
+							$("div.holder").jPages({
+								containerID : "div1",
+								 previous : "←previous",
+								 next : "next→",
+								 perPage : 16,
+								 delay: 50
+							});
+							
+							
+						
 // 						myDiv.innerHTML=data[i].thoughtSubtitle;
 					}
-					
 // 			    		myDiv.innerHTML = "<h3>" + data + "</h3>";
 				}else {
 					alert(xhr.status + ":" + xhr.statusText);
 				}
 			}
 		}
-		$(function(){
-// 			var  a = document.getElementById("div1");
-			$("div.holder").jPages({
-				containerID : "div1",
-				 previous : "←previous",
-				 next : "next→",
-				 perPage : 4,
-				 delay : 50
-			});
-		});
-		$(function(){
-			$('#div3').addClass('s1')
-			.mouseover(over)
-	        .mouseout(out);
-			
-			function over(){
-		         // $(this).removeClass('s1',1000).addClass('s2',1000);
-		         $(this).switchClass('s1','s2',1000);
-			 }
-			 function out(){
-		         //  $(this).removeClass('s2',1000).addClass('s1',1000);
-				 $(this).switchClass('s2','s1',1000);
-			 }
-		});
-		
 		
 		 window.onload = function(){
 			 getThought();
+			 
 		 }
 </script>
-    
-    
-    
-    
-  </body>
+</body>
 </html>

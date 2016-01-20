@@ -1,5 +1,6 @@
 package model.bean;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -47,16 +48,24 @@ public class ThoughtBean {
 	
 	@ManyToOne
 	@JoinColumn(
-			name="ThoughtId",
-			referencedColumnName="Thought",
+			name="MemberId",
 			insertable=false,updatable=false
 	)
+	private MemberBean member;
 	
-	
+	public MemberBean getMember() {
+		return member;
+	}
+	public void setMember(MemberBean member) {
+		this.member = member;
+	}
+
 	@Override
 	public String toString() {
-		return "[" + thoughtId + "," + thoughtName + "," + thoughtSubtitle + "," + thoughtContent + "," 
-				+thoughtPhoto+","+ thoughtTime + "," + memberId + "]";
+		return "ThoughtBean [thoughtId=" + thoughtId + ", thoughtName=" + thoughtName + ", thoughtContent="
+				+ thoughtContent + ", thoughtSubtitle=" + thoughtSubtitle + ", thoughtTime=" + thoughtTime
+				+ ", memberId=" + memberId + ", thoughtPhoto=" + Arrays.toString(thoughtPhoto) + ", member=" + member
+				+ "]";
 	}
 	public int getThoughtId() {
 		return thoughtId;

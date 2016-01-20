@@ -36,10 +36,11 @@
 <!--     我是內容---------------------------- -->
     <div class="container-fluid">
     	<div>
-    		<h3 class="thoughtName" style="text-align: center">${thoughtBean.thoughtName}</h3>
+    		<h2 class="thoughtName" style="text-align: center">${thoughtBean.thoughtName}</h2>
     	</div>
     	<div><label>標題:</label><span class="thoughtSubtitle">${thoughtBean.thoughtSubtitle}</span></div>
     	<div><label>發文時間:</label><span>${thoughtBean.thoughtTime}</span></div>
+    	<div><label>作者:</label><span>${name}</span></div>
     	<div>&nbsp;&nbsp;&nbsp;&nbsp;${thoughtBean.thoughtContent}</div>
     
     

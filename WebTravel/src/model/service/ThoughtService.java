@@ -37,6 +37,7 @@ public class ThoughtService {
 		List<ThoughtBean> listTB = thoughtDao.select();
 		List<MythoughtBean> listMB = new ArrayList<>();
 		for(ThoughtBean bean :listTB){
+//			bean.getMember().getNickName();
 			listMB.add(TypeConveter.pareseMythoughtBean(bean));
 		}
 		return listMB;
