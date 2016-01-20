@@ -36,9 +36,11 @@ public class ShowThoughtServlet extends HttpServlet {
        
         int id = Integer.parseInt(request.getParameter("id"));
          ThoughtBean bean = ts. getThoughtId(id);
+         String nick = bean.getMember().getNickName();
          HttpSession session = request.getSession();
    
          session.setAttribute("thoughtBean", bean);
+         session.setAttribute("name", nick);
 //         System.out.println("Bean  "+bean);
 //         request.getRequestDispatcher("ShowThought.jsp").forward(request, response);
          response.sendRedirect("ShowThought.jsp");
