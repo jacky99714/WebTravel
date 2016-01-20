@@ -12,8 +12,10 @@ repositories {
 dependencies {						//宣告dependency library
 	providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
 	providedCompile 'org.json:json:20151123'
+	providedCompile 'commons-codec:commons-codec:1.10'
 	providedRuntime 'javax.servlet:jstl:1.2'
 	providedRuntime 'javax.servlet.jsp.jstl:javax.servlet.jsp.jstl-api:1.2.1'
+	
 	compile 'org.hibernate:hibernate-entitymanager:4.3.11.Final'
 	
 	
