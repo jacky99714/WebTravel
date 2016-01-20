@@ -56,6 +56,7 @@ public class ThoughtServlet extends HttpServlet {
 		if(temp4 == null || temp4.trim().length()==0){
 			errors.put("thoughtContent", "請輸入內容");
 		}
+		
 		Collection<Part> parts = request.getParts();
 		Part pho = request.getPart("thoughtPhoto");
 		byte[] photo = null;

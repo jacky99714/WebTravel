@@ -57,12 +57,6 @@
 		    		<label>照片</label><span>-選一張到表此篇新的的美照吧</span><p color='red'  size="-3">${errors.thoughtPhoto}</p><input type="file" name="thoughtPhoto" multiple>
 		    	</div>
 			</div>
-<!-- 			<div> -->
-<!-- 				<div> -->
-<!-- 					<span>旅行日期</span> <span>-此旅行心得是何時去的？</span> -->
-<!-- 				</div> -->
-<!-- 				<input type="text" placeholder="請選擇日期"> -->
-<!-- 			</div> -->
 			<div>
 				<label>日記內容</label><span> - 內容需100字以上</span><p color='red'  size="-3">${errors.thoughtContent}</p>
 			</div>
