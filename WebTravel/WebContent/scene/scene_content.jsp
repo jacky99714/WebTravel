@@ -102,11 +102,11 @@
                 <hr>               
                 <div class="media"><!-- 會員頭像-->
                     <a class="pull-left" >
-                        <img class="media-object" src="http://placehold.it/64x64" alt="">
+                        <img class="media-object" style="width: 64px" src="<%=request.getContextPath()%>/MemberImg?memberId=${lm.menberBean.memberId}" alt="">
                     </a>
                     <div class="media-body"><!-- 回覆內容 -->
                         <h4 class="media-heading">${lm.menberBean.nickName}
-                            <small>${lm.menberBean.nickName}</small>
+                            <small>${lm.menberBean.userName}</small>
                         </h4>
                         ${lm.messageContent}
                     </div>
@@ -158,11 +158,14 @@
 						  
 						  var a = $("<a></a>").addClass("pull-left");
 						  var img = $("<img></img>").addClass("media-object");
-						  img.attr("src",'http://placehold.it/64x64');
+						  img.attr("src",'<%=request.getContextPath()%>/MemberImg?memberId='+data.menberBean.memberId);
+						  img.css("width","64px");
 						  var p1 = $(a).append(img);
 						  
 						  var div2 = $("<div></div>").addClass("media-body");			  
 						  var h4 = $("<h4></h4>").addClass("media-heading").text(data.menberBean.nickName);						    
+						  var small=$("<small></small>").text(data.menberBean.userName)
+						  h4.append(small)
 						  var con =data.messageContent 
 						  var p2 = $(div2).append([h4,con]);
 						  

@@ -190,4 +190,8 @@ public class MemberService {
 	public boolean deleteSchedule(int scheduleId){
 		return scheduleDAO.delete(scheduleId);
 	}
+	
+	public MemberBean selectMember(int memberId){
+		return mDAO.select(memberId);
+	}
 }
