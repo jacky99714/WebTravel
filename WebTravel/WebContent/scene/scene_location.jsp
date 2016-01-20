@@ -49,7 +49,7 @@
 		   <span class="glyphicon glyphicon-align-left" aria-hidden="true" ></span> 介紹
 		   </button>
 		   <!-- 收藏 button -->
-           <button  value="${sceneli.sceneId}" class="btn btn-success btn-sm">
+           <button  id="f${sceneli.sceneId}" value="${sceneli.sceneId}" class="btn btn-success btn-sm">
 		   <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> 收藏
 		   </button>
            <!-- 行程  button-->
@@ -90,9 +90,9 @@
 						$('<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>').prependTo(addfav)	 							
 					  }
 					})
-				alert("收藏成功");
+// 				alert("收藏成功");
 			} else{
-				alert("請登入會員");
+// 				alert("請登入會員");
 				location.href = "../secure/login.jsp";
 			}//if
 		})//btn-success
@@ -102,11 +102,15 @@
 		if (mb != null && mb.length > 0 && mb !=''){
 			$.ajax({
 				  "type":"get",
-				  "url":"<%=request.getContextPath()%>/SceneAddFavoriteServlet",
-				  "data":{"sceneId": $(this).val()},
+				  "url":"<%=request.getContextPath()%>/plan/GetFavoriteServlet",
+// 				  "data":{"sceneId": $(this).val()},
 				  "datatype":"text",
-				  "success":function(){
-						
+				  "success":function(listfavs){
+					$each(listfavs,function(index,listfav){
+						$("#f"+listfav.sceneId).removeClass("btn-success")
+		  				.removeClass("joinSchedule").addClass("btn-danger")
+		                .text("  景點");
+					})	
 					
 				  }
 				})		
