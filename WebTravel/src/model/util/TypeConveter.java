@@ -6,9 +6,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Base64;
 import java.util.List;
 
+import org.apache.commons.codec.binary.Base64;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -23,20 +23,21 @@ public class TypeConveter{
 		if(src == null){
 			return null;
 		}
-		return Base64.getEncoder().encodeToString(src);
+		return Base64.encodeBase64String(src);
 	}
 		
-	public static String EncodeStringBase64(String src){
+	public static String EncodeStringBase64(String src){  //source image path
 		if(src == null){
 			return null;
 		}
 		 return EncodeBase64(src.getBytes());
 	}	
+	
 	public static byte[] DecodeBase64(String src){
 		if(src == null){
 			return null;
 		}
-		return Base64.getDecoder().decode(src);
+		return Base64.decodeBase64(src);
 	}
 
 	public static JSONObject parseJSONObject(Object bean){
@@ -135,7 +136,7 @@ public class TypeConveter{
 			mb.setThoughtId(bean.getThoughtId());
 			mb.setThoughtName(bean.getThoughtName());
 			mb.setThoughtSubtitle(bean.getThoughtSubtitle());
-			mb.setThoughtPhoto(Base64.getEncoder().encodeToString(bean.getThoughtPhoto()));
+			mb.setThoughtPhoto(Base64.encodeBase64String(bean.getThoughtPhoto()));
 			mb.setThoughtTime(bean.getThoughtTime());
 			mb.setThoughtContent(bean.getThoughtContent());
 			mb.setMemberId(bean.getMemberId());
