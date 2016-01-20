@@ -107,23 +107,44 @@
 		$(":button").on("click",function(){
 			btn = $(this)
 		})//butten
+// 		//加入收藏
+// 		$(".btn-success").on("click",function(){				
+// 			var mb = $(".s").attr("id");
+// 			alert(mb);
+// 			if (mb != null){
+// 				$.ajax({
+// 					  "type":"get",
+<%-- 					  "url":"<%=request.getContextPath()%>/SceneAddFavoriteServlet", --%>
+// 					  "data":{"sceneId": $(this).val()},
+// 					  "datatype":"text",
+// 					})
+// 				alert("收藏成功");
+// 			} else{
+// 				alert("請登入會員");
+// 			}//if
+// 		})//btn-success
 		//加入收藏
 		$(".btn-success").on("click",function(){				
 			var mb = $(".s").attr("id");
-			alert(mb);
-			if (mb != null){
+			addfav = $(this)
+			if (mb != null && mb.length > 0 && mb !=''){
 				$.ajax({
 					  "type":"get",
 					  "url":"<%=request.getContextPath()%>/SceneAddFavoriteServlet",
 					  "data":{"sceneId": $(this).val()},
 					  "datatype":"text",
+					  "success":function(){
+ 						//收藏成功更換button顏色 
+						addfav.removeClass("btn-success").addClass("btn-danger").text("  收藏");
+						$('<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>').prependTo(addfav)	 							
+					  }
 					})
 				alert("收藏成功");
 			} else{
 				alert("請登入會員");
+				location.href = "../secure/login.jsp";
 			}//if
-		})//btn-success
-			
+		})//btn-success	
 		
 		//加入行程
 		$(".btn-warning").on("click",function(){				
