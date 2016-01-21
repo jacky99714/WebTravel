@@ -33,6 +33,8 @@ public class LoginServlet extends HttpServlet {
 		Map<String, String> error = new HashMap<String,String>();
 		request.setAttribute("error",error);
 		//接收資料--------------------------------------------
+		String page =(String)session.getAttribute("page");
+		
 		String temp1 = request.getParameter("useid");
 		String temp2 = request.getParameter("password");
 		
@@ -65,7 +67,12 @@ public class LoginServlet extends HttpServlet {
 				}
 //			System.out.println("LoginServlet:"+s);
 				session.setAttribute("loginOk", mb);
-				response.sendRedirect(request.getContextPath()+"/index.jsp");
+				if(page!=null){
+					session.removeAttribute("page");
+					response.sendRedirect(request.getContextPath()+"/"+page);
+				}else{
+					response.sendRedirect(request.getContextPath()+"/index.jsp");
+				}
 			}
 		}
 		
