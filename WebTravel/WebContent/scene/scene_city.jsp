@@ -146,6 +146,27 @@
 			}//if
 		})//btn-success	
 		
+		//景點收藏初始化
+		var mb = $(".s").attr("id");
+		if (mb != null && mb.length > 0 && mb !=''){
+			$.ajax({
+				  "type":"get",
+				  "url":"<%=request.getContextPath()%>/SceneSelectFavorite",
+// 				  "data":{"sceneId": $(this).val()},
+				  'dataType':'json',
+				  "success":function(listfavs){
+// 					  alert(listfavs);
+					$.each(listfavs,function(index,listfav){
+						$("#f"+listfav.sceneId).removeClass("btn-success")
+		  				.addClass("btn-danger")
+		                .text("  景點");
+						$('<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>').prependTo($("#f"+listfav.sceneId));
+					})	
+					
+				  }
+				});		
+		}//if
+		
 		//加入行程
 		$(".btn-warning").on("click",function(){				
 			

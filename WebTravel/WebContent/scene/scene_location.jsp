@@ -102,18 +102,20 @@
 		if (mb != null && mb.length > 0 && mb !=''){
 			$.ajax({
 				  "type":"get",
-				  "url":"<%=request.getContextPath()%>/plan/GetFavoriteServlet",
+				  "url":"<%=request.getContextPath()%>/SceneSelectFavorite",
 // 				  "data":{"sceneId": $(this).val()},
-				  "datatype":"text",
+				  'dataType':'json',
 				  "success":function(listfavs){
-					$each(listfavs,function(index,listfav){
+// 					  alert(listfavs);
+					$.each(listfavs,function(index,listfav){
 						$("#f"+listfav.sceneId).removeClass("btn-success")
-		  				.removeClass("joinSchedule").addClass("btn-danger")
+		  				.addClass("btn-danger")
 		                .text("  景點");
+						$('<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>').prependTo($("#f"+listfav.sceneId));
 					})	
 					
 				  }
-				})		
+				});		
 		}//if
 		
 		$.ajax({//載入的初始化
