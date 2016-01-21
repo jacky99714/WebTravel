@@ -2,7 +2,7 @@
 <Context path="" allowCasualMultipartParsing="true">
 	<Resource name="jdbc/xxx" auth="Container" type="javax.sql.DataSource"
                maxTotal="100" maxIdle="30" maxWaitMillis="10000"
-               username="sa" password="sa123456"
+               username="webtraveldb" password="@sapassw0rd"
                driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-               url="jdbc:sqlserver://127.0.0.1:1433;database=travel"/>
+               url="jdbc:sqlserver://eow035yl2w.database.windows.net;database=travel"/>
 </Context>
