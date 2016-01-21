@@ -1,5 +1,4 @@
-package model.dao.hibernate;
-
+package model.dao;
 
 import java.util.ArrayList;
 import java.util.Base64;

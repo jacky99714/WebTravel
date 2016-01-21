@@ -56,6 +56,7 @@ public class ThoughtServlet extends HttpServlet {
 		if(temp4 == null || temp4.trim().length()==0){
 			errors.put("thoughtContent", "請輸入內容");
 		}
+		
 		Collection<Part> parts = request.getParts();
 		Part pho = request.getPart("thoughtPhoto");
 		byte[] photo = null;
@@ -95,7 +96,7 @@ public class ThoughtServlet extends HttpServlet {
 		bean.setMemberId(temp5);
 		ThoughtBean inbean = ts.insert(bean);
 //		ThoughtBean b=thoughtDao.select(inbean.getThoughtId());
-		System.out.println("insert"+inbean);
+//		System.out.println("insert"+inbean);
 //		System.out.println("select"+b);
 		
 		//model執行結果，View
@@ -105,7 +106,7 @@ public class ThoughtServlet extends HttpServlet {
 			response.sendRedirect(path+"/thought/ThoughtPage.jsp");
 //			response.sendRedirect("index.jsp");
 //			request.getRequestDispatcher("game.jsp").forward(request, response);
-			System.out.println("AAABBB");
+//			System.out.println("AAABBB");
 		}else{
 			request.getRequestDispatcher("/thought/Thought.jsp").forward(request, response);
 		}

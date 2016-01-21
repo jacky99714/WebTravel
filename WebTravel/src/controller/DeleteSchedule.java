@@ -20,13 +20,13 @@ import other.bean.FavoriteBean;
  * Servlet implementation class deleteSchedule
  */
 @WebServlet("/plan/deleteSchedule")
-public class deleteSchedule extends HttpServlet {
+public class DeleteSchedule extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public deleteSchedule() {
+    public DeleteSchedule() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,9 +42,11 @@ public class deleteSchedule extends HttpServlet {
 			int delete= Integer.parseInt(request.getParameter("deleteId"));
 			System.out.println("delete "+delete);
 			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();
 			if(delete == -1){
 				session.removeAttribute("scheduleList");
 				session.removeAttribute("scheduleListFB");
+				
 			}else{
 				List<SceneBean> scheduleList =  (List<SceneBean>)session.getAttribute("scheduleList");
 				List<FavoriteBean> li =  (List<FavoriteBean>)session.getAttribute("scheduleListFB");
@@ -68,13 +70,11 @@ public class deleteSchedule extends HttpServlet {
 				     }  				
 				}				
 			}
-
-
-			
+	
 		}catch(NumberFormatException e){
 			System.out.println("it is not a number");
 		}
-
+		
 		
 
 	}

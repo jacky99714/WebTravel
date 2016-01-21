@@ -11,7 +11,12 @@
 	<link rel="shortcut icon" href="<c:url value="/img/icon.ico"/>">
 	<link href="<c:url value="/css/bootstrap.min.css"/>" rel="stylesheet">  
 	<link rel=stylesheet type="text/css" href="plan.css">
-
+	<c:if test="${empty loginOk}">
+		<%
+			session.setAttribute("page", "plan/plan.jsp");
+		%>
+    	<c:redirect url="/secure/login.jsp"></c:redirect>
+	</c:if>
 	<script>
          var table;
          var totalImage = 0;
@@ -113,7 +118,7 @@
 	    		xhrFavorite.open("get","GetFavoriteServlet",true); 
 		    	xhrFavorite.send();	
 	    	}else{
-	    		alert("您的瀏覽器不支援Ajax功能!!");
+	    	//	alert("您的瀏覽器不支援Ajax功能!!");
 	    	}	
 		}
 		
@@ -124,7 +129,7 @@
 			    	createImgContent(imgFavData,1,"imgFav");
 			    	load.style.display = "none";
 	    		}else{
-	    			alert(xhrFavorite.status + ":" + xhrFavorite.statusText);
+	    	//		alert(xhrFavorite.status + ":" + xhrFavorite.statusText);
 	    		}    		
 	    	}  	
 	    }
@@ -136,7 +141,7 @@
 	    		xhrSchedule.open("get","GetScheduleServlet",true); 
 		    	xhrSchedule.send();	
 	    	}else{
-	    		alert("您的瀏覽器不支援Ajax功能!!");
+	    //		alert("您的瀏覽器不支援Ajax功能!!");
 	    	}	
 		}
 
@@ -146,7 +151,7 @@
 			    	var data = JSON.parse(xhrSchedule.responseText);
 			    	appendScheduleContent(data);
 	    		}else{
-	    			alert(xhrSchedule.status + ":" + xhrSchedule.statusText);
+	    	//		alert(xhrSchedule.status + ":" + xhrSchedule.statusText);
 	    		}    		
 	    	}  	
 	    }	
@@ -162,7 +167,7 @@
 	    		xhrSearch.open("get","GetSceneLocationServlet?location="+selectLocation+"&begin="+begin+"&number="+showImg,true); 	
 		    	xhrSearch.send();	
 	    	}else{
-	    		alert("您的瀏覽器不支援Ajax功能!!");
+	    	//	alert("您的瀏覽器不支援Ajax功能!!");
 	    	}
  		}
 
@@ -174,7 +179,7 @@
 	    			createImgContent(imgSearchData,1,"imgSearch");
 	    			load.style.display = "none";
 	    		}else{
-	    			alert(xhrSearch.status + ":" + xhrSearch.statusText);
+	    	//		alert(xhrSearch.status + ":" + xhrSearch.statusText);
 	    		}    		
 	    	}  	
 	    }
@@ -188,7 +193,7 @@
 		    	xhrcreate.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");	
 		    	xhrcreate.send("json="+arrayObject);		      	
 	    	}else{
-	    		alert("您的瀏覽器不支援Ajax功能!!");
+	    	//	alert("您的瀏覽器不支援Ajax功能!!");
 	    	}	    	
 	    }
 	    
@@ -203,7 +208,7 @@
 	    		 	}, 2000);
 	    		
 	    		}else{
-	    			alert(xhrcreate.status + ":" + xhrcreate.statusText);
+	    	//		alert(xhrcreate.status + ":" + xhrcreate.statusText);
 	    		}    		
 	    	}  
 	    }	    
@@ -216,7 +221,7 @@
 	    		xhradd.open("get","${pageContext.servletContext.contextPath}/AddScheduleServlet?scene="+sceneid,true); 	
 		    	xhradd.send();		      	
 	    	}else{
-	    		alert("您的瀏覽器不支援Ajax功能!!");
+	    	//	alert("您的瀏覽器不支援Ajax功能!!");
 	    	}		    	
 	    }
 	    
@@ -227,7 +232,7 @@
 	    		xhrdelete.open("get","deleteSchedule?deleteId="+sceneid,true); 	
 		    	xhrdelete.send();		      	
 	    	}else{
-	    		alert("您的瀏覽器不支援Ajax功能!!");
+	    	//	alert("您的瀏覽器不支援Ajax功能!!");
 	    	}		    	
 	    }
 /////////////////////////////////////////////

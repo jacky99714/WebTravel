@@ -32,7 +32,7 @@ public class DisplayThoughtServlet extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
         HttpSession session = request.getSession();
         
-        System.out.println("AAAA");
+//        System.out.println("AAAA");
 //        String temp = request.getParameter("thoughtType");
 //        System.out.println("temp"+temp);
         
