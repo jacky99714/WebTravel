@@ -154,7 +154,7 @@ function getQuestion(){
     	xhr.open("get","GetQuestionServlet",true); 
     	xhr.send();		      	
 	}else{
-		alert("您的瀏覽器不支援Ajax功能!!");
+//		alert("您的瀏覽器不支援Ajax功能!!");
 	}
 }
 
@@ -192,7 +192,7 @@ function callback(){
 			});	
 
 		}else{
-			alert(xhr.status + ":" + xhr.statusText);
+	//		alert(xhr.status + ":" + xhr.statusText);
 	    		}    		
 	    	}  	
 	    }
