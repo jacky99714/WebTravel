@@ -35,9 +35,12 @@ public class ThoughtServlet extends HttpServlet {
 		String temp2 = request.getParameter("thoughtName");
 		String temp3 = request.getParameter("thoughtSubtitle");
 		String temp4 = request.getParameter("thoughtContent");
+		if(session.getAttribute("loginOk") == null){
+			request.getRequestDispatcher("/secure/login.jsp").forward(request, response);
+			return;
+		}
 		MemberBean mb = (MemberBean)session.getAttribute("loginOk");
 		int temp5 = mb.getMemberId();
-		
 		
 		
 		

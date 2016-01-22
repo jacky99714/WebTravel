@@ -28,6 +28,14 @@
  <style type="text/css">
  .d{width:200px;height:200px}
  </style>
+ 
+ <c:if test="${empty loginOk}">
+	<%
+			session.setAttribute("page", "thought/Thought.jsp");
+		%>
+    	<c:redirect url="/secure/login.jsp"></c:redirect>
+ </c:if>
+ 
   </head>
   <body style="padding:71px;">
   <jsp:include page="/WEB-INF/top/top.jsp"/>
