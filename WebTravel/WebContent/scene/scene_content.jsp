@@ -60,10 +60,10 @@
                                     <img class="slide-image"  src="data:image/png;base64,${listimg[0].img}" >                                   
                                 </div>
                                 <div class="item">
-                                    <img class="slide-image"  src="img/1012.jpg" >
+                                    <img class="slide-image"  src="data:image/png;base64,${listimg[1].img}" >
                                 </div>
                                 <div class="item">
-                                    <img class="slide-image"  src="img/1013.jpg" >
+                                    <img class="slide-image"  src="data:image/png;base64,${listimg[2].img}" >
                                 </div>
                             </div>
                             <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
