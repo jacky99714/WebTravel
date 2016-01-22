@@ -19,7 +19,7 @@ import model.hibernate.HibernateUtil;
 		urlPatterns={"/*"}
 		)
 public class OpenSessionInViewFilter implements Filter {
-	private FilterConfig config = null;
+	private FilterConfig config;
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		this.config = filterConfig;
@@ -33,10 +33,8 @@ public class OpenSessionInViewFilter implements Filter {
 			sessionFactory.getCurrentSession().beginTransaction();
 			chain.doFilter(req, resp);
 			sessionFactory.getCurrentSession().getTransaction().commit();
-			System.out.println("commit");
 		} catch (HibernateException e) {
 			sessionFactory.getCurrentSession().beginTransaction().rollback();
-			System.out.println("rollback");
 			chain.doFilter(req, resp);
 			e.printStackTrace();
 		}

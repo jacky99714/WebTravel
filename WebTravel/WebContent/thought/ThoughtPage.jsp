@@ -195,7 +195,7 @@
 					}
 // 			    		myDiv.innerHTML = "<h3>" + data + "</h3>";
 				}else {
-					alert(xhr.status + ":" + xhr.statusText);
+// 					alert(xhr.status + ":" + xhr.statusText);
 				}
 			}
 		}

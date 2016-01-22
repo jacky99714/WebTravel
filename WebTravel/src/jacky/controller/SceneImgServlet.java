@@ -17,7 +17,7 @@ import model.bean.SceneBean;
 import model.dao.hibernate.SceneDAOHibernate;
 import model.service.MemberService;
 
-@WebServlet("/SceneImgServlet")
+@WebServlet("/SceneImgServletq")
 public class SceneImgServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

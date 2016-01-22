@@ -73,7 +73,7 @@
   <c:forEach var="sceneli" items="${listcity}">
    <div class="col-sm-6 col-md-3">
     <div class="thumbnail">
-      <img style="width:300px;height:200px;" src="<%=request.getContextPath()%>/SceneImgServlet?sceneName=${sceneli.sceneName}"/>
+      <img style="width:300px;height:200px;" src="<%=request.getContextPath()%>/SceneImgServletq?sceneName=${sceneli.sceneName}"/>
       <div class="caption">
         <h3>${sceneli.sceneName}</h3>
         <p>${sceneli.sceneContent}</p>
@@ -83,7 +83,7 @@
 		   <span class="glyphicon glyphicon-align-left" aria-hidden="true" ></span> 介紹
 		   </button>
 		   
-           <button type="button" value="${sceneli.sceneId}" class="btn btn-success btn-sm">
+           <button id="f${sceneli.sceneId}"  type="button" value="${sceneli.sceneId}" class="btn btn-success btn-sm">
 		   <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> 收藏
 		   </button>
            

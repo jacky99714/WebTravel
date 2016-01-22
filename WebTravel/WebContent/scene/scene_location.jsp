@@ -39,7 +39,7 @@
   <c:forEach var="sceneli" items="${li}">
    <div class="col-sm-6 col-md-3">
     <div class="thumbnail">
-      <img style="width:300px;height:200px;" src="<%=request.getContextPath()%>/SceneImgServlet?sceneName=${sceneli.sceneName}"/>
+      <img style="width:300px;height:200px;" src="<%=request.getContextPath()%>/SceneImgServletq?sceneName=${sceneli.sceneName}"/>
       <div class="caption">
         <h3>${sceneli.sceneName}</h3>
         <p>${sceneli.sceneContent}</p>

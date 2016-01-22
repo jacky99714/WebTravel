@@ -33,10 +33,15 @@ public class DeleteCollectServlet extends HttpServlet {
 		String scene = request.getParameter("scene");
 //		System.out.println(scene);
 		MemberBean memberBean =(MemberBean)session.getAttribute("loginOk");
+		System.out.println(new Integer(scene));
+		System.out.println(memberBean.getMemberId());
 		boolean b =memberService.isDeleteMbCollect(memberBean.getMemberId(), new Integer(scene));
+		System.out.println(b);
 		PrintWriter out = response.getWriter();
 		if(b){
+			System.out.println("ss");
 			List<SceneBean> sceneList = memberService.getMemberCollectScene(memberBean.getMemberId());
+			System.out.println(sceneList);
 			session.setAttribute("sceneList", sceneList);
 			out.write("true");
 		}else{
