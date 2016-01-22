@@ -161,7 +161,7 @@ public class SceneImgDAOjdbc implements SceneImgDAO {
 		
 		//-----------------------圖片匯入-----------------------------------
 		
-		File f = new File("C:/Users/Student/Downloads/t1.jpg");
+		File f = new File("C:/Users/Student/Downloads/t3.jpg");
 		byte[] poto = new byte[(int)f.length()];
 		FileInputStream fi = new FileInputStream(f);
 		System.out.println(fi);
