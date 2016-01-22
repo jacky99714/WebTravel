@@ -56,8 +56,8 @@
                                 <li data-target="#carousel-example-generic" data-slide-to="2"></li>
                             </ol>
                             <div class="carousel-inner">
-                                <div class="item active">
-                                    <img class="slide-image"  src="img/1011.jpg" >
+                                <div class="item active">                            
+                                    <img class="slide-image"  src="data:image/png;base64,${listimg[0].img}" >                                   
                                 </div>
                                 <div class="item">
                                     <img class="slide-image"  src="img/1012.jpg" >

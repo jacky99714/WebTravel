@@ -11,7 +11,12 @@
 	<link rel="shortcut icon" href="<c:url value="/img/icon.ico"/>">
 	<link href="<c:url value="/css/bootstrap.min.css"/>" rel="stylesheet">  
 	<link rel=stylesheet type="text/css" href="plan.css">
-
+	<c:if test="${empty loginOk}">
+		<%
+			session.setAttribute("page", "plan/plan.jsp");
+		%>
+    	<c:redirect url="/secure/login.jsp"></c:redirect>
+	</c:if>
 	<script>
          var table;
          var totalImage = 0;

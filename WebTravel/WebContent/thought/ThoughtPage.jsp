@@ -124,13 +124,13 @@
 						myDiv.removeChild(myDiv.lastChild);
 					}
 					for (var i=0;i<data.length;i++){
-						console.log(data[i].thoughtId);
-						console.log(data[i].thoughtName);
-						console.log(data[i].thoughtSubtitle);
+// 						console.log(data[i].thoughtId);
+// 						console.log(data[i].thoughtName);
+// 						console.log(data[i].thoughtSubtitle);
 // 						console.log(data[i].thoughtPhoto);
-						console.log(data[i].thoughtContent);
-						console.log(data[i].thoughtTime);
-						console.log(data[i].memberId);
+// 						console.log(data[i].thoughtContent);
+// 						console.log(data[i].thoughtTime);
+// 						console.log(data[i].memberId);
 	// 					alert(data[0]);
 	// 					console.log(data);
 						

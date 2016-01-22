@@ -5,9 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class JdbcConnection {
-	private static final String URL = "jdbc:sqlserver://localhost:1433;database=travel";
-	private static final String USERNAME = "sa";
-	private static final String PASSWORD = "passw0rd";
+	private static final String URL = "jdbc:sqlserver://eow035yl2w.database.windows.net:1433;database=travel";
+	private static final String USERNAME = "webtraveldb";
+	private static final String PASSWORD = "@sapassw0rd";
 	private static Connection conn = null;
 	
 	public static Connection getConnection(){

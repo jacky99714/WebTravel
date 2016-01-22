@@ -1,5 +1,9 @@
 package model.dao.jdbc;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,6 +14,7 @@ import java.util.List;
 import model.bean.SceneImgBean;
 import model.dao.RestaurantMessageDAO;
 import model.dao.SceneImgDAO;
+import model.dao.jndi.SceneImgDAOjndi;
 import model.util.JdbcConnection;
 
 public class SceneImgDAOjdbc implements SceneImgDAO {
@@ -151,17 +156,17 @@ public class SceneImgDAOjdbc implements SceneImgDAO {
 		return false;
 	}
 
-	public static void main(String[] args) {
-		RestaurantMessageDAO test = new RestaurantMessageDAOjdbc();
+	public static void main(String[] args) throws IOException {
+		SceneImgDAO test = new SceneImgDAOjdbc();
 		
 		//-----------------------圖片匯入-----------------------------------
 		
-//				File f = new File("/Users/mouse/Desktop/001.jpg");
-//				byte[] poto = new byte[(int)f.length()];
-//				FileInputStream fi = new FileInputStream(f);
-//				System.out.println(fi);
-//				fi.read(poto);
-//				fi.close();
+		File f = new File("C:/Users/Student/Downloads/t1.jpg");
+		byte[] poto = new byte[(int)f.length()];
+		FileInputStream fi = new FileInputStream(f);
+		System.out.println(fi);
+		fi.read(poto);
+		fi.close();
 		
 		
 		// ----------------------------------------------------------
@@ -172,13 +177,13 @@ public class SceneImgDAOjdbc implements SceneImgDAO {
 		// ----------------------------------------------------------
 		// System.out.println(test.select(2)); // 單筆select
 		// ----------------------------------------------------------
-//		SceneImgBean rmbean = new SceneImgBean();
+		SceneImgBean rmbean = new SceneImgBean();
 //		
-//		rmbean.setRestaurantId(3);
-//		rmbean.setMemberId(1);
+		rmbean.setSceneId(6);
+		rmbean.setImg(poto);
 
 		//
-//		 System.out.println(test.insert(rmbean)); // 新增資料
+		 System.out.println(test.insert(rmbean)); // 新增資料
 		// ----------------------------------------------------------
 		// System.out.println(test.select("text123")); //單筆select （帳號）
 		// ----------------------------------------------------------

@@ -35,9 +35,12 @@ public class ThoughtServlet extends HttpServlet {
 		String temp2 = request.getParameter("thoughtName");
 		String temp3 = request.getParameter("thoughtSubtitle");
 		String temp4 = request.getParameter("thoughtContent");
+		if(session.getAttribute("loginOk") == null){
+			request.getRequestDispatcher("/secure/login.jsp").forward(request, response);
+			return;
+		}
 		MemberBean mb = (MemberBean)session.getAttribute("loginOk");
 		int temp5 = mb.getMemberId();
-		
 		
 		
 		
@@ -96,7 +99,7 @@ public class ThoughtServlet extends HttpServlet {
 		bean.setMemberId(temp5);
 		ThoughtBean inbean = ts.insert(bean);
 //		ThoughtBean b=thoughtDao.select(inbean.getThoughtId());
-		System.out.println("insert"+inbean);
+//		System.out.println("insert"+inbean);
 //		System.out.println("select"+b);
 		
 		//model執行結果，View
@@ -106,7 +109,7 @@ public class ThoughtServlet extends HttpServlet {
 			response.sendRedirect(path+"/thought/ThoughtPage.jsp");
 //			response.sendRedirect("index.jsp");
 //			request.getRequestDispatcher("game.jsp").forward(request, response);
-			System.out.println("AAABBB");
+//			System.out.println("AAABBB");
 		}else{
 			request.getRequestDispatcher("/thought/Thought.jsp").forward(request, response);
 		}
