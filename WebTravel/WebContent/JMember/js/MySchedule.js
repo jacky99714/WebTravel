@@ -299,6 +299,7 @@ $(function(){
 							                            	 console.log(data)
 							                            	 var nextTr = scheduleClick.parent().next("tr")
 							                            	 nextTr.fadeToggle(500);
+							                            	 nextTr.children(":eq(0)").text("");
 							                            	 $.each(mapdata1.routes[0].legs,function(i,datas){
 //							                            		 console.log(i,datas.steps)
 							                            		 s=i+1;

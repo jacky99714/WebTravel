@@ -43,7 +43,6 @@ public class SceneDAOHibernate implements SceneDAO{
 
 	@Override
 	public SceneBean selectName(String scenename) {
-		
 		return (SceneBean)getSession().createQuery("from SceneBean where sceneName='"+scenename+"'").uniqueResult();
 	}
 

@@ -19,7 +19,7 @@ import model.hibernate.HibernateUtil;
 		urlPatterns={"/*"}
 		)
 public class OpenSessionInViewFilter implements Filter {
-	private FilterConfig config = null;
+	private FilterConfig config;
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		this.config = filterConfig;

@@ -79,8 +79,10 @@ public class MemberService {
 	public List<SceneBean> getMemberCollectScene(int memberId){
 		List<CollectBean> cbList = cDAO.select(memberId);
 		List<SceneBean> sbList = new ArrayList<SceneBean>();
-		for(CollectBean c: cbList){
-			sbList.add(sDAO.select(c.getSceneId()));
+		if(cbList!=null){
+			for(CollectBean c: cbList){
+				sbList.add(sDAO.select(c.getSceneId()));
+			}
 		}
 		return sbList;
 	}
@@ -190,8 +192,11 @@ public class MemberService {
 	public boolean deleteSchedule(int scheduleId){
 		return scheduleDAO.delete(scheduleId);
 	}
-	
+	//memberIMG
 	public MemberBean selectMember(int memberId){
 		return mDAO.select(memberId);
+	}
+	public SceneBean selectScene(String scene){
+		return sDAO.selectName(scene);
 	}
 }
