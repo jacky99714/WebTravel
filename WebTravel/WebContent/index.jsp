@@ -55,17 +55,53 @@
     
     
 <!--     ---------------------------- -->
-    <div class="container">
-    	<div class="row">
-    		<div class="col-md-10">
+<!--     <div class="container"> -->
+<!--     	<div class="row"> -->
+<!--     		<div class="col-md-10"> -->
     		
-    		</div>
-    		<div class="col-md-2">
+<!--     		</div> -->
+<!--     		<div class="col-md-2"> -->
     		
-    		</div>
-    	</div>
-    </div>
-    
+<!--     		</div> -->
+<!--     	</div> -->
+<!--     </div> -->
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading">台北101<span class="text-muted">Taipei 101</span></h2>
+          <p class="lead">台北101景點位於信義區，籌建時原定為金融服務設施，而後轉變成綜合性的商業建築。台北101不僅是台北著名地標，更是時尚流行的指標，地上樓層共有101層、另有地下5層，商城除了有琳瑯滿目的精品櫃外，還有許多的道地美食也設櫃於此。於2004年12月31日至2010年1月4日間擁有世界第一高樓的紀錄，目前為世界第9高樓。</p>
+        </div>
+        <div class="col-md-5">
+          <img class="featurette-image img-responsive center-block" src="http://www.taipei-101.com.tw/images/fbshare.jpg" alt="Generic placeholder image">
+        </div>
+      </div>
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-7 col-md-push-5">
+          <h2 class="featurette-heading">Taroko Gorge<span class="text-muted">Tunnel of Nine Turns</span></h2>
+          <p class="lead">九曲洞位在花蓮縣秀林鄉、中橫公路174.5公里之處，是太魯閣國家公園中景觀最美的一段路程。原是中橫公路的舊道，後來改建為可供遊客行走的景觀步道，沿途常可見壯麗的山崖峭壁美景。</p>
+        </div>
+        <div class="col-md-5 col-md-pull-7">
+          <img class="featurette-image img-responsive center-block" src="http://www.easttour.com.tw/img/Schedule/Taroko%20Gorge%20in%20Hualien,%20Taiwan(3).jpg" alt="Generic placeholder image">
+        </div>
+      </div>
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading">平溪 <span class="text-muted">Train</span></h2>
+          <p class="lead">平溪車站位於平溪區嶺腳里內，早年稱為「石底驛」，若往菁桐站開去，會經過一座鐵橋，鐵橋橫跨三坑溪，向下俯瞰可看到平溪與石底聚落。車站一出來就是中華街，沿著緩坡向下走，與平溪街交叉處，這一帶就是老街。車站地理位置介於平溪與嶺腳間，居高臨下，下方是基隆河。門口老樹樹枝停滿覓食的鳥群，運氣好的時候，還能看見牠們俯衝獵食輕巧的飛行動作。</p>
+        </div>
+        <div class="col-md-5">
+          <img class="featurette-image img-responsive center-block" src="http://pic.pimg.tw/banbi217/1403716125-3963927038.jpg" alt="Generic placeholder image">
+        </div>
+      </div>
+
     
 <!--  -->
 

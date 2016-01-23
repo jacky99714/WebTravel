@@ -1,8 +1,8 @@
-apply plugin: 'java'
+﻿apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'eclipse-wtp'
 
-sourceCompatibility = 1.8			//設定編譯階段的JDK版本
+sourceCompatibility = 1.7			//設定編譯階段的JDK版本
 sourceSets.main.java.srcDir  'src'	//使用src目錄放置Java程式原始碼
 webAppDirName = 'WebContent'		//使用WebContent目錄放置網頁資源
 									//預設位置是src/main/java目錄

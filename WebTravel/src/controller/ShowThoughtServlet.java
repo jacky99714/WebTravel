@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.InterningXmlVisitor;
 
 import model.bean.ThoughtBean;
 import model.service.ThoughtService;
