@@ -73,7 +73,7 @@
   <c:forEach var="sceneli" items="${listcity}">
    <div class="col-sm-6 col-md-3">
     <div class="thumbnail">
-      <img style="width:300px;height:200px;" src="data:image/jpg;base64,${sceneli.scenePhoto}"/>
+      <img style="width:300px;height:200px;" src="<%=request.getContextPath()%>/SceneImgServletq?sceneName=${sceneli.sceneName}"/>
       <div class="caption">
         <h3>${sceneli.sceneName}</h3>
         <p>${sceneli.sceneContent}</p>
@@ -83,7 +83,7 @@
 		   <span class="glyphicon glyphicon-align-left" aria-hidden="true" ></span> 介紹
 		   </button>
 		   
-           <button type="button" value="${sceneli.sceneId}" class="btn btn-success btn-sm">
+           <button id="f${sceneli.sceneId}"  type="button" value="${sceneli.sceneId}" class="btn btn-success btn-sm">
 		   <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> 收藏
 		   </button>
            
@@ -145,6 +145,27 @@
 				location.href = "../secure/login.jsp";
 			}//if
 		})//btn-success	
+		
+		//景點收藏初始化
+		var mb = $(".s").attr("id");
+		if (mb != null && mb.length > 0 && mb !=''){
+			$.ajax({
+				  "type":"get",
+				  "url":"<%=request.getContextPath()%>/SceneSelectFavorite",
+// 				  "data":{"sceneId": $(this).val()},
+				  'dataType':'json',
+				  "success":function(listfavs){
+// 					  alert(listfavs);
+					$.each(listfavs,function(index,listfav){
+						$("#f"+listfav.sceneId).removeClass("btn-success")
+		  				.addClass("btn-danger")
+		                .text("  景點");
+						$('<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>').prependTo($("#f"+listfav.sceneId));
+					})	
+					
+				  }
+				});		
+		}//if
 		
 		//加入行程
 		$(".btn-warning").on("click",function(){				

@@ -43,7 +43,7 @@ public class SelectLocationServlet extends HttpServlet {
 		List<SceneBean> li = new ArrayList<SceneBean>();
 		List<FavoriteBean> fb = new ArrayList<FavoriteBean>();
 		String lo = request.getParameter("location");
-					
+		System.out.println(lo);
 		// 驗證資料
 		if ( "北區".equals(lo) || "中區".equals(lo) ||"南區".equals(lo) ||"東區".equals(lo)) {
 			li = sceneservice.getLocation(lo);

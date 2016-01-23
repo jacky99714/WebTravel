@@ -39,7 +39,7 @@
   <c:forEach var="sceneli" items="${li}">
    <div class="col-sm-6 col-md-3">
     <div class="thumbnail">
-      <img style="width:300px;height:200px;" src="data:image/png;base64,${sceneli.scenePhoto}"/>
+      <img style="width:300px;height:200px;" src="<%=request.getContextPath()%>/SceneImgServletq?sceneName=${sceneli.sceneName}"/>
       <div class="caption">
         <h3>${sceneli.sceneName}</h3>
         <p>${sceneli.sceneContent}</p>
@@ -49,7 +49,7 @@
 		   <span class="glyphicon glyphicon-align-left" aria-hidden="true" ></span> 介紹
 		   </button>
 		   <!-- 收藏 button -->
-           <button  value="${sceneli.sceneId}" class="btn btn-success btn-sm">
+           <button  id="f${sceneli.sceneId}" value="${sceneli.sceneId}" class="btn btn-success btn-sm">
 		   <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> 收藏
 		   </button>
            <!-- 行程  button-->
@@ -90,9 +90,9 @@
 						$('<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>').prependTo(addfav)	 							
 					  }
 					})
-				alert("收藏成功");
+// 				alert("收藏成功");
 			} else{
-				alert("請登入會員");
+// 				alert("請登入會員");
 				location.href = "../secure/login.jsp";
 			}//if
 		})//btn-success
@@ -102,14 +102,20 @@
 		if (mb != null && mb.length > 0 && mb !=''){
 			$.ajax({
 				  "type":"get",
-				  "url":"<%=request.getContextPath()%>/SceneAddFavoriteServlet",
-				  "data":{"sceneId": $(this).val()},
-				  "datatype":"text",
-				  "success":function(){
-						
+				  "url":"<%=request.getContextPath()%>/SceneSelectFavorite",
+// 				  "data":{"sceneId": $(this).val()},
+				  'dataType':'json',
+				  "success":function(listfavs){
+// 					  alert(listfavs);
+					$.each(listfavs,function(index,listfav){
+						$("#f"+listfav.sceneId).removeClass("btn-success")
+		  				.addClass("btn-danger")
+		                .text("  景點");
+						$('<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>').prependTo($("#f"+listfav.sceneId));
+					})	
 					
 				  }
-				})		
+				});		
 		}//if
 		
 		$.ajax({//載入的初始化

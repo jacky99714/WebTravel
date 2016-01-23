@@ -60,10 +60,17 @@
   			<th></th>
   		</thead>
   		<tbody>
+  		<c:if test="${empty sceneList}">
+  			<tr>
+  			<td>你沒有收藏</td>
+  			</tr>
+  		
+  		</c:if>
+  		<c:if test="${!empty sceneList}">
    		 <c:forEach var="scene" begin="${start}" end="${end-1}" items="${sceneList}" varStatus="s">
    			<tr>
 <%-- 	  			<td>${scene.sceneId}</td> --%>
-	  			<td><a href="data:image/png;base64,${scene.scenePhoto}" class="image-popup-no-margins"><img class="imglist" src="data:image/png;base64,${scene.scenePhoto}"/></a></td>
+	  			<td><a href="<%=request.getContextPath()%>/SceneImgServletq?sceneName=${scene.sceneName}" class="image-popup-no-margins"><img class="imglist" src="<%=request.getContextPath()%>/SceneImgServletq?sceneName=${scene.sceneName}"/></a></td>
 <%-- 	  			<td>${scene.location}</td> --%>
 	  			<td>${scene.city}</td>
 	  			<td>${scene.sceneName}</td>
@@ -75,6 +82,7 @@
   			</tr>
   			<%a++;%>
 		   </c:forEach>
+  		</c:if>
   		</tbody>
 	 </table>
     
