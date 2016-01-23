@@ -1,5 +1,8 @@
 package model.dao.hibernate;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -66,27 +69,34 @@ private Session session = null;
 		}
 		return false;
 	}
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		try {
 			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 			session.beginTransaction();
 
 			SceneImgDAOHibernate dao = new SceneImgDAOHibernate(session);
+		    
+			File f = new File("C:/Users/Student/Downloads/t1.jpg");
+			byte[] poto = new byte[(int)f.length()];
+			FileInputStream fi = new FileInputStream(f);
+			fi.read(poto);
+			fi.close();
+			
 //			List<SceneImgBean> beans = dao.select();
 //			System.out.println(beans);
 			
 //			List<SceneImgBean> bean = dao.select(1);
 //			System.out.println(bean);
 //			
-			boolean delete = dao.delete(3);
-			System.out.println(delete);
+//			boolean delete = dao.delete(3);
+//			System.out.println(delete);
 //			
-//			SceneImgBean insert = new SceneImgBean();
+			SceneImgBean insert = new SceneImgBean();
 //			
-//			insert.setSceneId(1);
+			insert.setSceneId(1);
 //			
 //			insert = dao.insert(insert);
-//			System.out.println(insert);
+			System.out.println(insert);
 //			
 //			ProductBean update = dao.update("hehehe", 300, new java.util.Date(0), 400, 15);
 //			System.out.println(update);

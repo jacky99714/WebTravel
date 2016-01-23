@@ -46,10 +46,9 @@
 			     		
 			     	</div>
 			     </div>
-
 				  <p style="margin-top:20px">
-				  <a class="btn btn-primary btn-lg" href="#" role="button">回首頁</a>  
-				  <a class="btn btn-primary btn-lg" href="#" role="button">信箱驗證</a>
+				  <a class="btn btn-primary btn-lg" href="<c:url value="/index.jsp"/>" role="button">回首頁</a>  
+<!-- 				  <a class="btn btn-primary btn-lg" href="#" role="button">信箱驗證</a> -->
 				  </p>
 
 			  </div>

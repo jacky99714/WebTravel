@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,49 +11,37 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.bean.CollectBean;
-import model.bean.MemberBean;
-import model.service.AddFavoriteService;
+import model.bean.SceneImgBean;
+import model.service.SceneImgService;
+import other.bean.SceneImg;
 
 /**
- * Servlet implementation class SceneAddFavoriteServlet
+ * Servlet implementation class SceneImgServlet
  */
-@WebServlet("/SceneAddFavoriteServlet")
-public class SceneAddFavoriteServlet extends HttpServlet {
+@WebServlet("/SceneImgServlet")
+public class SceneImgServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
-		// 接收資料
+		
 		String sid = request.getParameter("sceneId");
+		int isid = Integer.valueOf(sid);
+		
+		SceneImgService sis = new SceneImgService();
+		List<SceneImgBean> rs = sis.selectImg(isid);
+		List<SceneImg> rs64 = sis.change64(rs);
 		HttpSession session = request.getSession();
-		MemberBean mb = (MemberBean)session.getAttribute("loginOk");
-		int mid = mb.getMemberId();
-		Integer cid = 1;
-		System.out.println(sid+"SS");
-		if(sid!=null){
-			int isid = Integer.valueOf(sid);
-			// model
-			CollectBean cBean = new CollectBean();
-			cBean.setSceneId(isid);
-			cBean.setMemberId(mid);
-			cBean.setCollectId(cid);
-			
-			AddFavoriteService add = new AddFavoriteService();
-			add.addFavorite(cBean);
-		}
-		// 驗證資料
-		// 轉換資料
-		// view
+		session.setAttribute("listimg", rs64);
+		
 	}
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		this.doGet(request, response);
 	}
 
 }

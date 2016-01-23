@@ -5,9 +5,6 @@
 
     <link href="<c:url value="/css/bootstrap.css"/>" rel="stylesheet">
     
-    
-    
-    
      <div class="navbar-wrapper navbar-fixed-top">
       <div class="container">
         <nav class="navbar navbar-inverse navbar-static-top">
@@ -29,7 +26,7 @@
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">景點 <span class="caret"></span></a>
                   <ul class="dropdown-menu">
                     <li><a href="<c:url value="/scene/scene.jsp" />">景點介紹</a></li>
-                    <li><a href="#">新增景點</a></li>
+<!--                     <li><a href="#">新增景點</a></li> -->
 					</ul>
                 </li>
 <!-- 	------------------------景點------------------------ -->

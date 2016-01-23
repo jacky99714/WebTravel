@@ -12,10 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.bean.SceneBean;
+import model.bean.SceneImgBean;
 import model.bean.SceneMessageBean;
+import model.service.SceneImgService;
 import model.service.SceneMessageService;
 import model.service.SceneService;
 import other.bean.FavoriteBean;
+import other.bean.SceneImg;
 
 /**
  * Servlet implementation class SelectSceneContextServlet
@@ -39,8 +42,12 @@ public class SelectSceneContextServlet extends HttpServlet {
 		SceneBean nbean = new SceneBean();
 		SceneService sceneservice = new SceneService();
 		SceneMessageService scenemessage = new SceneMessageService();
-		
+		SceneImgService imgservice = new SceneImgService();
 		nbean = sceneservice.getName(sname);//找出景點內容
+		int sid = nbean.getSceneId();
+		List<SceneImgBean> sceneimg = imgservice.selectImg(sid);
+		List<SceneImg> sceneimg64 = imgservice.change64(sceneimg);
+		
 		List<SceneMessageBean> listmessage = scenemessage.selectmessage(nbean.getSceneId());//找出留言內容
 		
 		
@@ -51,6 +58,7 @@ public class SelectSceneContextServlet extends HttpServlet {
 			session.removeAttribute("namebean");
 			session.setAttribute("listmessage", listmessage);		
 			session.setAttribute("namebean", nbean);
+			session.setAttribute("listimg", sceneimg64);
 				
 		//view
 		
