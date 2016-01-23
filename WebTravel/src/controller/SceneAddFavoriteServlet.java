@@ -26,33 +26,26 @@ public class SceneAddFavoriteServlet extends HttpServlet {
 		
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
-		PrintWriter out = response.getWriter();
 		// 接收資料
-		
 		String sid = request.getParameter("sceneId");
-				
 		HttpSession session = request.getSession();
 		MemberBean mb = (MemberBean)session.getAttribute("loginOk");
 		int mid = mb.getMemberId();
-		
 		Integer cid = 1;
+		System.out.println(sid+"SS");
+		if(sid!=null){
+			int isid = Integer.valueOf(sid);
+			// model
+			CollectBean cBean = new CollectBean();
+			cBean.setSceneId(isid);
+			cBean.setMemberId(mid);
+			cBean.setCollectId(cid);
+			
+			AddFavoriteService add = new AddFavoriteService();
+			add.addFavorite(cBean);
+		}
 		// 驗證資料
-		
-			
-		
-			
-			
-		
 		// 轉換資料
-		int isid = Integer.valueOf(sid);
-		// model
-		CollectBean cBean = new CollectBean();
-		cBean.setSceneId(isid);
-		cBean.setMemberId(mid);
-		cBean.setCollectId(cid);
-		
-		AddFavoriteService add = new AddFavoriteService();
-		add.addFavorite(cBean);
 		// view
 	}
 
