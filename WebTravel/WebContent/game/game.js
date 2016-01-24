@@ -293,7 +293,7 @@ function changeState(nextState){
         }
         
         if(state === "win"){
-            content.innerHTML = "恭喜您打倒了魔王，獲得優惠卷一張。";
+            content.innerHTML = "恭喜您打倒了魔王，獲得咖啡廳優惠卷一張。";
             back = new imgToCanvas("background","img/winner.png",0,0,460,300,0,0,460,300);
         }else{
             content.innerHTML = "勝敗乃兵家常事，請大俠重新來過。";
@@ -710,7 +710,7 @@ function reStart(){
         clearInterval(start);
         start = null;				
     }	
-    start = setInterval(choose,1000);
+    start = setInterval(choose,4000);
 }
 
 //user choose a character which he wants to use
