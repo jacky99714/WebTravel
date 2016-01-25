@@ -27,7 +27,7 @@
 	 <div class="container-fluid">
 		<div class="jumbotron col-md-8" style="background:#FFDDAA">
 			  <div class="container-fluid">
-			     <h2 style="margin-top:10px;margin-bottom:20px;">親愛的${member.nickName}，歡迎您成為金石堂網路書店會員！</h2>
+			     <h2 style="margin-top:10px;margin-bottom:20px;">親愛的${member.nickName}，歡迎您成為旅行微革命會員！</h2>
 			     <div class="row">
 			     	<div class="col-md-4">
 <!-- 			     	會員有圖片 -->

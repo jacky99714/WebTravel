@@ -18,6 +18,7 @@
     	<c:redirect url="/secure/login.jsp"></c:redirect>
 	</c:if>
 	<script>
+	alert
          var table;
          var totalImage = 0;
          var maxImg = 4;  // max image in tr tag
