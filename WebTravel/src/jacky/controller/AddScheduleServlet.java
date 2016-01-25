@@ -59,7 +59,7 @@ public class AddScheduleServlet extends HttpServlet {
 						session.setAttribute("scheduleList", scheduleList);
 						session.setAttribute("scheduleListFB", scheduleListFB);
 						jsonArray=new JSONArray(list);
-						System.out.println("jsonArray="+jsonArray);
+//						System.out.println("jsonArray="+jsonArray);
 						n=false;
 						out.print(jsonArray);
 						return;
@@ -82,12 +82,12 @@ public class AddScheduleServlet extends HttpServlet {
 				SceneBean sceneBean =memberService.selectSceneId(sceneId);
 				listSceneBean.add(sceneBean);
 				scheduleListFB=memberService.selectFavoriteBean(listSceneBean);
-				System.out.println("END scheduleList:"+listSceneBean);
+//				System.out.println("END scheduleList:"+listSceneBean);
 //				System.out.println("END scheduleListFB:"+scheduleListFB);
 				session.setAttribute("scheduleList", listSceneBean);
 				session.setAttribute("scheduleListFB", scheduleListFB);
 				list.add("joinsuccess");
-				System.out.println(list);
+//				System.out.println(list);
 				jsonArray=new JSONArray(list);
 				out.print(jsonArray);
 			}
