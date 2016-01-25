@@ -152,7 +152,7 @@
 					  "success":function(data){
 						  $(".form-control").val('').empty();
 						  //window.location.reload(true);
-						  alert("留言新增成功");
+// 						  alert("留言新增成功");
 						  console.log(data);
 						  var div1 = $("<div></div>").addClass("media");
 						  
@@ -175,7 +175,7 @@
 					  }
 					});										
 			} else {
-				alert("請登入會員")
+// 				alert("請登入會員")
 				location.href = "../secure/login.jsp";				
 			}//if
 		})//btn-primary						

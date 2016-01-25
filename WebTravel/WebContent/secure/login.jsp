@@ -27,7 +27,7 @@
  <jsp:include page="/WEB-INF/top/top.jsp"></jsp:include>
  
 <!--     ---------------------------- -->
-   <div class="jumbotron" style="background:#FFFFFF">
+   <div class="jumbotron" style="background:#FFFFFF;border-radius:5px">
    <div class="row">
    		<div class="col-md-8">
    			<h2>歡迎來到旅行微革命<small>    讓旅行更美麗</small></h2>
