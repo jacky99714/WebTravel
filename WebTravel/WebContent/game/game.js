@@ -294,7 +294,7 @@ function changeState(nextState){
         
         if(state === "win"){
             content.innerHTML = "恭喜您打倒了魔王，獲得咖啡廳優惠卷一張。";
-            back = new imgToCanvas("background","img/winner.png",0,0,460,300,0,0,460,300);
+            back = new imgToCanvas("background","img/coffee.png",0,0,460,300,0,0,460,300);
         }else{
             content.innerHTML = "勝敗乃兵家常事，請大俠重新來過。";
             back = new imgToCanvas("background","img/loser.png",0,0,460,300,0,0,460,300);
