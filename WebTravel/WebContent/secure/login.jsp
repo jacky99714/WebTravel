@@ -58,7 +58,7 @@
 		  			</div><br>
 		 			 <button type="submit" class="btn btn-default">登入</button>
 				</form>
- 					<a href="<c:url value="/secure/joinMember.jsp" />">加入會員</a>&middot; <a href="#">忘記密碼</a>
+ 					<a href="<c:url value="/secure/joinMember.jsp" />">加入會員</a>
 				</div>
 				
 	   		</div>
