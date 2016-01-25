@@ -10,7 +10,10 @@
 	<title>行程規劃</title>
 	<link rel="shortcut icon" href="<c:url value="/img/icon.ico"/>">
 	<link href="<c:url value="/css/bootstrap.min.css"/>" rel="stylesheet">  
+	<script src="sweetalert2.min.js"></script> 
+	<link rel="stylesheet" type="text/css" href="sweetalert2.css">
 	<link rel=stylesheet type="text/css" href="plan.css">
+	
 	<c:if test="${empty loginOk}">
 		<%
 			session.setAttribute("page", "plan/plan.jsp");
@@ -201,12 +204,13 @@
 	    function callbackCreateSchedule(){
 	    	if(xhrcreate.readyState === 4){ 	
 	    		if(xhrcreate.status === 200){
-	    			document.getElementById("insert").innerHTML = "資料新增成功";
+	    			swal({   title: '新增行程',   text: '資料新增成功',   timer: 2000 });
+// 	    			document.getElementById("insert").innerHTML = "資料新增成功";
 	    		 	table.innerHTML = "";
 	    		 	totalImage = 0;
-	    		 	setTimeout(function (){
-	    		 		document.getElementById("insert").innerHTML = "";
-	    		 	}, 2000);
+// 	    		 	setTimeout(function (){
+// 	    		 		document.getElementById("insert").innerHTML = "";
+// 	    		 	}, 2000);
 	    		
 	    		}else{
 	    	//		alert(xhrcreate.status + ":" + xhrcreate.statusText);
@@ -372,6 +376,7 @@
          } 
 
         window.onload = function(){
+
         	load = document.getElementById("load");
         	table = document.getElementById("tab");
             document.getElementById("sure").addEventListener("click",function(){
@@ -392,7 +397,8 @@
             	}
            
               	createSchedule(JSON.stringify(scheduleArray));    	
-            	
+              	var scheduleName = document.getElementById("scheduleName");
+              	scheduleName.value = "";
             });
             
             
