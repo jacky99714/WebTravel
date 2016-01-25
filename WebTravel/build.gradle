@@ -1,8 +1,7 @@
-﻿apply plugin: 'java'
+apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'eclipse-wtp'
-
-sourceCompatibility = 1.7			//設定編譯階段的JDK版本
+sourceCompatibility = 1.8			//設定編譯階段的JDK版本
 sourceSets.main.java.srcDir  'src'	//使用src目錄放置Java程式原始碼
 webAppDirName = 'WebContent'		//使用WebContent目錄放置網頁資源
 									//預設位置是src/main/java目錄
@@ -17,9 +16,6 @@ dependencies {						//宣告dependency library
 	providedRuntime 'javax.servlet.jsp.jstl:javax.servlet.jsp.jstl-api:1.2.1'
 	
 	compile 'org.hibernate:hibernate-entitymanager:4.3.11.Final'
-	
-	
-	
 }
 import org.gradle.plugins.ide.eclipse.model.Facet
 eclipse {
@@ -30,7 +26,6 @@ eclipse {
 
 			facet name: 'jst.java', type: Facet.FacetType.fixed
 			facet name: 'jst.java', version: '1.8'
-
 			
 			facet name: 'wst.jsdt.web', type: Facet.FacetType.fixed
 			facet name: 'wst.jsdt.web', version: '1.0'

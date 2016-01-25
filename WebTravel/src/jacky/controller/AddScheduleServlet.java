@@ -45,7 +45,7 @@ public class AddScheduleServlet extends HttpServlet {
 			sceneId = new Integer(temp1);
 			List<SceneBean> scheduleList=(ArrayList<SceneBean>)session.getAttribute("scheduleList");
 			List<FavoriteBean> scheduleListFB=(ArrayList<FavoriteBean>)session.getAttribute("scheduleList");
-			System.out.println("scheduleList="+scheduleList);
+//			System.out.println("scheduleList="+scheduleList);
 //			System.out.println("scheduleListFB="+scheduleListFB);
 			if(scheduleList!=null){//session 有此行程所以要刪除此行程
 				boolean n = true;//判斷session 是否有沒有行程 沒有此行程就去加入行程(false) 有此行程就刪除(true)
@@ -55,7 +55,7 @@ public class AddScheduleServlet extends HttpServlet {
 						scheduleList.remove(sceneBean);
 						scheduleListFB=memberService.selectFavoriteBean(scheduleList);
 //						System.out.println("ADD scheduleListFB:"+scheduleListFB);
-						System.out.println("ADD scheduleList:"+scheduleList);
+//						System.out.println("ADD scheduleList:"+scheduleList);
 						session.setAttribute("scheduleList", scheduleList);
 						session.setAttribute("scheduleListFB", scheduleListFB);
 						jsonArray=new JSONArray(list);
@@ -68,12 +68,12 @@ public class AddScheduleServlet extends HttpServlet {
 				if (n) {//session 裡面沒有此行程 所以將景點加入session
 					scheduleList.add(memberService.selectSceneId(sceneId));
 					scheduleListFB=memberService.selectFavoriteBean(scheduleList);
-					System.out.println("END scheduleList:"+scheduleList);
+//					System.out.println("END scheduleList:"+scheduleList);
 //					System.out.println("END scheduleListFB:"+scheduleListFB);
 					session.setAttribute("scheduleList", scheduleList);
 					session.setAttribute("scheduleListFB", scheduleListFB);
 					list.add("joinsuccess");
-					System.out.println(list);
+//					System.out.println(list);
 					jsonArray = new JSONArray(list);
 					out.print(jsonArray);
 				}
