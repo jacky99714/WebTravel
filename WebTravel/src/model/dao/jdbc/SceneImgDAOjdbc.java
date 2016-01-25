@@ -161,7 +161,7 @@ public class SceneImgDAOjdbc implements SceneImgDAO {
 		
 		//-----------------------圖片匯入-----------------------------------
 		
-		File f = new File("C:/Users/Student/Downloads/t3.jpg");
+		File f = new File("C:/Users/Student/Desktop/scene/schange/128_03.JPG");
 		byte[] poto = new byte[(int)f.length()];
 		FileInputStream fi = new FileInputStream(f);
 		System.out.println(fi);
@@ -179,7 +179,7 @@ public class SceneImgDAOjdbc implements SceneImgDAO {
 		// ----------------------------------------------------------
 		SceneImgBean rmbean = new SceneImgBean();
 //		
-		rmbean.setSceneId(6);
+		rmbean.setSceneId(128);
 		rmbean.setImg(poto);
 
 		//

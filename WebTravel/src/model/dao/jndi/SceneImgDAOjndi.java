@@ -160,7 +160,7 @@ public class SceneImgDAOjndi implements SceneImgDAO {
 		
 		//-----------------------圖片匯入-----------------------------------
 		
-				File f = new File("C:/Users/Student/Downloads/t1.jpg");
+				File f = new File("C:/Users/Student/Desktop/scene/schange/006_01.JPG");
 				byte[] poto = new byte[(int)f.length()];
 				FileInputStream fi = new FileInputStream(f);
 				System.out.println(fi);
@@ -180,7 +180,7 @@ public class SceneImgDAOjndi implements SceneImgDAO {
 		
 //		rmbean.setRestaurantId(3);
 //		rmbean.setMemberId(1);
-		rmbean.setSceneId(1);
+		rmbean.setSceneId(6);
 		rmbean.setImg(poto);
 		//
 		 System.out.println(test.insert(rmbean)); // 新增資料
