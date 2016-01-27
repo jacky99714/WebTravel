@@ -27,7 +27,7 @@
  <jsp:include page="/WEB-INF/top/top.jsp"></jsp:include>
  
 <!--     ---------------------------- -->
-   <div class="jumbotron" style="background:#FFFFFF">
+   <div class="jumbotron" style="background:#FFFFFF;border-radius:5px">
    <div class="row">
    		<div class="col-md-8">
    			<h2>歡迎來到旅行微革命<small>    讓旅行更美麗</small></h2>
@@ -58,7 +58,7 @@
 		  			</div><br>
 		 			 <button type="submit" class="btn btn-default">登入</button>
 				</form>
- 					<a href="<c:url value="/secure/joinMember.jsp" />">加入會員</a>&middot; <a href="#">忘記密碼</a>
+ 					<a href="<c:url value="/secure/joinMember.jsp" />">加入會員</a>
 				</div>
 				
 	   		</div>

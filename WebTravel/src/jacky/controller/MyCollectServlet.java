@@ -30,7 +30,7 @@ public class MyCollectServlet extends HttpServlet {
 	    response.setContentType("text/html; charset=UTF-8");
 	    String s= request.getParameter("start");
 	    String e= request.getParameter("end");
-	    System.out.println(s+":"+e);
+//	    System.out.println(s+":"+e);
 		HttpSession session =request.getSession();
 		MemberBean mb = (MemberBean)session.getAttribute("loginOk");
 		SceneBean sb = new SceneBean();
@@ -46,7 +46,7 @@ public class MyCollectServlet extends HttpServlet {
 				session.removeAttribute("sceneList");
 				session.setAttribute("sceneList", sceneListF);
 				int rowCount = sceneListF.size(); //list count 
-				System.out.println(rowCount);
+//				System.out.println(rowCount);
 				int pageSize = 4;//-1  一頁幾筆資料
 				int pageq = rowCount % pageSize == 0 ? rowCount / pageSize : rowCount / pageSize + 1;
 				int start = 0;

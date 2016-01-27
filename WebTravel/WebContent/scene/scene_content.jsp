@@ -36,7 +36,7 @@
 <style type="text/css">
 .map {
     width: 450px;
-    height: 300px;
+    height: 240px;
 }
 </style>
 <!-- Map End-->
@@ -121,10 +121,10 @@
   <!-- 版面右邊 --> 
   <div class="col-md-5">
   	<!-- 氣象 -->
-  	<div  class="weather">New York,NY
+  	<div  class="weather">
   	
   	</div>
-  	<hr>
+  	
    <!-- 地圖 -->
   	<div class="map" >
   	</div>
@@ -152,7 +152,7 @@
 					  "success":function(data){
 						  $(".form-control").val('').empty();
 						  //window.location.reload(true);
-						  alert("留言新增成功");
+// 						  alert("留言新增成功");
 						  console.log(data);
 						  var div1 = $("<div></div>").addClass("media");
 						  
@@ -175,7 +175,7 @@
 					  }
 					});										
 			} else {
-				alert("請登入會員")
+// 				alert("請登入會員")
 				location.href = "../secure/login.jsp";				
 			}//if
 		})//btn-primary						

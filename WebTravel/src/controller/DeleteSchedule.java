@@ -40,7 +40,6 @@ public class DeleteSchedule extends HttpServlet {
 		
 		try{
 			int delete= Integer.parseInt(request.getParameter("deleteId"));
-			System.out.println("delete "+delete);
 			HttpSession session = request.getSession();
 			PrintWriter out = response.getWriter();
 			if(delete == -1){
@@ -74,8 +73,6 @@ public class DeleteSchedule extends HttpServlet {
 		}catch(NumberFormatException e){
 			System.out.println("it is not a number");
 		}
-		
-		
 
 	}
 
